@@ -10,5 +10,6 @@
 - DR-0001 (proposed): custom catalogue route over Storybook. Histoire and Kitbook lack Svelte 5
   support (npm, 2026-11-14).
 - The workspace scaffold (pnpm, SvelteKit, shared) moves from 002 into 001. Deploy stays in 002.
-- **Open:** owner rules on DR-0001; owner approves `@axe-core/playwright` (dev dependency).
+- Owner accepted DR-0001 (build our own catalogue).
+- **Open:** owner approves `@axe-core/playwright` (dev dependency).
 - **Next:** `/speckit-tasks` for 001.

@@ -15,8 +15,7 @@ Build Ribbon's calm, evidence-backed design foundation before any features exist
   rationale, sources and calm-ds Check results.
 
 The research behind every value is in [research.md](research.md). The catalogue-tool choice is
-[DR-0001](../../docs/decisions/DR-0001-design-catalogue.md), which is proposed and awaiting the
-owner's ruling.
+[DR-0001](../../docs/decisions/DR-0001-design-catalogue.md), accepted by the owner on 2026-11-14.
 
 This spec also does the minimal workspace scaffold that spec 002 had assumed: pnpm workspace,
 SvelteKit app and shared package. Wrangler config, deploy and CI deploy stay in 002. The
@@ -67,13 +66,13 @@ AI-Team constitution v1.0.0. All gates are checked before and after design.
 | IV What, not how | the spec is free of tools | ✅ tools appear only in the plan, research and DR |
 | V Adopt before building | ≥1 existing solution assessed | ✅ Storybook, Histoire, Kitbook, Sveltescape and Ladle assessed (DR-0001) |
 | VI Decisions recorded | DR for non-trivial choices | ✅ DR-0001. Typeface, palette and storage are recorded in research.md (R2, R3, R9) |
-| VII Challenger before locking | separate opposing pass, decider rules | ⚠️ the challenger pass in DR-0001 was in-session; the DR stays **proposed** until the owner rules |
+| VII Challenger before locking | separate opposing pass, decider rules | ✅ the challenger pass in DR-0001 was in-session; the owner ruled (accepted 2026-11-14) |
 | VIII Cite or ASSUMPTION | every claim | ✅ research.md; the remaining ASSUMPTIONs are listed there |
 | IX Economy | lowest-cost option that meets the need | ✅ no new runtime dependencies; one dev-only dependency |
 | X Solo-operable | one laptop | ✅ everything runs locally |
 | XI Honest by construction | no dark patterns | ✅ no badges, streaks or nags (FR-017) |
 
-Re-check after design: no violations. VII remains open until the owner rules on DR-0001.
+Re-check after design: no violations.
 
 ## Project Structure
 

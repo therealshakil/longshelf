@@ -12,7 +12,7 @@ owner's own judgement, which calm-ds names as the acceptance test ("first user")
 
 ## R1. Catalogue tool (FR-018–FR-022)
 
-**Decision (proposed):** a custom catalogue built into the app as its own route. One page per
+**Decision (accepted 2026-11-14):** a custom catalogue built into the app as its own route. One page per
 token group or component. Full record and challenger pass: `docs/decisions/DR-0001-design-catalogue.md`.
 
 **Rationale:** checked against the npm registry on 2026-11-14.

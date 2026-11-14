@@ -1,7 +1,7 @@
 # DR-0001: How the design catalogue is built
 
-Status: **proposed** (awaiting the owner's ruling)
-Version: 0.1.0   Date: 2026-11-14   Decider: owner
+Status: **accepted** (owner ruled 2026-11-14)
+Version: 1.0.0   Date: 2026-11-14   Decider: owner
 Scope: spec 001, FR-018–FR-022. The catalogue is the browsable page set with one page per
 design element.
 
@@ -51,7 +51,9 @@ Facts were checked against the npm registry on 2026-11-14 ([research R1](../../s
   toggle. Each one is code the owner maintains alone.
 - And 'it lives in the app' means catalogue code ships in the production bundle."
 
-## Ruling (proposed; owner decides)
+## Ruling
+
+**Owner, 2026-11-14:** accepted D: build our own, with the limits below.
 
 D, with limits that answer the challenge:
 
@@ -89,4 +91,4 @@ ASSUMPTION: a few hundred lines in total.
 ## Review note
 
 The challenger pass was done within the same session, not by a separate reviewer. Under the
-AI-Team constitution (VII), the owner's ruling is the deciding pass.
+AI-Team constitution (VII), the owner's ruling (2026-11-14, accepted) is the deciding pass.
