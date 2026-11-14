@@ -63,9 +63,9 @@
 		</p>
 		<div class="hidden md:block">{@render index()}</div>
 		<details class="rounded-md border border-border bg-surface md:hidden">
-			<summary class="flex min-h-(--r-target) cursor-pointer items-center px-4 font-strong">
-				All design pages{#if currentTitle}<span class="font-regular text-text-muted"
-						>&nbsp;· now: {currentTitle}</span
+			<summary class="min-h-(--r-target) cursor-pointer px-4 py-2.5">
+				<span class="font-strong">All design pages</span>
+				{#if currentTitle}<span class="block text-sm text-text-muted">Now: {currentTitle}</span
 					>{/if}
 			</summary>
 			<div class="px-4 pt-2">{@render index()}</div>

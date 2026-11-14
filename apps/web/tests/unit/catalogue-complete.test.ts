@@ -7,6 +7,7 @@ import {
 	isAssumption,
 	type CatalogueMeta
 } from '@ribbon/shared/design/meta';
+import { tokens } from '@ribbon/shared/tokens';
 
 /** SC-001 / contracts/tokens-and-catalogue.md: every element is catalogued, sourced and checked. */
 const modules = import.meta.glob<{ meta: CatalogueMeta }>('../../src/routes/design/*/meta.ts', {
@@ -45,9 +46,13 @@ describe('catalogue completeness', () => {
 		expect(components.filter((c) => !ids.has(kebab(c)))).toEqual([]);
 	});
 
-	it('ASSUMPTION sources are under 20% of all sources (SC-001)', () => {
-		const all = metas.flatMap((m) => m.meta.sources);
-		const assumed = all.filter(isAssumption).length;
-		expect(assumed / all.length).toBeLessThan(0.2);
+	it('decisions resting only on ASSUMPTION are under 20% (SC-001)', () => {
+		// A decision is a token value or a catalogue entry. It is "assumed" when none of its sources is published.
+		const decisions = [
+			...tokens.map((t) => t.sources),
+			...metas.filter((m) => m.meta.kind === 'component').map((m) => m.meta.sources)
+		];
+		const assumedOnly = decisions.filter((srcs) => srcs.every(isAssumption)).length;
+		expect(assumedOnly / decisions.length).toBeLessThan(0.2);
 	});
 });

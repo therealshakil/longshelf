@@ -55,3 +55,14 @@
   - SvelteKit 3's lint rule requires `resolve()` for internal links; external source links are exempted inline;
   - `wrangler types` output depends on whether a build exists, so `worker-configuration.d.ts` is now generated on demand and gitignored, and `checkJs` is off (Ribbon is TypeScript-only).
 - **Next:** US2, the token pages.
+
+## 2026-11-14: Spec 001 US2 (token pages) done; MVP ready for owner review
+
+- Seven token pages: Colour (both themes side by side, with a live contrast table), Type, Space, Corners, Motion, Focus (static ring plus measured contrast), Target size.
+- Shared catalogue pieces: `TokenTable`, plus `meta-helpers` (calm-ds VII defaults to "deferred"; sources are de-duplicated).
+- SC-001 is now measured per decision, as the spec words it (analysis F3): 6 of 38 token decisions rest only on ASSUMPTION (type steps, heading leading, both radii), which is 16%.
+- An interim axe check (`a11y-smoke.spec.ts`) covers every page in light and dark: zero violations. The full matrix is T052.
+- Tests: 47 shared unit, 28 web unit, 4 e2e, all passing. Typecheck and lint are clean.
+- **Learning:** axe found links distinguished only by colour. Tailwind's preflight removes link underlines, and Lightning CSS then dropped our longhand `text-decoration-line: underline` from the merged `a {}` rule. The `text-decoration: underline` shorthand survives. Check the built CSS, not only the source, when a base style seems to have no effect.
+- **Efficacy so far:** 0 reworks after implementation; running cost £0.
+- **Next:** owner review of the defaults (colours, type, spacing) before US4 components.

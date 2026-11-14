@@ -118,13 +118,13 @@ nothing moves. Reload, and confirm you return to the same page.
 **Independent Test**: each token page shows the values for both themes and both contrast settings,
 the measured contrast for each pair, and the sources; every pair passes.
 
-- [ ] T025 [P] [US2] Add `apps/web/src/routes/design/color/+page.svelte` plus `meta.ts`. It shows the swatches for both themes side by side (using the `data-theme` override) and a table of every pair from `pairs.ts` with its live ratio and the minimum it needs. Ratios are shown as text and pass/fail as a word, not only a colour.
-- [ ] T026 [P] [US2] Add `apps/web/src/routes/design/type/+page.svelte` plus `meta.ts`. It shows the type scale, a 66ch measure sample using realistic prose, and the line height. It cites the dyslexia-font studies and Atkinson Hyperlegible (research R2, R6).
-- [ ] T027 [P] [US2] Add `apps/web/src/routes/design/space/+page.svelte` plus `meta.ts`, covering the spacing steps.
-- [ ] T028 [P] [US2] Add `apps/web/src/routes/design/radius/+page.svelte` plus `meta.ts`.
-- [ ] T029 [P] [US2] Add `apps/web/src/routes/design/motion/+page.svelte` plus `meta.ts`. It states that Ribbon uses no motion, and why (research R7). It has no demo animations.
-- [ ] T030 [P] [US2] Add `apps/web/src/routes/design/focus/+page.svelte` plus `meta.ts`. It shows the focus ring on each type of control, with the measured contrast of the ring (SC 2.4.13).
-- [ ] T031 [P] [US2] Add `apps/web/src/routes/design/size/+page.svelte` plus `meta.ts`, showing the 44 px target size (SC 2.5.5).
+- [X] T025 [P] [US2] Add `apps/web/src/routes/design/color/+page.svelte` plus `meta.ts`. It shows the swatches for both themes side by side (using the `data-theme` override) and a table of every pair from `pairs.ts` with its live ratio and the minimum it needs. Ratios are shown as text and pass/fail as a word, not only a colour.
+- [X] T026 [P] [US2] Add `apps/web/src/routes/design/type/+page.svelte` plus `meta.ts`. It shows the type scale, a 66ch measure sample using realistic prose, and the line height. It cites the dyslexia-font studies and Atkinson Hyperlegible (research R2, R6).
+- [X] T027 [P] [US2] Add `apps/web/src/routes/design/space/+page.svelte` plus `meta.ts`, covering the spacing steps.
+- [X] T028 [P] [US2] Add `apps/web/src/routes/design/radius/+page.svelte` plus `meta.ts`.
+- [X] T029 [P] [US2] Add `apps/web/src/routes/design/motion/+page.svelte` plus `meta.ts`. It states that Ribbon uses no motion, and why (research R7). It has no demo animations.
+- [X] T030 [P] [US2] Add `apps/web/src/routes/design/focus/+page.svelte` plus `meta.ts`. It shows the focus ring on each type of control, with the measured contrast of the ring (SC 2.4.13).
+- [X] T031 [P] [US2] Add `apps/web/src/routes/design/size/+page.svelte` plus `meta.ts`, showing the 44 px target size (SC 2.5.5).
 
 **Checkpoint**: all seven token pages are catalogued and the contrast test is green.
 
@@ -194,7 +194,7 @@ and its 7 Checks are recorded.
 
 ## Phase 8: Polish and verification
 
-- [ ] T052 Add an axe matrix e2e test in `apps/web/tests/e2e/a11y.spec.ts`. For every `/design/*` page, run `@axe-core/playwright` (tags wcag2a, wcag2aa, wcag21aa, wcag22aa) in both the light and dark system colour schemes (Playwright `colorScheme`), at 1280 px and 320 px widths. Expect zero violations (SC-003).
+- [ ] T052 (An interim version exists: `tests/e2e/a11y-smoke.spec.ts`, every catalogue page in light and dark at the default viewport. Replace it with the full matrix.) Add an axe matrix e2e test in `apps/web/tests/e2e/a11y.spec.ts`. For every `/design/*` page, run `@axe-core/playwright` (tags wcag2a, wcag2aa, wcag21aa, wcag22aa) in both the light and dark system colour schemes (Playwright `colorScheme`), at 1280 px and 320 px widths. Expect zero violations (SC-003).
 - [ ] T053 Add a reflow e2e test in `apps/web/tests/e2e/reflow.spec.ts`. At 320 px width and at 200% text size (root font size doubled), and with the WCAG 1.4.12 text-spacing overrides applied, no page scrolls horizontally (`scrollWidth <= clientWidth`) and no state overlaps another (SC-004, SC 1.4.10, 1.4.12). Also, on the library-grid catalogue page with 700 books and covers loading, the measured cumulative layout shift (PerformanceObserver `layout-shift`) is 0 (FR-015).
 - [ ] T054 Run quickstart.md steps 1–6 and record the results (pass/fail, with output for any failure) in `specs/001-visual-design/quickstart.md` under a "Results" heading.
 - [ ] T055 Owner review (SC-006): the owner spends 30 minutes in the catalogue with the defaults, in both light and dark. Record their findings in `specs/001-visual-design/review.md`; fix any of them before marking 001 done. The review includes:
