@@ -1,1 +1,115 @@
 @import 'tailwindcss';
+@import './lib/styles/tokens.css';
+
+/* Fonts: self-hosted (offline), SIL OFL; licences in static/fonts/. */
+@font-face {
+	font-family: 'Atkinson Hyperlegible Next';
+	src: url('/fonts/AtkinsonHyperlegibleNext-var.woff2') format('woff2');
+	font-weight: 200 800;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Atkinson Hyperlegible Next';
+	src: url('/fonts/AtkinsonHyperlegibleNext-Italic-var.woff2') format('woff2');
+	font-weight: 200 800;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Literata';
+	src: url('/fonts/Literata-var.woff2') format('woff2');
+	font-weight: 200 900;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Literata';
+	src: url('/fonts/Literata-Italic-var.woff2') format('woff2');
+	font-weight: 200 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+/*
+ * shadcn-svelte theme names, pointed at Ribbon tokens so its components inherit the design.
+ * shadcn's "accent" means a hover tint; Ribbon's `accent` is the one accent colour. Components are
+ * restyled to use `accent-surface` for hover/current, so the names don't collide in practice.
+ */
+@theme inline {
+	--color-background: var(--r-bg);
+	--color-foreground: var(--r-text);
+	--color-card: var(--r-raised);
+	--color-card-foreground: var(--r-text);
+	--color-popover: var(--r-raised);
+	--color-popover-foreground: var(--r-text);
+	--color-primary: var(--r-accent);
+	--color-primary-foreground: var(--r-on-accent);
+	--color-secondary: var(--r-surface);
+	--color-secondary-foreground: var(--r-text);
+	--color-muted: var(--r-surface);
+	--color-muted-foreground: var(--r-text-muted);
+	--color-accent-foreground: var(--r-text);
+	--color-destructive: var(--r-text);
+	--color-input: var(--r-control);
+	--color-ring: var(--r-focus);
+	--radius: var(--r-radius-sm);
+}
+
+@layer base {
+	html {
+		background: var(--r-bg);
+		color: var(--r-text);
+		font-family: var(--r-font-ui);
+		font-size: 100%; /* respect the browser's text size */
+		line-height: var(--r-leading-body);
+		-webkit-text-size-adjust: 100%;
+	}
+
+	body {
+		margin: 0;
+		min-height: 100dvh;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		line-height: var(--r-leading-tight);
+		font-weight: var(--r-weight-strong);
+		text-wrap: balance;
+	}
+
+	p,
+	li,
+	dd {
+		max-inline-size: var(--r-measure);
+		text-wrap: pretty;
+	}
+
+	/* Emphasis by weight, not italics or underline (dyslexia guidance). */
+	em {
+		font-style: normal;
+		font-weight: var(--r-weight-strong);
+	}
+
+	a {
+		color: var(--r-accent);
+		text-underline-offset: 0.2em;
+	}
+
+	:focus-visible {
+		outline: var(--r-focus-width) solid var(--r-focus);
+		outline-offset: var(--r-focus-offset);
+	}
+
+	/* No motion anywhere (calm-ds I). Also guards third-party components. */
+	*,
+	*::before,
+	*::after {
+		animation-duration: var(--r-duration) !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: var(--r-duration) !important;
+		scroll-behavior: auto !important;
+	}
+}

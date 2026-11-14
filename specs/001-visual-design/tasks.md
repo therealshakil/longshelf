@@ -44,12 +44,12 @@ and axe, SC-007 persistence).
 builds on these. *(Scope change 2026-11-14: defaults only. Light and dark come from the system
 setting; there is no preference store.)*
 
-- [ ] T008 Define the metadata types in `packages/shared/src/design/meta.ts`:
+- [X] T008 Define the metadata types in `packages/shared/src/design/meta.ts`:
   - `Source = { title, publisher?, url?, checked: date } | { assumption: true, note }`.
   - `CheckResult = { principle: 'I'…'VII', result: 'pass' | 'n/a' | 'deferred', reason }`. calm-ds VII is `deferred` while US3 is deferred.
   - `CatalogueMeta = { id, title, kind: 'token' | 'component', order, rationale, sources: Source[], checks: CheckResult[7] }`.
   - Add the matching Zod schemas.
-- [ ] T009 Define the tokens in `packages/shared/src/tokens/`, one file per group: `color.ts`, `type.ts`, `space.ts`, `radius.ts`, `motion.ts`, `focus.ts`, `size.ts`.
+- [X] T009 Define the tokens in `packages/shared/src/tokens/`, in `color.ts` (colour) and `scales.ts` (type, space, radius, motion, focus, size), with shared types in `types.ts` and citations in `design/sources.ts`.
   - Every token: `{ name (kebab-case, grouped), group, value, rationale, sources }`, with "≥1 source, or `assumption: true`" (data-model.md).
   - Colour values are OKLCH, given per theme (light, dark).
   - Take the starting values from research.md:
@@ -60,9 +60,9 @@ setting; there is no preference store.)*
     - motion 0 ms;
     - focus outline 3 px solid with an offset, ≥3:1;
     - target size 44 px.
-- [ ] T010 Define the contrast pairs `{ fg, bg, minRatio }` in `packages/shared/src/tokens/pairs.ts`, covering every text-on-background and interface-on-background combination: 4.5 for text, 3 for large text and interface parts. Add a WCAG relative-luminance contrast function (OKLCH → sRGB → ratio) in `packages/shared/src/tokens/contrast.ts`, with no dependency.
-- [ ] T011 [P] Write a unit test, `packages/shared/src/tokens/contrast.test.ts`, that checks the contrast function against known WCAG reference pairs, and checks every pair in both themes against its `minRatio` (FR-004, SC-003). Also assert that all accent tokens share one hue, within ±5° OKLCH (FR-005). Together with the token-only lint (T017), this guarantees one accent per view.
-- [ ] T012 Write the token-to-CSS generator, `packages/shared/src/tokens/to-css.ts`, and a build script, `apps/web/scripts/gen-tokens.ts`, run before `dev`, `build` and `test`. It emits `apps/web/src/lib/styles/tokens.css`:
+- [X] T010 Define the contrast pairs `{ fg, bg, minRatio }` in `packages/shared/src/tokens/pairs.ts`, covering every text-on-background and interface-on-background combination: 4.5 for text, 3 for large text and interface parts. Add a WCAG relative-luminance contrast function (OKLCH → sRGB → ratio) in `packages/shared/src/tokens/contrast.ts`, with no dependency.
+- [X] T011 [P] Write a unit test, `packages/shared/src/tokens/contrast.test.ts`, that checks the contrast function against known WCAG reference pairs, and checks every pair in both themes against its `minRatio` (FR-004, SC-003). Also assert that all accent tokens share one hue, within ±5° OKLCH (FR-005). Together with the token-only lint (T017), this guarantees one accent per view.
+- [X] T012 Write the token-to-CSS generator, `packages/shared/src/tokens/to-css.ts`, and a build script, `apps/web/scripts/gen-tokens.ts`, run before `dev`, `build` and `test`. It emits `apps/web/src/lib/styles/tokens.css`:
   - custom properties for light under `:root`, and for dark under `@media (prefers-color-scheme: dark)`;
   - a `[data-theme="light"|"dark"]` override, used only by the catalogue to show both themes side by side;
   - all durations `0ms`, and a global `prefers-reduced-motion` rule as a safety net;
@@ -72,12 +72,12 @@ setting; there is no preference store.)*
 - [ ] T013 *(deferred with US3)* Preference schema: see contracts/preferences.md.
 - [ ] T014 *(deferred with US3)* Preference precedence tests.
 - [ ] T015 *(deferred with US3)* Head script that applies preferences before first paint.
-- [ ] T016 Add the base styles and `@font-face` rules in `apps/web/src/app.css`:
+- [X] T016 Add the base styles and `@font-face` rules in `apps/web/src/app.css`:
   - body uses the token background and text colours and the interface font;
   - a global `:focus-visible` rule using the focus tokens;
   - `max-inline-size` for prose;
   - restyle the shadcn-svelte theme variables so they point at Ribbon tokens.
-- [ ] T017 [P] Add a token-only lint test, `apps/web/tests/unit/token-only.test.ts`. It scans `apps/web/src/lib/components/**/*.svelte` and fails on raw colour literals (`#`, `rgb(`, `oklch(`), raw px sizes outside the token files, and non-token `transition`/`animation` durations.
+- [X] T017 [P] Add a token-only lint test, `apps/web/tests/unit/token-only.test.ts`. It scans `apps/web/src/lib/components/**/*.svelte` and fails on raw colour literals (`#`, `rgb(`, `oklch(`), raw px sizes outside the token files, and non-token `transition`/`animation` durations.
 
 **Checkpoint**: the tokens generate CSS; the contrast test passes; the page follows the system's
 light or dark setting.

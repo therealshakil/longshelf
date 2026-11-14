@@ -28,3 +28,16 @@
 - Scope change (owner): good defaults first. User-adjustable appearance (US3, FR-009–011, SC-007) is deferred. The app follows the system light/dark and reduced-motion settings, and calm-ds VII is marked "deferred". Spec, plan, tasks, data model and contract are amended.
 - `CLAUDE.md` Commands section filled in.
 - **Next:** Phase 2 (tokens, contrast test, CSS generation, base styles).
+
+## 2026-11-14: Spec 001 Phase 2 (tokens) done
+
+- Tokens live in `packages/shared/src/tokens`: 11 colours (light and dark, OKLCH), 12 type, 8 space, 2 radius, motion (0ms), 2 focus, 1 target size. Each has a rationale and sources, or is marked ASSUMPTION.
+- Source registry: `packages/shared/src/design/sources.ts`, taken from research.md.
+- Contrast is measured, not eyeballed. A dependency-free OKLCH → sRGB → WCAG ratio function is checked against reference values. Measured results:
+  - body text 11.5:1 (light) and 11.8:1 (dark), inside the 9–12 calm band;
+  - every one of the 19 pairs meets AA in both themes;
+  - the light focus colour was out of gamut at first; its chroma was reduced to 0.075.
+- `tokens.css` is generated before `dev`, `build`, `test` and `typecheck`, and is gitignored. Tailwind's default colour palette is removed, and the shadcn names point at the tokens.
+- Global rules: no transitions or animations; bold for emphasis instead of italics; a 66ch measure on prose; a 3px focus ring.
+- The token-only lint test is in place.
+- **Next:** US1, the catalogue shell.
