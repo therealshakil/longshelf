@@ -12,4 +12,5 @@
 - The workspace scaffold (pnpm, SvelteKit, shared) moves from 002 into 001. Deploy stays in 002.
 - Owner accepted DR-0001 (build our own catalogue).
 - Owner approved `@axe-core/playwright` (dev dependency).
-- **Next:** `/speckit-tasks` for 001.
+- Tasks generated: 57 (specs/001-visual-design/tasks.md).
+- **Next:** `/speckit-implement` for 001, MVP = Setup → Foundational → US1 → US2.
