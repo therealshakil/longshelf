@@ -7,9 +7,9 @@
   v0.1.0, with one catalogue page per element.
 - Planned 001: research.md covers typefaces, polarity, contrast, colour, line length, motion,
   focus, preferences and testing. Every value is sourced or marked ASSUMPTION.
-- DR-0001 (proposed): custom catalogue route over Storybook. Histoire and Kitbook lack Svelte 5
+- DR-0001: custom catalogue route over Storybook. Histoire and Kitbook lack Svelte 5
   support (npm, 2026-11-14).
 - The workspace scaffold (pnpm, SvelteKit, shared) moves from 002 into 001. Deploy stays in 002.
 - Owner accepted DR-0001 (build our own catalogue).
-- **Open:** owner approves `@axe-core/playwright` (dev dependency).
+- Owner approved `@axe-core/playwright` (dev dependency).
 - **Next:** `/speckit-tasks` for 001.

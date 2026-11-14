@@ -198,8 +198,8 @@ on load.
 **Rationale:**
 - axe-core (Deque) is the established engine: 4.14.0, no dependencies of its own.
 - Playwright is already part of the stack.
-- **New dependency, needs owner approval** (CLAUDE.md principle 4): `@axe-core/playwright`
-  (dev only).
+- New dependency `@axe-core/playwright` (dev only): approved by the owner on 2026-11-14
+  (CLAUDE.md principle 4).
 
 ---
 

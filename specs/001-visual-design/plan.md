@@ -29,7 +29,7 @@ catalogue runs locally until then.
 already in the agreed stack (CLAUDE.md). Fonts are self-hosted files under `static/`: Atkinson
 Hyperlegible Next and Literata, both OFL. They are not npm packages.
 
-**New dependency needing approval**: `@axe-core/playwright` (dev only), for accessibility checks
+**New dependency (owner-approved 2026-11-14)**: `@axe-core/playwright` (dev only), for accessibility checks
 ([research R11](research.md#r11-accessibility-testing)).
 
 **Storage**: browser `localStorage`, one versioned key ([contracts/preferences.md](contracts/preferences.md)). No server data.
