@@ -14,6 +14,9 @@ and axe, SC-007 persistence).
 - Copy follows calm-ds VI: literal labels, buttons that say what happens.
 - Sample content is realistic: no lorem ipsum.
 - Do not add any dependency beyond those named in plan.md without asking the owner.
+- **Definition of done (constitution):** every phase checkpoint is committed together with a
+  `docs/JOURNAL.md` entry (what landed, what's next) and any spec, DR or research update it
+  needs. Tick the tasks here in the same commit.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -50,7 +53,7 @@ before-first-paint application, and the metadata types. Every story builds on th
   - Colour values are OKLCH, given per theme (light, dark) × contrast (standard, more).
   - Take the starting values from research.md:
     - off-white background, never `#fff`; dark grey, not black, for dark mode;
-    - one muted blue-green accent; no saturated red or yellow areas;
+    - exactly one accent hue (a muted blue-green), with lightness variants only; no saturated red or yellow areas (FR-005);
     - body text about 9–12:1 at standard contrast and ≥7:1 at more contrast;
     - type: Atkinson Hyperlegible Next for the interface, ≥16 px, in `rem`;
     - text-size steps 100 / 112.5 / 125 / 150 %;
@@ -59,7 +62,7 @@ before-first-paint application, and the metadata types. Every story builds on th
     - focus outline 3 px solid with an offset, ≥3:1;
     - target sizes: 44 px comfortable, 24 px compact.
 - [ ] T010 Define the contrast pairs `{ fg, bg, minRatio }` in `packages/shared/src/tokens/pairs.ts`, covering every text-on-background and interface-on-background combination: 4.5 for text, 3 for large text and interface parts, 7 for body text at "more" contrast. Add a WCAG relative-luminance contrast function (OKLCH → sRGB → ratio) in `packages/shared/src/tokens/contrast.ts`, with no dependency.
-- [ ] T011 [P] Write a unit test, `packages/shared/src/tokens/contrast.test.ts`, that checks the contrast function against known WCAG reference pairs, and checks every pair in every theme × contrast against its `minRatio` (FR-004, SC-003).
+- [ ] T011 [P] Write a unit test, `packages/shared/src/tokens/contrast.test.ts`, that checks the contrast function against known WCAG reference pairs, and checks every pair in every theme × contrast against its `minRatio` (FR-004, SC-003). Also assert that all accent tokens share one hue, within ±5° OKLCH (FR-005). Together with the token-only lint (T017), this guarantees one accent per view.
 - [ ] T012 Write the token-to-CSS generator, `packages/shared/src/tokens/to-css.ts`, and a build script, `apps/web/scripts/gen-tokens.ts`, run before `dev`, `build` and `test`. It emits `apps/web/src/lib/styles/tokens.css`:
   - custom properties under `:root[data-theme=…][data-contrast=…]`, `[data-text-size=0..3]`, `[data-text-spacing]` and `[data-density]`;
   - every duration set to `0ms` unless `[data-motion="on"]`;
@@ -75,7 +78,7 @@ before-first-paint application, and the metadata types. Every story builds on th
     - `density: comfortable | compact`;
     - `motion: off | on` (default `off`);
     - `readerFont: publisher | literata | atkinson`;
-    - `readerSize`, `readerLineHeight`, `readerMargins`, `readerParagraphSpacing` as step indices.
+    - `readerSize`, `readerLineHeight`, `readerMargins` and `readerParagraphSpacing` are step indices 0–4, defaulting to 2 (the middle step), with values as in data-model.md.
   - Add a pure `resolve(saved, system) → html attributes` with this precedence: saved choice > system preference > default.
   - `prefers-reduced-motion: reduce` forces `off` unless the owner saved `on`.
   - Storage key: `ribbon.prefs.v1`.
@@ -202,12 +205,14 @@ and its 7 Checks are recorded.
 ## Phase 8: Polish and verification
 
 - [ ] T052 Add an axe matrix e2e test in `apps/web/tests/e2e/a11y.spec.ts`. For every `/design/*` page and `/settings`, run `@axe-core/playwright` (tags wcag2a, wcag2aa, wcag21aa, wcag22aa) across: theme {light, dark} × contrast {standard, more} × textSize {0, 3} × density {comfortable, compact}, at 1280 px and 320 px widths. Expect zero violations (SC-003).
-- [ ] T053 Add a reflow e2e test in `apps/web/tests/e2e/reflow.spec.ts`. At 320 px width, the largest text size and wide spacing, no page scrolls horizontally (`scrollWidth <= clientWidth`) and no state overlaps another (SC-004, SC 1.4.10, 1.4.12).
+- [ ] T053 Add a reflow e2e test in `apps/web/tests/e2e/reflow.spec.ts`. At 320 px width, the largest text size and wide spacing, no page scrolls horizontally (`scrollWidth <= clientWidth`) and no state overlaps another (SC-004, SC 1.4.10, 1.4.12). Also, on the library-grid catalogue page with 700 books and covers loading, the measured cumulative layout shift (PerformanceObserver `layout-shift`) is 0 (FR-015).
 - [ ] T054 Run quickstart.md steps 1–6 and record the results (pass/fail, with output for any failure) in `specs/001-visual-design/quickstart.md` under a "Results" heading.
-- [ ] T055 Owner review (SC-006): the owner spends 30 minutes in the catalogue at their own settings. Record their findings in `specs/001-visual-design/review.md`; fix any of them before marking 001 done.
+- [ ] T055 Owner review (SC-006): the owner spends 30 minutes in the catalogue at their own settings. Record their findings in `specs/001-visual-design/review.md`; fix any of them before marking 001 done. The review includes:
+  - **(a)** a timed check: from the index, find 5 named elements, each in under 10 seconds (SC-005);
+  - **(b)** the owner spot-checks the calm-ds Check results of at least 3 components; any disagreement is a finding (SC-002).
 - [ ] T056 Bring the docs up to date:
   - `docs/PLAN.md`: set the 001 status to done;
-  - `docs/JOURNAL.md`: add an entry with what shipped, what's still ASSUMPTION, and the next step (spec 002);
+  - `docs/JOURNAL.md`: add an entry with what shipped, what's still ASSUMPTION, and the next step (spec 002), plus the efficacy baseline the constitution asks for: idea-to-ship time (spec created 2026-11-14 to done), the number of post-implementation reworks (findings from T055), and running cost (£0; nothing deployed);
   - `docs/DESIGN.md`: add a short "Visual design" section that points to the catalogue and the tokens.
 - [ ] T057 Write `specs/001-visual-design/calm-ds-notes.md`, recording what this spec learned for calm-ds: which tokens could be promoted to calm-ds's first token set, and any Checks that were hard to apply. Do not edit the calm-ds repo; that's the owner's call.
 

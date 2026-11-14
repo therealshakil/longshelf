@@ -37,7 +37,13 @@ Validation: every colour token that is used as text or interface paired with a b
 | density | comfortable, compact | comfortable | none |
 | motion | off, on | off | `prefers-reduced-motion: reduce` forces off unless the owner chose on |
 | readerFont | publisher, literata, atkinson | publisher | none |
-| readerSize, readerLineHeight, readerMargins, readerParagraphSpacing | small set of steps | middle step | none |
+| readerSize | 0–4 = 87.5 / 100 / 112.5 / 125 / 150 % | 2 | none |
+| readerLineHeight | 0–4 = 1.4 / 1.5 / 1.65 / 1.8 / 2.0 | 2 | none |
+| readerMargins | 0–4 = 0.5 / 1 / 2 / 3 / 4 rem | 2 | none |
+| readerParagraphSpacing | 0–4 = 0 / 0.5 / 1 / 1.5 / 2 em | 2 | none |
+
+Naming: the spec's "higher" contrast is stored as `more`, matching the CSS `prefers-contrast` value, and the spec's "wider" text spacing is stored as `wide`. The labels shown on screen use the spec's words.
+The reader step values are ASSUMPTION, centred on research R6 (line height 1.5–1.8); the owner tunes them in review.
 
 Precedence: the owner's saved choice beats the system preference, which beats the default (FR-011, FR-012).
 State transitions: unset → set (saved on change); set → unset only through "Restore default
