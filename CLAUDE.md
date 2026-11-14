@@ -27,7 +27,7 @@ apps/web/            SvelteKit app + API, wrangler.jsonc, migrations/
 packages/sync-cli/   ribbon
 packages/shared/     types + Zod schemas
 vendor/foliate-js/   submodule
-docs/                DESIGN.md, PLAN.md
+docs/                DESIGN.md, PLAN.md, JOURNAL.md, decisions/ (DR-NNNN)
 specs/               Spec Kit features (NNN-name/: spec, plan, tasks)
 .specify/            Spec Kit scaffold; memory/constitution.md = AI-Team constitution (copied)
 ```
