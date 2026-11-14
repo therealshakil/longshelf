@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-14
 
-**Status**: Draft
+**Status**: Draft. Amended 2026-11-14: user-adjustable appearance (US3) is deferred; see Scope change.
 
 **Input**: User description: "A design phase ahead of technical implementation: research-based,
 calm, neurodivergent-friendly visual design for Ribbon. Each design element gets its own design
@@ -22,6 +22,20 @@ The design philosophy is the calm-ds constitution (v0.1.0, seven principles, eac
 **Check**): Quiet senses, Predictable, One thing at a time, Remember for me, No pressure, Plain
 words, The person holds the dial. This feature is calm-ds's first real consumer, and its tokens
 may become calm-ds's first token set.
+
+## Scope change (2026-11-14, owner)
+
+The owner asked to focus on good defaults, not on customising appearance, for now.
+
+- **Deferred to a later spec:** US3 (the dial), FR-009, FR-010, FR-011, SC-007, and the
+  reading-typography controls in FR-013.
+- **Kept:** FR-012 in reduced form. Ribbon follows the system's light or dark setting and its
+  reduced-motion setting. Browser zoom and text size work everywhere, because sizes are in `rem`.
+  This gives the owner some control without Ribbon needing settings of its own.
+- **calm-ds VII** (the person holds the dial) is recorded as *deferred* on every catalogue page,
+  not as passed. The strongest case against deferring: calm is personal, and defaults chosen by
+  someone else will be wrong for somebody. Ruling: Ribbon has one user, the owner, who will judge
+  the defaults directly in review (SC-006). The token structure keeps the dial cheap to add later.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -73,7 +87,7 @@ measured results (contrast ratios, line length, focus visibility) are shown and 
 
 ---
 
-### User Story 3 - The person holds the dial (Priority: P2)
+### User Story 3 - The person holds the dial (Priority: P2) — DEFERRED (see Scope change)
 
 The owner adjusts how Ribbon looks — theme (light, dark, follow system), contrast (standard,
 higher), text size, text spacing, density (comfortable, compact), and motion (off, on) — from one
@@ -216,8 +230,9 @@ option, cites sources, and states a ruled-on counter-argument.
   Check.
 - **FR-019**: The catalogue MUST render the real components, not pictures of them, so that what
   is reviewed is what ships.
-- **FR-020**: The catalogue MUST respond to the same preferences as the app, so every element
-  can be reviewed at any setting.
+- **FR-020**: The catalogue MUST follow the same system light/dark setting as the app. The colour
+  token page shows both themes side by side, so both can be reviewed without changing the system
+  setting.
 - **FR-021**: The catalogue MUST be available to the owner without any library, reader, or sync
   feature being built.
 - **FR-022**: The way the catalogue is built MUST be chosen in a decision record that assesses at
@@ -242,13 +257,13 @@ option, cites sources, and states a ruled-on counter-argument.
 - **SC-002**: Every component passes all seven calm-ds Checks, as recorded on its page.
 - **SC-003**: Every text/background pair, in every theme and contrast combination, meets WCAG 2.2
   AA, verified by measurement and an automated accessibility check with zero violations.
-- **SC-004**: At the largest text size and at phone width, no component overlaps, clips, or
+- **SC-004**: At 200% browser zoom (text size) and at phone width, no component overlaps, clips, or
   scrolls horizontally.
 - **SC-005**: The owner can find any element in the catalogue in under 10 seconds from its index.
 - **SC-006**: In a review session, the owner uses the catalogue for 30 minutes at their own
   settings and reports nothing that moved, glared, or startled without being asked for
   (calm-ds "first user as acceptance test").
-- **SC-007**: Preferences survive closing and reopening in 100% of tries.
+- **SC-007**: *(Deferred with US3.)* Preferences survive closing and reopening in 100% of tries.
 
 ## Assumptions
 

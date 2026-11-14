@@ -1,0 +1,21 @@
+{
+  "name": "@ribbon/shared",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "test": "vitest --run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.12"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}

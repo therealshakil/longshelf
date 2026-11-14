@@ -27,7 +27,7 @@ Validation: every colour token that is used as text or interface paired with a b
 
 **State**: `{ name, props, sampleContent }`. Sample content is realistic: no lorem ipsum (spec edge cases).
 
-## Preference
+## Preference *(deferred with US3, 2026-11-14; kept as the design for later)*
 | Key | Values | Default | System preference that applies if unset |
 |---|---|---|---|
 | theme | light, dark, system | system | `prefers-color-scheme` |

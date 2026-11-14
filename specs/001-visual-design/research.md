@@ -155,7 +155,7 @@ because WCAG 3 is still a draft and not a standard. ASSUMPTION: this is the draf
 - WCAG 2.2 [1].
 - A clearly visible focus ring supports "find my way with eyes half-closed" (calm-ds II).
 
-## R9. Saving preferences (FR-011, FR-012)
+## R9. Saving preferences (FR-011, FR-012) — deferred with US3 (2026-11-14)
 
 **Decision:**
 - Preferences are stored in the browser's per-device storage (`localStorage`), under one

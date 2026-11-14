@@ -14,3 +14,17 @@
 - Owner approved `@axe-core/playwright` (dev dependency).
 - Tasks generated: 57 (specs/001-visual-design/tasks.md).
 - **Next:** `/speckit-implement` for 001, MVP = Setup → Foundational → US1 → US2.
+
+## 2026-11-14: Spec 001 Phase 1 (setup) done; scope narrowed to defaults
+
+- Workspace scaffolded:
+  - pnpm 12 (via corepack); build scripts allow-listed in `pnpm-workspace.yaml` (esbuild, workerd);
+  - `apps/web`: SvelteKit 3, Svelte 5.57, Tailwind 4.3, Vite 8, adapter-cloudflare;
+  - `packages/shared`: Zod.
+- shadcn-svelte initialised (vega preset, Lucide), but its theme CSS was not applied, because Ribbon's tokens replace it.
+- Dependencies added: `cn` (shadcn's class merger, approved by the owner) and `@axe-core/playwright` (approved).
+- Fonts are self-hosted from the googlefonts repos (variable woff2, OFL): Atkinson Hyperlegible Next and Literata.
+- Deviation from T002: the adapter generated a minimal `wrangler.jsonc` (no bindings), and the build and typecheck scripts depend on it. It is kept; deploy is still spec 002.
+- Scope change (owner): good defaults first. User-adjustable appearance (US3, FR-009–011, SC-007) is deferred. The app follows the system light/dark and reduced-motion settings, and calm-ds VII is marked "deferred". Spec, plan, tasks, data model and contract are amended.
+- `CLAUDE.md` Commands section filled in.
+- **Next:** Phase 2 (tokens, contrast test, CSS generation, base styles).

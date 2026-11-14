@@ -1,5 +1,8 @@
 # Contract: preferences
 
+> **Deferred** (2026-11-14, owner): spec 001 ships good defaults only. Until this contract is
+> picked up, CSS follows `prefers-color-scheme` and `prefers-reduced-motion` directly.
+
 Later specs consume this contract. Changing it means a new version of the key.
 
 - **Storage**: `localStorage["ribbon.prefs.v1"]` = JSON object of the keys in

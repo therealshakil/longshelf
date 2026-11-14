@@ -1,0 +1,15 @@
+node_modules/
+.svelte-kit/
+build/
+dist/
+.wrangler/
+coverage/
+test-results/
+playwright-report/
+*.log
+.env*
+!.env.example
+.DS_Store
+*.swp
+.vscode/
+.idea/

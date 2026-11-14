@@ -21,6 +21,10 @@ This spec also does the minimal workspace scaffold that spec 002 had assumed: pn
 SvelteKit app and shared package. Wrangler config, deploy and CI deploy stay in 002. The
 catalogue runs locally until then.
 
+**Scope change (2026-11-14):** user-adjustable appearance is deferred (see spec, "Scope change").
+The tokens have a light and a dark theme, chosen by `prefers-color-scheme`. Motion is always none.
+There is no preference store, no head script and no Settings page in this spec.
+
 ## Technical Context
 
 **Language/Version**: TypeScript 5, Svelte 5, Node 24

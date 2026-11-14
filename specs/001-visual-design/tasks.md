@@ -26,13 +26,13 @@ and axe, SC-007 persistence).
 
 **Purpose**: the workspace scaffold (moved here from spec 002). No Wrangler config and no deploy.
 
-- [ ] T001 Create the pnpm workspace: `pnpm-workspace.yaml` (`apps/*`, `packages/*`), root `package.json` (scripts: `dev`, `test`, `test:e2e`, `lint`, `typecheck` that delegate with `--filter`), `.nvmrc` (24), `.gitignore`, `.editorconfig`.
-- [ ] T002 Scaffold the SvelteKit app (Svelte 5, TypeScript) in `apps/web/` with `npx sv create`. Use `@sveltejs/adapter-cloudflare` as the adapter, but add no Wrangler config yet.
-- [ ] T003 [P] Create `packages/shared/` (TypeScript, `zod` dependency, `src/index.ts`) and reference it from `apps/web`.
-- [ ] T004 [P] Add Tailwind v4 to `apps/web` with `npx sv add tailwindcss`. Initialise shadcn-svelte (`npx shadcn-svelte@latest init`) into `apps/web/src/lib/components/ui/`. Add `@lucide/svelte`.
-- [ ] T005 [P] Configure ESLint and Prettier (via `sv add`), `svelte-check` for `typecheck`, Vitest for unit tests in `apps/web` and `packages/shared`, and Playwright plus `@axe-core/playwright` (owner-approved) in `apps/web/tests/e2e/`.
-- [ ] T006 [P] Download the woff2 files for Atkinson Hyperlegible Next (variable) and Literata (variable). Use official sources only: the googlefonts GitHub repos or Google Fonts. Put them in `apps/web/static/fonts/` with their `OFL.txt` licence files, and declare `@font-face` with `font-display: swap` in `apps/web/src/app.css`.
-- [ ] T007 Fill in the `## Commands` section of `CLAUDE.md` with the real commands (dev, test, test:e2e, lint, typecheck).
+- [X] T001 Create the pnpm workspace: `pnpm-workspace.yaml` (`apps/*`, `packages/*`), root `package.json` (scripts: `dev`, `test`, `test:e2e`, `lint`, `typecheck` that delegate with `--filter`), `.nvmrc` (24), `.gitignore`, `.editorconfig`.
+- [X] T002 Scaffold the SvelteKit app (Svelte 5, TypeScript) in `apps/web/` with `npx sv create`. Use `@sveltejs/adapter-cloudflare` as the adapter, but add no Wrangler config yet.
+- [X] T003 [P] Create `packages/shared/` (TypeScript, `zod` dependency, `src/index.ts`) and reference it from `apps/web`.
+- [X] T004 [P] Add Tailwind v4 to `apps/web` with `npx sv add tailwindcss`. Initialise shadcn-svelte (`npx shadcn-svelte@latest init`) into `apps/web/src/lib/components/ui/`. Add `@lucide/svelte`.
+- [X] T005 [P] Configure ESLint and Prettier (via `sv add`), `svelte-check` for `typecheck`, Vitest for unit tests in `apps/web` and `packages/shared`, and Playwright plus `@axe-core/playwright` (owner-approved) in `apps/web/tests/e2e/`.
+- [X] T006 [P] Download the woff2 files for Atkinson Hyperlegible Next (variable) and Literata (variable). Use official sources only: the googlefonts GitHub repos or Google Fonts. Put them in `apps/web/static/fonts/` with their `OFL.txt` licence files, and declare `@font-face` with `font-display: swap` in `apps/web/src/app.css`.
+- [X] T007 Fill in the `## Commands` section of `CLAUDE.md` with the real commands (dev, test, test:e2e, lint, typecheck).
 
 **Checkpoint**: `pnpm dev` serves the default page; `pnpm test`, `pnpm lint` and `pnpm typecheck` all pass.
 
@@ -40,59 +40,47 @@ and axe, SC-007 persistence).
 
 ## Phase 2: Foundational (blocks every story)
 
-**Purpose**: the token source, the CSS generated from it, the preference schema and its
-before-first-paint application, and the metadata types. Every story builds on these.
+**Purpose**: the token source, the CSS generated from it, and the metadata types. Every story
+builds on these. *(Scope change 2026-11-14: defaults only. Light and dark come from the system
+setting; there is no preference store.)*
 
 - [ ] T008 Define the metadata types in `packages/shared/src/design/meta.ts`:
   - `Source = { title, publisher?, url?, checked: date } | { assumption: true, note }`.
-  - `CheckResult = { principle: 'I'…'VII', result: 'pass' | 'n/a', reason }`.
+  - `CheckResult = { principle: 'I'…'VII', result: 'pass' | 'n/a' | 'deferred', reason }`. calm-ds VII is `deferred` while US3 is deferred.
   - `CatalogueMeta = { id, title, kind: 'token' | 'component', order, rationale, sources: Source[], checks: CheckResult[7] }`.
   - Add the matching Zod schemas.
 - [ ] T009 Define the tokens in `packages/shared/src/tokens/`, one file per group: `color.ts`, `type.ts`, `space.ts`, `radius.ts`, `motion.ts`, `focus.ts`, `size.ts`.
   - Every token: `{ name (kebab-case, grouped), group, value, rationale, sources }`, with "≥1 source, or `assumption: true`" (data-model.md).
-  - Colour values are OKLCH, given per theme (light, dark) × contrast (standard, more).
+  - Colour values are OKLCH, given per theme (light, dark).
   - Take the starting values from research.md:
     - off-white background, never `#fff`; dark grey, not black, for dark mode;
     - exactly one accent hue (a muted blue-green), with lightness variants only; no saturated red or yellow areas (FR-005);
-    - body text about 9–12:1 at standard contrast and ≥7:1 at more contrast;
-    - type: Atkinson Hyperlegible Next for the interface, ≥16 px, in `rem`;
-    - text-size steps 100 / 112.5 / 125 / 150 %;
-    - line height 1.5, or 1.8 when spacing is wide; reading measure 66ch;
+    - body text about 9–12:1;
+    - type: Atkinson Hyperlegible Next for the interface, ≥16 px, in `rem`; line height 1.5; reading measure 66ch;
     - motion 0 ms;
     - focus outline 3 px solid with an offset, ≥3:1;
-    - target sizes: 44 px comfortable, 24 px compact.
-- [ ] T010 Define the contrast pairs `{ fg, bg, minRatio }` in `packages/shared/src/tokens/pairs.ts`, covering every text-on-background and interface-on-background combination: 4.5 for text, 3 for large text and interface parts, 7 for body text at "more" contrast. Add a WCAG relative-luminance contrast function (OKLCH → sRGB → ratio) in `packages/shared/src/tokens/contrast.ts`, with no dependency.
-- [ ] T011 [P] Write a unit test, `packages/shared/src/tokens/contrast.test.ts`, that checks the contrast function against known WCAG reference pairs, and checks every pair in every theme × contrast against its `minRatio` (FR-004, SC-003). Also assert that all accent tokens share one hue, within ±5° OKLCH (FR-005). Together with the token-only lint (T017), this guarantees one accent per view.
+    - target size 44 px.
+- [ ] T010 Define the contrast pairs `{ fg, bg, minRatio }` in `packages/shared/src/tokens/pairs.ts`, covering every text-on-background and interface-on-background combination: 4.5 for text, 3 for large text and interface parts. Add a WCAG relative-luminance contrast function (OKLCH → sRGB → ratio) in `packages/shared/src/tokens/contrast.ts`, with no dependency.
+- [ ] T011 [P] Write a unit test, `packages/shared/src/tokens/contrast.test.ts`, that checks the contrast function against known WCAG reference pairs, and checks every pair in both themes against its `minRatio` (FR-004, SC-003). Also assert that all accent tokens share one hue, within ±5° OKLCH (FR-005). Together with the token-only lint (T017), this guarantees one accent per view.
 - [ ] T012 Write the token-to-CSS generator, `packages/shared/src/tokens/to-css.ts`, and a build script, `apps/web/scripts/gen-tokens.ts`, run before `dev`, `build` and `test`. It emits `apps/web/src/lib/styles/tokens.css`:
-  - custom properties under `:root[data-theme=…][data-contrast=…]`, `[data-text-size=0..3]`, `[data-text-spacing]` and `[data-density]`;
-  - every duration set to `0ms` unless `[data-motion="on"]`;
+  - custom properties for light under `:root`, and for dark under `@media (prefers-color-scheme: dark)`;
+  - a `[data-theme="light"|"dark"]` override, used only by the catalogue to show both themes side by side;
+  - all durations `0ms`, and a global `prefers-reduced-motion` rule as a safety net;
   - a Tailwind v4 `@theme` block that maps utilities to the tokens.
 
   Import it in `apps/web/src/app.css`.
-- [ ] T013 Define the preference schema in `packages/shared/src/prefs.ts`, using Zod:
-  - Keys and values exactly as data-model.md:
-    - `theme: light | dark | system` (default `system`);
-    - `contrast: standard | more`;
-    - `textSize: 0 | 1 | 2 | 3`;
-    - `textSpacing: standard | wide`;
-    - `density: comfortable | compact`;
-    - `motion: off | on` (default `off`);
-    - `readerFont: publisher | literata | atkinson`;
-    - `readerSize`, `readerLineHeight`, `readerMargins` and `readerParagraphSpacing` are step indices 0–4, defaulting to 2 (the middle step), with values as in data-model.md.
-  - Add a pure `resolve(saved, system) → html attributes` with this precedence: saved choice > system preference > default.
-  - `prefers-reduced-motion: reduce` forces `off` unless the owner saved `on`.
-  - Storage key: `ribbon.prefs.v1`.
-- [ ] T014 [P] Write a unit test, `packages/shared/src/prefs.test.ts`, covering the precedence for every key, the reduced-motion rule, and invalid or partial stored JSON being treated as empty (FR-011, FR-012).
-- [ ] T015 Add an inline script to the `<head>` of `apps/web/src/app.html`. It reads `localStorage["ribbon.prefs.v1"]` inside try/catch, reads the system media queries, and sets the `data-theme`, `data-contrast`, `data-text-size`, `data-text-spacing`, `data-density` and `data-motion` attributes on `<html>` before first paint. Keep it in sync with `resolve()` from T013 by generating it at build time from the same source, or by testing that both give the same output.
-- [ ] T016 Add the base styles in `apps/web/src/app.css`:
+- [ ] T013 *(deferred with US3)* Preference schema: see contracts/preferences.md.
+- [ ] T014 *(deferred with US3)* Preference precedence tests.
+- [ ] T015 *(deferred with US3)* Head script that applies preferences before first paint.
+- [ ] T016 Add the base styles and `@font-face` rules in `apps/web/src/app.css`:
   - body uses the token background and text colours and the interface font;
   - a global `:focus-visible` rule using the focus tokens;
   - `max-inline-size` for prose;
   - restyle the shadcn-svelte theme variables so they point at Ribbon tokens.
 - [ ] T017 [P] Add a token-only lint test, `apps/web/tests/unit/token-only.test.ts`. It scans `apps/web/src/lib/components/**/*.svelte` and fails on raw colour literals (`#`, `rgb(`, `oklch(`), raw px sizes outside the token files, and non-token `transition`/`animation` durations.
 
-**Checkpoint**: the tokens generate CSS; the contrast and prefs tests pass; the page renders in the
-right theme with no flash on reload.
+**Checkpoint**: the tokens generate CSS; the contrast test passes; the page follows the system's
+light or dark setting.
 
 ---
 
@@ -130,19 +118,21 @@ nothing moves. Reload, and confirm you return to the same page.
 **Independent Test**: each token page shows the values for both themes and both contrast settings,
 the measured contrast for each pair, and the sources; every pair passes.
 
-- [ ] T025 [P] [US2] Add `apps/web/src/routes/design/color/+page.svelte` plus `meta.ts`. It shows the swatches for each theme × contrast and a table of every pair from `pairs.ts` with its live ratio and the minimum it needs. Ratios are shown as text and pass/fail as a word, not only a colour.
-- [ ] T026 [P] [US2] Add `apps/web/src/routes/design/type/+page.svelte` plus `meta.ts`. It shows the scale at each text-size step, a 66ch measure sample using realistic prose, and the line height at standard and wide spacing. It cites the dyslexia-font studies and Atkinson Hyperlegible (research R2, R6).
-- [ ] T027 [P] [US2] Add `apps/web/src/routes/design/space/+page.svelte` plus `meta.ts`, covering spacing steps and both density settings.
+- [ ] T025 [P] [US2] Add `apps/web/src/routes/design/color/+page.svelte` plus `meta.ts`. It shows the swatches for both themes side by side (using the `data-theme` override) and a table of every pair from `pairs.ts` with its live ratio and the minimum it needs. Ratios are shown as text and pass/fail as a word, not only a colour.
+- [ ] T026 [P] [US2] Add `apps/web/src/routes/design/type/+page.svelte` plus `meta.ts`. It shows the type scale, a 66ch measure sample using realistic prose, and the line height. It cites the dyslexia-font studies and Atkinson Hyperlegible (research R2, R6).
+- [ ] T027 [P] [US2] Add `apps/web/src/routes/design/space/+page.svelte` plus `meta.ts`, covering the spacing steps.
 - [ ] T028 [P] [US2] Add `apps/web/src/routes/design/radius/+page.svelte` plus `meta.ts`.
-- [ ] T029 [P] [US2] Add `apps/web/src/routes/design/motion/+page.svelte` plus `meta.ts`. It states "No motion" as the default, and any demo motion runs only after a "Play example" button is pressed while motion is on (US2 scenario 3).
+- [ ] T029 [P] [US2] Add `apps/web/src/routes/design/motion/+page.svelte` plus `meta.ts`. It states that Ribbon uses no motion, and why (research R7). It has no demo animations.
 - [ ] T030 [P] [US2] Add `apps/web/src/routes/design/focus/+page.svelte` plus `meta.ts`. It shows the focus ring on each type of control, with the measured contrast of the ring (SC 2.4.13).
-- [ ] T031 [P] [US2] Add `apps/web/src/routes/design/size/+page.svelte` plus `meta.ts`, showing target sizes in both densities (SC 2.5.5 and 2.5.8).
+- [ ] T031 [P] [US2] Add `apps/web/src/routes/design/size/+page.svelte` plus `meta.ts`, showing the 44 px target size (SC 2.5.5).
 
 **Checkpoint**: all seven token pages are catalogued and the contrast test is green.
 
 ---
 
-## Phase 5: User Story 3 - The person holds the dial (P2)
+## Phase 5: User Story 3 - The person holds the dial (P2): DEFERRED (scope change 2026-11-14)
+
+T032–T036 are kept as the design for a later spec. Do not implement them in 001.
 
 **Goal**: one Settings page that changes the appearance everywhere, live and persistently.
 
@@ -183,7 +173,7 @@ and its 7 Checks are recorded.
 - [ ] T042 [P] [US4] Build `apps/web/src/lib/components/BookDetail.svelte`: one primary action (Read), with Download as secondary; the description is collapsed until asked for (calm-ds III). States: full metadata, minimal metadata, downloaded. Catalogue page: `routes/design/book-detail/`.
 - [ ] T043 [P] [US4] Build `apps/web/src/lib/components/ReaderChrome.svelte`: top and bottom bars, a progress readout as text ("42% · Chapter 7"), and the bars hidden until asked for. States: hidden, shown, loading. Catalogue page: `routes/design/reader-chrome/`.
 - [ ] T044 [P] [US4] Build `apps/web/src/lib/components/TableOfContents.svelte`, with nested chapters and the current chapter marked by both text and shape. Catalogue page: `routes/design/toc/`.
-- [ ] T045 [P] [US4] Build `apps/web/src/lib/components/ReadingControls.svelte`, the in-reader quick access to the reader preferences, reusing the T032 store. Catalogue page: `routes/design/reading-controls/`.
+- [ ] T045 *(deferred with US3)* [US4] Build `apps/web/src/lib/components/ReadingControls.svelte`, the in-reader quick access to the reader preferences, reusing the T032 store. Catalogue page: `routes/design/reading-controls/`.
 - [ ] T046 [P] [US4] Build `apps/web/src/lib/components/SyncStatus.svelte`: peripheral, icon plus text, never animated. States: up to date, syncing, offline, needs attention (FR-017). Catalogue page: `routes/design/sync-status/`.
 - [ ] T047 [P] [US4] Build `apps/web/src/lib/components/EmptyState.svelte`, which states what is empty and the one next step. Examples: empty library, nothing downloaded, no search results. Catalogue page: `routes/design/empty-state/`.
 - [ ] T048 [P] [US4] Build `apps/web/src/lib/components/ErrorState.svelte`: what happened, whether anything was lost, and the one next step, with no blame and no idioms (FR-016). Examples: offline and the book isn't downloaded; sync failed but progress is saved on this device. Catalogue page: `routes/design/error-state/`.
@@ -204,10 +194,10 @@ and its 7 Checks are recorded.
 
 ## Phase 8: Polish and verification
 
-- [ ] T052 Add an axe matrix e2e test in `apps/web/tests/e2e/a11y.spec.ts`. For every `/design/*` page and `/settings`, run `@axe-core/playwright` (tags wcag2a, wcag2aa, wcag21aa, wcag22aa) across: theme {light, dark} × contrast {standard, more} × textSize {0, 3} × density {comfortable, compact}, at 1280 px and 320 px widths. Expect zero violations (SC-003).
-- [ ] T053 Add a reflow e2e test in `apps/web/tests/e2e/reflow.spec.ts`. At 320 px width, the largest text size and wide spacing, no page scrolls horizontally (`scrollWidth <= clientWidth`) and no state overlaps another (SC-004, SC 1.4.10, 1.4.12). Also, on the library-grid catalogue page with 700 books and covers loading, the measured cumulative layout shift (PerformanceObserver `layout-shift`) is 0 (FR-015).
+- [ ] T052 Add an axe matrix e2e test in `apps/web/tests/e2e/a11y.spec.ts`. For every `/design/*` page, run `@axe-core/playwright` (tags wcag2a, wcag2aa, wcag21aa, wcag22aa) in both the light and dark system colour schemes (Playwright `colorScheme`), at 1280 px and 320 px widths. Expect zero violations (SC-003).
+- [ ] T053 Add a reflow e2e test in `apps/web/tests/e2e/reflow.spec.ts`. At 320 px width and at 200% text size (root font size doubled), and with the WCAG 1.4.12 text-spacing overrides applied, no page scrolls horizontally (`scrollWidth <= clientWidth`) and no state overlaps another (SC-004, SC 1.4.10, 1.4.12). Also, on the library-grid catalogue page with 700 books and covers loading, the measured cumulative layout shift (PerformanceObserver `layout-shift`) is 0 (FR-015).
 - [ ] T054 Run quickstart.md steps 1–6 and record the results (pass/fail, with output for any failure) in `specs/001-visual-design/quickstart.md` under a "Results" heading.
-- [ ] T055 Owner review (SC-006): the owner spends 30 minutes in the catalogue at their own settings. Record their findings in `specs/001-visual-design/review.md`; fix any of them before marking 001 done. The review includes:
+- [ ] T055 Owner review (SC-006): the owner spends 30 minutes in the catalogue with the defaults, in both light and dark. Record their findings in `specs/001-visual-design/review.md`; fix any of them before marking 001 done. The review includes:
   - **(a)** a timed check: from the index, find 5 named elements, each in under 10 seconds (SC-005);
   - **(b)** the owner spot-checks the calm-ds Check results of at least 3 components; any disagreement is a finding (SC-002).
 - [ ] T056 Bring the docs up to date:
@@ -222,15 +212,15 @@ and its 7 Checks are recorded.
 
 - **Setup (T001–T007)** → **Foundational (T008–T017)** → stories.
 - **US1 (T018–T024)** comes first because every other story's pages live inside its catalogue.
-- **US2 (T025–T031)** and **US3 (T032–T036)** can run in parallel after US1.
-- **US4 (T037–T050)** needs US1. T045 needs T032, and T040 needs T039.
+- **US2 (T025–T031)** comes after US1. US3 (T032–T036) is deferred.
+- **US4 (T037–T050)** needs US1. T040 needs T039. T045 is deferred.
 - **US5 (T051)** needs T022.
 - **Polish (T052–T057)** comes after all the stories. T055 (the owner review) is the final gate.
 
 ## Parallel examples
 
 - **Setup**: T003, T004, T005 and T006 together, after T002.
-- **Foundational**: T011, T014 and T017 alongside their source tasks once T010, T013 and T016 exist.
+- **Foundational**: T011 and T017 alongside their source tasks once T010 and T016 exist.
 - **US2**: T025–T031 all at once, since each is a separate route folder.
 - **US4**: T038, T039 and T041–T049 at once. T040 waits for T039, and T050 comes last.
 
@@ -238,6 +228,6 @@ and its 7 Checks are recorded.
 
 1. **MVP:** Setup → Foundational → US1 → US2. You can review the catalogue with the real tokens and
    change them while they're still cheap to change.
-2. Then US3 (the dial). Do a short owner check at your own settings before building components.
+2. Owner check of the defaults (colours, type, spacing) before building components.
 3. Then US4 (components), US5 (the DR link), and Polish. Spec 001 is done when the owner review
    (T055) passes.

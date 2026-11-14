@@ -36,4 +36,13 @@ Work goes through Spec Kit: `/speckit-specify` → `/speckit-plan` → `/speckit
 The Ribbon principles above are project-specific and sit alongside the constitution.
 
 ## Commands
-(Fill in as the repo is scaffolded: dev, test, lint, typecheck, deploy, migrate.)
+Run from the repo root (pnpm 12 via corepack, Node 24):
+- `pnpm install`: install workspace deps (build scripts are allow-listed in `pnpm-workspace.yaml`)
+- `pnpm dev`: SvelteKit dev server (`apps/web`)
+- `pnpm test`: Vitest unit tests (all packages)
+- `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on :4173)
+- `pnpm lint`: Prettier + ESLint
+- `pnpm typecheck`: svelte-check / tsc
+- Deploy and migrate: added in spec 002.
+
+SvelteKit 3 uses `#lib/...` imports (package.json `imports`), not `$lib`.
