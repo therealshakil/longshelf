@@ -7,7 +7,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 ## Specs
 | # | Feature | Depends on | Status |
 |---|---|---|---|
-| 001 | Visual design: calm, ND-friendly design system + per-element design pages | calm-ds constitution | not started |
+| 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | spec drafted |
 | 002 | Mirror (Phase 1 below) | 001 | not started |
 | 003 | Read (Phase 2) | 002 | not started |
 | 004 | Device progress (Phase 3) | 003, spike | not started |
