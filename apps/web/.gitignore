@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 # Playwright
 test-results
 src/lib/styles/tokens.css
+worker-configuration.d.ts

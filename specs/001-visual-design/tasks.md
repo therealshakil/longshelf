@@ -92,16 +92,16 @@ Checks.
 **Independent Test**: open `/design`, pick an element, and confirm every block is present and
 nothing moves. Reload, and confirm you return to the same page.
 
-- [ ] T018 [P] [US1] Build `apps/web/src/lib/catalogue/StatesGrid.svelte`. It takes `states: { name, props, sampleContent }[]` and a component, and renders each state labelled, side by side, wrapping into one column at narrow widths. It has no interactive controls (DR-0001 scope cap).
-- [ ] T019 [P] [US1] Build `apps/web/src/lib/catalogue/MetaBlock.svelte`. It renders the rationale, the source list (a link plus the title kept as text; ASSUMPTION shown as a plain label, not a colour alone), and a table of the 7 calm-ds Check results.
-- [ ] T020 [US1] Build `apps/web/src/routes/design/+layout.svelte` and `+layout.ts`. They:
+- [X] T018 [P] [US1] Build `apps/web/src/lib/catalogue/StatesGrid.svelte`. It takes `states: { name, props, sampleContent }[]` and a component, and renders each state labelled, side by side, wrapping into one column at narrow widths. It has no interactive controls (DR-0001 scope cap).
+- [X] T019 [P] [US1] Build `apps/web/src/lib/catalogue/MetaBlock.svelte`. It renders the rationale, the source list (a link plus the title kept as text; ASSUMPTION shown as a plain label, not a colour alone), and a table of the 7 calm-ds Check results.
+- [X] T020 [US1] Build `apps/web/src/routes/design/+layout.svelte` and `+layout.ts`. They:
   - collect `meta.ts` from every element folder with `import.meta.glob`;
   - show a short index grouped "Tokens" then "Components", ordered by `order`;
   - keep the index in the same place on every page (calm-ds II).
-- [ ] T021 [US1] Make the catalogue remember the last page visited: store it in `localStorage["ribbon.design.last"]` inside try/catch, and redirect `/design` there when it is set (US1 scenario 3).
-- [ ] T022 [US1] Add `apps/web/src/routes/design/about/+page.svelte` plus `meta.ts`. It explains how to read a page and links DR-0001, research.md and the calm-ds Checks (covers US5's surface).
-- [ ] T023 [P] [US1] Write a unit test, `apps/web/tests/unit/catalogue-complete.test.ts`. Every `meta.ts` must pass the `CatalogueMeta` schema. Every source list must be non-empty or be an assumption. Every entry needs exactly 7 checks. Every component in `apps/web/src/lib/components/*.svelte` must have a catalogue folder. ASSUMPTION sources must be under 20% across all entries (SC-001).
-- [ ] T024 [P] [US1] Write an e2e test, `apps/web/tests/e2e/catalogue.spec.ts`:
+- [X] T021 [US1] Make the catalogue remember the last page visited: store it in `localStorage["ribbon.design.last"]` inside try/catch, and redirect `/design` there when it is set (US1 scenario 3).
+- [X] T022 [US1] Add `apps/web/src/routes/design/about/+page.svelte` plus `meta.ts`. It explains how to read a page and links DR-0001, research.md and the calm-ds Checks (covers US5's surface).
+- [X] T023 [P] [US1] Write a unit test, `apps/web/tests/unit/catalogue-complete.test.ts`. Every `meta.ts` must pass the `CatalogueMeta` schema. Every source list must be non-empty or be an assumption. Every entry needs exactly 7 checks. Every component in `apps/web/src/lib/components/*.svelte` must have a catalogue folder. ASSUMPTION sources must be under 20% across all entries (SC-001).
+- [X] T024 [P] [US1] Write an e2e test, `apps/web/tests/e2e/catalogue.spec.ts`:
   - the index lists every entry;
   - each page shows the states, rationale, sources and checks;
   - the last page is restored after a reload;

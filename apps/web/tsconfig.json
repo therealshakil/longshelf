@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"strict": true,
 		"types": ["$app/types", "node", "./worker-configuration.d.ts"],
-		"allowImportingTsExtensions": true
+		"allowImportingTsExtensions": true,
+		"checkJs": false
 	},
 	"include": [
 		"src",

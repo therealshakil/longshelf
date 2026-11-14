@@ -1,0 +1,42 @@
+import { expect, test } from '@playwright/test';
+
+test.describe('design catalogue (US1)', () => {
+	test('index lists entries and each page has examples, rationale, sources and checks', async ({
+		page
+	}) => {
+		await page.goto('/design/about');
+		const nav = page.getByRole('navigation', { name: 'Design catalogue' });
+		const links = nav.locator('a[href^="/design/"]');
+		const hrefs = [
+			...new Set(await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')!)))
+		];
+		expect(hrefs.length).toBeGreaterThan(0);
+
+		for (const href of hrefs) {
+			await page.goto(href);
+			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+			await expect(page.getByRole('region', { name: 'Examples' })).toBeVisible();
+			await expect(page.getByRole('heading', { name: 'Why it looks like this' })).toBeVisible();
+			await expect(page.getByRole('heading', { name: 'Sources' })).toBeVisible();
+			await expect(page.getByRole('heading', { name: 'calm-ds Checks' })).toBeVisible();
+			await expect(page.locator('a[aria-current="page"]').first()).toHaveAttribute('href', href);
+			// Nothing moves (calm-ds I).
+			expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+		}
+	});
+
+	test('returning to /design opens the last page visited', async ({ page }) => {
+		await page.goto('/design');
+		await expect(page).toHaveURL(/\/design\/about$/);
+		const other = page
+			.getByRole('navigation', { name: 'Design catalogue' })
+			.locator('a[href^="/design/"]:not([href="/design/about"])')
+			.first();
+		if ((await other.count()) === 0) test.skip(true, 'only one entry so far');
+		const href = await other.getAttribute('href');
+		await page.goto(href!);
+		await page.goto('/');
+		await page.goto('/design');
+		await expect(page).toHaveURL(new RegExp(`${href}$`));
+	});
+});

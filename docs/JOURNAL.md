@@ -41,3 +41,17 @@
 - Global rules: no transitions or animations; bold for emphasis instead of italics; a 66ch measure on prose; a 3px focus ring.
 - The token-only lint test is in place.
 - **Next:** US1, the catalogue shell.
+
+## 2026-11-14: Spec 001 US1 (catalogue shell) done
+
+- `/design` built:
+  - an index in the same place on every page (a sidebar on wide screens, a collapsed list on narrow ones), with the current page marked by a bar, weight and `aria-current`;
+  - `EntryPage` wraps each page as Examples, then Why, then Sources, then calm-ds Checks;
+  - `StatesGrid` shows every state at once, with no controls;
+  - `/design` opens the last page you visited (stored in localStorage; falls back silently).
+- The About page is the first entry. A "guide" kind was added to `CatalogueMeta` for pages that aren't tokens or components.
+- Tests: catalogue completeness (schema, 7 checks, a page per entry, a page per component, ASSUMPTION under 20%) and an e2e test (every page has all its blocks and no animations).
+- Toolchain fixes:
+  - SvelteKit 3's lint rule requires `resolve()` for internal links; external source links are exempted inline;
+  - `wrangler types` output depends on whether a build exists, so `worker-configuration.d.ts` is now generated on demand and gitignored, and `checkJs` is off (Ribbon is TypeScript-only).
+- **Next:** US2, the token pages.
