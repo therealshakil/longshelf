@@ -17,7 +17,8 @@ const TAILWIND: Record<string, (name: string) => string | null> = {
 	space: () => null,
 	motion: () => null,
 	focus: () => null,
-	size: () => null
+	size: () => null,
+	depth: (n) => (n.startsWith('shadow-') ? `--shadow-${n.slice(7)}` : null)
 };
 
 const decl = (t: Token, theme: Theme) =>
@@ -26,7 +27,8 @@ const decl = (t: Token, theme: Theme) =>
 /**
  * Generates the tokens stylesheet:
  * - light values on :root (the default), dark values under prefers-color-scheme: dark;
- * - [data-theme] overrides, used only by the catalogue to show both themes side by side;
+ * - [data-theme] overrides: the catalogue shows themes side by side, and the reader's Night
+ *   setting applies night (spec 002);
  * - a Tailwind v4 `@theme inline` block so utilities resolve to the tokens, with Tailwind's
  *   default colour palette removed so only Ribbon colours exist.
  */
@@ -64,6 +66,11 @@ ${block('light')}
 
 [data-theme='dark'] {
 ${block('dark')}
+	color-scheme: dark;
+}
+
+[data-theme='night'] {
+${block('night')}
 	color-scheme: dark;
 }
 

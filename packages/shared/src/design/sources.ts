@@ -103,6 +103,11 @@ export const S = {
 		publisher: 'arXiv',
 		url: 'https://arxiv.org/html/2511.01248',
 		checked
+	},
+	approvedMocks: {
+		title: 'Approved design mocks (design-mocks/, DR-0002)',
+		publisher: 'Ribbon owner, live review',
+		checked: '2026-11-18'
 	}
 } as const satisfies Record<string, Source>;
 

@@ -1,0 +1,674 @@
+[
+ {
+  "slug": "mary-shelley_frankenstein",
+  "title": "Frankenstein",
+  "author": "Mary Shelley",
+  "url": "https://standardebooks.org/ebooks/mary-shelley/frankenstein",
+  "file": "se-covers/mary-shelley_frankenstein.jpg"
+ },
+ {
+  "slug": "jane-austen_pride-and-prejudice",
+  "title": "Pride and Prejudice",
+  "author": "Jane Austen",
+  "url": "https://standardebooks.org/ebooks/jane-austen/pride-and-prejudice",
+  "file": "se-covers/jane-austen_pride-and-prejudice.jpg"
+ },
+ {
+  "slug": "bram-stoker_dracula",
+  "title": "Dracula",
+  "author": "Bram Stoker",
+  "url": "https://standardebooks.org/ebooks/bram-stoker/dracula",
+  "file": "se-covers/bram-stoker_dracula.jpg"
+ },
+ {
+  "slug": "marcus-aurelius_meditations_george-long",
+  "title": "Meditations",
+  "author": "Marcus Aurelius",
+  "url": "https://standardebooks.org/ebooks/marcus-aurelius/meditations/george-long",
+  "file": "se-covers/marcus-aurelius_meditations_george-long.jpg"
+ },
+ {
+  "slug": "lewis-carroll_alices-adventures-in-wonderland_john-tenniel",
+  "title": "Alice\u2019s Adventures in Wonderland",
+  "author": "Lewis Carroll",
+  "url": "https://standardebooks.org/ebooks/lewis-carroll/alices-adventures-in-wonderland/john-tenniel",
+  "file": "se-covers/lewis-carroll_alices-adventures-in-wonderland_john-tenniel.jpg"
+ },
+ {
+  "slug": "joseph-conrad_short-fiction",
+  "title": "Short Fiction",
+  "author": "Joseph Conrad",
+  "url": "https://standardebooks.org/ebooks/joseph-conrad/short-fiction",
+  "file": "se-covers/joseph-conrad_short-fiction.jpg"
+ },
+ {
+  "slug": "seneca_moral-letters-to-lucilius_richard-m-gummere",
+  "title": "Moral Letters to Lucilius",
+  "author": "Seneca",
+  "url": "https://standardebooks.org/ebooks/seneca/moral-letters-to-lucilius/richard-m-gummere",
+  "file": "se-covers/seneca_moral-letters-to-lucilius_richard-m-gummere.jpg"
+ },
+ {
+  "slug": "alexandre-dumas_the-count-of-monte-cristo_chapman-and-hall",
+  "title": "The Count of Monte Cristo",
+  "author": "Alexandre Dumas",
+  "url": "https://standardebooks.org/ebooks/alexandre-dumas/the-count-of-monte-cristo/chapman-and-hall",
+  "file": "se-covers/alexandre-dumas_the-count-of-monte-cristo_chapman-and-hall.jpg"
+ },
+ {
+  "slug": "henry-seton-merriman_suspense",
+  "title": "Suspense",
+  "author": "Henry Seton Merriman",
+  "url": "https://standardebooks.org/ebooks/henry-seton-merriman/suspense",
+  "file": "se-covers/henry-seton-merriman_suspense.jpg"
+ },
+ {
+  "slug": "herman-melville_moby-dick",
+  "title": "Moby Dick",
+  "author": "Herman Melville",
+  "url": "https://standardebooks.org/ebooks/herman-melville/moby-dick",
+  "file": "se-covers/herman-melville_moby-dick.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_the-adventures-of-sherlock-holmes",
+  "title": "The Adventures of Sherlock Holmes",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/the-adventures-of-sherlock-holmes",
+  "file": "se-covers/arthur-conan-doyle_the-adventures-of-sherlock-holmes.jpg"
+ },
+ {
+  "slug": "oscar-wilde_the-picture-of-dorian-gray",
+  "title": "The Picture of Dorian Gray",
+  "author": "Oscar Wilde",
+  "url": "https://standardebooks.org/ebooks/oscar-wilde/the-picture-of-dorian-gray",
+  "file": "se-covers/oscar-wilde_the-picture-of-dorian-gray.jpg"
+ },
+ {
+  "slug": "charlotte-bronte_jane-eyre",
+  "title": "Jane Eyre",
+  "author": "Charlotte Bront\u00eb",
+  "url": "https://standardebooks.org/ebooks/charlotte-bronte/jane-eyre",
+  "file": "se-covers/charlotte-bronte_jane-eyre.jpg"
+ },
+ {
+  "slug": "fyodor-dostoevsky_crime-and-punishment_constance-garnett",
+  "title": "Crime and Punishment",
+  "author": "Fyodor Dostoevsky",
+  "url": "https://standardebooks.org/ebooks/fyodor-dostoevsky/crime-and-punishment/constance-garnett",
+  "file": "se-covers/fyodor-dostoevsky_crime-and-punishment_constance-garnett.jpg"
+ },
+ {
+  "slug": "h-g-wells_the-time-machine",
+  "title": "The Time Machine",
+  "author": "H. G. Wells",
+  "url": "https://standardebooks.org/ebooks/h-g-wells/the-time-machine",
+  "file": "se-covers/h-g-wells_the-time-machine.jpg"
+ },
+ {
+  "slug": "f-scott-fitzgerald_the-great-gatsby",
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "url": "https://standardebooks.org/ebooks/f-scott-fitzgerald/the-great-gatsby",
+  "file": "se-covers/f-scott-fitzgerald_the-great-gatsby.jpg"
+ },
+ {
+  "slug": "john-buchan_short-fiction",
+  "title": "Short Fiction",
+  "author": "John Buchan",
+  "url": "https://standardebooks.org/ebooks/john-buchan/short-fiction",
+  "file": "se-covers/john-buchan_short-fiction.jpg"
+ },
+ {
+  "slug": "a-e-w-mason_the-prisoner-in-the-opal",
+  "title": "The Prisoner in the Opal",
+  "author": "A. E. W. Mason",
+  "url": "https://standardebooks.org/ebooks/a-e-w-mason/the-prisoner-in-the-opal",
+  "file": "se-covers/a-e-w-mason_the-prisoner-in-the-opal.jpg"
+ },
+ {
+  "slug": "henry-seton-merriman_the-vultures",
+  "title": "The Vultures",
+  "author": "Henry Seton Merriman",
+  "url": "https://standardebooks.org/ebooks/henry-seton-merriman/the-vultures",
+  "file": "se-covers/henry-seton-merriman_the-vultures.jpg"
+ },
+ {
+  "slug": "selma-lagerlof_the-emperor-of-portugallia_velma-swanston-howard",
+  "title": "The Emperor of Portugallia",
+  "author": "Selma Lagerl\u00f6f",
+  "url": "https://standardebooks.org/ebooks/selma-lagerlof/the-emperor-of-portugallia/velma-swanston-howard",
+  "file": "se-covers/selma-lagerlof_the-emperor-of-portugallia_velma-swanston-howard.jpg"
+ },
+ {
+  "slug": "maurice-leblanc_the-extraordinary-adventures-of-arsene-lupin-gentleman-burglar_george-morehead",
+  "title": "The Extraordinary Adventures of Ars\u00e8ne Lupin, Gentleman-Burglar",
+  "author": "Maurice Leblanc",
+  "url": "https://standardebooks.org/ebooks/maurice-leblanc/the-extraordinary-adventures-of-arsene-lupin-gentleman-burglar/george-morehead",
+  "file": "se-covers/maurice-leblanc_the-extraordinary-adventures-of-arsene-lupin-gentleman-burglar_george-morehead.jpg"
+ },
+ {
+  "slug": "anton-chekhov_ivanov_constance-garnett",
+  "title": "Ivanov",
+  "author": "Anton Chekhov",
+  "url": "https://standardebooks.org/ebooks/anton-chekhov/ivanov/constance-garnett",
+  "file": "se-covers/anton-chekhov_ivanov_constance-garnett.jpg"
+ },
+ {
+  "slug": "jules-verne_robur-the-conqueror_sampson-low-marston-searle-rivington",
+  "title": "Robur the Conqueror",
+  "author": "Jules Verne",
+  "url": "https://standardebooks.org/ebooks/jules-verne/robur-the-conqueror/sampson-low-marston-searle-rivington",
+  "file": "se-covers/jules-verne_robur-the-conqueror_sampson-low-marston-searle-rivington.jpg"
+ },
+ {
+  "slug": "fergus-hume_the-green-mummy",
+  "title": "The Green Mummy",
+  "author": "Fergus Hume",
+  "url": "https://standardebooks.org/ebooks/fergus-hume/the-green-mummy",
+  "file": "se-covers/fergus-hume_the-green-mummy.jpg"
+ },
+ {
+  "slug": "robert-louis-stevenson_the-strange-case-of-dr-jekyll-and-mr-hyde",
+  "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+  "author": "Robert Louis Stevenson",
+  "url": "https://standardebooks.org/ebooks/robert-louis-stevenson/the-strange-case-of-dr-jekyll-and-mr-hyde",
+  "file": "se-covers/robert-louis-stevenson_the-strange-case-of-dr-jekyll-and-mr-hyde.jpg"
+ },
+ {
+  "slug": "fyodor-dostoevsky_the-brothers-karamazov_constance-garnett",
+  "title": "The Brothers Karamazov",
+  "author": "Fyodor Dostoevsky",
+  "url": "https://standardebooks.org/ebooks/fyodor-dostoevsky/the-brothers-karamazov/constance-garnett",
+  "file": "se-covers/fyodor-dostoevsky_the-brothers-karamazov_constance-garnett.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_sir-nigel",
+  "title": "Sir Nigel",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/sir-nigel",
+  "file": "se-covers/arthur-conan-doyle_sir-nigel.jpg"
+ },
+ {
+  "slug": "herman-whitaker_the-mystery-of-the-barranca",
+  "title": "The Mystery of the Barranca",
+  "author": "Herman Whitaker",
+  "url": "https://standardebooks.org/ebooks/herman-whitaker/the-mystery-of-the-barranca",
+  "file": "se-covers/herman-whitaker_the-mystery-of-the-barranca.jpg"
+ },
+ {
+  "slug": "carolyn-wells_the-gold-bag",
+  "title": "The Gold Bag",
+  "author": "Carolyn Wells",
+  "url": "https://standardebooks.org/ebooks/carolyn-wells/the-gold-bag",
+  "file": "se-covers/carolyn-wells_the-gold-bag.jpg"
+ },
+ {
+  "slug": "ernst-junger_the-storm-of-steel_basil-creighton",
+  "title": "The Storm of Steel",
+  "author": "Ernst J\u00fcnger",
+  "url": "https://standardebooks.org/ebooks/ernst-junger/the-storm-of-steel/basil-creighton",
+  "file": "se-covers/ernst-junger_the-storm-of-steel_basil-creighton.jpg"
+ },
+ {
+  "slug": "sun-tzu_the-art-of-war_lionel-giles",
+  "title": "The Art of War",
+  "author": "Sun Tzu",
+  "url": "https://standardebooks.org/ebooks/sun-tzu/the-art-of-war/lionel-giles",
+  "file": "se-covers/sun-tzu_the-art-of-war_lionel-giles.jpg"
+ },
+ {
+  "slug": "henry-david-thoreau_walden",
+  "title": "Walden",
+  "author": "Henry David Thoreau",
+  "url": "https://standardebooks.org/ebooks/henry-david-thoreau/walden",
+  "file": "se-covers/henry-david-thoreau_walden.jpg"
+ },
+ {
+  "slug": "emily-bronte_wuthering-heights",
+  "title": "Wuthering Heights",
+  "author": "Emily Bront\u00eb",
+  "url": "https://standardebooks.org/ebooks/emily-bronte/wuthering-heights",
+  "file": "se-covers/emily-bronte_wuthering-heights.jpg"
+ },
+ {
+  "slug": "e-nesbit_beautiful-stories-from-shakespeare",
+  "title": "Beautiful Stories from Shakespeare",
+  "author": "E. Nesbit",
+  "url": "https://standardebooks.org/ebooks/e-nesbit/beautiful-stories-from-shakespeare",
+  "file": "se-covers/e-nesbit_beautiful-stories-from-shakespeare.jpg"
+ },
+ {
+  "slug": "charles-dickens_a-christmas-carol",
+  "title": "A Christmas Carol",
+  "author": "Charles Dickens",
+  "url": "https://standardebooks.org/ebooks/charles-dickens/a-christmas-carol",
+  "file": "se-covers/charles-dickens_a-christmas-carol.jpg"
+ },
+ {
+  "slug": "laozi_tao-te-ching_james-legge",
+  "title": "Tao Te Ching",
+  "author": "Laozi",
+  "url": "https://standardebooks.org/ebooks/laozi/tao-te-ching/james-legge",
+  "file": "se-covers/laozi_tao-te-ching_james-legge.jpg"
+ },
+ {
+  "slug": "jane-austen_sense-and-sensibility",
+  "title": "Sense and Sensibility",
+  "author": "Jane Austen",
+  "url": "https://standardebooks.org/ebooks/jane-austen/sense-and-sensibility",
+  "file": "se-covers/jane-austen_sense-and-sensibility.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_a-study-in-scarlet",
+  "title": "A Study in Scarlet",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/a-study-in-scarlet",
+  "file": "se-covers/arthur-conan-doyle_a-study-in-scarlet.jpg"
+ },
+ {
+  "slug": "george-eliot_middlemarch",
+  "title": "Middlemarch",
+  "author": "George Eliot",
+  "url": "https://standardebooks.org/ebooks/george-eliot/middlemarch",
+  "file": "se-covers/george-eliot_middlemarch.jpg"
+ },
+ {
+  "slug": "pauline-e-hopkins_of-one-blood",
+  "title": "Of One Blood",
+  "author": "Pauline E. Hopkins",
+  "url": "https://standardebooks.org/ebooks/pauline-e-hopkins/of-one-blood",
+  "file": "se-covers/pauline-e-hopkins_of-one-blood.jpg"
+ },
+ {
+  "slug": "homer_the-odyssey_william-cullen-bryant",
+  "title": "The Odyssey",
+  "author": "Homer",
+  "url": "https://standardebooks.org/ebooks/homer/the-odyssey/william-cullen-bryant",
+  "file": "se-covers/homer_the-odyssey_william-cullen-bryant.jpg"
+ },
+ {
+  "slug": "edgar-rice-burroughs_the-cave-girl",
+  "title": "The Cave Girl",
+  "author": "Edgar Rice Burroughs",
+  "url": "https://standardebooks.org/ebooks/edgar-rice-burroughs/the-cave-girl",
+  "file": "se-covers/edgar-rice-burroughs_the-cave-girl.jpg"
+ },
+ {
+  "slug": "gregory-of-nyssa_on-the-making-of-man_william-moore_henry-austin-wilson",
+  "title": "On the Making of Man",
+  "author": "Gregory of Nyssa",
+  "url": "https://standardebooks.org/ebooks/gregory-of-nyssa/on-the-making-of-man/william-moore_henry-austin-wilson",
+  "file": "se-covers/gregory-of-nyssa_on-the-making-of-man_william-moore_henry-austin-wilson.jpg"
+ },
+ {
+  "slug": "robert-louis-stevenson_treasure-island",
+  "title": "Treasure Island",
+  "author": "Robert Louis Stevenson",
+  "url": "https://standardebooks.org/ebooks/robert-louis-stevenson/treasure-island",
+  "file": "se-covers/robert-louis-stevenson_treasure-island.jpg"
+ },
+ {
+  "slug": "charles-dickens_a-tale-of-two-cities",
+  "title": "A Tale of Two Cities",
+  "author": "Charles Dickens",
+  "url": "https://standardebooks.org/ebooks/charles-dickens/a-tale-of-two-cities",
+  "file": "se-covers/charles-dickens_a-tale-of-two-cities.jpg"
+ },
+ {
+  "slug": "edgar-allan-poe_short-fiction",
+  "title": "Short Fiction",
+  "author": "Edgar Allan Poe",
+  "url": "https://standardebooks.org/ebooks/edgar-allan-poe/short-fiction",
+  "file": "se-covers/edgar-allan-poe_short-fiction.jpg"
+ },
+ {
+  "slug": "plato_dialogues_benjamin-jowett",
+  "title": "Dialogues",
+  "author": "Plato",
+  "url": "https://standardebooks.org/ebooks/plato/dialogues/benjamin-jowett",
+  "file": "se-covers/plato_dialogues_benjamin-jowett.jpg"
+ },
+ {
+  "slug": "charles-darwin_the-origin-of-species",
+  "title": "The Origin of Species",
+  "author": "Charles Darwin",
+  "url": "https://standardebooks.org/ebooks/charles-darwin/the-origin-of-species",
+  "file": "se-covers/charles-darwin_the-origin-of-species.jpg"
+ },
+ {
+  "slug": "niccolo-machiavelli_the-prince_w-k-marriott",
+  "title": "The Prince",
+  "author": "Niccol\u00f2 Machiavelli",
+  "url": "https://standardebooks.org/ebooks/niccolo-machiavelli/the-prince/w-k-marriott",
+  "file": "se-covers/niccolo-machiavelli_the-prince_w-k-marriott.jpg"
+ },
+ {
+  "slug": "leo-tolstoy_war-and-peace_louise-maude_aylmer-maude",
+  "title": "War and Peace",
+  "author": "Leo Tolstoy",
+  "url": "https://standardebooks.org/ebooks/leo-tolstoy/war-and-peace/louise-maude_aylmer-maude",
+  "file": "se-covers/leo-tolstoy_war-and-peace_louise-maude_aylmer-maude.jpg"
+ },
+ {
+  "slug": "epictetus_short-works_george-long",
+  "title": "Short Works",
+  "author": "Epictetus",
+  "url": "https://standardebooks.org/ebooks/epictetus/short-works/george-long",
+  "file": "se-covers/epictetus_short-works_george-long.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_the-hound-of-the-baskervilles",
+  "title": "The Hound of the Baskervilles",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/the-hound-of-the-baskervilles",
+  "file": "se-covers/arthur-conan-doyle_the-hound-of-the-baskervilles.jpg"
+ },
+ {
+  "slug": "seneca_dialogues_aubrey-stewart",
+  "title": "Dialogues",
+  "author": "Seneca",
+  "url": "https://standardebooks.org/ebooks/seneca/dialogues/aubrey-stewart",
+  "file": "se-covers/seneca_dialogues_aubrey-stewart.jpg"
+ },
+ {
+  "slug": "leo-tolstoy_anna-karenina_constance-garnett",
+  "title": "Anna Karenina",
+  "author": "Leo Tolstoy",
+  "url": "https://standardebooks.org/ebooks/leo-tolstoy/anna-karenina/constance-garnett",
+  "file": "se-covers/leo-tolstoy_anna-karenina_constance-garnett.jpg"
+ },
+ {
+  "slug": "miguel-de-cervantes-saavedra_don-quixote_john-ormsby",
+  "title": "Don Quixote",
+  "author": "Miguel de Cervantes Saavedra",
+  "url": "https://standardebooks.org/ebooks/miguel-de-cervantes-saavedra/don-quixote/john-ormsby",
+  "file": "se-covers/miguel-de-cervantes-saavedra_don-quixote_john-ormsby.jpg"
+ },
+ {
+  "slug": "epictetus_discourses_george-long",
+  "title": "Discourses",
+  "author": "Epictetus",
+  "url": "https://standardebooks.org/ebooks/epictetus/discourses/george-long",
+  "file": "se-covers/epictetus_discourses_george-long.jpg"
+ },
+ {
+  "slug": "charles-dickens_great-expectations",
+  "title": "Great Expectations",
+  "author": "Charles Dickens",
+  "url": "https://standardebooks.org/ebooks/charles-dickens/great-expectations",
+  "file": "se-covers/charles-dickens_great-expectations.jpg"
+ },
+ {
+  "slug": "l-m-montgomery_anne-of-green-gables",
+  "title": "Anne of Green Gables",
+  "author": "L. M. Montgomery",
+  "url": "https://standardebooks.org/ebooks/l-m-montgomery/anne-of-green-gables",
+  "file": "se-covers/l-m-montgomery_anne-of-green-gables.jpg"
+ },
+ {
+  "slug": "louisa-may-alcott_little-women",
+  "title": "Little Women",
+  "author": "Louisa May Alcott",
+  "url": "https://standardebooks.org/ebooks/louisa-may-alcott/little-women",
+  "file": "se-covers/louisa-may-alcott_little-women.jpg"
+ },
+ {
+  "slug": "henry-seton-merriman_the-sowers",
+  "title": "The Sowers",
+  "author": "Henry Seton Merriman",
+  "url": "https://standardebooks.org/ebooks/henry-seton-merriman/the-sowers",
+  "file": "se-covers/henry-seton-merriman_the-sowers.jpg"
+ },
+ {
+  "slug": "h-g-wells_the-war-of-the-worlds",
+  "title": "The War of the Worlds",
+  "author": "H. G. Wells",
+  "url": "https://standardebooks.org/ebooks/h-g-wells/the-war-of-the-worlds",
+  "file": "se-covers/h-g-wells_the-war-of-the-worlds.jpg"
+ },
+ {
+  "slug": "virginia-woolf_to-the-lighthouse",
+  "title": "To the Lighthouse",
+  "author": "Virginia Woolf",
+  "url": "https://standardebooks.org/ebooks/virginia-woolf/to-the-lighthouse",
+  "file": "se-covers/virginia-woolf_to-the-lighthouse.jpg"
+ },
+ {
+  "slug": "james-joyce_ulysses",
+  "title": "Ulysses",
+  "author": "James Joyce",
+  "url": "https://standardebooks.org/ebooks/james-joyce/ulysses",
+  "file": "se-covers/james-joyce_ulysses.jpg"
+ },
+ {
+  "slug": "robert-w-chambers_the-king-in-yellow",
+  "title": "The King in Yellow",
+  "author": "Robert W. Chambers",
+  "url": "https://standardebooks.org/ebooks/robert-w-chambers/the-king-in-yellow",
+  "file": "se-covers/robert-w-chambers_the-king-in-yellow.jpg"
+ },
+ {
+  "slug": "a-e-w-mason_the-house-of-the-arrow",
+  "title": "The House of the Arrow",
+  "author": "A. E. W. Mason",
+  "url": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow",
+  "file": "se-covers/a-e-w-mason_the-house-of-the-arrow.jpg"
+ },
+ {
+  "slug": "jack-london_the-call-of-the-wild",
+  "title": "The Call of the Wild",
+  "author": "Jack London",
+  "url": "https://standardebooks.org/ebooks/jack-london/the-call-of-the-wild",
+  "file": "se-covers/jack-london_the-call-of-the-wild.jpg"
+ },
+ {
+  "slug": "marcel-proust_in-search-of-lost-time_c-k-scott-moncrieff",
+  "title": "In Search of Lost Time",
+  "author": "Marcel Proust",
+  "url": "https://standardebooks.org/ebooks/marcel-proust/in-search-of-lost-time/c-k-scott-moncrieff",
+  "file": "se-covers/marcel-proust_in-search-of-lost-time_c-k-scott-moncrieff.jpg"
+ },
+ {
+  "slug": "jane-austen_emma",
+  "title": "Emma",
+  "author": "Jane Austen",
+  "url": "https://standardebooks.org/ebooks/jane-austen/emma",
+  "file": "se-covers/jane-austen_emma.jpg"
+ },
+ {
+  "slug": "agatha-christie_the-murder-of-roger-ackroyd",
+  "title": "The Murder of Roger Ackroyd",
+  "author": "Agatha Christie",
+  "url": "https://standardebooks.org/ebooks/agatha-christie/the-murder-of-roger-ackroyd",
+  "file": "se-covers/agatha-christie_the-murder-of-roger-ackroyd.jpg"
+ },
+ {
+  "slug": "jane-austen_persuasion",
+  "title": "Persuasion",
+  "author": "Jane Austen",
+  "url": "https://standardebooks.org/ebooks/jane-austen/persuasion",
+  "file": "se-covers/jane-austen_persuasion.jpg"
+ },
+ {
+  "slug": "william-shakespeare_hamlet",
+  "title": "Hamlet",
+  "author": "William Shakespeare",
+  "url": "https://standardebooks.org/ebooks/william-shakespeare/hamlet",
+  "file": "se-covers/william-shakespeare_hamlet.jpg"
+ },
+ {
+  "slug": "fyodor-dostoevsky_notes-from-underground_constance-garnett",
+  "title": "Notes from Underground",
+  "author": "Fyodor Dostoevsky",
+  "url": "https://standardebooks.org/ebooks/fyodor-dostoevsky/notes-from-underground/constance-garnett",
+  "file": "se-covers/fyodor-dostoevsky_notes-from-underground_constance-garnett.jpg"
+ },
+ {
+  "slug": "l-frank-baum_the-wonderful-wizard-of-oz",
+  "title": "The Wonderful Wizard of Oz",
+  "author": "L. Frank Baum",
+  "url": "https://standardebooks.org/ebooks/l-frank-baum/the-wonderful-wizard-of-oz",
+  "file": "se-covers/l-frank-baum_the-wonderful-wizard-of-oz.jpg"
+ },
+ {
+  "slug": "john-milton_paradise-lost",
+  "title": "Paradise Lost",
+  "author": "John Milton",
+  "url": "https://standardebooks.org/ebooks/john-milton/paradise-lost",
+  "file": "se-covers/john-milton_paradise-lost.jpg"
+ },
+ {
+  "slug": "william-shakespeare_macbeth",
+  "title": "Macbeth",
+  "author": "William Shakespeare",
+  "url": "https://standardebooks.org/ebooks/william-shakespeare/macbeth",
+  "file": "se-covers/william-shakespeare_macbeth.jpg"
+ },
+ {
+  "slug": "jonathan-swift_gullivers-travels",
+  "title": "Gulliver\u2019s Travels",
+  "author": "Jonathan Swift",
+  "url": "https://standardebooks.org/ebooks/jonathan-swift/gullivers-travels",
+  "file": "se-covers/jonathan-swift_gullivers-travels.jpg"
+ },
+ {
+  "slug": "henry-seton-merriman_with-edged-tools",
+  "title": "With Edged Tools",
+  "author": "Henry Seton Merriman",
+  "url": "https://standardebooks.org/ebooks/henry-seton-merriman/with-edged-tools",
+  "file": "se-covers/henry-seton-merriman_with-edged-tools.jpg"
+ },
+ {
+  "slug": "homer_the-iliad_william-cullen-bryant",
+  "title": "The Iliad",
+  "author": "Homer",
+  "url": "https://standardebooks.org/ebooks/homer/the-iliad/william-cullen-bryant",
+  "file": "se-covers/homer_the-iliad_william-cullen-bryant.jpg"
+ },
+ {
+  "slug": "kahlil-gibran_the-prophet",
+  "title": "The Prophet",
+  "author": "Kahlil Gibran",
+  "url": "https://standardebooks.org/ebooks/kahlil-gibran/the-prophet",
+  "file": "se-covers/kahlil-gibran_the-prophet.jpg"
+ },
+ {
+  "slug": "dante-alighieri_the-divine-comedy_henry-wadsworth-longfellow",
+  "title": "The Divine Comedy",
+  "author": "Dante Alighieri",
+  "url": "https://standardebooks.org/ebooks/dante-alighieri/the-divine-comedy/henry-wadsworth-longfellow",
+  "file": "se-covers/dante-alighieri_the-divine-comedy_henry-wadsworth-longfellow.jpg"
+ },
+ {
+  "slug": "ralph-waldo-emerson_essays",
+  "title": "Essays",
+  "author": "Ralph Waldo Emerson",
+  "url": "https://standardebooks.org/ebooks/ralph-waldo-emerson/essays",
+  "file": "se-covers/ralph-waldo-emerson_essays.jpg"
+ },
+ {
+  "slug": "frances-hodgson-burnett_the-secret-garden",
+  "title": "The Secret Garden",
+  "author": "Frances Hodgson Burnett",
+  "url": "https://standardebooks.org/ebooks/frances-hodgson-burnett/the-secret-garden",
+  "file": "se-covers/frances-hodgson-burnett_the-secret-garden.jpg"
+ },
+ {
+  "slug": "adam-smith_the-wealth-of-nations",
+  "title": "The Wealth of Nations",
+  "author": "Adam Smith",
+  "url": "https://standardebooks.org/ebooks/adam-smith/the-wealth-of-nations",
+  "file": "se-covers/adam-smith_the-wealth-of-nations.jpg"
+ },
+ {
+  "slug": "mark-twain_the-adventures-of-huckleberry-finn",
+  "title": "The Adventures of Huckleberry Finn",
+  "author": "Mark Twain",
+  "url": "https://standardebooks.org/ebooks/mark-twain/the-adventures-of-huckleberry-finn",
+  "file": "se-covers/mark-twain_the-adventures-of-huckleberry-finn.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_the-sign-of-the-four",
+  "title": "The Sign of the Four",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/the-sign-of-the-four",
+  "file": "se-covers/arthur-conan-doyle_the-sign-of-the-four.jpg"
+ },
+ {
+  "slug": "virginia-woolf_mrs-dalloway",
+  "title": "Mrs. Dalloway",
+  "author": "Virginia Woolf",
+  "url": "https://standardebooks.org/ebooks/virginia-woolf/mrs-dalloway",
+  "file": "se-covers/virginia-woolf_mrs-dalloway.jpg"
+ },
+ {
+  "slug": "benjamin-franklin_the-autobiography-of-benjamin-franklin",
+  "title": "The Autobiography of Benjamin Franklin",
+  "author": "Benjamin Franklin",
+  "url": "https://standardebooks.org/ebooks/benjamin-franklin/the-autobiography-of-benjamin-franklin",
+  "file": "se-covers/benjamin-franklin_the-autobiography-of-benjamin-franklin.jpg"
+ },
+ {
+  "slug": "boethius_the-consolation-of-philosophy_h-r-james",
+  "title": "The Consolation of Philosophy",
+  "author": "Boethius",
+  "url": "https://standardebooks.org/ebooks/boethius/the-consolation-of-philosophy/h-r-james",
+  "file": "se-covers/boethius_the-consolation-of-philosophy_h-r-james.jpg"
+ },
+ {
+  "slug": "kenneth-grahame_the-wind-in-the-willows",
+  "title": "The Wind in the Willows",
+  "author": "Kenneth Grahame",
+  "url": "https://standardebooks.org/ebooks/kenneth-grahame/the-wind-in-the-willows",
+  "file": "se-covers/kenneth-grahame_the-wind-in-the-willows.jpg"
+ },
+ {
+  "slug": "fyodor-dostoevsky_the-idiot_eva-m-martin",
+  "title": "The Idiot",
+  "author": "Fyodor Dostoevsky",
+  "url": "https://standardebooks.org/ebooks/fyodor-dostoevsky/the-idiot/eva-m-martin",
+  "file": "se-covers/fyodor-dostoevsky_the-idiot_eva-m-martin.jpg"
+ },
+ {
+  "slug": "victor-hugo_les-miserables_isabel-f-hapgood",
+  "title": "Les Mis\u00e9rables",
+  "author": "Victor Hugo",
+  "url": "https://standardebooks.org/ebooks/victor-hugo/les-miserables/isabel-f-hapgood",
+  "file": "se-covers/victor-hugo_les-miserables_isabel-f-hapgood.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_the-memoirs-of-sherlock-holmes",
+  "title": "The Memoirs of Sherlock Holmes",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/the-memoirs-of-sherlock-holmes",
+  "file": "se-covers/arthur-conan-doyle_the-memoirs-of-sherlock-holmes.jpg"
+ },
+ {
+  "slug": "virginia-woolf_orlando",
+  "title": "Orlando",
+  "author": "Virginia Woolf",
+  "url": "https://standardebooks.org/ebooks/virginia-woolf/orlando",
+  "file": "se-covers/virginia-woolf_orlando.jpg"
+ },
+ {
+  "slug": "mark-twain_the-adventures-of-tom-sawyer",
+  "title": "The Adventures of Tom Sawyer",
+  "author": "Mark Twain",
+  "url": "https://standardebooks.org/ebooks/mark-twain/the-adventures-of-tom-sawyer",
+  "file": "se-covers/mark-twain_the-adventures-of-tom-sawyer.jpg"
+ },
+ {
+  "slug": "agatha-christie_the-mysterious-affair-at-styles",
+  "title": "The Mysterious Affair at Styles",
+  "author": "Agatha Christie",
+  "url": "https://standardebooks.org/ebooks/agatha-christie/the-mysterious-affair-at-styles",
+  "file": "se-covers/agatha-christie_the-mysterious-affair-at-styles.jpg"
+ },
+ {
+  "slug": "arthur-conan-doyle_the-casebook-of-sherlock-holmes",
+  "title": "The Casebook of Sherlock Holmes",
+  "author": "Arthur Conan Doyle",
+  "url": "https://standardebooks.org/ebooks/arthur-conan-doyle/the-casebook-of-sherlock-holmes",
+  "file": "se-covers/arthur-conan-doyle_the-casebook-of-sherlock-holmes.jpg"
+ }
+]

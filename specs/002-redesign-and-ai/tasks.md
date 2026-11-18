@@ -32,48 +32,48 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ## Phase 1: Setup
 
-- [ ] T001 Add foliate-js as a pinned git submodule at `vendor/foliate-js` (CLAUDE.md stack). Record the pinned commit in `docs/JOURNAL.md`.
-- [ ] T002 [P] Copy the sample covers from `design-mocks/se-covers/` to `apps/web/static/sample/covers/`. Create `apps/web/static/sample/books/README.md`. It asks the owner to download the Middlemarch, Moby Dick and Meditations EPUBs from standardebooks.org into that folder, cites CC0 (https://standardebooks.org/about), and says robots.txt blocks automated downloads (research R2).
-- [ ] T003 Add the shadcn-svelte `sheet` and `dialog` components with the shadcn-svelte CLI (`components.json` is already set up). This installs Bits UI, an agreed-stack dependency. Restyle the generated files in `apps/web/src/lib/components/ui/` to tokens only. Also add `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) and `pnpm eval:recaps` (`apps/web/scripts/eval-recaps.ts`) script stubs to `apps/web/package.json`, filled in during later phases.
+- [X] T001 Add foliate-js as a pinned git submodule at `vendor/foliate-js` (CLAUDE.md stack). Record the pinned commit in `docs/JOURNAL.md`.
+- [X] T002 [P] Copy the sample covers from `design-mocks/se-covers/` to `apps/web/static/sample/covers/`. Create `apps/web/static/sample/books/README.md`. It asks the owner to download the Middlemarch, Moby Dick and Meditations EPUBs from standardebooks.org into that folder, cites CC0 (https://standardebooks.org/about), and says robots.txt blocks automated downloads (research R2).
+- [X] T003 Add the shadcn-svelte `sheet` and `dialog` components with the shadcn-svelte CLI (`components.json` is already set up). This installs Bits UI, an agreed-stack dependency. Restyle the generated files in `apps/web/src/lib/components/ui/` to tokens only. Also add `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) and `pnpm eval:recaps` (`apps/web/scripts/eval-recaps.ts`) script stubs to `apps/web/package.json`, filled in during later phases.
 
 ---
 
 ## Phase 2: Foundational (blocks every story)
 
-- [ ] T004 Update colour tokens in `packages/shared/src/tokens/color.ts`, measured from the approved mocks (research R8):
+- [X] T004 Update colour tokens in `packages/shared/src/tokens/color.ts`, measured from the approved mocks (research R8):
   - accent light `#7A2E3A` = oklch(0.413 0.106 13.4); dark `#E29AA3` = oklch(0.759 0.087 11.1);
   - neutrals to match `design-mocks/styles.css` `:root` and dark;
   - `ACCENT_HUE = 12`;
   - rationale updated to cite DR-0002.
-- [ ] T005 Add the `night` theme to `packages/shared/src/tokens` (values from `:root[data-theme=night]` in `design-mocks/styles.css`; accent `#C98A92` = oklch(0.698 0.078 10.9)). Extend `THEMES`, `pairs.ts` and `contrast.test.ts` so every pair passes in light, dark and night, with body text at 9–13:1.
-- [ ] T006 [P] Add a paper-grain token (the SVG noise from `design-mocks/styles.css`, light and dark alpha; none for night). Apply grain, `::selection`, caret and scrollbar colours in `apps/web/src/app.css`.
-- [ ] T007 Define Zod schemas and types for Book, ReadingPosition, ReadStatus, Author (with bio, portrait, bibliography), Shelf and PeriodicalIssue in `packages/shared/src/library/types.ts`, per data-model.md. Validation: "`percent` is 0–100" and "`furthestPercent` ≥ `percent` for the same source".
-- [ ] T008 Define the `LibrarySource` interface in `packages/shared/src/library/source.ts`, exactly as in contracts/library-source.md, including "`alsoReading` returns at most 5".
-- [ ] T009 [P] Write the read-status formatter `packages/shared/src/library/status.ts`: no label when unread, "N% read" in progress, "Finished" when finished. Unit test in `packages/shared/src/library/status.test.ts`.
-- [ ] T010 Build `SampleLibrary` in `packages/shared/src/sample/`:
+- [X] T005 Add the `night` theme to `packages/shared/src/tokens` (values from `:root[data-theme=night]` in `design-mocks/styles.css`; accent `#C98A92` = oklch(0.698 0.078 10.9)). Extend `THEMES`, `pairs.ts` and `contrast.test.ts` so every pair passes in light, dark and night, with body text at 9–13:1.
+- [X] T006 [P] Add a paper-grain token (the SVG noise from `design-mocks/styles.css`, light and dark alpha; none for night). Apply grain, `::selection`, caret and scrollbar colours in `apps/web/src/app.css`.
+- [X] T007 Define Zod schemas and types for Book, ReadingPosition, ReadStatus, Author (with bio, portrait, bibliography), Shelf and PeriodicalIssue in `packages/shared/src/library/types.ts`, per data-model.md. Validation: "`percent` is 0–100" and "`furthestPercent` ≥ `percent` for the same source".
+- [X] T008 Define the `LibrarySource` interface in `packages/shared/src/library/source.ts`, exactly as in contracts/library-source.md, including "`alsoReading` returns at most 5".
+- [X] T009 [P] Write the read-status formatter `packages/shared/src/library/status.ts`: no label when unread, "N% read" in progress, "Finished" when finished. Unit test in `packages/shared/src/library/status.test.ts`.
+- [X] T010 Build `SampleLibrary` in `packages/shared/src/sample/`:
   - books and covers from `design-mocks/se-books.json`;
   - collections, positions (including Kobo), dates and periodicals invented as in the mocks: current book Middlemarch at 38% (Kobo 41%); Also reading Anna Karenina 71% (Kobo 64%), Moby Dick 12% (away 12 days), Meditations 55% (Kobo 55%);
   - the seven invented periodicals.
   
   Unit tests in `packages/shared/src/sample/sample.test.ts`: no periodical in `recentlyAdded`; `alsoReading` at most 5; title sort ignores The/A/An.
-- [ ] T011 Wire the sample source into the app in `apps/web/src/lib/library/index.ts`. It is the one place that picks the implementation, swappable in spec 003.
-- [ ] T012 [P] Build `apps/web/src/lib/components/AppHeader.svelte`:
+- [X] T011 Wire the sample source into the app in `apps/web/src/lib/library/index.ts`. It is the one place that picks the implementation, swappable in spec 003.
+- [X] T012 [P] Build `apps/web/src/lib/components/AppHeader.svelte`:
   - "Ribbon." wordmark with an oxblood full stop, and "Ribbon, home" as its accessible name;
   - a Home · Library switch with `aria-current`;
   - a "Search, or ask your library" field;
   - a `SyncStatus` slot in the header (FR-006).
   
   Catalogue page `apps/web/src/routes/design/app-header/`.
-- [ ] T013 [P] Build `apps/web/src/lib/components/SyncStatus.svelte` (up to date, syncing, offline, attention; icon plus text; never floats). Catalogue page `apps/web/src/routes/design/sync-status/`.
-- [ ] T014 [P] Build `apps/web/src/lib/components/BookTile.svelte`:
+- [X] T013 [P] Build `apps/web/src/lib/components/SyncStatus.svelte` (up to date, syncing, offline, attention; icon plus text; never floats). Catalogue page `apps/web/src/routes/design/sync-status/`.
+- [X] T014 [P] Build `apps/web/src/lib/components/BookTile.svelte`:
   - cover with a fixed 2:3 ratio, so nothing shifts while it loads;
   - title clamped to 2 lines, and author ("Unknown author" if none);
   - a status label from T009, plus an optional reason line;
   - a plain binding with the title when there is no cover.
   
   Catalogue page `apps/web/src/routes/design/book-tile/`.
-- [ ] T015 [P] Build `EmptyState.svelte` and `ErrorState.svelte` in `apps/web/src/lib/components/`. They state what happened, whether anything was lost, and the one next step. Catalogue pages under `apps/web/src/routes/design/`.
-- [ ] T016 Add the root layout `apps/web/src/routes/+layout.svelte`, with AppHeader on every page except `/read/*`.
+- [X] T015 [P] Build `EmptyState.svelte` and `ErrorState.svelte` in `apps/web/src/lib/components/`. They state what happened, whether anything was lost, and the one next step. Catalogue pages under `apps/web/src/routes/design/`.
+- [X] T016 Add the root layout `apps/web/src/routes/+layout.svelte`, with AppHeader on every page except `/read/*`.
 
 **Checkpoint:** tokens pass in three themes; the sample source and formatter are tested.
 
@@ -85,7 +85,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 **Independent Test**: on sample data, resume the current book and one ledger book; each opens `/read/[id]`.
 
-- [ ] T017 [P] [US1] Build `apps/web/src/lib/components/CurrentBook.svelte` ("Spread"):
+- [X] T017 [P] [US1] Build `apps/web/src/lib/components/CurrentBook.svelte` ("Spread"):
   - a 15rem cover;
   - a large Literata title and author;
   - a rule, then a labelled table: Progress (% + chapter + bar), Elsewhere ("Kobo is at 41%"), Last read;
@@ -93,7 +93,7 @@ description: "Tasks for 002 redesigned screens and AI features"
   - a 7rem cover beside the text on phones.
   
   Catalogue page.
-- [ ] T018 [P] [US1] Build `apps/web/src/lib/components/LedgerRow.svelte` ("Compact band"):
+- [X] T018 [P] [US1] Build `apps/web/src/lib/components/LedgerRow.svelte` ("Compact band"):
   - the title link is stretched over the whole row (one link per book, FR-008);
   - % and chapter on the right, a full-width bar, and a grey Kobo bar when present;
   - the "Away N days · Story so far" pill sits above the stretched link;
@@ -102,8 +102,8 @@ description: "Tasks for 002 redesigned screens and AI features"
   - on phones, the % moves under the author and the cue is hidden.
   
   Catalogue page.
-- [ ] T019 [P] [US1] Build `apps/web/src/lib/components/PeriodicalRow.svelte` (plain issue bindings, newest first, "New" mark, horizontal scroll). Catalogue page.
-- [ ] T020 [US1] Build the Home route `apps/web/src/routes/+page.svelte`, in the FR-002 order:
+- [X] T019 [P] [US1] Build `apps/web/src/lib/components/PeriodicalRow.svelte` (plain issue bindings, newest first, "New" mark, horizontal scroll). Catalogue page.
+- [X] T020 [US1] Build the Home route `apps/web/src/routes/+page.svelte`, in the FR-002 order:
   - current book (skipped with no gap when nothing is in progress);
   - Also reading (at most 5);
   - a Read next slot that hides itself until US5;
@@ -111,8 +111,8 @@ description: "Tasks for 002 redesigned screens and AI features"
   - Latest news & magazines.
   
   All data comes through `LibrarySource`.
-- [ ] T021 [US1] Add a stub `apps/web/src/routes/read/[id]/+page.svelte` that opens at the stored position, so Continue reading works before US2 completes.
-- [ ] T022 [P] [US1] Write the e2e test `apps/web/tests/e2e/home.spec.ts`:
+- [X] T021 [US1] Add a stub `apps/web/src/routes/read/[id]/+page.svelte` that opens at the stored position, so Continue reading works before US2 completes.
+- [X] T022 [P] [US1] Write the e2e test `apps/web/tests/e2e/home.spec.ts`:
   - acceptance scenarios 1–4 from spec US1;
   - axe at 390 and 1440 in light and dark;
   - at 390, all books in progress are visible without horizontal scroll.

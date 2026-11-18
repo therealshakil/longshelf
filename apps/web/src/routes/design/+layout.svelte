@@ -6,13 +6,13 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import type { RouteId } from '$app/types';
 	import { entries, GROUPS, LAST_PAGE_KEY } from '#lib/catalogue/entries.ts';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
 
-	const href = (id: string) => resolve(`/design/${id}` as RouteId);
+	// Catalogue ids are static folders under routes/design; typed via one known route.
+	const href = (id: string) => resolve(`/design/${id}` as '/design/about');
 	const current = $derived(page.url.pathname.replace(/\/$/, ''));
 	const currentTitle = $derived(entries.find((e) => href(e.id) === current)?.title);
 

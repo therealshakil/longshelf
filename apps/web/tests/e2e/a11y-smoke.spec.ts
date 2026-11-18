@@ -4,12 +4,15 @@ import { expect, test } from '@playwright/test';
 // Interim accessibility check for the MVP pages; replaced by the full matrix in T052.
 for (const colorScheme of ['light', 'dark'] as const) {
 	test(`catalogue pages have no axe violations (${colorScheme})`, async ({ page }) => {
+		test.setTimeout(240_000); // one axe scan per catalogue page
 		await page.emulateMedia({ colorScheme });
 		await page.goto('/design/about');
 		const hrefs = await page
 			.getByRole('navigation', { name: 'Design catalogue' })
-			.locator('a[href^="/design/"]')
-			.evaluateAll((as) => [...new Set(as.map((a) => a.getAttribute('href')!))]);
+			.locator('a[href*="design/"]')
+			.evaluateAll((as) => [
+				...new Set(as.map((a) => new URL((a as HTMLAnchorElement).href).pathname))
+			]);
 		for (const href of hrefs) {
 			await page.goto(href);
 			const results = await new AxeBuilder({ page })

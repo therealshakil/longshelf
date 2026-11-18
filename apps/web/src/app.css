@@ -43,7 +43,7 @@
 	--color-card-foreground: var(--r-text);
 	--color-popover: var(--r-raised);
 	--color-popover-foreground: var(--r-text);
-	--color-primary: var(--r-accent);
+	--color-primary: var(--r-action);
 	--color-primary-foreground: var(--r-on-accent);
 	--color-secondary: var(--r-surface);
 	--color-secondary-foreground: var(--r-text);
@@ -58,12 +58,30 @@
 
 @layer base {
 	html {
-		background: var(--r-bg);
+		background: var(--r-bg) var(--r-grain);
 		color: var(--r-text);
+		-webkit-font-smoothing: antialiased;
+		scrollbar-color: var(--r-control) transparent;
+		accent-color: var(--r-accent);
+		caret-color: var(--r-accent);
 		font-family: var(--r-font-ui);
 		font-size: 100%; /* respect the browser's text size */
 		line-height: var(--r-leading-body);
 		-webkit-text-size-adjust: 100%;
+	}
+
+	::selection {
+		background: var(--r-accent);
+		color: var(--r-on-accent);
+	}
+
+	/* Titles and headings: Literata in ink (approved mocks, DR-0002). */
+	h1,
+	h2,
+	h3 {
+		font-family: var(--r-font-reading);
+		color: var(--r-ink);
+		font-optical-sizing: auto;
 	}
 
 	body {

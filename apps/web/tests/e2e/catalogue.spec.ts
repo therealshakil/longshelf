@@ -6,9 +6,14 @@ test.describe('design catalogue (US1)', () => {
 	}) => {
 		await page.goto('/design/about');
 		const nav = page.getByRole('navigation', { name: 'Design catalogue' });
-		const links = nav.locator('a[href^="/design/"]');
+		// SvelteKit renders relative hrefs during SSR, so compare resolved pathnames.
+		const links = nav.locator('a[href*="design/"]');
 		const hrefs = [
-			...new Set(await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')!)))
+			...new Set(
+				await links.evaluateAll((as) =>
+					as.map((a) => new URL((a as HTMLAnchorElement).href).pathname)
+				)
+			)
 		];
 		expect(hrefs.length).toBeGreaterThan(0);
 
@@ -19,7 +24,12 @@ test.describe('design catalogue (US1)', () => {
 			await expect(page.getByRole('heading', { name: 'Why it looks like this' })).toBeVisible();
 			await expect(page.getByRole('heading', { name: 'Sources' })).toBeVisible();
 			await expect(page.getByRole('heading', { name: 'calm-ds Checks' })).toBeVisible();
-			await expect(page.locator('a[aria-current="page"]').first()).toHaveAttribute('href', href);
+			expect(
+				await page
+					.locator('a[aria-current="page"]')
+					.first()
+					.evaluate((a) => new URL((a as HTMLAnchorElement).href).pathname)
+			).toBe(href);
 			// Nothing moves (calm-ds I).
 			expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
 		}

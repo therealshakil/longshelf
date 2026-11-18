@@ -60,6 +60,49 @@ export const type: Token[] = [
 		sources: [assume('Scale steps of about 1.25× give clear hierarchy without shouting.')]
 	},
 	{
+		name: 'text-xs',
+		group: 'type',
+		value: '0.8125rem',
+		rationale: 'Metadata such as device progress and footnotes. Never for body text.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'text-display',
+		group: 'type',
+		value: 'clamp(2rem, 1.4rem + 1.8vw, 3rem)',
+		rationale:
+			'The current book’s title on Home and a book’s title on its page: the one large title, scaling with the window.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'text-reading',
+		group: 'type',
+		value: '1.25rem',
+		rationale: 'Reading text and recaps in Literata (1.125rem on phones), as in the approved reader.',
+		sources: [S.approvedMocks, S.bda]
+	},
+	{
+		name: 'leading-display',
+		group: 'type',
+		value: '1.05',
+		rationale: 'Large titles sit tight so a two-line title reads as one block.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'leading-reading',
+		group: 'type',
+		value: '1.7',
+		rationale: 'Generous line spacing for long reading, within dyslexia-friendly guidance (1.5 or more).',
+		sources: [S.bda, S.approvedMocks]
+	},
+	{
+		name: 'weight-title',
+		group: 'type',
+		value: '600',
+		rationale: 'Literata titles: firm without being bold.',
+		sources: [S.approvedMocks]
+	},
+	{
 		name: 'leading-body',
 		group: 'type',
 		value: '1.5',
@@ -116,6 +159,20 @@ export const space: Token[] = (
 
 export const radius: Token[] = [
 	{
+		name: 'radius-cover',
+		group: 'radius',
+		value: '0.125rem',
+		rationale: 'Book covers: almost square, like a real book’s board.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'radius-pill',
+		group: 'radius',
+		value: '999rem',
+		rationale: 'Buttons and the search field: fully rounded, as in the approved mocks.',
+		sources: [S.approvedMocks]
+	},
+	{
 		name: 'radius-sm',
 		group: 'radius',
 		value: '0.375rem',
@@ -166,5 +223,42 @@ export const size: Token[] = [
 		value: '2.75rem',
 		rationale: 'Minimum size of anything you can press: 44px at default zoom (WCAG AAA target size).',
 		sources: [S.wcag22]
+	}
+];
+
+const grain = (rgb: string, alpha: number) =>
+	`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 ${rgb} 0 0 0 0 ${rgb} 0 0 0 0 ${rgb} 0 0 0 ${alpha} 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")`;
+
+/** Paper grain and soft shadows from the approved mocks (spec 002, DR-0002). */
+export const depth: Token[] = [
+	{
+		name: 'grain',
+		group: 'depth',
+		value: { light: grain('0', 0.07), dark: grain('1', 0.045), night: 'none' },
+		rationale:
+			'A fine paper grain behind the page: texture rather than colour. None in night, where the page should be as quiet as possible.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'shadow-cover',
+		group: 'depth',
+		value: {
+			light: '0 1px 2px #0002, 0 18px 30px -14px #0007',
+			dark: '0 1px 2px #0006, 0 18px 30px -14px #000c',
+			night: '0 1px 2px #000, 0 18px 30px -14px #000'
+		},
+		rationale: 'Large covers sit on the paper with a soft, offset shadow, like a book on a table.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'shadow-tile',
+		group: 'depth',
+		value: {
+			light: '0 1px 1px #0001, 0 8px 14px -10px #0006',
+			dark: '0 1px 1px #0004, 0 8px 14px -10px #000a',
+			night: '0 1px 1px #000, 0 8px 14px -10px #000'
+		},
+		rationale: 'Small covers get a lighter shadow so a grid does not look heavy.',
+		sources: [S.approvedMocks]
 	}
 ];

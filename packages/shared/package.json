@@ -6,6 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./tokens": "./src/tokens/index.ts",
+    "./library": "./src/library/index.ts",
+    "./sample": "./src/sample/index.ts",
     "./*": "./src/*.ts"
   },
   "scripts": {

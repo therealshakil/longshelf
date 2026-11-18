@@ -1,5 +1,5 @@
 import { color } from './color.ts';
-import { focus, motion, radius, size, space, type } from './scales.ts';
+import { depth, focus, motion, radius, size, space, type } from './scales.ts';
 import type { Token, TokenGroup } from './types.ts';
 
 export * from './types.ts';
@@ -8,7 +8,16 @@ export { pairs, type Pair } from './pairs.ts';
 export { contrast, inSrgbGamut, parseOklch } from './contrast.ts';
 export { tokensToCss } from './to-css.ts';
 
-export const tokens: Token[] = [...color, ...type, ...space, ...radius, ...motion, ...focus, ...size];
+export const tokens: Token[] = [
+	...color,
+	...type,
+	...space,
+	...radius,
+	...motion,
+	...focus,
+	...size,
+	...depth
+];
 
 export const byGroup = (g: TokenGroup) => tokens.filter((t) => t.group === g);
 

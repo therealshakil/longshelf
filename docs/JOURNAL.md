@@ -110,3 +110,29 @@
 
 - 69 tasks in `specs/002-redesign-and-ai/tasks.md`. The MVP is Home and the reader on sample data (T001–T031).
 - **Next:** the owner downloads the three sample EPUBs, then `/speckit-implement` for the MVP.
+
+## 2026-11-18: Spec 002 setup, foundation and US1 (Home) built
+
+- Setup:
+  - foliate-js pinned as a submodule (78914ae, 2026-05-01);
+  - shadcn-svelte `sheet` and `dialog` added, which installed Bits UI, tailwind-variants and @internationalized/date (agreed stack);
+  - sample covers copied;
+  - a README asks the owner to save three EPUBs.
+- Tokens:
+  - measured from the approved mocks: an oxblood accent (`ACCENT_HUE` 12), a new `ink` (headings) and `action` (primary button);
+  - a `night` theme;
+  - depth tokens (paper grain, cover and tile shadows);
+  - new type steps (`text-xs`, `text-display`, `text-reading`, `leading-reading`, `weight-title`) and radii (`radius-cover`, `radius-pill`);
+  - contrast pairs pass in light, dark and night.
+  
+  Light `control` was darkened to keep 3:1 on surfaces. Night control was darkened from the mock to reach 3:1.
+- `LibrarySource` contract, the read-status rule (FR-005) and `SampleLibrary` (Standard Ebooks data, invented progress) are in `packages/shared`, with tests.
+- Components:
+  - AppHeader, SyncStatus, BookTile, EmptyState, ErrorState, CurrentBook ("Spread"), LedgerRow ("Compact band") and PeriodicalRow;
+  - each has a catalogue page.
+- Routes: Home is built against the mock; `/read/[id]` is a stub; `/library`, `/book/[id]` and `/search` are placeholders.
+- Tests: 90 shared unit, 56 web unit; e2e home (8, including axe in light and dark at 390 and 1440), catalogue and a11y-smoke all pass.
+- **Learning:**
+  - SvelteKit 3 renders relative hrefs during SSR, so the catalogue e2e tests had matched no links: the a11y smoke test was scanning zero pages. The tests now resolve hrefs to pathnames; all 16 catalogue pages pass axe in light and dark.
+  - A stale `wrangler dev` preview on :4173 from 14 Nov had been serving old builds to the e2e run (`reuseExistingServer`). It was killed.
+- **Next:** US2, the reader. Blocked until the owner saves the three EPUBs in `apps/web/static/sample/books/`.
