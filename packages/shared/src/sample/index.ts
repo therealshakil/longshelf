@@ -106,11 +106,13 @@ const SUBTITLES: Record<string, string> = {
 
 const PUB_YEARS: Record<string, string> = { 'george-eliot_middlemarch': '1871–72' };
 
-/** Books that have an EPUB the owner saves into static/sample/books (research R2). */
+/** Books with a public-domain EPUB in static/sample/books (Project Gutenberg; see its README). */
 const EPUBS = new Set([
 	'george-eliot_middlemarch',
 	'herman-melville_moby-dick',
-	'marcus-aurelius_meditations_george-long'
+	'bram-stoker_dracula',
+	'robert-w-chambers_the-king-in-yellow',
+	'john-milton_paradise-lost'
 ]);
 
 const FINISHED = [

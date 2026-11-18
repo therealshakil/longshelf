@@ -129,32 +129,32 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 **Prerequisite**: the owner has saved the three EPUBs (T002).
 
-- [ ] T023 [US2] Build `apps/web/src/lib/reader/Reader.svelte`, wrapping `vendor/foliate-js`:
+- [X] T023 [US2] Build `apps/web/src/lib/reader/Reader.svelte`, wrapping `vendor/foliate-js`:
   - open a Blob from `LibrarySource.bookFile`;
   - scroll or paginate;
   - emit position (href, fraction, percent, chapter label) and chapter-finished events (used by US4);
   - expose the TOC.
-- [ ] T024 [US2] Build the reader typography stylesheet injected into foliate's content in `apps/web/src/lib/reader/reader.css`:
+- [X] T024 [US2] Build the reader typography stylesheet injected into foliate's content (built as `apps/web/src/lib/reader/reader-styles.ts`, because foliate's frames don't inherit page tokens):
   - Literata 1.25rem (1.125rem on phones), line height 1.7, about 65ch;
   - ragged right, `hyphens: manual` (FR-009), old-style figures;
   - first-line indent 1.4em with no paragraph gaps, and no indent after headings and epigraphs;
   - chapter-opening styles: small-caps label, large numeral, muted italic epigraph with verse indents.
-- [ ] T025 [P] [US2] Build the reader settings store `apps/web/src/lib/reader/settings.ts`: one versioned `localStorage` key holding size, font (Literata or Atkinson Hyperlegible), spacing, margins, scroll or pages, and theme (system, paper or night). It applies to every book; reads are wrapped in try/catch. Unit test it.
-- [ ] T026 [P] [US2] Build `apps/web/src/lib/components/ReaderChrome.svelte`:
+- [X] T025 [P] [US2] Build the reader settings store `apps/web/src/lib/reader/settings.ts`: one versioned `localStorage` key holding size, font (Literata or Atkinson Hyperlegible), spacing, margins, scroll or pages, and theme (system, paper or night). It applies to every book; reads are wrapped in try/catch. Unit test it.
+- [X] T026 [P] [US2] Build `apps/web/src/lib/components/ReaderChrome.svelte`:
   - top bar: back, title and chapter, Contents, Aa, Bookmark;
   - bottom bar: a full-width bar with a Kobo tick, %, "N min left in chapter", and Story so far;
   - a tap in the middle third toggles both bars (edges reserved); slide only without reduced motion.
   
   Catalogue page.
-- [ ] T027 [P] [US2] Build `apps/web/src/lib/components/KoboNotice.svelte`: a compact pill in the top bar ("Kobo is further on · Chapter 41, 41%", Go there, Stay); on phones it takes its own row; nothing floats over the text. Catalogue page.
-- [ ] T028 [P] [US2] Build `apps/web/src/lib/components/TextPanel.svelte` on the Bits UI Sheet (`ui/sheet`, right side; focus trap, Escape and focus return come from Bits UI): size slider, font, line spacing, margins, page mode and theme, as segmented controls. Catalogue page.
-- [ ] T029 [P] [US2] Build `apps/web/src/lib/components/ContentsPanel.svelte` on the Bits UI Sheet (left side): grouped by book or part, current chapter marked by text and background. Catalogue page.
-- [ ] T030 [US2] Build the reader route `apps/web/src/routes/read/[id]/+page.svelte`, replacing the T021 stub:
+- [X] T027 [P] [US2] Build `apps/web/src/lib/components/KoboNotice.svelte`: a compact pill in the top bar ("Kobo is further on · Chapter 41, 41%", Go there, Stay); on phones it takes its own row; nothing floats over the text. Catalogue page.
+- [X] T028 [P] [US2] Build `apps/web/src/lib/components/TextPanel.svelte` on the Bits UI Sheet (`ui/sheet`, right side; focus trap, Escape and focus return come from Bits UI): size slider, font, line spacing, margins, page mode and theme, as segmented controls. Catalogue page.
+- [X] T029 [P] [US2] Build `apps/web/src/lib/components/ContentsPanel.svelte` on the Bits UI Sheet (left side): grouped by book or part, current chapter marked by text and background. Catalogue page.
+- [X] T030 [US2] Build the reader route `apps/web/src/routes/read/[id]/+page.svelte`, replacing the T021 stub:
   - compose Reader, ReaderChrome, KoboNotice, TextPanel and ContentsPanel;
   - Bookmark toggles a local bookmark;
   - "Go there" jumps to the Kobo position;
   - save this device's position locally on every change (data-model.md "Device-local state").
-- [ ] T031 [P] [US2] Write the e2e test `apps/web/tests/e2e/reader.spec.ts`:
+- [X] T031 [P] [US2] Write the e2e test `apps/web/tests/e2e/reader.spec.ts`:
   - acceptance scenarios 1–4 from spec US2;
   - settings persist across reload;
   - Night applies;

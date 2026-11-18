@@ -136,3 +136,21 @@
   - SvelteKit 3 renders relative hrefs during SSR, so the catalogue e2e tests had matched no links: the a11y smoke test was scanning zero pages. The tests now resolve hrefs to pathnames; all 16 catalogue pages pass axe in light and dark.
   - A stale `wrangler dev` preview on :4173 from 14 Nov had been serving old builds to the e2e run (`reuseExistingServer`). It was killed.
 - **Next:** US2, the reader. Blocked until the owner saves the three EPUBs in `apps/web/static/sample/books/`.
+
+## 2026-11-18: Spec 002 US2 (reader) built: MVP ready for owner review
+
+- **Reader:**
+  - `Reader.svelte` wraps foliate-js and injects book typography from the tokens: Literata at reading size, ragged right, no hyphenation, old-style figures, first-line indents. It sets the book frame's `color-scheme` to match the page, so dark and night don't paint a white canvas.
+  - ReaderChrome: thin bars; a tap in the middle toggles them; they slide only without reduced motion, using the new `duration-reveal` token and the `.reveal` class.
+  - KoboNotice is a pill in the top bar.
+  - TextPanel and ContentsPanel are Bits UI sheets.
+  - Settings (one versioned localStorage key) and this device's place persist.
+- **Sample books:** Middlemarch and Moby Dick from Project Gutenberg's official mirror (gutenberg.pglaf.org); Dracula, The King in Yellow and Paradise Lost are Gutenberg editions from the owner's machine (no personal Calibre data inside). Anna Karenina and Meditations have no file and show the "not on this device" state.
+- **Robots.txt:** Standard Ebooks' robots.txt disallows `/ebooks/*/downloads/*` and `/ebooks/*/text*` for AI agents, so no Standard Ebooks file is fetched. Disclosure: earlier today, before I read the robots.txt, one Standard Ebooks chapter page (Middlemarch ch. 40) was fetched for the reader mock. The text is public domain.
+- **Tests:**
+  - reader e2e (11), including axe on the chrome in light, dark and night at 390 and 1440;
+  - unit tests: 90 shared, 74 web.
+- **Learning:**
+  - Cloudflare's worker types override the DOM `Element.append` signature in this project, so `appendChild` is used instead.
+  - `pkill -f <pattern>` killed the very shell running it; use the port's pid instead.
+- **Next:** owner review of Home and the reader against the mocks (the MVP checkpoint), then US3 (library).

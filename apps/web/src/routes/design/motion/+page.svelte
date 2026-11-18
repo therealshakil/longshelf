@@ -12,6 +12,10 @@
 			Where other apps would fade, slide or spin, Ribbon changes instantly. Progress is shown as
 			words (“Syncing 3 of 12 books”), never as a spinner.
 		</p>
+		<p>
+			One exception: in the reader, the bars slide away or back when you tap the page. You started
+			it, it lasts a fifth of a second, and it is off when your system asks for reduced motion.
+		</p>
 	</div>
 	<TokenTable tokens={byGroup('motion')} caption="Motion token" />
 </EntryPage>

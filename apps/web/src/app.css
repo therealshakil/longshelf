@@ -134,3 +134,15 @@
 		scroll-behavior: auto !important;
 	}
 }
+
+/*
+ * Owner-started reveals only (the reader's bars on a tap, DR-0002). More specific than the global
+ * no-motion rule above, and off under reduced motion.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	.reveal {
+		transition-property: transform, opacity;
+		transition-duration: var(--r-duration-reveal) !important;
+		transition-timing-function: ease-out;
+	}
+}

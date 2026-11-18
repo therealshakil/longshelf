@@ -196,6 +196,14 @@ export const motion: Token[] = [
 		rationale:
 			'No motion. Nothing animates. Changes happen instantly and stay put. Reduced-motion system settings are also honoured as a safety net.',
 		sources: [S.calmDs, S.wcag22, S.mq5]
+	},
+	{
+		name: 'duration-reveal',
+		group: 'motion',
+		value: '200ms',
+		rationale:
+			'The one exception: when you tap the page, the reader’s bars slide away or back. You started it, it is short, and it is off when your system asks for reduced motion (DR-0002).',
+		sources: [S.approvedMocks, S.wcag22, S.mq5]
 	}
 ];
 
