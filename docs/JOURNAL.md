@@ -66,3 +66,21 @@
 - **Learning:** axe found links distinguished only by colour. Tailwind's preflight removes link underlines, and Lightning CSS then dropped our longhand `text-decoration-line: underline` from the merged `a {}` rule. The `text-decoration: underline` shorthand survives. Check the built CSS, not only the source, when a base style seems to have no effect.
 - **Efficacy so far:** 0 reworks after implementation; running cost £0.
 - **Next:** owner review of the defaults (colours, type, spacing) before US4 components.
+
+## 2026-11-18: Redesign with Impeccable; full design approved (no app code yet)
+
+- Adopted Impeccable v0.1.24 as a project skill (telemetry off, design hook not wired). `PRODUCT.md` written by `init`.
+- A first build went ahead without a preview; the owner rejected it ("muddy and basic") and it was removed. New rule: preview and owner approval before any UI code.
+- Five direction rounds on Impeccable's decision page; the owner locked "Bedside Stack" (round 5), which was then reworked into "Now reading".
+- Live review, one page at a time, on static mocks in `design-mocks/`, served by Vite on :8411 so changes reload. Approved:
+  - Home: current book, Also reading ledger, Read next, Latest news & magazines;
+  - Story so far panel;
+  - Library: tabs, author page, shelf page;
+  - the book page;
+  - the reader: tap to hide bars, Night theme.
+- Mocks use Standard Ebooks public-domain books and covers, so they can be committed. The owner's Calibre covers were used for the earlier decision rounds only; they stay git-ignored.
+- Decisions:
+  - DR-0002: the redesign, oxblood accent, calm-ds as guidance;
+  - DR-0003: AI features designed, with genres kept in Ribbon first and promoted to Calibre on the owner's say. Implementation and cost are still open.
+- **Learning:** Impeccable live mode wires itself into the SvelteKit app when its target sits inside `apps/web`. Static mocks work cleanly from a folder outside the app, with `--target design-mocks/index.html`.
+- **Next:** a new spec for the redesign and AI features (`/speckit-specify`), then plan, tasks and the build against the mocks.

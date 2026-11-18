@@ -13,3 +13,8 @@ playwright-report/
 *.swp
 .vscode/
 .idea/
+
+# Covers copied from the local Calibre library for design work; never commit (private, copyrighted)
+apps/web/.impeccable/reference/
+apps/web/static/sample-covers/
+

@@ -10,3 +10,6 @@ bun.lockb
 worker-configuration.d.ts
 static/fonts/
 src/lib/styles/tokens.css
+
+# Impeccable design tool working files
+.impeccable/
