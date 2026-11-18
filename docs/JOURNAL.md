@@ -84,3 +84,11 @@
   - DR-0003: AI features designed, with genres kept in Ribbon first and promoted to Calibre on the owner's say. Implementation and cost are still open.
 - **Learning:** Impeccable live mode wires itself into the SvelteKit app when its target sits inside `apps/web`. Static mocks work cleanly from a folder outside the app, with `--target design-mocks/index.html`.
 - **Next:** a new spec for the redesign and AI features (`/speckit-specify`), then plan, tasks and the build against the mocks.
+
+## 2026-11-18: Spec 002 (redesigned screens and AI features) specified
+
+- Owner chose one spec for the screens and the AI features together. Mirror, read and device progress are renumbered 003–005 in PLAN.md.
+- Screens run on licence-free sample data until the mirror lands (FR-007).
+- AI provider: Cloudflare Workers AI only, for now. No Anthropic (owner). Ceiling £5/month, target £0 within the free allowance. Content stays in the owner's account. DR-0003 is updated with the options compared and their prices, read today.
+- A Claude subscription cannot power the app: subscription login is for Anthropic's own apps (Claude Code legal page).
+- **Next:** `/speckit-plan` for 002.

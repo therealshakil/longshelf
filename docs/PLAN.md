@@ -8,9 +8,10 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 | # | Feature | Depends on | Status |
 |---|---|---|---|
 | 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | MVP built (US1+US2); awaiting owner review |
-| 002 | Mirror (Phase 1 below) | 001 | not started |
-| 003 | Read (Phase 2) | 002 | not started |
-| 004 | Device progress (Phase 3) | 003, spike | not started |
+| 002 | [Redesigned screens and AI features](../specs/002-redesign-and-ai/spec.md) (DR-0002, DR-0003) | 001 | specified 2026-11-18 |
+| 003 | Mirror (Phase 1 below) | 001 | not started |
+| 004 | Read (Phase 2) | 003 | not started |
+| 005 | Device progress (Phase 3) | 004, spike | not started |
 
 ## Spike (manual, on the desktop with the Kobo; record findings here)
 - [ ] Install Kobo Utilities, configure columns, confirm store and restore round-trip a position.
@@ -23,22 +24,22 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 
 ## Starting scope per spec
 
-### Phase 1: mirror → spec 002 (does not depend on the spike)
+### Phase 1: mirror → spec 003 (does not depend on the spike)
 - [ ] Wrangler config, CI deploy (workspace + SvelteKit scaffold moved to spec 001)
 - [ ] D1 schema + migrations
 - [ ] Ingest API (`plan`, `commit`) with Zod contract
 - [ ] `ribbon library` (upload KEPUB as well as EPUB when present)
-- [ ] Library UI: grid, search, book detail, download
+- [ ] Library UI: wire the spec 002 screens to real data (download included)
 - [ ] PWA manifest + service worker (app shell, covers)
 - [ ] Cloudflare Access + service token
 
-### Phase 2: read → spec 003
+### Phase 2: read → spec 004
 - [ ] foliate-js submodule + `Reader.svelte`
 - [ ] Offline downloads (OPFS), storage settings page
 - [ ] Web progress, outbox, catalog snapshot in Dexie
 - [ ] Playwright smoke test: open app, go offline, open a book
 
-### Phase 3: device progress via Calibre columns → spec 004
+### Phase 3: device progress via Calibre columns → spec 005
 - [ ] Store device location verbatim in `native_location`; merge status and position by separate timestamps
 - [ ] Column config; `ribbon progress` (read columns, push; pull, `calibredb set_custom`)
 - [ ] "Jump to Kobo position" prompt
