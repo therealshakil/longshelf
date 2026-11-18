@@ -92,3 +92,16 @@
 - AI provider: Cloudflare Workers AI only, for now. No Anthropic (owner). Ceiling £5/month, target £0 within the free allowance. Content stays in the owner's account. DR-0003 is updated with the options compared and their prices, read today.
 - A Claude subscription cannot power the app: subscription login is for Anthropic's own apps (Claude Code legal page).
 - **Next:** `/speckit-plan` for 002.
+
+## 2026-11-18: Spec 002 planned
+
+- `plan.md`, `research.md` (R1–R10), `data-model.md`, `contracts/` (LibrarySource, AI API) and `quickstart.md` written.
+- Key calls:
+  - screens read through one `LibrarySource`, served by public-domain sample data until the mirror lands;
+  - foliate-js rendering and minimal Wrangler config (AI and D1 bindings) are pulled forward from 004 and 003;
+  - Story so far is built from per-chapter summaries, so it is spoiler-safe by construction;
+  - suggestion reasons come from rules and embeddings, never from a model;
+  - a daily spend guard sits at 8,000 neurons (free allowance 10,000);
+  - spec 001's US4 component tasks are superseded.
+- Owner action needed before the reader tasks: download three Standard Ebooks EPUBs (their robots.txt blocks automated downloads).
+- **Next:** `/speckit-tasks` for 002.
