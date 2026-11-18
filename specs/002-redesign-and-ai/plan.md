@@ -33,9 +33,10 @@ A daily spend guard keeps usage inside the free allowance. Decisions:
 
 **Primary Dependencies**:
 - The agreed stack: SvelteKit 3, Tailwind v4, shadcn-svelte (Bits UI), Lucide, Zod.
+- Bits UI through the shadcn-svelte `sheet` and `dialog` components, for all panels (focus trap, Escape, focus return).
 - foliate-js as a pinned submodule (brought forward from 004, research R2).
 - Workers AI and D1 through Wrangler bindings (research R3).
-- No new npm dependencies.
+- No npm dependencies outside the agreed stack.
 
 **Storage**:
 - D1 for AI results ([data-model.md](data-model.md)).
@@ -129,7 +130,7 @@ apps/web/
     │   ├── components/  # AppHeader, SyncStatus, CurrentBook, LedgerRow, ReadNextShelf, BookTile,
     │   │                # ReadStatus, LibraryTabs, LetterRail, AuthorList, CollectionStack,
     │   │                # GenreList, PeriodicalRow, BookHeader, GenreChips, ReaderChrome,
-    │   │                # TextPanel, ContentsPanel, StorySoFar (dialog), KoboNotice, EmptyState, ErrorState
+    │   │                # TextPanel, ContentsPanel, StorySoFar (Bits UI Sheet), KoboNotice, EmptyState, ErrorState
     │   ├── reader/      # Reader.svelte (foliate-js wrapper), settings store
     │   ├── library/     # sample source wiring
     │   └── server/ai/   # models, spend guard, summaries, recap, suggestions, search, genres

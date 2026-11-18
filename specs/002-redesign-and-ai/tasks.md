@@ -34,7 +34,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 - [ ] T001 Add foliate-js as a pinned git submodule at `vendor/foliate-js` (CLAUDE.md stack). Record the pinned commit in `docs/JOURNAL.md`.
 - [ ] T002 [P] Copy the sample covers from `design-mocks/se-covers/` to `apps/web/static/sample/covers/`. Create `apps/web/static/sample/books/README.md`. It asks the owner to download the Middlemarch, Moby Dick and Meditations EPUBs from standardebooks.org into that folder, cites CC0 (https://standardebooks.org/about), and says robots.txt blocks automated downloads (research R2).
-- [ ] T003 [P] Add `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) and `pnpm eval:recaps` (`apps/web/scripts/eval-recaps.ts`) script stubs to `apps/web/package.json`, filled in during later phases.
+- [ ] T003 Add the shadcn-svelte `sheet` and `dialog` components with the shadcn-svelte CLI (`components.json` is already set up). This installs Bits UI, an agreed-stack dependency. Restyle the generated files in `apps/web/src/lib/components/ui/` to tokens only. Also add `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) and `pnpm eval:recaps` (`apps/web/scripts/eval-recaps.ts`) script stubs to `apps/web/package.json`, filled in during later phases.
 
 ---
 
@@ -147,8 +147,8 @@ description: "Tasks for 002 redesigned screens and AI features"
   
   Catalogue page.
 - [ ] T027 [P] [US2] Build `apps/web/src/lib/components/KoboNotice.svelte`: a compact pill in the top bar ("Kobo is further on · Chapter 41, 41%", Go there, Stay); on phones it takes its own row; nothing floats over the text. Catalogue page.
-- [ ] T028 [P] [US2] Build `apps/web/src/lib/components/TextPanel.svelte` as a native `<dialog>` side sheet: size slider, font, line spacing, margins, page mode and theme, as segmented controls. Catalogue page.
-- [ ] T029 [P] [US2] Build `apps/web/src/lib/components/ContentsPanel.svelte` as a `<dialog>` from the left: grouped by book or part, current chapter marked by text and background. Catalogue page.
+- [ ] T028 [P] [US2] Build `apps/web/src/lib/components/TextPanel.svelte` on the Bits UI Sheet (`ui/sheet`, right side; focus trap, Escape and focus return come from Bits UI): size slider, font, line spacing, margins, page mode and theme, as segmented controls. Catalogue page.
+- [ ] T029 [P] [US2] Build `apps/web/src/lib/components/ContentsPanel.svelte` on the Bits UI Sheet (left side): grouped by book or part, current chapter marked by text and background. Catalogue page.
 - [ ] T030 [US2] Build the reader route `apps/web/src/routes/read/[id]/+page.svelte`, replacing the T021 stub:
   - compose Reader, ReaderChrome, KoboNotice, TextPanel and ContentsPanel;
   - Bookmark toggles a local bookmark;
@@ -246,7 +246,7 @@ description: "Tasks for 002 redesigned screens and AI features"
   - cache in `recap`, rebuilt when the furthest point moves past `upto_href`.
   
   Unit test that no summary beyond the cut-off is used.
-- [ ] T051 [US4] Build `apps/web/src/lib/components/StorySoFar.svelte` as a native `<dialog>`: a side sheet on desktop and a bottom sheet on phones. It shows the cut-off line, the recap in Literata, the AI note, Continue reading and Not now, plus the Writing, Unavailable and Too early states, per `design-mocks/index.html#recap`. Open it from LedgerRow, the book page and the reader. Catalogue page with all four states.
+- [ ] T051 [US4] Build `apps/web/src/lib/components/StorySoFar.svelte` on the Bits UI Sheet: right side on desktop, bottom on phones. It shows the cut-off line, the recap in Literata, the AI note, Continue reading and Not now, plus the Writing, Unavailable and Too early states, per `design-mocks/index.html#recap`. Open it from LedgerRow, the book page and the reader. Catalogue page with all four states.
 - [ ] T052 [US4] Show "Away N days · Story so far" on a LedgerRow when the book was last read 7 or more days ago (spec Assumptions).
 - [ ] T053 [US4] Implement `pnpm eval:recaps` in `apps/web/scripts/eval-recaps.ts`. It builds 20 recaps at set cut-offs across the three sample books and writes each next to the following chapter for owner judgement (SC-004, pass = 0 of 20 mention later events). If it fails, rerun with the gpt-oss-120b step-up and report to the owner (FR-018: no other provider).
 
@@ -296,7 +296,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ## Dependencies and order
 
-- Setup → Foundational → **US1 → US2 (MVP)** → US3 → US8.
+- Setup (T003 installs Bits UI) → Foundational → **US1 → US2 (MVP)** → US3 → US8.
 - AI groundwork (Phase 7) needs Foundational only, so it can run beside US1–US3. It needs the owner's `wrangler login`.
 - US4 needs US2 (chapter events) and Phase 7. US5 and US6 need Phase 7 and US3's slots. US7 needs Phase 7 and its design review (T061).
 - Polish runs last.

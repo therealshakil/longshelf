@@ -12,7 +12,7 @@ Audience and job: the owner, picking up a book on phone, tablet or laptop, often
 Constraints: WCAG 2.2 AA, a 3px focus ring, follows the system light/dark setting, no decorative motion, sizes in rem.
 Feel-wrong list (owner): generic SaaS, busy or loud, twee bookishness, unpredictable layout.
 Approved design: `design-mocks/index.html` (owner approved 2026-11-18 after live review). It is the composition the build matches.
-Story so far panel approved 2026-11-18: side sheet (desktop) / bottom sheet (phone) opened from the ledger pill, at `design-mocks/index.html#recap`, with Ready, Writing, Unavailable and Too early states. Build it as a `<dialog>`; the dashed mock-state switch is review chrome only.
+Story so far panel approved 2026-11-18: side sheet (desktop) / bottom sheet (phone) opened from the ledger pill, at `design-mocks/index.html#recap`, with Ready, Writing, Unavailable and Too early states. Build it on the Bits UI Sheet (shadcn-svelte); the dashed mock-state switch is review chrome only.
 
 ## Direction contract
 
