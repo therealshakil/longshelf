@@ -105,3 +105,8 @@
   - spec 001's US4 component tasks are superseded.
 - Owner action needed before the reader tasks: download three Standard Ebooks EPUBs (their robots.txt blocks automated downloads).
 - **Next:** `/speckit-tasks` for 002.
+
+## 2026-11-18: Spec 002 tasks generated
+
+- 69 tasks in `specs/002-redesign-and-ai/tasks.md`. The MVP is Home and the reader on sample data (T001–T031).
+- **Next:** the owner downloads the three sample EPUBs, then `/speckit-implement` for the MVP.
