@@ -1,14 +1,122 @@
+<!--
+	Book page (spec 002 US3): header with progress and actions, the description from Calibre, and
+	details. Genres (US6) and More like this (US5) join when the AI features land.
+	Matches design-mocks/book.html.
+-->
 <script lang="ts">
-	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
+	import BookHeader from '#lib/components/BookHeader.svelte';
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
+	const item = $derived(data.book);
+	const author = $derived(item.book.authors[0]);
+	let downloaded = $state(false);
+	const paras = $derived((item.book.description ?? '').split(/\n\s*\n/).filter(Boolean));
 </script>
 
 <svelte:head>
-	<title>Book · Ribbon</title>
+	<title>{item.book.title} · Ribbon</title>
 </svelte:head>
 
-<main class="py-8">
-	<h1 class="text-2xl">Book</h1>
-	<p class="mt-2 text-text-muted">
-		The book page for “{page.params.id}” is built next (spec 002, user story 3).
-	</p>
+<main class="page">
+	<nav class="crumbs" aria-label="Breadcrumb">
+		<a href={resolve('/library')}>Library</a>
+		{#if author}<span aria-hidden="true">/</span><a
+				href={resolve('/library/authors/[id]', { id: author.id })}>{author.name}</a
+			>{/if}
+	</nav>
+
+	<BookHeader {item} bind:downloaded />
+
+	<div class="cols">
+		<section aria-labelledby="about-h">
+			<h2 id="about-h" class="section-h">About this book</h2>
+			{#if paras.length}
+				<div class="desc">
+					{#each paras as p, i (i)}<p>{p}</p>{/each}
+				</div>
+				<p class="src">Description from Calibre</p>
+			{:else}
+				<p class="text-text-muted">There’s no description for this book in Calibre.</p>
+			{/if}
+		</section>
+		<aside>
+			<h2 class="section-h">Details</h2>
+			<dl class="details">
+				{#each item.details as d (d.label)}
+					<dt>{d.label}</dt>
+					<dd>{d.value}</dd>
+				{/each}
+			</dl>
+		</aside>
+	</div>
 </main>
+
+<style>
+	.page {
+		padding: 1rem 0 4rem;
+	}
+	.crumbs {
+		display: flex;
+		gap: 0.5rem;
+		font-size: var(--r-text-sm);
+		margin-bottom: 0.75rem;
+		color: var(--r-text-muted);
+	}
+	.crumbs a {
+		color: var(--r-text-muted);
+		text-decoration: none;
+	}
+	.crumbs a:hover {
+		color: var(--r-ink);
+		text-decoration: underline;
+	}
+	.cols {
+		display: grid;
+		grid-template-columns: minmax(0, 40rem) minmax(0, 22rem);
+		justify-content: space-between;
+		gap: 4rem;
+		margin-top: 1rem;
+	}
+	.section-h {
+		font-size: var(--r-text-xl);
+		font-weight: var(--r-weight-title);
+		margin: 2.5rem 0 1rem;
+		padding-bottom: 0.4rem;
+		border-bottom: 1px solid var(--r-border);
+	}
+	.desc {
+		font-family: var(--r-font-reading);
+		font-size: var(--r-text-lg);
+		line-height: 1.65;
+	}
+	.desc p + p {
+		margin-top: 0.9em;
+	}
+	.src {
+		font-size: var(--r-text-xs);
+		color: var(--r-text-muted);
+		margin-top: 0.6rem;
+	}
+	.details {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.5rem 1.5rem;
+		font-size: var(--r-text-sm);
+		margin: 0;
+	}
+	.details dt {
+		color: var(--r-text-muted);
+		font-size: var(--r-text-xs);
+	}
+	.details dd {
+		margin: 0;
+	}
+	@media (max-width: 64rem) {
+		.cols {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+	}
+</style>

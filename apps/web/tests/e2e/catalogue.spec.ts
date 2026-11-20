@@ -4,6 +4,7 @@ test.describe('design catalogue (US1)', () => {
 	test('index lists entries and each page has examples, rationale, sources and checks', async ({
 		page
 	}) => {
+		test.setTimeout(240_000); // visits every catalogue page
 		await page.goto('/design/about');
 		const nav = page.getByRole('navigation', { name: 'Design catalogue' });
 		// SvelteKit renders relative hrefs during SSR, so compare resolved pathnames.

@@ -8,3 +8,13 @@ import { createSampleLibrary } from '@ribbon/shared/sample';
 export const library: LibrarySource = createSampleLibrary();
 
 export { statusLabel, statusFrom } from '@ribbon/shared/library';
+
+import type { Book, ReadStatus } from '@ribbon/shared/library';
+
+/** Read status for a list of books, keyed by id, so tiles show it (FR-005). */
+export async function statusesFor(books: Book[]): Promise<Record<string, ReadStatus>> {
+	const entries = await Promise.all(
+		books.map(async (b) => [b.id, await library.status(b.id)] as const)
+	);
+	return Object.fromEntries(entries);
+}

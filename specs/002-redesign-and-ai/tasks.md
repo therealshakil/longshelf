@@ -171,22 +171,22 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 **Independent Test**: reach one book by each route and open its book page.
 
-- [ ] T032 [P] [US3] Build `apps/web/src/lib/components/LibraryTabs.svelte`. The tabs are, in order: Recently added (default), Authors, Genres, Collections, News & magazines, All Books (FR-003). Tab state lives in `?tab=`; keyboard follows the ARIA tabs pattern. Catalogue page.
-- [ ] T033 [P] [US3] Build `apps/web/src/lib/components/LetterRail.svelte`, a vertical scrubbable A–Z rail:
+- [X] T032 [P] [US3] Build `apps/web/src/lib/components/LibraryTabs.svelte`. The tabs are, in order: Recently added (default), Authors, Genres, Collections, News & magazines, All Books (FR-003). Tab state lives in `?tab=`; keyboard follows the ARIA tabs pattern. Catalogue page.
+- [X] T033 [P] [US3] Build `apps/web/src/lib/components/LetterRail.svelte`, a vertical scrubbable A–Z rail:
   - pointer drag maps y to a letter and jumps there;
   - a large oxblood letter bubble while scrubbing;
   - letters with no books are disabled;
   - links work by keyboard and single tap.
   
   Unit-test the y-to-letter mapping in `LetterRail.test.ts`. Catalogue page.
-- [ ] T034 [P] [US3] Build `AuthorList.svelte` (three-column list of names with "N books", letter headings), `CollectionStack.svelte` (fanned three covers, name, count) and `GenreList.svelte` ("All suggested" or "N in Calibre · M suggested"). All in `apps/web/src/lib/components/`, each with a catalogue page.
-- [ ] T035 [US3] Build the Library route `apps/web/src/routes/library/+page.svelte`:
+- [X] T034 [P] [US3] Build `AuthorList.svelte` (three-column list of names with "N books", letter headings), `CollectionStack.svelte` (fanned three covers, name, count) and `GenreList.svelte` ("All suggested" or "N in Calibre · M suggested"). All in `apps/web/src/lib/components/`, each with a catalogue page.
+- [X] T035 [US3] Build the Library route `apps/web/src/routes/library/+page.svelte`:
   - Recently added grouped "This week" / "Earlier in November", never with periodicals;
   - Authors, Genres and Collections;
   - quiet footnotes at the bottom ("From Calibre's Collection column. Ribbon never changes them." and the genre note);
   - News & magazines (one PeriodicalRow per publication);
   - All Books with the LetterRail.
-- [ ] T036 [P] [US3] Build the author page `apps/web/src/routes/library/authors/[id]/+page.svelte`:
+- [X] T036 [P] [US3] Build the author page `apps/web/src/routes/library/authors/[id]/+page.svelte`:
   - breadcrumb, portrait with credit, life dates;
   - bio with its source link;
   - "N books in your library · M finished" ("M finished" omitted when 0);
@@ -194,15 +194,15 @@ description: "Tasks for 002 redesigned screens and AI features"
   - bibliography with owned books linked and status shown, not-owned books grey with "Not in your library".
   
   Omit any missing data.
-- [ ] T037 [P] [US3] Build the shelf page `apps/web/src/routes/library/shelf/[kind]/[id]/+page.svelte`: breadcrumb, name, count, Title / Author / Recently added sort, grid, and the Calibre or AI footnote by kind.
-- [ ] T038 [US3] Build the book page `apps/web/src/routes/book/[id]/+page.svelte` and `BookHeader.svelte`:
+- [X] T037 [P] [US3] Build the shelf page `apps/web/src/routes/library/shelf/[kind]/[id]/+page.svelte`: breadcrumb, name, count, Title / Author / Recently added sort, grid, and the Calibre or AI footnote by kind.
+- [X] T038 [US3] Build the book page `apps/web/src/routes/book/[id]/+page.svelte` and `BookHeader.svelte`:
   - cover, title, author link, subtitle, publication line;
   - the CurrentBook progress table;
   - actions: Continue reading, Downloaded/Download toggle (state only until 004), Story so far, and a more menu (Mark as finished);
   - About this book, Details;
   - Genres and More like this slots that hide until US6 and US5;
   - on phones, the cover stacks and Downloaded, Story so far and the menu share one row.
-- [ ] T039 [P] [US3] Write the e2e test `apps/web/tests/e2e/library.spec.ts`:
+- [X] T039 [P] [US3] Write the e2e test `apps/web/tests/e2e/library.spec.ts`:
   - acceptance scenarios 1–5 from spec US3;
   - the read-status label is identical for one book across Home, every tab, author, shelf and book page;
   - axe at 390 and 1440 in light and dark.
@@ -213,7 +213,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ## Phase 6: User Story 8 - News and magazines (P3, no AI; done with the library)
 
-- [ ] T040 [US8] Add periodical issue opening: an issue opens straight into the reader. In sample data, map one issue to a sample EPUB or mark it unavailable with ErrorState. Assert in `apps/web/tests/e2e/library.spec.ts` that 14 issues fetched on one day never appear in Recently added.
+- [X] T040 [US8] Add periodical issue opening: an issue opens straight into the reader. In sample data, map one issue to a sample EPUB or mark it unavailable with ErrorState. Assert in `apps/web/tests/e2e/library.spec.ts` that 14 issues fetched on one day never appear in Recently added.
 
 ---
 

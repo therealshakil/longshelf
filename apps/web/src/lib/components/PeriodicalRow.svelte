@@ -3,6 +3,7 @@
 	issues, scrolling sideways when there are many. Never mixed into Recently added (US8).
 -->
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { PeriodicalIssue } from '@ribbon/shared/library';
 	import { statusLabel } from '@ribbon/shared/library';
 
@@ -19,7 +20,7 @@
 <ul class="issues" aria-label={label}>
 	{#each issues as issue (issue.id)}
 		<li>
-			<a class="issue" href="#issue-{issue.id}">
+			<a class="issue" href={resolve('/read/[id]', { id: issue.id })}>
 				<span class="binding">
 					<b>{issue.publication}</b>
 					<em>{issue.issueLabel}</em>

@@ -154,3 +154,28 @@
   - Cloudflare's worker types override the DOM `Element.append` signature in this project, so `appendChild` is used instead.
   - `pkill -f <pattern>` killed the very shell running it; use the port's pid instead.
 - **Next:** owner review of Home and the reader against the mocks (the MVP checkpoint), then US3 (library).
+
+## 2026-11-20: Spec 002 US3 (library) and US8 (news) built
+
+- **Library page:**
+  - six tabs in a fixed order (ARIA tabs, state in `?tab=`);
+  - Recently added grouped This week / Earlier;
+  - Authors list, Collections stacks, an empty Genres tab until AI lands;
+  - News & magazines by publication;
+  - All Books by title with the scrubbable letter rail.
+- **Other pages:**
+  - author page: portrait, sourced bio, books, and a bibliography marking owned and not-owned books;
+  - shelf page: Title / Author / Recently added sort;
+  - book page: header, progress, Continue reading, Download toggle, More menu, description, details.
+- News issues open in the reader; with no file they show the "not on this device" state.
+- **Accessibility:** axe found the letter rail's letters below the 24px target size. They are now 24px tall, and the dimmed letters hide on short screens.
+- **Tests:**
+  - e2e library spec (9), including axe on 8 library pages in light and dark at 390 and 1440;
+  - all 32 e2e pass;
+  - unit tests: 90 shared, 100 web.
+  
+  The catalogue test now has a 4-minute limit (33 pages), and the Playwright web server a 180-second start limit.
+- **Learning:**
+  - SvelteKit 3's `goto` options are now `replace` and `reset` (`noScroll`/`keepFocus` are gone).
+  - A component that renders an `h1` needs a heading-level prop if it also appears on catalogue pages.
+- **Next:** AI groundwork (Phase 7). It needs the owner to run `wrangler login` and `wrangler d1 create ribbon`.

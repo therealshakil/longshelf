@@ -82,8 +82,8 @@
 {#if !book}
 	<main class="mx-auto max-w-[36rem] px-4 py-16">
 		<ErrorState
-			what="That book isn’t in your library."
-			lost="Nothing is lost."
+			what="This isn’t on this device yet."
+			lost="Nothing is lost. It opens here once it has been downloaded from Calibre."
 			next={{ label: 'Back to Home', href: resolve('/') }}
 		/>
 	</main>
