@@ -146,3 +146,10 @@
 		transition-timing-function: ease-out;
 	}
 }
+
+/* Sheet titles in Literata. A plain class because cn() (tailwind-merge) reads `font-reading` and
+   `font-title` as clashing font utilities and drops one. */
+.title-reading {
+	font-family: var(--r-font-reading);
+	font-weight: var(--r-weight-title);
+}

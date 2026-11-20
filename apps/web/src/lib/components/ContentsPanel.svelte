@@ -49,7 +49,7 @@
 <Sheet.Root bind:open>
 	<Sheet.Content side="left" class="w-full gap-0 bg-bg p-0 sm:max-w-[26rem]">
 		<Sheet.Header class="px-6 pt-6 pb-2">
-			<Sheet.Title class="font-reading text-2xl font-title text-ink">Contents</Sheet.Title>
+			<Sheet.Title class="title-reading text-2xl text-ink">Contents</Sheet.Title>
 			<Sheet.Description class="font-reading text-text-muted">{title}</Sheet.Description>
 		</Sheet.Header>
 		<nav class="overflow-y-auto px-6 pb-6" aria-label="Chapters">

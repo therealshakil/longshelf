@@ -164,6 +164,10 @@
 		};
 	});
 
+	/** The contents entry you're in, counted through the flattened contents (the recap cut-off). */
+	export function currentOrdinal(): number | undefined {
+		return lastOrdinal >= 0 ? lastOrdinal : undefined;
+	}
 	export function next() {
 		return view?.goRight();
 	}

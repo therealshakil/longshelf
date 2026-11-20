@@ -16,6 +16,8 @@
 	import ErrorState from '#lib/components/ErrorState.svelte';
 	import { deviceName, splitPositions } from '#lib/library/format.ts';
 	import { sendSummary } from '#lib/reader/summaries.ts';
+	import StorySoFar from '#lib/components/StorySoFar.svelte';
+	import { fetchRecap, type RecapView } from '#lib/ai/recap.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -35,6 +37,20 @@
 	let loc = $state<FoliateLocation | null>(null);
 	let reader = $state<ReturnType<typeof Reader> | null>(null);
 	let topHeight = $state(60);
+	let recapOpen = $state(false);
+	let recap = $state<RecapView>({ state: 'loading' });
+
+	// Story so far (US4), up to where you are now.
+	async function openRecap() {
+		if (!book) return;
+		recap = { state: 'loading' };
+		recapOpen = true;
+		recap = await fetchRecap(book.id, {
+			percent,
+			label: chapterLabel,
+			ordinal: reader?.currentOrdinal()
+		});
+	}
 
 	const percent = $derived(loc ? Math.round(loc.fraction * 100) : (positions.here?.percent ?? 0));
 	const other = $derived(
@@ -42,6 +58,7 @@
 			? { device: deviceName(positions.other.source), percent: positions.other.percent }
 			: undefined
 	);
+	const chapterLabel = $derived(loc?.tocItem?.label ?? positions.here?.chapterLabel ?? '');
 	const showNotice = $derived(!!other && !noticeDismissed && other.percent > percent);
 
 	$effect(() => saveSettings($state.snapshot(settings)));
@@ -110,7 +127,7 @@
 {:else}
 	<ReaderChrome
 		title={book.title}
-		chapter={loc?.tocItem?.label ?? positions.here?.chapterLabel}
+		chapter={chapterLabel}
 		{percent}
 		{other}
 		minutesLeft={loc?.time ? Math.round(loc.time.section) : undefined}
@@ -121,6 +138,7 @@
 		onContents={() => (contentsOpen = true)}
 		onText={() => (textOpen = true)}
 		onBookmark={() => (bookmarked = !bookmarked)}
+		onStorySoFar={data.ai ? openRecap : undefined}
 	>
 		{#snippet notice()}
 			{#if showNotice && other && positions.other}
@@ -174,6 +192,13 @@
 	</main>
 
 	<TextPanel bind:open={textOpen} bind:settings />
+	<StorySoFar
+		bind:open={recapOpen}
+		title={book.title}
+		author={book.authors[0]?.name}
+		place={{ label: chapterLabel, percent }}
+		{recap}
+	/>
 	<ContentsPanel
 		bind:open={contentsOpen}
 		title={book.title}

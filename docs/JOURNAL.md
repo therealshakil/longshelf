@@ -225,3 +225,22 @@
 - **Verified in a browser:** paging through Moby Dick chapters 10–12 sent exactly those three chapters, and the stored summaries are accurate.
 - **Accessibility gap fixed:** the reader had no keyboard page turning. Arrow keys and Page Up/Down now turn pages, including when focus is inside the book. There's an e2e test for it.
 - **Flaky e2e start:** one run had all 13 tests fail because the preview server didn't start, while the dev server on :5199 was also using the local D1 state. The same tests passed on rerun. ASSUMPTION: a state lock; watch for a repeat.
+
+## 2026-11-20: Spec 002 T051–T052: Story so far sheet
+
+- `StorySoFar.svelte` on the Bits UI Sheet: from the right on wide screens and from the bottom on phones.
+  - States: ready, writing, unavailable, too early, plus "No recap yet", per `design-mocks/index.html#recap`.
+  - The footer stays pinned while the recap scrolls.
+  - A catalogue page shows all four states; axe passes in every state in light and dark, at 390 and 1440.
+- **Where it opens:**
+  - Home: the "Away N days · Story so far" pill on ledger rows (7+ days away);
+  - the reader: the footer link, with the cut-off at the current chapter.
+  - Not on the book page: the approved book mock has no entry, so it is left for owner review.
+- **AI off (FR-016):** the layout loads an AI-on flag, and the entry points hide when AI is off. The e2e ai-off spec checks Home and the reader.
+- Recap endpoint:
+  - without a chapter number it uses every stored summary; these exist only for chapters you finished, so they are already behind you;
+  - "No recap yet" explains that recaps come from chapters finished in Ribbon;
+  - the AI note now uses the approved mock copy.
+- **Bug fixed:** sheet titles rendered in Inter, not Literata. `cn()` (tailwind-merge) treats `font-reading` and `font-title` as clashing and drops one. TextPanel and ContentsPanel had the same bug; all three now use a `.title-reading` class.
+- Tests: 119 web unit tests; e2e ai-off, catalogue, a11y-smoke and home suites pass (14).
+- **Open question for the owner:** for a book read mostly on Kobo, Ribbon has summaries only for chapters finished in Ribbon. The recap then covers only those chapters, while the cut-off line still names your place. Options: say how much the recap covers, or summarise the earlier chapters on demand when the recap opens (costs more neurons, still within the free tier).

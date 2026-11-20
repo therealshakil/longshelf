@@ -9,9 +9,30 @@
 	import CurrentBook from '#lib/components/CurrentBook.svelte';
 	import LedgerRow from '#lib/components/LedgerRow.svelte';
 	import PeriodicalRow from '#lib/components/PeriodicalRow.svelte';
+	import StorySoFar from '#lib/components/StorySoFar.svelte';
+	import type { BookWithPositions } from '@ribbon/shared/library';
+	import { fetchRecap, type RecapView } from '#lib/ai/recap.ts';
+	import { daysAway, splitPositions } from '#lib/library/format.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+
+	// Story so far (US4): opened from the "Away N days" pill on a ledger row.
+	let recapOpen = $state(false);
+	let recap = $state<RecapView>({ state: 'loading' });
+	let recapFor = $state<BookWithPositions | null>(null);
+	const recapPlace = $derived.by(() => {
+		const here = recapFor ? splitPositions(recapFor.positions).here : undefined;
+		return { label: here?.chapterLabel ?? '', percent: here?.percent ?? 0, readAt: here?.readAt };
+	});
+
+	async function openRecap(bookId: string) {
+		recapFor = data.also.find((b) => b.book.id === bookId) ?? null;
+		if (!recapFor) return;
+		recap = { state: 'loading' };
+		recapOpen = true;
+		recap = await fetchRecap(bookId, recapPlace);
+	}
 </script>
 
 <svelte:head>
@@ -30,7 +51,7 @@
 					<h3 class="also-h">Also reading</h3>
 					<ol class="ledger">
 						{#each data.also as item (item.book.id)}
-							<LedgerRow {item} />
+							<LedgerRow {item} onStorySoFar={data.ai ? openRecap : undefined} />
 						{/each}
 					</ol>
 				</div>
@@ -49,6 +70,18 @@
 		</section>
 	{/if}
 </main>
+
+{#if recapFor}
+	<StorySoFar
+		bind:open={recapOpen}
+		title={recapFor.book.title}
+		author={recapFor.book.authors[0]?.name}
+		place={recapPlace}
+		awayDays={recapPlace.readAt ? daysAway(recapPlace.readAt, new Date()) : undefined}
+		{recap}
+		continueHref={resolve('/read/[id]', { id: recapFor.book.id })}
+	/>
+{/if}
 
 <style>
 	.now {

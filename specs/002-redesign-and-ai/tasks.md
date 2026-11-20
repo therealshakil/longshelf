@@ -246,8 +246,8 @@ description: "Tasks for 002 redesigned screens and AI features"
   - cache in `recap`, rebuilt when the furthest point moves past `upto_href`.
   
   Unit test that no summary beyond the cut-off is used.
-- [ ] T051 [US4] Build `apps/web/src/lib/components/StorySoFar.svelte` on the Bits UI Sheet: right side on desktop, bottom on phones. It shows the cut-off line, the recap in Literata, the AI note, Continue reading and Not now, plus the Writing, Unavailable and Too early states, per `design-mocks/index.html#recap`. Open it from LedgerRow, the book page and the reader. Catalogue page with all four states.
-- [ ] T052 [US4] Show "Away N days · Story so far" on a LedgerRow when the book was last read 7 or more days ago (spec Assumptions).
+- [X] T051 [US4] Build `apps/web/src/lib/components/StorySoFar.svelte` on the Bits UI Sheet: right side on desktop, bottom on phones. It shows the cut-off line, the recap in Literata, the AI note, Continue reading and Not now, plus the Writing, Unavailable and Too early states, per `design-mocks/index.html#recap`. Open it from LedgerRow, the book page and the reader. Catalogue page with all four states. (Built 2026-11-20: Home and reader only. The approved book mock has no Story so far entry, so the book page waits for owner review.)
+- [X] T052 [US4] Show "Away N days · Story so far" on a LedgerRow when the book was last read 7 or more days ago (spec Assumptions).
 - [ ] T053 [US4] Implement `pnpm eval:recaps` in `apps/web/scripts/eval-recaps.ts`. It builds 20 recaps at set cut-offs across the three sample books and writes each next to the following chapter for owner judgement (SC-004, pass = 0 of 20 mention later events). If it fails, rerun with the gpt-oss-120b step-up and report to the owner (FR-018: no other provider).
 
 ---

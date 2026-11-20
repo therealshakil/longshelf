@@ -39,6 +39,11 @@ test.describe('AI switched off', () => {
 			expect(res?.status(), path).toBe(200);
 		}
 		await page.goto('/');
+		// AI areas hide (FR-016): no Story so far on Home or in the reader.
+		await expect(page.getByRole('button', { name: /Story so far/ })).toHaveCount(0);
+		await page.goto('/read/herman-melville_moby-dick');
+		await expect(page.getByRole('button', { name: 'Story so far' })).toHaveCount(0);
+		await page.goto('/');
 		await page.getByRole('link', { name: /Continue reading/ }).click();
 		await expect(page).toHaveURL(/\/read\/george-eliot_middlemarch$/);
 	});

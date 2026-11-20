@@ -16,7 +16,7 @@
 <Sheet.Root bind:open>
 	<Sheet.Content side="right" class="panel w-full gap-0 bg-bg p-0 sm:max-w-[26rem]">
 		<Sheet.Header class="px-6 pt-6 pb-2">
-			<Sheet.Title class="font-reading text-2xl font-title text-ink">Text</Sheet.Title>
+			<Sheet.Title class="title-reading text-2xl text-ink">Text</Sheet.Title>
 		</Sheet.Header>
 		<div class="flex flex-col gap-5 overflow-y-auto px-6 pb-6">
 			<div class="flex flex-col gap-2 border-b border-border pb-5">
