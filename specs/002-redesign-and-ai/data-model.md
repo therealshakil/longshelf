@@ -45,6 +45,9 @@ suggestion_dismissal(book_id PRIMARY KEY, kind, until)   -- kind: not_now | neve
 
 -- Spend guard (FR-017): estimated neurons per UTC day
 ai_usage(day PRIMARY KEY, neurons_est, calls)
+
+-- The owner's AI settings: the off switch (FR-016) and the daily ceiling (FR-017)
+ai_setting(key PRIMARY KEY, value)
 ```
 
 State rules:

@@ -9,5 +9,17 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"workers_dev": true,
-	"preview_urls": true
+	"preview_urls": true,
+	// Spec 002 (research R3): Workers AI runs in the owner's account; D1 keeps AI results.
+	// Deploy, CI and the real database id arrive with the mirror (spec 003). Until then the
+	// database is local only (wrangler dev and the e2e preview).
+	"ai": { "binding": "AI", "remote": true },
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "ribbon",
+			"database_id": "00000000-0000-0000-0000-000000000000",
+			"migrations_dir": "migrations"
+		}
+	]
 }

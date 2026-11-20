@@ -179,3 +179,20 @@
   - SvelteKit 3's `goto` options are now `replace` and `reset` (`noScroll`/`keepFocus` are gone).
   - A component that renders an `h1` needs a heading-level prop if it also appears on catalogue pages.
 - **Next:** AI groundwork (Phase 7). It needs the owner to run `wrangler login` and `wrangler d1 create ribbon`.
+
+## 2026-11-20: Spec 002 AI groundwork (Phase 7) built
+
+- `wrangler.jsonc`:
+  - Workers AI binding `AI` (remote) and D1 binding `DB`;
+  - the database is local only, with a placeholder id; spec 003 creates the real one at deploy;
+  - no cloud resource created.
+- `migrations/0001_ai.sql`: the data-model tables plus `ai_setting` (off switch and ceiling), applied locally. `preview` and `dev:remote` apply migrations first.
+- Zod schemas for every `/api/ai/*` shape are in `packages/shared/src/ai`.
+- Spend guard: 8,000 neurons/day by default, the UTC day resets it, and switching AI off blocks every AI call. It is unit-tested with an in-memory store.
+- `MODELS` (model ids as config) with a neuron estimate per call.
+- Operator page `/settings/ai`: on/off switch, today's use, and where content goes. `GET /api/ai/usage` and `PUT /api/ai/enabled`.
+- Tests: e2e ai-off spec (every route opens with AI off; operator page passes axe); 104 web unit tests.
+- **Learning:**
+  - SvelteKit 3 exposes Cloudflare bindings through `import { env } from 'cloudflare:workers'`, emulated in `vite dev`. `event.platform.env` is not populated.
+  - Running Prettier from `apps/web` on `packages/shared` without `--config` reformatted shared files in Prettier's default style. Shared has no Prettier config or lint script, so pass apps/web's config explicitly.
+- **Next:** US4 Story so far (chapter summaries on Workers AI, recap assembly, eval).

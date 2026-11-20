@@ -219,16 +219,16 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ## Phase 7: AI groundwork (blocks US4–US7)
 
-- [ ] T041 Add the Workers AI binding `AI` and the D1 binding `DB` to `apps/web/wrangler.jsonc` (research R3; deploy and CI stay in 003). Regenerate `worker-configuration.d.ts`. Add `pnpm dev:remote` to `apps/web/package.json`. Owner step: `wrangler login` and `wrangler d1 create ribbon`.
-- [ ] T042 Write D1 migration `apps/web/migrations/0001_ai.sql` with exactly the tables in data-model.md:
+- [X] T041 Add the Workers AI binding `AI` and the D1 binding `DB` to `apps/web/wrangler.jsonc` (research R3; deploy and CI stay in 003). Regenerate `worker-configuration.d.ts`. Add `pnpm dev:remote` to `apps/web/package.json`. Wrangler was already logged in. The database stays local (placeholder id) until spec 003 creates the real one at deploy.
+- [X] T042 Write D1 migration `apps/web/migrations/0001_ai.sql` with exactly the tables in data-model.md:
   - `genre_suggestion` (states suggested → promoted → in_calibre; suggested → removed; promoted → removed);
   - `chapter_summary`, `recap`, `book_embedding`, `suggestion_dismissal`;
   - `ai_usage(day, neurons_est, calls)`.
-- [ ] T043 [P] Add Zod schemas for every `/api/ai/*` request and response in `packages/shared/src/ai/schemas.ts`, per contracts/ai-api.md, including `503 { reason: 'ai_paused' | 'ai_off' | 'offline' }`.
-- [ ] T044 Build `apps/web/src/lib/server/ai/models.ts`: model IDs as configuration, defaulting to `@cf/qwen/qwen3-30b-a3b-fp8` (text), `@cf/openai/gpt-oss-120b` (recap step-up) and `@cf/google/embeddinggemma-2` (embeddings), with a neuron estimate per call from the pricing table in research R4/R5.
-- [ ] T045 Build the spend guard `apps/web/src/lib/server/ai/guard.ts`: before each call, check `ai_usage` for the UTC day; refuse with `ai_paused` at the ceiling (default 8,000 neurons, configurable); refuse with `ai_off` when disabled. Unit test the ceiling and the day rollover.
-- [ ] T046 [P] Build the operator page `apps/web/src/routes/settings/ai/+page.svelte` plus `GET /api/ai/usage` and `PUT /api/ai/enabled`. It shows today's estimate vs ceiling, calls, the on/off switch, a "Suggest genres" job button, and a plain note that content stays in the owner's Cloudflare account (constitution III, XI).
-- [ ] T047 [P] Add the AI-off e2e test `apps/web/tests/e2e/ai-off.spec.ts`: with AI disabled, every route opens and every non-AI task in US1–3 and US8 completes, while AI areas hide or say they are off (SC-006).
+- [X] T043 [P] Add Zod schemas for every `/api/ai/*` request and response in `packages/shared/src/ai/schemas.ts`, per contracts/ai-api.md, including `503 { reason: 'ai_paused' | 'ai_off' | 'offline' }`.
+- [X] T044 Build `apps/web/src/lib/server/ai/models.ts`: model IDs as configuration, defaulting to `@cf/qwen/qwen3-30b-a3b-fp8` (text), `@cf/openai/gpt-oss-120b` (recap step-up) and `@cf/google/embeddinggemma-2` (embeddings), with a neuron estimate per call from the pricing table in research R4/R5.
+- [X] T045 Build the spend guard `apps/web/src/lib/server/ai/guard.ts`: before each call, check `ai_usage` for the UTC day; refuse with `ai_paused` at the ceiling (default 8,000 neurons, configurable); refuse with `ai_off` when disabled. Unit test the ceiling and the day rollover.
+- [X] T046 [P] Build the operator page `apps/web/src/routes/settings/ai/+page.svelte` plus `GET /api/ai/usage` and `PUT /api/ai/enabled`. It shows today's estimate vs ceiling, calls, the on/off switch, a "Suggest genres" job button, and a plain note that content stays in the owner's Cloudflare account (constitution III, XI).
+- [X] T047 [P] Add the AI-off e2e test `apps/web/tests/e2e/ai-off.spec.ts`: with AI disabled, every route opens and every non-AI task in US1–3 and US8 completes, while AI areas hide or say they are off (SC-006).
 
 ---
 

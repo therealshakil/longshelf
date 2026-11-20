@@ -8,6 +8,7 @@
     "./tokens": "./src/tokens/index.ts",
     "./library": "./src/library/index.ts",
     "./sample": "./src/sample/index.ts",
+    "./ai": "./src/ai/schemas.ts",
     "./*": "./src/*.ts"
   },
   "scripts": {
