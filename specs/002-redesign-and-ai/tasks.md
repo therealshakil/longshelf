@@ -239,7 +239,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 **Independent Test**: read two chapters of Moby Dick and check the recap covers exactly those.
 
 - [X] T048 [US4] Implement `POST /api/ai/chapter-summary` in `apps/web/src/routes/api/ai/chapter-summary/+server.ts`: a 120–200-word summary of that chapter only, stored in `chapter_summary`. The text is not stored. Idempotent per (bookId, href); passes through the guard.
-- [ ] T049 [US4] Make the reader send finished-chapter text: on Reader's chapter-finished event, call the endpoint (queued locally if offline, sent later) in `apps/web/src/lib/reader/summaries.ts`.
+- [X] T049 [US4] Make the reader send finished-chapter text: on Reader's chapter-finished event, call the endpoint (queued locally if offline, sent later) in `apps/web/src/lib/reader/summaries.ts`.
 - [X] T050 [US4] Implement `GET /api/ai/recap/[bookId]` in `apps/web/src/routes/api/ai/recap/[bookId]/+server.ts`:
   - assemble 3–5 paragraphs only from summaries up to the furthest position;
   - states: `too_early` below 5%, `writing`, `unavailable`;

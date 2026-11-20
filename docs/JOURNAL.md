@@ -210,3 +210,18 @@
 - Result: Moby Dick chapters 1–2 summarised accurately, and the recap stopped at the end of chapter 2. About 86 neurons in total.
 - Tests: 109 web unit tests (cut-off and summary sanity).
 - **Next:** the reader sends finished chapters (T049); then the Story so far sheet (T051), "Away N days" (T052) and the recap eval (T053).
+
+## 2026-11-20: Spec 002 T049: the reader sends finished chapters
+
+- A chapter is a contents entry, not a file section. Gutenberg EPUBs put many chapters in one file (Moby Dick chapters 8–12+ are all in section 2), so section-level summaries would be far too coarse.
+- **How "finished" works:**
+  - a chapter counts as finished when the reader moves from contents entry N to N+1; jumps don't count;
+  - its text runs from its anchor to the next entry's anchor (foliate `book.resolveHref`);
+  - the order number is the entry's position in the flattened contents, which is the recap cut-off.
+- **Sending:**
+  - chapters under 400 characters aren't sent;
+  - offline or paused requests wait in a 12-entry local queue and are sent on the next chapter or reader visit;
+  - with AI off they are dropped.
+- **Verified in a browser:** paging through Moby Dick chapters 10–12 sent exactly those three chapters, and the stored summaries are accurate.
+- **Accessibility gap fixed:** the reader had no keyboard page turning. Arrow keys and Page Up/Down now turn pages, including when focus is inside the book. There's an e2e test for it.
+- **Flaky e2e start:** one run had all 13 tests fail because the preview server didn't start, while the dev server on :5199 was also using the local D1 state. The same tests passed on rerun. ASSUMPTION: a state lock; watch for a repeat.

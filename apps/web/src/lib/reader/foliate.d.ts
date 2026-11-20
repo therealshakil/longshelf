@@ -22,7 +22,12 @@ export interface FoliateRenderer extends HTMLElement {
 }
 
 export interface FoliateView extends HTMLElement {
-	book: { toc?: TocItem[]; metadata?: { title?: string } };
+	book: {
+		toc?: TocItem[];
+		metadata?: { title?: string };
+		sections: { linear?: string; createDocument(): Promise<Document> }[];
+		resolveHref?(href: string): { index: number; anchor(doc: Document): Element | number } | null;
+	};
 	renderer: FoliateRenderer;
 	lastLocation?: FoliateLocation;
 	open(file: string | Blob): Promise<void>;

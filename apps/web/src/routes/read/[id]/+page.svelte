@@ -15,6 +15,7 @@
 	import ContentsPanel from '#lib/components/ContentsPanel.svelte';
 	import ErrorState from '#lib/components/ErrorState.svelte';
 	import { deviceName, splitPositions } from '#lib/library/format.ts';
+	import { sendSummary } from '#lib/reader/summaries.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -53,6 +54,9 @@
 		else if (settings.theme === 'paper') root.dataset.theme = 'light';
 		else delete root.dataset.theme;
 	});
+	// Anything queued while offline goes now (US4).
+	$effect(() => void sendSummary(null));
+
 	onDestroy(() => {
 		if (typeof document !== 'undefined') delete document.documentElement.dataset.theme;
 	});
@@ -68,12 +72,28 @@
 			});
 	}
 
+	// Keyboard page turning: arrows and Page Up/Down, unless a panel is open or a field has focus.
+	function onKey(e: KeyboardEvent) {
+		if (textOpen || contentsOpen || e.altKey || e.ctrlKey || e.metaKey) return;
+		const t = e.target as HTMLElement | null;
+		if (t?.closest('input, textarea, select, [contenteditable]')) return;
+		if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+			e.preventDefault();
+			reader?.next();
+		} else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+			e.preventDefault();
+			reader?.prev();
+		}
+	}
+
 	function onTap(zone: 'left' | 'middle' | 'right') {
 		if (zone === 'middle' || settings.page === 'scroll') hidden = !hidden;
 		else if (zone === 'left') reader?.prev();
 		else reader?.next();
 	}
 </script>
+
+<svelte:window onkeydown={onKey} />
 
 <svelte:head>
 	<title>{book?.title ?? 'Book'} · Reading · Ribbon</title>
@@ -138,6 +158,16 @@
 				onReady={(a) => (api = a)}
 				{onRelocate}
 				{onTap}
+				{onKey}
+				onChapterFinished={(c) =>
+					c.text.length >= 400 &&
+					sendSummary({
+						bookId: book.id,
+						href: c.href,
+						chapterLabel: c.label,
+						ordinal: c.ordinal,
+						text: c.text.slice(0, 200_000)
+					})}
 				onError={(m) => (error = m)}
 			/>
 		{/if}

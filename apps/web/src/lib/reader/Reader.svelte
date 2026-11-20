@@ -17,8 +17,9 @@
 		startFraction,
 		onReady,
 		onRelocate,
-		onChapterLeft,
+		onChapterFinished,
 		onTap,
+		onKey,
 		onError
 	}: {
 		src: string;
@@ -29,16 +30,63 @@
 		startFraction?: number;
 		onReady?: (api: ReaderApi) => void;
 		onRelocate?: (loc: FoliateLocation) => void;
-		/** A chapter was left going forward: the owner finished it (US4 summaries). */
-		onChapterLeft?: (chapter: { href: string; label: string }) => void;
+		/**
+		 * A chapter (contents entry) was left for the next one, so the owner finished it (US4). The
+		 * text is handed over once for summarising; Ribbon doesn't keep it.
+		 */
+		onChapterFinished?: (chapter: {
+			href: string;
+			ordinal: number;
+			label: string;
+			text: string;
+		}) => void;
 		onTap?: (zone: 'left' | 'middle' | 'right') => void;
+		/** A key pressed while focus is inside the book (forwarded so page keys work there too). */
+		onKey?: (e: KeyboardEvent) => void;
 		onError?: (message: string) => void;
 	} = $props();
 
 	let hostEl = $state<HTMLDivElement>();
 	let view: FoliateView | null = null;
-	let lastChapter: { href: string; label: string } | null = null;
-	let lastFraction = 0;
+	let flatToc: { href: string; label: string }[] = [];
+	let lastOrdinal = -1;
+
+	const flatten = (
+		items: { href: string; label: string; subitems?: unknown[] }[]
+	): typeof flatToc =>
+		items.flatMap((i) => [
+			{ href: i.href, label: i.label.trim() },
+			...flatten((i.subitems ?? []) as typeof items)
+		]);
+
+	/** The text of contents entry `ordinal`: from its anchor up to the next entry's anchor. */
+	async function chapterText(ordinal: number): Promise<string> {
+		const book = view?.book;
+		const here = book?.resolveHref?.(flatToc[ordinal].href);
+		if (!book || !here) return '';
+		const doc = await book.sections[here.index].createDocument();
+		const range = doc.createRange();
+		const start = here.anchor(doc);
+		if (start instanceof Element) range.setStartBefore(start);
+		else range.setStart(doc.body, 0);
+		range.setEndAfter(doc.body.lastChild ?? doc.body);
+		const next = flatToc[ordinal + 1] && book.resolveHref?.(flatToc[ordinal + 1].href);
+		if (next && next.index === here.index) {
+			const end = next.anchor(doc);
+			if (end instanceof Element) range.setEndBefore(end);
+		}
+		return range.toString().replace(/\s+/g, ' ').trim();
+	}
+
+	async function finished(ordinal: number) {
+		try {
+			const text = await chapterText(ordinal);
+			const { href, label } = flatToc[ordinal];
+			onChapterFinished?.({ href, ordinal, label, text });
+		} catch {
+			// A chapter that can't be read just goes without a summary.
+		}
+	}
 
 	function applyStyles() {
 		if (!view?.renderer) return;
@@ -73,6 +121,7 @@
 
 				view.addEventListener('load', ((e: CustomEvent<{ doc: Document }>) => {
 					const doc = e.detail.doc;
+					doc.addEventListener('keydown', (ev: KeyboardEvent) => onKey?.(ev));
 					doc.addEventListener('click', (ev: MouseEvent) => {
 						if ((ev.target as Element | null)?.closest('a')) return;
 						const frame = doc.defaultView?.frameElement?.getBoundingClientRect();
@@ -84,20 +133,17 @@
 
 				view.addEventListener('relocate', ((e: CustomEvent<FoliateLocation>) => {
 					const loc = e.detail;
-					const chapter = loc.tocItem ? { href: loc.tocItem.href, label: loc.tocItem.label } : null;
-					if (
-						lastChapter &&
-						chapter &&
-						chapter.href !== lastChapter.href &&
-						loc.fraction > lastFraction
-					)
-						onChapterLeft?.(lastChapter);
-					lastChapter = chapter ?? lastChapter;
-					lastFraction = loc.fraction;
+					const ordinal = loc.tocItem ? flatToc.findIndex((i) => i.href === loc.tocItem!.href) : -1;
+					if (ordinal >= 0) {
+						// Only the next chapter, not a jump: skipping ahead isn't finishing.
+						if (lastOrdinal >= 0 && ordinal === lastOrdinal + 1) finished(lastOrdinal);
+						lastOrdinal = ordinal;
+					}
 					onRelocate?.(loc);
 				}) as EventListener);
 
 				await view.open(src);
+				flatToc = flatten(view.book.toc ?? []);
 				applyStyles();
 				if (startCfi) await view.init({ lastLocation: startCfi });
 				else if (startFraction) await view.goToFraction(startFraction);

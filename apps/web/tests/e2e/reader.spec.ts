@@ -29,6 +29,22 @@ async function tapMiddle(page: Page) {
 }
 
 test.describe('Reader', () => {
+	test('arrow keys turn the page', async ({ page }) => {
+		await openBook(page);
+		// The saved place (a CFI) moves with every page turn.
+		const place = () =>
+			page.evaluate(() =>
+				Object.entries(localStorage)
+					.filter(([k]) => k.includes('place'))
+					.map(([, v]) => v)
+					.join()
+			);
+		await expect.poll(place).not.toBe('');
+		const before = await place();
+		for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowRight');
+		await expect.poll(place).not.toBe(before);
+	});
+
 	test('a tap in the middle hides the bars and a second tap shows them', async ({ page }) => {
 		await openBook(page);
 		const top = page.locator('header.top');
