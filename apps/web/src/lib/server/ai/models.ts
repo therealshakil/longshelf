@@ -1,19 +1,20 @@
 /**
  * Workers AI models (research R4) and a neuron estimate per call (research R5).
  * Model ids are configuration: changing one needs no other code change.
- * Prices: https://developers.cloudflare.com/workers-ai/platform/pricing/ (read 2026-11-18).
+ * Prices and status from `wrangler ai models list` (read 2026-11-20). The first choices
+ * (qwen3-30b-a3b, embeddinggemma) were deprecated by Cloudflare on 2026-11-20.
  */
 export const MODELS = {
-	text: '@cf/qwen/qwen3-30b-a3b-fp8',
+	text: '@cf/google/gemma-4-26b-a4b-it',
 	recapStepUp: '@cf/openai/gpt-oss-120b',
-	embedding: '@cf/google/embeddinggemma-2'
+	embedding: '@cf/baai/bge-m3'
 } as const;
 
 /** USD per million tokens (input, output). */
 const PRICE: Record<string, [number, number]> = {
-	'@cf/qwen/qwen3-30b-a3b-fp8': [0.051, 0.335],
+	'@cf/google/gemma-4-26b-a4b-it': [0.1, 0.3],
 	'@cf/openai/gpt-oss-120b': [0.35, 0.75],
-	'@cf/google/embeddinggemma-2': [0.0017, 0]
+	'@cf/baai/bge-m3': [0.0118, 0]
 };
 
 /** $0.011 per 1,000 neurons. ASSUMPTION: neurons scale linearly with the listed token prices. */

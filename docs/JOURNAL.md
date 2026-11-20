@@ -196,3 +196,17 @@
   - SvelteKit 3 exposes Cloudflare bindings through `import { env } from 'cloudflare:workers'`, emulated in `vite dev`. `event.platform.env` is not populated.
   - Running Prettier from `apps/web` on `packages/shared` without `--config` reformatted shared files in Prettier's default style. Shared has no Prettier config or lint script, so pass apps/web's config explicitly.
 - **Next:** US4 Story so far (chapter summaries on Workers AI, recap assembly, eval).
+
+## 2026-11-20: Spec 002 US4 server side: chapter summaries and recaps
+
+- New endpoints:
+  - `POST /api/ai/chapter-summary` (idempotent per book and chapter; the text is not stored);
+  - `GET /api/ai/chapter-summary/[bookId]` (which chapters already have summaries);
+  - `GET /api/ai/recap/[bookId]` (built only from summaries before the current chapter, cached per cut-off).
+- First real Workers AI calls:
+  - the planned model (`qwen3-30b-a3b`) was deprecated by Cloudflare today, so the defaults moved to `gemma-4-26b-a4b-it` and `bge-m3` (research R4 update);
+  - Gemma's default reasoning used up the output budget; it is now switched off per call;
+  - an empty chapter got a "Please provide the text" reply, so short sections are skipped and non-summary replies are never stored.
+- Result: Moby Dick chapters 1–2 summarised accurately, and the recap stopped at the end of chapter 2. About 86 neurons in total.
+- Tests: 109 web unit tests (cut-off and summary sanity).
+- **Next:** the reader sends finished chapters (T049); then the Story so far sheet (T051), "Away N days" (T052) and the recap eval (T053).

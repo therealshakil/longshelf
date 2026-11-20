@@ -225,7 +225,7 @@ description: "Tasks for 002 redesigned screens and AI features"
   - `chapter_summary`, `recap`, `book_embedding`, `suggestion_dismissal`;
   - `ai_usage(day, neurons_est, calls)`.
 - [X] T043 [P] Add Zod schemas for every `/api/ai/*` request and response in `packages/shared/src/ai/schemas.ts`, per contracts/ai-api.md, including `503 { reason: 'ai_paused' | 'ai_off' | 'offline' }`.
-- [X] T044 Build `apps/web/src/lib/server/ai/models.ts`: model IDs as configuration, defaulting to `@cf/qwen/qwen3-30b-a3b-fp8` (text), `@cf/openai/gpt-oss-120b` (recap step-up) and `@cf/google/embeddinggemma-2` (embeddings), with a neuron estimate per call from the pricing table in research R4/R5.
+- [X] T044 Build `apps/web/src/lib/server/ai/models.ts` (defaults changed 2026-11-20, research R4 update): model IDs as configuration, defaulting to `@cf/qwen/qwen3-30b-a3b-fp8` (text), `@cf/openai/gpt-oss-120b` (recap step-up) and `@cf/google/embeddinggemma-2` (embeddings), with a neuron estimate per call from the pricing table in research R4/R5.
 - [X] T045 Build the spend guard `apps/web/src/lib/server/ai/guard.ts`: before each call, check `ai_usage` for the UTC day; refuse with `ai_paused` at the ceiling (default 8,000 neurons, configurable); refuse with `ai_off` when disabled. Unit test the ceiling and the day rollover.
 - [X] T046 [P] Build the operator page `apps/web/src/routes/settings/ai/+page.svelte` plus `GET /api/ai/usage` and `PUT /api/ai/enabled`. It shows today's estimate vs ceiling, calls, the on/off switch, a "Suggest genres" job button, and a plain note that content stays in the owner's Cloudflare account (constitution III, XI).
 - [X] T047 [P] Add the AI-off e2e test `apps/web/tests/e2e/ai-off.spec.ts`: with AI disabled, every route opens and every non-AI task in US1–3 and US8 completes, while AI areas hide or say they are off (SC-006).
@@ -238,9 +238,9 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 **Independent Test**: read two chapters of Moby Dick and check the recap covers exactly those.
 
-- [ ] T048 [US4] Implement `POST /api/ai/chapter-summary` in `apps/web/src/routes/api/ai/chapter-summary/+server.ts`: a 120–200-word summary of that chapter only, stored in `chapter_summary`. The text is not stored. Idempotent per (bookId, href); passes through the guard.
+- [X] T048 [US4] Implement `POST /api/ai/chapter-summary` in `apps/web/src/routes/api/ai/chapter-summary/+server.ts`: a 120–200-word summary of that chapter only, stored in `chapter_summary`. The text is not stored. Idempotent per (bookId, href); passes through the guard.
 - [ ] T049 [US4] Make the reader send finished-chapter text: on Reader's chapter-finished event, call the endpoint (queued locally if offline, sent later) in `apps/web/src/lib/reader/summaries.ts`.
-- [ ] T050 [US4] Implement `GET /api/ai/recap/[bookId]` in `apps/web/src/routes/api/ai/recap/[bookId]/+server.ts`:
+- [X] T050 [US4] Implement `GET /api/ai/recap/[bookId]` in `apps/web/src/routes/api/ai/recap/[bookId]/+server.ts`:
   - assemble 3–5 paragraphs only from summaries up to the furthest position;
   - states: `too_early` below 5%, `writing`, `unavailable`;
   - cache in `recap`, rebuilt when the furthest point moves past `upto_href`.

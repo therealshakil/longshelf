@@ -72,6 +72,33 @@ Source: Workers AI pricing, https://developers.cloudflare.com/workers-ai/platfor
 Context windows were not listed on the pricing page. ASSUMPTION: a single chapter (typically
 under 15k tokens) fits these models. The plan avoids whole-book prompts entirely (R5).
 
+### R4 update, 2026-11-20 (supersedes the table above for text and embeddings)
+
+Cloudflare deprecated `qwen3-30b-a3b-fp8` and `embeddinggemma` on 2026-11-20; the first real
+call failed with error 5028. Replacements, from `wrangler ai models list` (read 2026-11-20):
+
+| Job | Model | Price per M tokens (in / out) | Why |
+|---|---|---|---|
+| Summaries, recaps, genres, "why it matched" | `@cf/google/gemma-4-26b-a4b-it` | $0.10 / $0.30 | Cheapest non-deprecated general model with a 256k context; mixture-of-experts |
+| Recap step-up (unchanged) | `@cf/openai/gpt-oss-120b` | $0.35 / $0.75 | Still listed |
+| Embeddings | `@cf/baai/bge-m3` | $0.0118 | Not deprecated, multilingual, 60k context |
+
+Considered and rejected:
+- `glm-4.7-flash` ($0.06 / $0.40): cheaper input, but a 131k context and pricier output.
+- `clef-flash` ($0.038): a 24k context, which a long chapter would exceed.
+- `llama-3.2-3b`: deprecated the same day.
+
+Cost is about twice the qwen estimate, still well under $0.01 a reading day.
+
+Findings from the first real calls:
+- Gemma thinks before answering by default and spent the whole token budget doing so. The calls
+  now pass `chat_template_kwargs: { enable_thinking: false }`.
+- Given a heading with no text, the model answered "Please provide the text…". Chapters under 400
+  characters are now skipped, and replies that aren't summaries are never stored (`looksLikeSummary`).
+
+Measured: two Moby Dick chapters (12k and 8k characters) plus one recap used about 86 neurons,
+under 1% of the free daily allowance.
+
 ## R5. Story so far: chapter summaries, spoiler-safe by construction (FR-011, SC-004)
 
 **Decision:** when the owner finishes a chapter in the reader, the client sends that chapter's
