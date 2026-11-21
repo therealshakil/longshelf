@@ -19,6 +19,24 @@
 				note: 'Written by AI from the book’s text up to your place, so it won’t spoil what comes next. It can get details wrong.'
 			}
 		},
+		{
+			name: 'Recent chapters only',
+			percent: 68,
+			recap: {
+				state: 'ready',
+				upto: { label: 'Chapter 3. The Spouter-Inn', percent: 68 },
+				paragraphs: [
+					'He leaves Manhattan for New Bedford with a carpet-bag, misses the boat to Nantucket, and looks for a cheap bed on a cold December night, ending up at the Spouter-Inn.'
+				],
+				note: 'Written by AI from the book’s text up to your place, so it won’t spoil what comes next. It can get details wrong.',
+				earlier: { percent: 25, days: 1 },
+				coverage: {
+					fromLabel: 'Chapter 2. The Carpet-Bag',
+					toLabel: 'Chapter 2. The Carpet-Bag',
+					limited: false
+				}
+			}
+		},
 		{ name: 'Writing', percent: 12, recap: { state: 'loading' } },
 		{
 			name: 'Unavailable',
@@ -60,6 +78,7 @@
 			awayDays={12}
 			recap={s.recap}
 			continueHref="#"
+			onIncludeEarlier={() => {}}
 		/>
 	{/each}
 </EntryPage>

@@ -1,7 +1,15 @@
 import { json } from '@sveltejs/kit';
 import type { Recap } from '@ribbon/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
-import { beforeCutoff, writeRecap, type StoredSummary } from '#lib/server/ai/story.ts';
+import { ceiling } from '#lib/server/ai/guard.ts';
+import { estimateNeurons, MODELS } from '#lib/server/ai/models.ts';
+import { ON_DEMAND_DAILY } from '#lib/server/ai/on-demand.ts';
+import {
+	beforeCutoff,
+	summaryNeurons,
+	writeRecap,
+	type StoredSummary
+} from '#lib/server/ai/story.ts';
 import type { RequestHandler } from './$types';
 
 // Approved copy (design-mocks/index.html#recap).
@@ -9,9 +17,10 @@ const NOTE =
 	'Written by AI from the book’s text up to your place, so it won’t spoil what comes next. It can get details wrong.';
 
 /**
- * Story so far up to the reader's furthest place. Summaries exist only for chapters the owner
- * finished, so without `ordinal` every stored summary is already behind them. With `ordinal`
- * (the chapter they're in, from the reader) the recap stops before it.
+ * Story so far up to the reader's place. The client first fills in summaries for earlier
+ * chapters (DR-0004). With `ordinal` (the chapter they're in) the recap stops before it. Without
+ * one the place couldn't be located, so no on-demand summaries were made and every stored
+ * summary comes from a chapter the owner finished.
  */
 export const GET: RequestHandler = async ({ params, url }) => {
 	const raw = url.searchParams.get('ordinal');
@@ -34,10 +43,11 @@ export const GET: RequestHandler = async ({ params, url }) => {
 		return json({
 			state: 'writing',
 			reason:
-				'No recap yet. Recaps are written from the chapters you finish reading in Ribbon, so one will be ready after your next chapter.'
+				'No recap yet. Ribbon has no earlier chapters to work from, so one will be ready after your next chapter.'
 		} satisfies Recap);
 
-	const uptoHref = `ordinal:${used.at(-1)!.ordinal}`;
+	// The count matters: filling an earlier gap must rebuild a recap with the same last chapter.
+	const uptoHref = `ordinal:${used.at(-1)!.ordinal}:${used.length}`;
 	const cached = await db
 		.prepare('SELECT text FROM recap WHERE book_id = ? AND upto_href = ?')
 		.bind(params.bookId, uptoHref)
@@ -67,10 +77,24 @@ export const GET: RequestHandler = async ({ params, url }) => {
 			)
 			.run();
 	}
+	// What adding the earlier chapters would cost, so the owner sees it before choosing (DR-0004).
+	const earlierChapters = Number(url.searchParams.get('earlierChapters')) || 0;
+	const earlierChars = Number(url.searchParams.get('earlierChars')) || 0;
+	let earlier: { percent: number; days: number } | undefined;
+	if (earlierChapters > 0 && earlierChars > 0) {
+		const neurons =
+			summaryNeurons(0) * earlierChapters +
+			estimateNeurons(MODELS.text, Math.ceil(earlierChars / 4), 0);
+		earlier = {
+			percent: Math.max(1, Math.round((100 * neurons) / (await ceiling(store)))),
+			days: Math.ceil(neurons / ON_DEMAND_DAILY)
+		};
+	}
 	return json({
 		state: 'ready',
 		upto: { label, percent: Math.round(percent) },
 		paragraphs,
-		note: NOTE
+		note: NOTE,
+		earlier
 	} satisfies Recap);
 };

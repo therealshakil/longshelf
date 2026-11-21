@@ -17,7 +17,7 @@
 	import { deviceName, splitPositions } from '#lib/library/format.ts';
 	import { sendSummary } from '#lib/reader/summaries.ts';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
-	import { fetchRecap, type RecapView } from '#lib/ai/recap.ts';
+	import { recapWithBackfill, type RecapView } from '#lib/ai/recap.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -41,16 +41,32 @@
 	let recap = $state<RecapView>({ state: 'loading' });
 
 	// Story so far (US4), up to where you are now.
-	async function openRecap() {
+	let recapRun: AbortController | null = null;
+	const openRecap = () => runRecap(false);
+	async function runRecap(all: boolean) {
 		if (!book) return;
+		recapRun?.abort();
+		const run = (recapRun = new AbortController());
 		recap = { state: 'loading' };
 		recapOpen = true;
-		recap = await fetchRecap(book.id, {
-			percent,
-			label: chapterLabel,
-			ordinal: reader?.currentOrdinal()
-		});
+		const out = await recapWithBackfill(
+			book.id,
+			{ percent, label: chapterLabel, ordinal: reader?.currentOrdinal() },
+			reader?.openedBook(),
+			{
+				signal: run.signal,
+				all,
+				onProgress: (done, total) => {
+					if (!run.signal.aborted) recap = { state: 'loading', progress: { done, total } };
+				}
+			}
+		);
+		if (out && !run.signal.aborted) recap = out;
 	}
+	// Closing the sheet stops any summarising, so nothing is spent unseen.
+	$effect(() => {
+		if (!recapOpen) recapRun?.abort();
+	});
 
 	const percent = $derived(loc ? Math.round(loc.fraction * 100) : (positions.here?.percent ?? 0));
 	const other = $derived(
@@ -198,6 +214,7 @@
 		author={book.authors[0]?.name}
 		place={{ label: chapterLabel, percent }}
 		{recap}
+		onIncludeEarlier={() => runRecap(true)}
 	/>
 	<ContentsPanel
 		bind:open={contentsOpen}

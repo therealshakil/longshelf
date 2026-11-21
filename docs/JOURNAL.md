@@ -244,3 +244,17 @@
 - **Bug fixed:** sheet titles rendered in Inter, not Literata. `cn()` (tailwind-merge) treats `font-reading` and `font-title` as clashing and drops one. TextPanel and ContentsPanel had the same bug; all three now use a `.title-reading` class.
 - Tests: 119 web unit tests; e2e ai-off, catalogue, a11y-smoke and home suites pass (14).
 - **Open question for the owner:** for a book read mostly on Kobo, Ribbon has summaries only for chapters finished in Ribbon. The recap then covers only those chapters, while the cut-off line still names your place. Options: say how much the recap covers, or summarise the earlier chapters on demand when the recap opens (costs more neurons, still within the free tier).
+
+## 2026-11-21: On-demand recap summaries (DR-0004)
+
+- **Owner decisions:** summarise chapters not read in Ribbon on demand, then keep the cost down.
+- **Tested:** five long chapters with full text, head only, head and tail, and spaced slices. Slicing cost 18–29% of full text but lost main plot beats, so chapters are always sent whole.
+- **Built:**
+  - a recap summarises the newest 40,000 words before your place, in whole chapters;
+  - the sheet says what it covers and offers "Include earlier chapters" with its estimated cost;
+  - on-demand summaries stop at 3,000 neurons per UTC day, reserved atomically on the server;
+  - closing the sheet stops the work, and finished summaries are kept.
+- **Cache fix:** the recap key now includes the summary count, so filling an earlier gap rebuilds it.
+- **Sample data:** the Moby Dick position now uses a real contents link.
+- **Checked:** typecheck, lint, unit tests, and targeted e2e runs for recap backfill (AI stubbed) and the catalogue.
+- **Not checked:** a real Workers AI recap through the new flow, or "Include earlier chapters" clicked in a browser. The sample Moby Dick place is inside the 40,000-word window, so it doesn't show the coverage line.

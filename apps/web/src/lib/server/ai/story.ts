@@ -2,7 +2,7 @@
  * Story so far (spec 002 US4, research R5): one short summary per chapter the owner has passed,
  * and recaps built only from those, so a recap can't run past the owner's place.
  */
-import { MODELS } from './models.ts';
+import { estimateNeurons, MODELS, tokensOf } from './models.ts';
 import { runText } from './run.ts';
 import type { GuardStore } from './guard.ts';
 
@@ -34,6 +34,14 @@ You are given short summaries of the chapters they have already read, in order.
 Write 3 to 5 short paragraphs in plain English that remind them who is who and what has happened.
 Use only what the summaries say. Never predict, hint at or foreshadow anything after the last summary.
 Reply with the paragraphs only, separated by blank lines.`;
+
+/** Upper estimate for summarising a chapter of this length: its prompt plus a full reply. */
+export const summaryNeurons = (chars: number) =>
+	estimateNeurons(
+		MODELS.text,
+		tokensOf(SUMMARY_SYSTEM) + Math.ceil(Math.min(chars, MAX_CHAPTER_CHARS) / 4),
+		400
+	);
 
 export async function summariseChapter(
 	ai: Ai | null,

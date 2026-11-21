@@ -18,7 +18,8 @@
 		awayDays,
 		recap,
 		continueHref,
-		onContinue
+		onContinue,
+		onIncludeEarlier
 	}: {
 		open?: boolean;
 		title: string;
@@ -30,6 +31,8 @@
 		/** Where Continue reading goes; in the reader it just closes the sheet. */
 		continueHref?: string;
 		onContinue?: () => void;
+		/** The owner chose to summarise the chapters before the recap's window (DR-0004). */
+		onIncludeEarlier?: () => void;
 	} = $props();
 
 	let phone = $state(false);
@@ -70,16 +73,38 @@
 		{/if}
 
 		{#if recap.state === 'ready'}
+			{#if recap.coverage}
+				<p class="covers">
+					Covers {recap.coverage.fromLabel} to {recap.coverage.toLabel} in detail.
+				</p>
+			{/if}
 			<div class="recap-text">
 				{#each recap.paragraphs as p, i (i)}<p>{p}</p>{/each}
 			</div>
+			{#if recap.coverage?.limited}
+				<p class="covers">
+					Ribbon reached today’s limit for earlier chapters. Open Story so far tomorrow to add more.
+				</p>
+			{:else if recap.coverage && recap.earlier && onIncludeEarlier}
+				<button type="button" class="earlier" onclick={onIncludeEarlier}>
+					Include earlier chapters · about {recap.earlier.percent}% of today’s AI allowance{#if recap.earlier.days > 1},
+						over {recap.earlier.days} days{/if}
+				</button>
+			{/if}
 			<p class="ai-note">{recap.note}</p>
 		{:else if recap.state === 'loading'}
 			<div class="wait" role="status">
 				<span class="line w-[90%]"></span><span class="line w-[75%]"></span><span
 					class="line w-[85%]"
 				></span><span class="line w-[60%]"></span>
-				<p>Writing a recap up to {place.label}. This takes a few seconds.</p>
+				{#if recap.progress && recap.progress.done < recap.progress.total}
+					<p>
+						Reading the earlier chapters, {recap.progress.done} of {recap.progress.total}. The first
+						recap of a long book can take a few minutes.
+					</p>
+				{:else}
+					<p>Writing a recap up to {place.label}. This takes a few seconds.</p>
+				{/if}
 			</div>
 		{:else if message}
 			<div class="msg" role="status">
@@ -138,6 +163,25 @@
 	}
 	.recap-text p + p {
 		margin-top: 0.9em;
+	}
+	.covers {
+		font-size: var(--r-text-sm);
+		color: var(--r-text-muted);
+	}
+	.earlier {
+		align-self: flex-start;
+		min-height: var(--r-target);
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--r-accent);
+		font: inherit;
+		font-size: var(--r-text-sm);
+		font-weight: var(--r-weight-strong);
+		text-align: start;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+		cursor: pointer;
 	}
 	.ai-note {
 		font-size: var(--r-text-xs);

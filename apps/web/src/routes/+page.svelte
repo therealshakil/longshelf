@@ -11,8 +11,10 @@
 	import PeriodicalRow from '#lib/components/PeriodicalRow.svelte';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
 	import type { BookWithPositions } from '@ribbon/shared/library';
-	import { fetchRecap, type RecapView } from '#lib/ai/recap.ts';
+	import { recapWithBackfill, type RecapView } from '#lib/ai/recap.ts';
+	import { library } from '#lib/library/index.ts';
 	import { daysAway, splitPositions } from '#lib/library/format.ts';
+	import { flattenToc, openBook, placeOrdinal } from '#lib/reader/chapters.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -23,16 +25,51 @@
 	let recapFor = $state<BookWithPositions | null>(null);
 	const recapPlace = $derived.by(() => {
 		const here = recapFor ? splitPositions(recapFor.positions).here : undefined;
-		return { label: here?.chapterLabel ?? '', percent: here?.percent ?? 0, readAt: here?.readAt };
+		return {
+			label: here?.chapterLabel ?? '',
+			percent: here?.percent ?? 0,
+			readAt: here?.readAt,
+			href: here?.href ?? ''
+		};
 	});
 
-	async function openRecap(bookId: string) {
+	/** The book's chapters and the owner's place in them, if its file is available. */
+	async function openForRecap(bookId: string) {
+		try {
+			const url = await library.bookFileUrl(bookId);
+			if (!url) return {};
+			const book = await openBook(url);
+			const chapters = flattenToc(book.toc ?? []);
+			const ordinal = placeOrdinal(chapters, recapPlace, (h) => book.resolveHref?.(h)?.index);
+			return { opened: { book, chapters }, ordinal };
+		} catch {
+			return {}; // no file to read: the recap uses the summaries Ribbon already has
+		}
+	}
+
+	let recapRun: AbortController | null = null;
+	const openRecap = (bookId: string) => runRecap(bookId, false);
+	async function runRecap(bookId: string, all: boolean) {
 		recapFor = data.also.find((b) => b.book.id === bookId) ?? null;
 		if (!recapFor) return;
+		recapRun?.abort();
+		const run = (recapRun = new AbortController());
 		recap = { state: 'loading' };
 		recapOpen = true;
-		recap = await fetchRecap(bookId, recapPlace);
+		const { opened, ordinal } = await openForRecap(bookId);
+		const out = await recapWithBackfill(bookId, { ...recapPlace, ordinal }, opened, {
+			signal: run.signal,
+			all,
+			onProgress: (done, total) => {
+				if (!run.signal.aborted) recap = { state: 'loading', progress: { done, total } };
+			}
+		});
+		if (out && !run.signal.aborted) recap = out;
 	}
+	// Closing the sheet stops any summarising, so nothing is spent unseen.
+	$effect(() => {
+		if (!recapOpen) recapRun?.abort();
+	});
 </script>
 
 <svelte:head>
@@ -80,6 +117,7 @@
 		awayDays={recapPlace.readAt ? daysAway(recapPlace.readAt, new Date()) : undefined}
 		{recap}
 		continueHref={resolve('/read/[id]', { id: recapFor.book.id })}
+		onIncludeEarlier={() => recapFor && runRecap(recapFor.book.id, true)}
 	/>
 {/if}
 

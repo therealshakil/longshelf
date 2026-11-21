@@ -158,7 +158,8 @@ const IN_PROGRESS: Progress[] = [
 		slug: 'herman-melville_moby-dick',
 		percent: 12,
 		chapter: 'Chapter 23',
-		href: 'chapter-23',
+		// A real contents link: Story so far locates the place from it.
+		href: 'OEBPS/8951984864809045623_2701-h-2.htm.xhtml#pgepubid00027',
 		hoursAgo: 12 * 24 + 3
 	},
 	{

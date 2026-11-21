@@ -5,6 +5,7 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { chapterText, flattenToc, type Chapter, type FoliateBook } from './chapters.ts';
 	import type { FoliateLocation, FoliateView, ReaderApi } from './foliate.d.ts';
 	import { bookCss, readColours } from './reader-styles.ts';
 	import type { ReaderSettings } from './settings.ts';
@@ -48,39 +49,13 @@
 
 	let hostEl = $state<HTMLDivElement>();
 	let view: FoliateView | null = null;
-	let flatToc: { href: string; label: string }[] = [];
+	let flatToc: Chapter[] = [];
 	let lastOrdinal = -1;
-
-	const flatten = (
-		items: { href: string; label: string; subitems?: unknown[] }[]
-	): typeof flatToc =>
-		items.flatMap((i) => [
-			{ href: i.href, label: i.label.trim() },
-			...flatten((i.subitems ?? []) as typeof items)
-		]);
-
-	/** The text of contents entry `ordinal`: from its anchor up to the next entry's anchor. */
-	async function chapterText(ordinal: number): Promise<string> {
-		const book = view?.book;
-		const here = book?.resolveHref?.(flatToc[ordinal].href);
-		if (!book || !here) return '';
-		const doc = await book.sections[here.index].createDocument();
-		const range = doc.createRange();
-		const start = here.anchor(doc);
-		if (start instanceof Element) range.setStartBefore(start);
-		else range.setStart(doc.body, 0);
-		range.setEndAfter(doc.body.lastChild ?? doc.body);
-		const next = flatToc[ordinal + 1] && book.resolveHref?.(flatToc[ordinal + 1].href);
-		if (next && next.index === here.index) {
-			const end = next.anchor(doc);
-			if (end instanceof Element) range.setEndBefore(end);
-		}
-		return range.toString().replace(/\s+/g, ' ').trim();
-	}
 
 	async function finished(ordinal: number) {
 		try {
-			const text = await chapterText(ordinal);
+			if (!view) return;
+			const text = await chapterText(view.book, flatToc, ordinal);
 			const { href, label } = flatToc[ordinal];
 			onChapterFinished?.({ href, ordinal, label, text });
 		} catch {
@@ -143,7 +118,7 @@
 				}) as EventListener);
 
 				await view.open(src);
-				flatToc = flatten(view.book.toc ?? []);
+				flatToc = flattenToc(view.book.toc ?? []);
 				applyStyles();
 				if (startCfi) await view.init({ lastLocation: startCfi });
 				else if (startFraction) await view.goToFraction(startFraction);
@@ -167,6 +142,10 @@
 	/** The contents entry you're in, counted through the flattened contents (the recap cut-off). */
 	export function currentOrdinal(): number | undefined {
 		return lastOrdinal >= 0 ? lastOrdinal : undefined;
+	}
+	/** The open book and its chapters, for summarising earlier chapters on demand. */
+	export function openedBook(): { book: FoliateBook; chapters: Chapter[] } | undefined {
+		return view?.book ? { book: view.book, chapters: flatToc } : undefined;
 	}
 	export function next() {
 		return view?.goRight();

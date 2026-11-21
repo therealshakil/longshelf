@@ -269,7 +269,10 @@ Home row, newest issue first, with new issues marked.
   good.
 - **FR-011**: Story so far MUST be written only from text before the owner's furthest
   position. It MUST state its cut-off and say that it was written by AI. It MUST have writing,
-  unavailable and too-early states.
+  unavailable and too-early states. For chapters not read in Ribbon, it MUST summarise whole
+  chapters newest first, up to 40,000 words before the owner's place, MUST say what it covers,
+  and MUST add earlier chapters only when the owner asks, with the estimated cost shown first
+  (DR-0004).
 - **FR-012**: Genre suggestions MUST be kept in Ribbon and marked as suggested until the owner
   promotes them. Promotion MUST write to a dedicated genres field in the Calibre library through
   Calibre's own tools at the next sync. The owner's collection field MUST never be changed.
