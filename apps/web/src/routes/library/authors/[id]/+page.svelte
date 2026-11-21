@@ -1,6 +1,6 @@
 <!--
 	Author page (spec 002 US3): portrait and short biography with their source (left out when
-	unknown), your books by them, and their bibliography marking which you own.
+	unknown), your books by them, and their notable works marking which you own (DR-0005).
 	Matches design-mocks/author.html.
 -->
 <script lang="ts">
@@ -12,6 +12,17 @@
 	let { data }: PageProps = $props();
 	const a = $derived(data.page.author);
 	const owned = $derived(new Map(data.page.books.map((b) => [b.book.id, b])));
+	// Name only the sources this author's page actually uses.
+	const credits = $derived.by(() => {
+		const fromWikipedia =
+			a.bio && a.portrait ? 'Biography and photo' : a.bio ? 'Biography' : a.portrait ? 'Photo' : '';
+		return [
+			fromWikipedia && `${fromWikipedia} from Wikipedia.`,
+			a.bibliography.length ? 'Notable works from Wikidata.' : ''
+		]
+			.filter(Boolean)
+			.join(' ');
+	});
 </script>
 
 <svelte:head>
@@ -28,7 +39,11 @@
 		{#if a.portrait}
 			<figure>
 				<img src={a.portrait.url} alt={a.portrait.alt} />
-				<figcaption>{a.portrait.credit}</figcaption>
+				<figcaption>
+					{a.portrait.credit} ·
+					{#if a.portrait.source}<a href={a.portrait.source} rel="external">{a.portrait.licence}</a
+						>{:else}{a.portrait.licence}{/if}
+				</figcaption>
 			</figure>
 		{/if}
 		<div>
@@ -37,7 +52,8 @@
 			{#if a.bio}
 				<p class="bio">{a.bio.text}</p>
 				<p class="src">
-					Biography from Wikipedia · <a href={a.bio.source} rel="external">Read more</a>
+					Biography from Wikipedia, CC BY-SA 4.0 ·
+					<a href={a.bio.source} rel="external">Read more</a>
 				</p>
 			{/if}
 			<p class="meta">
@@ -55,12 +71,12 @@
 	</ul>
 
 	{#if a.bibliography.length}
-		<h2 class="section-h">Bibliography</h2>
+		<h2 class="section-h">Notable works</h2>
 		<ol class="bib">
 			{#each a.bibliography as w (w.title)}
 				{@const mine = w.ownedBookId ? owned.get(w.ownedBookId) : undefined}
 				<li class:missing={!mine}>
-					<span class="y">{w.year}</span>
+					<span class="y">{w.year ?? '—'}</span>
 					{#if mine}
 						<a class="t" href={resolve('/book/[id]', { id: mine.book.id })}>{w.title}</a>
 						<span class="s" class:active={mine.status.kind === 'in-progress'}
@@ -73,10 +89,9 @@
 				</li>
 			{/each}
 		</ol>
-		<p class="note">
-			Novels and novellas, by first publication. Bibliography and biography come from public
-			sources; your library comes from Calibre.
-		</p>
+	{/if}
+	{#if credits}
+		<p class="note">{credits} Your library comes from Calibre.</p>
 	{/if}
 </main>
 
@@ -121,6 +136,9 @@
 		object-position: top;
 		border-radius: var(--r-radius-cover);
 		box-shadow: var(--r-shadow-tile);
+	}
+	figcaption a {
+		color: inherit;
 	}
 	figcaption {
 		font-size: var(--r-text-xs);
@@ -219,14 +237,13 @@
 		color: var(--r-text-muted);
 	}
 	@media (max-width: 40rem) {
-		.top {
-			grid-template-columns: 7rem minmax(0, 1fr);
+		.top,
+		.top.no-portrait {
+			grid-template-columns: minmax(0, 1fr);
 			gap: 1.25rem;
 		}
-		.bio,
-		.src,
-		.meta {
-			grid-column: 1 / -1;
+		figure {
+			max-inline-size: 9rem;
 		}
 		h1 {
 			font-size: var(--r-text-2xl);

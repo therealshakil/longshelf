@@ -13,7 +13,7 @@ Two layers:
 | Book | id, title, subtitle?, authors[] (id, name, sort), cover (url, alt), description?, series? (name, index), collection?, tags[], formats[], addedAt, pubYear?, publisher? | `collection` is Calibre's single-value Collection column; never written (FR-012). |
 | ReadingPosition | bookId, source (`this-device` \| `kobo` \| other device id), percent, chapterLabel, href, fraction, cfi?, readAt, furthestHref, furthestPercent | Matches DESIGN.md `progress` plus "furthest", which recaps need. |
 | ReadStatus (derived) | `unread` \| `in-progress(percent)` \| `finished` | One rule everywhere (FR-005): no label / "N% read" / "Finished". |
-| Author | id, name, sort, lifeDates?, bio? (text, source url), portrait? (url, credit, licence), bibliography[] (title, year, ownedBookId?) | Bio, portrait and bibliography come from public sources, with the source shown. Missing data is omitted. |
+| Author | id, name, sort, lifeDates?, bio? (text, source url), portrait? (url, credit, licence, source?), bibliography[] (title, year?, ownedBookId?) | Bio, portrait and bibliography come from public sources, with the source shown. Missing data is omitted. |
 | Shelf | kind (`collection` \| `genre`), id, name, bookIds[] | Genre shelves include suggested and promoted genres. |
 | PeriodicalIssue | id, publication, issueDate, cover?, status | Never listed in Recently added (FR-002, US8). |
 

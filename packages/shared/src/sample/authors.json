@@ -1,0 +1,2813 @@
+{
+ "a-e-w-mason": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/A._E._W._Mason",
+   "text": "Alfred Edward Woodley Mason was an English author and Liberal Party Member of Parliament. He is best remembered for his 1902 novel of courage and cowardice in wartime, The Four Feathers, and is also known as the creator of Inspector Hanaud, a French detective who was an early template for Agatha Christie's famous Hercule Poirot."
+  },
+  "lifeDates": "1865–1948 · English novelist",
+  "portrait": {
+   "alt": "Portrait of A. E. W. Mason",
+   "credit": "Unknown artist",
+   "file": "a-e-w-mason.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Picture_of_A._E._W._Mason.jpg"
+  },
+  "works": []
+ },
+ "adam-smith": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Adam_Smith",
+   "text": "Adam Smith was a Scottish economist and philosopher who was a pioneer in the field of political economy and key figure during the Scottish Enlightenment. Seen by many as the \"father of economics\", or the \"father of capitalism\", he is primarily known for two classic works: The Theory of Moral Sentiments (1759) and An Inquiry into the Nature and Causes of the Wealth of Nations (1776). The latter, often abbreviated as The Wealth of Nations, is regarded as his magnum opus, marking the inception of modern economic scholarship as a comprehensive system and an academic discipline."
+  },
+  "lifeDates": "1723–1790 · Scottish economist and philosopher",
+  "portrait": {
+   "alt": "Portrait of Adam Smith",
+   "credit": "Unknown artist",
+   "file": "adam-smith.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Adam_Smith_The_Muir_portrait.jpg"
+  },
+  "works": [
+   {
+    "title": "The Theory of Moral Sentiments",
+    "year": "1759"
+   },
+   {
+    "title": "The Wealth of Nations",
+    "year": "1776"
+   }
+  ]
+ },
+ "agatha-christie": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Agatha_Christie",
+   "text": "Dame Agatha Mary Clarissa Mallowan, Lady Mallowan, usually known by her first married name, Agatha Christie, was an English author known for her 66 detective novels and 14 short-story collections, particularly those revolving around fictional detectives Hercule Poirot, Tommy and Tuppence, and Miss Marple. She is widely regarded as one of the greatest writers of all time, particularly in the mystery genre."
+  },
+  "lifeDates": "1890–1976 · English mystery and detective writer",
+  "portrait": {
+   "alt": "Portrait of Agatha Christie",
+   "credit": "Joop van Bilsen for Anefo",
+   "file": "agatha-christie.jpg",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Agatha_Christie_in_Nederland_(detectiveschrijfster),_bij_aankomst_op_Schiphol_me,_Bestanddeelnr_916-8898_(cropped).jpg"
+  },
+  "works": [
+   {
+    "title": "The Murder of Roger Ackroyd",
+    "year": "1926"
+   },
+   {
+    "title": "The Sittaford Mystery",
+    "year": "1931"
+   },
+   {
+    "title": "Peril at End House",
+    "year": "1932"
+   },
+   {
+    "title": "Lord Edgware Dies",
+    "year": "1933"
+   },
+   {
+    "title": "Murder on the Orient Express",
+    "year": "1934"
+   },
+   {
+    "title": "Cards on the Table",
+    "year": "1936"
+   },
+   {
+    "title": "The A.B.C. Murders",
+    "year": "1936"
+   },
+   {
+    "title": "Death on the Nile",
+    "year": "1937"
+   },
+   {
+    "title": "And Then There Were None",
+    "year": "1939"
+   },
+   {
+    "title": "Sad Cypress",
+    "year": "1940"
+   },
+   {
+    "title": "Five Little Pigs",
+    "year": "1942"
+   },
+   {
+    "title": "Towards Zero",
+    "year": "1944"
+   },
+   {
+    "title": "A Murder Is Announced",
+    "year": "1950"
+   },
+   {
+    "title": "A Daughter's a Daughter",
+    "year": "1952"
+   },
+   {
+    "title": "Endless Night",
+    "year": "1967"
+   },
+   {
+    "title": "Curtain",
+    "year": "1975"
+   },
+   {
+    "title": "Sleeping Murder",
+    "year": "1976"
+   }
+  ]
+ },
+ "alexandre-dumas": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Alexandre_Dumas",
+   "text": "Alexandre Dumas, also known as Alexandre Dumas père, was a French novelist and playwright."
+  },
+  "lifeDates": "1802–1870 · French writer and dramatist",
+  "portrait": {
+   "alt": "Portrait of Alexandre Dumas",
+   "credit": "Nadar",
+   "file": "alexandre-dumas.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Nadar_-_Alexander_Dumas_p%C3%A8re_(1802-1870)_-_Google_Art_Project_2.jpg"
+  },
+  "works": [
+   {
+    "title": "The Count of Monte Cristo",
+    "year": "1844"
+   },
+   {
+    "title": "The Three Musketeers",
+    "year": "1844"
+   },
+   {
+    "title": "La Reine Margot",
+    "year": "1845"
+   },
+   {
+    "title": "Twenty Years After",
+    "year": "1845"
+   },
+   {
+    "title": "Joseph Balsamo",
+    "year": "1846"
+   },
+   {
+    "title": "La Dame de Monsoreau",
+    "year": "1846"
+   },
+   {
+    "title": "The Forty-five Guardsmen",
+    "year": "1847"
+   },
+   {
+    "title": "The Vicomte of Bragelonne: Ten Years Later",
+    "year": "1847"
+   },
+   {
+    "title": "The Queen's Necklace",
+    "year": "1849"
+   },
+   {
+    "title": "Ange Pitou",
+    "year": "1850"
+   },
+   {
+    "title": "The Countess of Charny",
+    "year": "1853"
+   }
+  ]
+ },
+ "anton-chekhov": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Anton_Chekhov",
+   "text": "Anton Pavlovich Chekhov was a Russian playwright, short story writer, and physician. Widely considered one of the greatest writers of all time, his career as a playwright produced four classics, and his best short stories are held in high esteem by writers and critics. Along with Henrik Ibsen and August Strindberg, Chekhov is often referred to as one of the three seminal figures in the birth of early modernism in the theatre. Chekhov was a physician by profession. \"Medicine is my lawful wife,\" he once said, \"and literature is my mistress.\""
+  },
+  "lifeDates": "1860–1904 · Russian dramatist and author",
+  "portrait": {
+   "alt": "Portrait of Anton Chekhov",
+   "credit": "V. Chekhovskii, Moscow",
+   "file": "anton-chekhov.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Anton_Chekhov_1889.jpg"
+  },
+  "works": [
+   {
+    "title": "Fat and Thin",
+    "year": "1883"
+   },
+   {
+    "title": "Vanka",
+    "year": "1886"
+   },
+   {
+    "title": "Kashtanka",
+    "year": "1888"
+   },
+   {
+    "title": "The Black Monk",
+    "year": "1894"
+   },
+   {
+    "title": "The Seagull",
+    "year": "1896"
+   },
+   {
+    "title": "Uncle Vanya",
+    "year": "1897"
+   },
+   {
+    "title": "Three Sisters",
+    "year": "1901"
+   },
+   {
+    "title": "The Cherry Orchard",
+    "year": "1904"
+   }
+  ]
+ },
+ "arthur-conan-doyle": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Arthur_Conan_Doyle",
+   "text": "Sir Arthur Ignatius Conan Doyle was a British writer and physician. He is best known for his four novels and fifty-six short stories about the fictional consulting detective Sherlock Holmes and his assistant Dr. Watson, which are milestones in crime fiction, and for his first work featuring Professor Challenger, The Lost World (1912), which gave its name to a subgenre of speculative fiction. He was a prolific writer who produced over 200 stories and articles, four volumes of poetry, and a number of works for the stage. He was knighted by King Edward VII in the 1902 Coronation Honours."
+  },
+  "lifeDates": "1859–1930 · British writer and physician",
+  "portrait": {
+   "alt": "Portrait of Arthur Conan Doyle",
+   "credit": "Walter Benington",
+   "file": "arthur-conan-doyle.png",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Arthur_Conan_Doyle_by_Walter_Benington,_1914.png"
+  },
+  "works": [
+   {
+    "title": "The Lost World",
+    "year": "1912"
+   },
+   {
+    "title": "canon of Sherlock Holmes"
+   }
+  ]
+ },
+ "benjamin-franklin": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+   "text": "Benjamin Franklin was an American polymath active as a physicist, philosopher, statesman and inventor who was one of the Founding Fathers of the United States. He was a drafter and signer of the Declaration of Independence, and the first postmaster general."
+  },
+  "lifeDates": "1706–1790 · American Founding Father and polymath",
+  "portrait": {
+   "alt": "Portrait of Benjamin Franklin",
+   "credit": "Joseph-Siffred Duplessis",
+   "file": "benjamin-franklin.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg"
+  },
+  "works": []
+ },
+ "boethius": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Boethius",
+   "text": "Anicius Manlius Severinus Boethius, commonly known simply as Boethius, was a Roman senator, consul, magister officiorum, polymath, historian, and philosopher of the Early Middle Ages. He was a central figure in the translation of the Greek classics into Latin, a precursor to the Scholastic movement, and, along with Cassiodorus, one of the two leading Christian scholars of the 6th century. The local cult of Boethius in the Diocese of Pavia was sanctioned by the Sacred Congregation of Rites in 1883, confirming the diocese's custom of honoring him on 23 October."
+  },
+  "lifeDates": "480–524 AD · Roman senator and philosopher",
+  "works": [
+   {
+    "title": "De institutione arithmetica",
+    "year": "500"
+   },
+   {
+    "title": "De institutione musica",
+    "year": "500"
+   },
+   {
+    "title": "History"
+   },
+   {
+    "title": "Opuscula sacra"
+   },
+   {
+    "title": "The Consolation of Philosophy"
+   },
+   {
+    "title": "elogia"
+   }
+  ]
+ },
+ "bram-stoker": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Bram_Stoker",
+   "text": "Abraham Stoker was an Irish writer, barrister, literary critic, and theatre manager. He was the author of the Gothic horror novel Dracula (1897) and the creator of the fictional character Count Dracula. The work and its antagonist are regarded as milestones in the fields of Gothic and vampire literature."
+  },
+  "lifeDates": "1847–1912 · Irish author",
+  "portrait": {
+   "alt": "Portrait of Bram Stoker",
+   "credit": "Unknown artist",
+   "file": "bram-stoker.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Bram_Stoker_1906.jpg"
+  },
+  "works": [
+   {
+    "title": "Under the Sunset",
+    "year": "1881"
+   },
+   {
+    "title": "The Snake's Pass",
+    "year": "1890"
+   },
+   {
+    "title": "The Shoulder of Shasta",
+    "year": "1895"
+   },
+   {
+    "title": "The Watter's Mou'",
+    "year": "1895"
+   },
+   {
+    "title": "Dracula",
+    "year": "1897"
+   },
+   {
+    "title": "Miss Betty",
+    "year": "1898"
+   },
+   {
+    "title": "The Mystery of the Sea",
+    "year": "1902"
+   },
+   {
+    "title": "The Man",
+    "year": "1905"
+   }
+  ]
+ },
+ "carolyn-wells": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Carolyn_Wells",
+   "text": "Carolyn Wells was an American mystery author, poet, humorist, and children's writer. Over her career, she authored more than 170 books, spanning genres including detective fiction, poetry, humor, and young adult literature. Known for her prolific output, Wells was a prominent figure in early 20th-century American literature, particularly in the mystery genre, where she created the long-running Fleming Stone series. Despite her contemporary success, her work fell into obscurity after her death, a phenomenon explored in recent biographies."
+  },
+  "lifeDates": "1862–1942 · American writer",
+  "portrait": {
+   "alt": "Portrait of Carolyn Wells",
+   "credit": "Unknown artist",
+   "file": "carolyn-wells.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Picture_of_Carolyn_Wells.jpg"
+  },
+  "works": []
+ },
+ "charles-darwin": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Charles_Darwin",
+   "text": "Charles Robert Darwin was an English naturalist, geologist, and biologist, widely known for his contributions to evolutionary biology. His proposition that all species have descended from a common ancestor is now accepted and considered a fundamental scientific concept. In a joint presentation with Alfred Russel Wallace, he proposed that this branching pattern of evolution resulted from a process he called natural selection, in which the struggle for existence has a similar effect to the artificial selection involved in selective breeding."
+  },
+  "lifeDates": "1809–1882 · English naturalist and biologist",
+  "portrait": {
+   "alt": "Portrait of Charles Darwin",
+   "credit": "Wikimedia Commons",
+   "file": "charles-darwin.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Charles_Darwin_seated_crop.jpg"
+  },
+  "works": [
+   {
+    "title": "The Voyage of the Beagle",
+    "year": "1839"
+   },
+   {
+    "title": "On the Origin of Species",
+    "year": "1859"
+   },
+   {
+    "title": "The Descent of Man, and Selection in Relation to Sex",
+    "year": "1871"
+   },
+   {
+    "title": "The Expression of the Emotions in Man and Animals",
+    "year": "1872"
+   },
+   {
+    "title": "Insectivorous Plants",
+    "year": "1875"
+   },
+   {
+    "title": "The Power of Movement in Plants",
+    "year": "1880"
+   },
+   {
+    "title": "The Formation of Vegetable Mould through the Action of Worms"
+   }
+  ]
+ },
+ "charles-dickens": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Charles_Dickens",
+   "text": "Charles John Huffam Dickens was an English writer and journalist. He created some of literature's best-known fictional characters, and is regarded by many as the greatest novelist of the Victorian era. His works enjoyed unprecedented popularity during his lifetime and, by the 20th century, critics and scholars had recognised him as a literary genius. His novels and short stories are widely read today."
+  },
+  "lifeDates": "1812–1870 · English writer and journalist",
+  "portrait": {
+   "alt": "Portrait of Charles Dickens",
+   "credit": "Jeremiah Gurney",
+   "file": "charles-dickens.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Dickens_Gurney_head.jpg"
+  },
+  "works": [
+   {
+    "title": "The Pickwick Papers",
+    "year": "1836"
+   },
+   {
+    "title": "Nicholas Nickleby",
+    "year": "1839"
+   },
+   {
+    "title": "Oliver Twist",
+    "year": "1839"
+   },
+   {
+    "title": "Barnaby Rudge",
+    "year": "1840"
+   },
+   {
+    "title": "The Old Curiosity Shop",
+    "year": "1840"
+   },
+   {
+    "title": "A Christmas Carol",
+    "year": "1843"
+   },
+   {
+    "title": "Martin Chuzzlewit",
+    "year": "1844"
+   },
+   {
+    "title": "Dombey and Son",
+    "year": "1848"
+   },
+   {
+    "title": "David Copperfield",
+    "year": "1850"
+   },
+   {
+    "title": "Bleak House",
+    "year": "1853"
+   },
+   {
+    "title": "Hard Times: For These Times",
+    "year": "1854"
+   },
+   {
+    "title": "Little Dorrit",
+    "year": "1857"
+   },
+   {
+    "title": "A Tale of Two Cities",
+    "year": "1859"
+   },
+   {
+    "title": "Great Expectations",
+    "year": "1861"
+   },
+   {
+    "title": "Our Mutual Friend",
+    "year": "1864"
+   },
+   {
+    "title": "The Mystery of Edwin Drood",
+    "year": "1870"
+   }
+  ]
+ },
+ "charlotte-bronte": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Charlotte_Bront%C3%AB",
+   "text": "Charlotte Nicholls, commonly known by her maiden name Charlotte Brontë, was an English novelist and poet, and was the elder sister of Emily, Anne and Branwell Brontë. She is best known for her novel Jane Eyre, which was first published under the pseudonym Currer Bell. Jane Eyre was a great success on publication, and has since been acknowledged as a classic of English literature."
+  },
+  "lifeDates": "1816–1855 · English novelist and poet",
+  "portrait": {
+   "alt": "Portrait of Charlotte Brontë",
+   "credit": "Branwell Brontë",
+   "file": "charlotte-bronte.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Charlotte_Bront%C3%AB_by_Patrick_Branwell_Bront%C3%AB_restored.jpg"
+  },
+  "works": [
+   {
+    "title": "Poems by Currer, Ellis, and Acton Bell",
+    "year": "1846"
+   },
+   {
+    "title": "Shirley",
+    "year": "1849"
+   },
+   {
+    "title": "Villette",
+    "year": "1853"
+   },
+   {
+    "title": "The Professor",
+    "year": "1857"
+   }
+  ]
+ },
+ "dante-alighieri": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Dante_Alighieri",
+   "text": "Dante Alighieri, widely known mononymously as Dante, was an Italian poet, writer, and philosopher. His Divine Comedy, originally called Comedìa and later christened Divina by Giovanni Boccaccio, is widely considered one of the most important poems of the Middle Ages and the greatest literary work in the Italian language."
+  },
+  "lifeDates": "1265–1321 · Italian writer and philosopher",
+  "portrait": {
+   "alt": "Portrait of Dante Alighieri",
+   "credit": "Wolfgang Sauber",
+   "file": "dante-alighieri.jpg",
+   "licence": "CC BY-SA 3.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Bargello_-_Kapelle_Fresko_2a.jpg"
+  },
+  "works": [
+   {
+    "title": "Vita Nuova",
+    "year": "1295"
+   },
+   {
+    "title": "Epistles",
+    "year": "1303"
+   },
+   {
+    "title": "Convivio",
+    "year": "1304"
+   },
+   {
+    "title": "De Monarchia",
+    "year": "1316"
+   },
+   {
+    "title": "L'oracion che fe Danti a la morte",
+    "year": "1400"
+   },
+   {
+    "title": "Eclogues"
+   },
+   {
+    "title": "Le Rime"
+   },
+   {
+    "title": "The Divine Comedy"
+   }
+  ]
+ },
+ "e-nesbit": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/E._Nesbit",
+   "text": "Edith Nesbit was an English writer and poet, who published her books for children and others as E. Nesbit. She wrote or collaborated on more than 60 such books. She was also a political activist and co-founder of the Fabian Society, a socialist organisation later affiliated to the Labour Party."
+  },
+  "lifeDates": "1858–1924 · English author and poet",
+  "portrait": {
+   "alt": "Portrait of E. Nesbit",
+   "credit": "Unknown artist",
+   "file": "e-nesbit.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Nesbit.jpg"
+  },
+  "works": [
+   {
+    "title": "The Railway Children",
+    "year": "1906"
+   }
+  ]
+ },
+ "edgar-allan-poe": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Edgar_Allan_Poe",
+   "text": "Edgar Allan Poe was an American writer, poet, editor, and literary critic who is best known for his poetry and short stories, particularly his tales involving mystery and the macabre. He is widely regarded as one of the central figures of Romanticism and Gothic fiction in the United States and of early American literature."
+  },
+  "lifeDates": "1809–1849 · American writer and critic",
+  "portrait": {
+   "alt": "Portrait of Edgar Allan Poe",
+   "credit": "Unknown artist",
+   "file": "edgar-allan-poe.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Edgar_Allan_Poe,_circa_1849,_restored,_squared_off.jpg"
+  },
+  "works": [
+   {
+    "title": "The Narrative of Arthur Gordon Pym of Nantucket",
+    "year": "1838"
+   },
+   {
+    "title": "The Fall of the House of Usher",
+    "year": "1839"
+   },
+   {
+    "title": "William Wilson",
+    "year": "1839"
+   },
+   {
+    "title": "The Murders in the Rue Morgue",
+    "year": "1841"
+   },
+   {
+    "title": "The Gold-Bug",
+    "year": "1842"
+   },
+   {
+    "title": "The Oval Portrait",
+    "year": "1842"
+   },
+   {
+    "title": "The Pit and the Pendulum",
+    "year": "1842"
+   },
+   {
+    "title": "The Black Cat",
+    "year": "1843"
+   },
+   {
+    "title": "The Tell-Tale Heart",
+    "year": "1843"
+   },
+   {
+    "title": "The Purloined Letter",
+    "year": "1844"
+   },
+   {
+    "title": "The Raven",
+    "year": "1845"
+   }
+  ]
+ },
+ "edgar-rice-burroughs": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Edgar_Rice_Burroughs",
+   "text": "Edgar Rice Burroughs was an American writer, recognized for his prolific output in the adventure, science fiction, and fantasy genres. Best known for creating the characters Tarzan and John Carter, he also wrote the Pellucidar series, the Amtor series, and the Caspak trilogy."
+  },
+  "lifeDates": "1875–1950 · American writer",
+  "portrait": {
+   "alt": "Portrait of Edgar Rice Burroughs",
+   "credit": "Unknown artist",
+   "file": "edgar-rice-burroughs.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:BurroughsEdgarRice.jpg"
+  },
+  "works": [
+   {
+    "title": "Barsoom"
+   },
+   {
+    "title": "Tarzan"
+   }
+  ]
+ },
+ "emily-bronte": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Emily_Bront%C3%AB",
+   "text": "Emily Jane Brontë was an English writer best known for her 1847 novel Wuthering Heights. She also co-authored a book of poetry with her sisters Charlotte and Anne entitled Poems by Currer, Ellis, and Acton Bell."
+  },
+  "lifeDates": "1818–1848 · English writer and novelist",
+  "portrait": {
+   "alt": "Portrait of Emily Brontë",
+   "credit": "Branwell Brontë",
+   "file": "emily-bronte.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Emily_Bront%C3%AB_by_Patrick_Branwell_Bront%C3%AB_restored.jpg"
+  },
+  "works": [
+   {
+    "title": "Poems by Currer, Ellis, and Acton Bell",
+    "year": "1846"
+   },
+   {
+    "title": "Wuthering Heights",
+    "year": "1847"
+   }
+  ]
+ },
+ "epictetus": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Epictetus",
+   "text": "Epictetus was a Greek Stoic philosopher. He was born into slavery at Hierapolis, Phrygia and lived in Rome until his banishment, after which he spent the rest of his life in Nicopolis in northwestern Greece."
+  },
+  "lifeDates": "c. 50–c. 135 · Greek Stoic philosopher",
+  "portrait": {
+   "alt": "Portrait of Epictetus",
+   "credit": "William Sonmans / Michael Burghers",
+   "file": "epictetus.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Epicteti_Enchiridion_Latinis_versibus_adumbratum_(Oxford_1715)_frontispiece_(cropped).jpg"
+  },
+  "works": []
+ },
+ "ernst-junger": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Ernst_J%C3%BCnger",
+   "text": "Ernst Jünger was a German author, soldier, philosopher, and entomologist who became publicly known for his World War I memoir Storm of Steel. A prolific writer of over forty books, Jünger wrote particularly in the furtherance of conservatism and against what he perceived as the spiritual oppression of man."
+  },
+  "lifeDates": "1895–1998 · German soldier and author",
+  "portrait": {
+   "alt": "Portrait of Ernst Jünger",
+   "credit": "Magnus Merck",
+   "file": "ernst-junger.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Ernst_J%C3%BCnger_vers_1920_(cropped).jpg"
+  },
+  "works": [
+   {
+    "title": "Storm of Steel",
+    "year": "1920"
+   },
+   {
+    "title": "The forest passage",
+    "year": "1951"
+   },
+   {
+    "title": "Eumeswil",
+    "year": "1977"
+   }
+  ]
+ },
+ "f-scott-fitzgerald": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/F._Scott_Fitzgerald",
+   "text": "Francis Scott Key Fitzgerald, widely known as F. Scott Fitzgerald or simply Scott Fitzgerald, was an American novelist, essayist, and short story writer. He is most notable for his novels depicting the flamboyance and excess of the Jazz Age, a term that he popularized in his short story collection Tales of the Jazz Age. He published four novels, four story collections, and 164 short stories. He achieved transient success and fortune in the 1920s, but did not receive critical acclaim until after his death. He is now widely regarded as one of the greatest American writers of the 20th century."
+  },
+  "lifeDates": "1896–1940 · American writer",
+  "portrait": {
+   "alt": "Portrait of F. Scott Fitzgerald",
+   "credit": "Unknown artist",
+   "file": "f-scott-fitzgerald.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:F._Scott_Fitzgerald_(1921_portrait_-_crop)_Retouched.jpg"
+  },
+  "works": [
+   {
+    "title": "The Great Gatsby",
+    "year": "1925"
+   },
+   {
+    "title": "Tender Is the Night",
+    "year": "1934"
+   }
+  ]
+ },
+ "fergus-hume": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Fergus_Hume",
+   "text": "Ferguson Wright Hume, known as Fergus Hume, was a prolific English novelist, known for his detective fiction, thrillers and mysteries."
+  },
+  "lifeDates": "1859–1932 · English novelist",
+  "portrait": {
+   "alt": "Portrait of Fergus Hume",
+   "credit": "Elliott & Fry",
+   "file": "fergus-hume.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Fergus_Hume.jpg"
+  },
+  "works": []
+ },
+ "frances-hodgson-burnett": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Frances_Hodgson_Burnett",
+   "text": "Frances Eliza Hodgson Burnett was an English-American novelist and playwright. She is best known for the three children's novels Little Lord Fauntleroy (1886), A Little Princess (1905), and The Secret Garden (1911)."
+  },
+  "lifeDates": "1849–1924 · English-American novelist",
+  "portrait": {
+   "alt": "Portrait of Frances Hodgson Burnett",
+   "credit": "Herbert Rose Barraud",
+   "file": "frances-hodgson-burnett.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Frances_Burnett.jpg"
+  },
+  "works": [
+   {
+    "title": "Little Lord Fauntleroy",
+    "year": "1885"
+   },
+   {
+    "title": "A Little Princess",
+    "year": "1905"
+   },
+   {
+    "title": "Racketty-Packetty House",
+    "year": "1906"
+   },
+   {
+    "title": "The Secret Garden",
+    "year": "1912"
+   },
+   {
+    "title": "The Lost Prince",
+    "year": "1915"
+   },
+   {
+    "title": "The Head of the House of Coombe",
+    "year": "1922"
+   },
+   {
+    "title": "A Lady of Quality"
+   },
+   {
+    "title": "Queen Silver-Bell"
+   },
+   {
+    "title": "The Making of a Marchioness"
+   },
+   {
+    "title": "The Shuttle"
+   }
+  ]
+ },
+ "fyodor-dostoevsky": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Fyodor_Dostoevsky",
+   "text": "Fyodor Mikhailovich Dostoevsky was a Russian philosopher, novelist, short-story writer, essayist, and journalist. He is regarded as one of the greatest novelists in both Russian and world literature, and many of his works are considered highly influential masterpieces. Dostoevsky's literary works explore the human condition in the troubled political, social and spiritual atmospheres of 19th-century Russia, and engage with a variety of philosophical and religious themes."
+  },
+  "lifeDates": "1821–1881 · Russian novelist and philosopher",
+  "portrait": {
+   "alt": "Portrait of Fyodor Dostoevsky",
+   "credit": "Vasily Perov",
+   "file": "fyodor-dostoevsky.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Vasily_Perov_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%A4.%D0%9C.%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_-_Google_Art_Project.jpg"
+  },
+  "works": [
+   {
+    "title": "Poor Folk",
+    "year": "1846"
+   },
+   {
+    "title": "The Double",
+    "year": "1846"
+   },
+   {
+    "title": "The House of the Dead",
+    "year": "1862"
+   },
+   {
+    "title": "Notes from Underground",
+    "year": "1864"
+   },
+   {
+    "title": "Crime and Punishment",
+    "year": "1866"
+   },
+   {
+    "title": "The Gambler",
+    "year": "1867"
+   },
+   {
+    "title": "The Idiot",
+    "year": "1869"
+   },
+   {
+    "title": "Demons",
+    "year": "1871"
+   },
+   {
+    "title": "The Brothers Karamazov",
+    "year": "1880"
+   }
+  ]
+ },
+ "george-eliot": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/George_Eliot",
+   "text": "Mary Ann Evans, known by her pen name George Eliot, was an English novelist, poet, journalist, translator, and one of the leading writers of the Victorian era. She wrote seven novels: Adam Bede (1859), The Mill on the Floss (1860), Silas Marner (1861), Romola (1862–1863), Felix Holt, the Radical (1866), Middlemarch (1871–1872) and Daniel Deronda (1876). Her novels are known for their realism, psychological insight, sense of place, and detailed depiction of the countryside."
+  },
+  "lifeDates": "1819–1880 · English novelist and poet",
+  "portrait": {
+   "alt": "Portrait of George Eliot",
+   "credit": "replica by François D’Albert Durade (1804–1886)",
+   "file": "george-eliot.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:George_Eliot,_por_Fran%C3%A7ois_D%27Albert_Durade.jpg"
+  },
+  "works": [
+   {
+    "title": "Adam Bede",
+    "year": "1859"
+   },
+   {
+    "title": "The Mill on the Floss",
+    "year": "1860"
+   },
+   {
+    "title": "Silas Marner",
+    "year": "1861"
+   },
+   {
+    "title": "Romola",
+    "year": "1862"
+   },
+   {
+    "title": "Middlemarch",
+    "year": "1871"
+   },
+   {
+    "title": "Daniel Deronda",
+    "year": "1876"
+   }
+  ]
+ },
+ "gregory-of-nyssa": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Gregory_of_Nyssa",
+   "text": "Gregory of Nyssa, also known as Gregory Nyssen, was an early Christian theologian who served as the bishop of Nyssa from 372 to 376 and from 378 until his death in 394. He is venerated as a saint in Eastern Orthodoxy, the Catholic Church, Oriental Orthodox Churches, Anglicanism, and Lutheranism. Gregory, his elder brother Basil of Caesarea, and their friend Gregory of Nazianzus are collectively known as the Cappadocian Fathers."
+  },
+  "lifeDates": "4th-century Christian bishop and theologian",
+  "portrait": {
+   "alt": "Portrait of Gregory of Nyssa",
+   "credit": "Unknown artist",
+   "file": "gregory-of-nyssa.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Gregory_of_Nyssa.jpg"
+  },
+  "works": [
+   {
+    "title": "De hominis opificio"
+   },
+   {
+    "title": "The Great Catechism"
+   }
+  ]
+ },
+ "h-g-wells": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/H._G._Wells",
+   "text": "Herbert George Wells was an English writer, prolific in many genres. He wrote more than forty novels and dozens of short stories. His non-fiction output included works of social commentary, politics, history, popular science, satire, biography, and autobiography. Wells is most known today for his groundbreaking science fiction novels."
+  },
+  "lifeDates": "1866–1946 · English writer",
+  "portrait": {
+   "alt": "Portrait of H. G. Wells",
+   "credit": "George Charles Beresford",
+   "file": "h-g-wells.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:H.G._Wells_by_Beresford.jpg"
+  },
+  "works": [
+   {
+    "title": "The Island of Dr Moreau",
+    "year": "1895"
+   },
+   {
+    "title": "The Time Machine",
+    "year": "1895"
+   },
+   {
+    "title": "The Invisible Man",
+    "year": "1897"
+   },
+   {
+    "title": "The War of the Worlds",
+    "year": "1897"
+   },
+   {
+    "title": "The First Men in the Moon",
+    "year": "1901"
+   },
+   {
+    "title": "Marriage",
+    "year": "1912"
+   },
+   {
+    "title": "The Soul of a Bishop",
+    "year": "1917"
+   },
+   {
+    "title": "The Outline of History",
+    "year": "1919"
+   },
+   {
+    "title": "The Shape of Things to Come",
+    "year": "1933"
+   }
+  ]
+ },
+ "henry-david-thoreau": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Henry_David_Thoreau",
+   "text": "Henry David Thoreau was an American naturalist essayist, poet, and philosopher. A leading transcendentalist, he is best known for his book Walden, a reflection upon simple living in natural surroundings, and his essay \"Civil Disobedience\", an argument in favor of citizen disobedience against an unjust state."
+  },
+  "lifeDates": "1817–1862 · American philosopher",
+  "portrait": {
+   "alt": "Portrait of Henry David Thoreau",
+   "credit": "Benjamin D. Maxham",
+   "file": "henry-david-thoreau.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Benjamin_D._Maxham_-_Henry_David_Thoreau_-_Restored.jpg"
+  },
+  "works": [
+   {
+    "title": "Civil Disobedience",
+    "year": "1849"
+   },
+   {
+    "title": "Walden",
+    "year": "1854"
+   }
+  ]
+ },
+ "henry-seton-merriman": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Hugh_Stowell_Scott",
+   "text": "Hugh Stowell Scott was an English novelist who wrote under the pseudonym of Henry Seton Merriman. His best known novel, The Sowers went through thirty UK editions."
+  },
+  "lifeDates": "1862–1903 · English novelist",
+  "works": []
+ },
+ "herman-melville": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Herman_Melville",
+   "text": "Herman Melville was an American writer of the American Renaissance period. Among his best-known works are Moby-Dick (1851), Typee (1846), a romanticized account of his experiences in Polynesia, and Billy Budd, Sailor, a posthumously published novella. At the time of his death, Melville was not well known to the public, but 1919, the centennial of his birth, was the starting point of a Melville revival. Moby-Dick would eventually be considered one of the Great American Novels."
+  },
+  "lifeDates": "1819–1891 · American writer",
+  "portrait": {
+   "alt": "Portrait of Herman Melville",
+   "credit": "Joseph Oriel Eaton",
+   "file": "herman-melville.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Herman_Melville_by_Joseph_O_Eaton.jpg"
+  },
+  "works": [
+   {
+    "title": "Moby-Dick",
+    "year": "1851"
+   }
+  ]
+ },
+ "herman-whitaker": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Herman_Whitaker",
+   "text": "Herman James Whitaker, known as Jim to his friends, was an English-born writer. Whitaker authored more than two hundred short stories and several books."
+  },
+  "lifeDates": "1867–1919 · English-born writer",
+  "portrait": {
+   "alt": "Portrait of Herman Whitaker",
+   "credit": "Unknown artist",
+   "file": "herman-whitaker.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Herman_Whitaker.jpg"
+  },
+  "works": []
+ },
+ "homer": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Homer",
+   "text": "Homer was an ancient Greek poet who is traditionally credited as the author of the Iliad and the Odyssey, two epic poems that are foundational works of ancient Greek literature. Homer was highly revered in ancient Greek society and is considered one of the most influential authors in history. The question of Homer's identity and existence—dubbed the \"Homeric Question\"—continues to be debated, and scholars generally regard the two poems as the works of separate authors."
+  },
+  "lifeDates": "Ancient Greek poet",
+  "portrait": {
+   "alt": "Bust of Homer",
+   "credit": "Mike Peel",
+   "file": "homer.jpg",
+   "licence": "CC BY-SA 4.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Homer_At_the_British_Museum_2024_(3x4_cropped).jpg"
+  },
+  "works": [
+   {
+    "title": "Homeric epics"
+   },
+   {
+    "title": "Iliad"
+   },
+   {
+    "title": "Odyssey"
+   }
+  ]
+ },
+ "jack-london": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Jack_London",
+   "text": "John Griffith London, better known as Jack London, was an American novelist, journalist and activist. A pioneer of commercial fiction and American magazines, he was one of the first American authors to become an international celebrity and earn a large fortune from writing."
+  },
+  "lifeDates": "1876–1916 · American author, journalist, and social activist",
+  "portrait": {
+   "alt": "Portrait of Jack London",
+   "credit": "L. C. Page and Company, 1903",
+   "file": "jack-london.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Jack_London_young.jpg"
+  },
+  "works": [
+   {
+    "title": "To Build a Fire",
+    "year": "1902"
+   },
+   {
+    "title": "The Call of the Wild",
+    "year": "1903"
+   },
+   {
+    "title": "The People of the Abyss",
+    "year": "1903"
+   },
+   {
+    "title": "The Sea-Wolf",
+    "year": "1904"
+   },
+   {
+    "title": "White Fang",
+    "year": "1906"
+   },
+   {
+    "title": "The Road",
+    "year": "1907"
+   },
+   {
+    "title": "Martin Eden",
+    "year": "1909"
+   },
+   {
+    "title": "The Valley of the Moon",
+    "year": "1913"
+   },
+   {
+    "title": "The Star Rover",
+    "year": "1915"
+   },
+   {
+    "title": "The Roads"
+   }
+  ]
+ },
+ "james-joyce": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/James_Joyce",
+   "text": "James Augustine Aloysius Joyce was an Irish novelist, poet, and literary critic. He contributed to the modernist movement and is regarded among the most influential and important writers of the 20th century. Joyce's novel Ulysses (1922) is a landmark in which the episodes of Homer's Odyssey are paralleled in a variety of literary styles, particularly stream of consciousness. His other well-known works include the short-story collection Dubliners (1914) and the novels A Portrait of the Artist as a Young Man (1916) and Finnegans Wake (1939)."
+  },
+  "lifeDates": "1882–1941 · Irish novelist and poet",
+  "portrait": {
+   "alt": "Portrait of James Joyce",
+   "credit": "Camille Ruf",
+   "file": "james-joyce.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Revolutionary_Joyce_Better_Contrast.jpg"
+  },
+  "works": [
+   {
+    "title": "Dubliners",
+    "year": "1914"
+   },
+   {
+    "title": "A Portrait of the Artist as a Young Man",
+    "year": "1918"
+   },
+   {
+    "title": "Ulysses",
+    "year": "1922"
+   },
+   {
+    "title": "Pomes Penyeach",
+    "year": "1927"
+   },
+   {
+    "title": "Finnegans Wake",
+    "year": "1939"
+   },
+   {
+    "title": "Stephen Hero",
+    "year": "1944"
+   },
+   {
+    "title": "Exiles"
+   }
+  ]
+ },
+ "jane-austen": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Jane_Austen",
+   "text": "Jane Austen was an English writer known primarily for her six novels, which implicitly interpret, critique, and comment on the English landed gentry at the end of the 18th century."
+  },
+  "lifeDates": "1775–1817 · English novelist",
+  "portrait": {
+   "alt": "Pencil and watercolour sketch of Jane Austen",
+   "credit": "Sketch by Cassandra Austen, about 1810",
+   "file": "jane-austen.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:CassandraAusten-JaneAusten(c.1810)_hires.jpg"
+  },
+  "works": [
+   {
+    "title": "Sense and Sensibility",
+    "year": "1811"
+   },
+   {
+    "title": "Pride and Prejudice",
+    "year": "1813"
+   },
+   {
+    "title": "Mansfield Park",
+    "year": "1814"
+   },
+   {
+    "title": "Emma",
+    "year": "1815"
+   },
+   {
+    "title": "Persuasion",
+    "year": "1817"
+   },
+   {
+    "title": "Northanger Abbey",
+    "year": "1818"
+   }
+  ]
+ },
+ "john-buchan": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/John_Buchan",
+   "text": "John Buchan, 1st Baron Tweedsmuir was a Scottish novelist, historian, British Army officer, and Unionist politician who served as Governor General of Canada, the 15th since Canadian Confederation."
+  },
+  "lifeDates": "1875–1940 · Scottish author and statesman",
+  "portrait": {
+   "alt": "Portrait of John Buchan",
+   "credit": "Bassano Ltd",
+   "file": "john-buchan.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Lord_tweedsmuiir.jpg"
+  },
+  "works": []
+ },
+ "john-milton": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/John_Milton",
+   "text": "John Milton was an English poet, polemicist, and civil servant. His 1667 epic poem Paradise Lost was written in blank verse and included 12 books, written in a time of immense religious flux and political upheaval. It addressed the fall of man, including the temptation of Adam and Eve by the fallen angel Satan, and God's expulsion of them from the Garden of Eden. Paradise Lost elevated Milton's reputation as one of history's greatest poets. He also served as a civil servant for the Commonwealth of England under its Council of State and later under Oliver Cromwell."
+  },
+  "lifeDates": "1608–1674 · English poet and civil servant",
+  "portrait": {
+   "alt": "Portrait of John Milton",
+   "credit": "Unknown artist",
+   "file": "john-milton.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:John-milton.jpg"
+  },
+  "works": [
+   {
+    "title": "Areopagitica",
+    "year": "1644"
+   },
+   {
+    "title": "Paradise Lost",
+    "year": "1667"
+   }
+  ]
+ },
+ "jonathan-swift": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Jonathan_Swift",
+   "text": "Jonathan Swift was an Anglo-Irish writer, essayist, satirist, and Anglican cleric. He was the author of the satirical prose novel Gulliver's Travels (1726) and the creator of the fictional island of Lilliput. He is regarded by many as the greatest satirist of the Georgian era and one of the foremost prose authors in the history of English and world literature."
+  },
+  "lifeDates": "1667–1745 · Anglo-Irish satirist and cleric",
+  "portrait": {
+   "alt": "Portrait of Jonathan Swift",
+   "credit": "Charles Jervas",
+   "file": "jonathan-swift.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Jonathan_Swift_by_Charles_Jervas.jpg"
+  },
+  "works": [
+   {
+    "title": "A Tale of a Tub",
+    "year": "1704"
+   },
+   {
+    "title": "Gulliver's Travels",
+    "year": "1726"
+   },
+   {
+    "title": "A Modest Proposal",
+    "year": "1729"
+   }
+  ]
+ },
+ "joseph-conrad": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Joseph_Conrad",
+   "text": "Joseph Conrad was a Polish-British novelist and story writer. He is regarded as one of the greatest writers in the English language and – though he did not speak English fluently until his twenties – he became a master prose stylist who brought a non-English sensibility into English literature."
+  },
+  "lifeDates": "1857–1924 · Polish-British writer",
+  "portrait": {
+   "alt": "Portrait of Joseph Conrad",
+   "credit": "George Charles Beresford",
+   "file": "joseph-conrad.png",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Joseph_Conrad-remastered_to_black_and_white.png"
+  },
+  "works": [
+   {
+    "title": "The Nigger of the 'Narcissus'",
+    "year": "1897"
+   },
+   {
+    "title": "Heart of Darkness",
+    "year": "1899"
+   },
+   {
+    "title": "Lord Jim",
+    "year": "1900"
+   },
+   {
+    "title": "Amy Foster",
+    "year": "1901"
+   },
+   {
+    "title": "Typhoon",
+    "year": "1902"
+   },
+   {
+    "title": "Nostromo",
+    "year": "1904"
+   },
+   {
+    "title": "The Secret Agent",
+    "year": "1907"
+   },
+   {
+    "title": "Under Western Eyes",
+    "year": "1911"
+   },
+   {
+    "title": "The Secret Sharer",
+    "year": "1912"
+   },
+   {
+    "title": "The Lagoon",
+    "year": "1932"
+   }
+  ]
+ },
+ "jules-verne": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Jules_Verne",
+   "text": "Jules Gabriel Verne was a French novelist, poet, and playwright."
+  },
+  "lifeDates": "1828–1905 · French writer",
+  "portrait": {
+   "alt": "Portrait of Jules Verne",
+   "credit": "Étienne Carjat / Adam Cuerden",
+   "file": "jules-verne.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Jules_Verne_by_%C3%89tienne_Carjat.jpg"
+  },
+  "works": [
+   {
+    "title": "A Journey to the Centre of the Earth",
+    "year": "1864"
+   },
+   {
+    "title": "From the Earth to the Moon",
+    "year": "1865"
+   },
+   {
+    "title": "Twenty Thousand Leagues Under the Sea",
+    "year": "1869"
+   },
+   {
+    "title": "Around the World in Eighty Days",
+    "year": "1872"
+   },
+   {
+    "title": "The Mysterious Island",
+    "year": "1874"
+   },
+   {
+    "title": "Michael Strogoff",
+    "year": "1876"
+   },
+   {
+    "title": "The Purchase of the North Pole",
+    "year": "1889"
+   }
+  ]
+ },
+ "kahlil-gibran": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Kahlil_Gibran",
+   "text": "Jubrān Khalīl Jubrān, usually referred to in English as Kahlil Gibran, was a Lebanese-American writer, poet and visual artist. He was also considered a philosopher, although he himself rejected the title. He is best known as the author of The Prophet, which was first published in the United States in 1923 and has since become one of the best-selling books of all time, having been translated into more than 100 languages."
+  },
+  "lifeDates": "1883–1931 · Lebanese American artist, poet, and writer",
+  "portrait": {
+   "alt": "Portrait of Kahlil Gibran",
+   "credit": "Unknown artist",
+   "file": "kahlil-gibran.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Kahlil_Gibran_1913.jpg"
+  },
+  "works": [
+   {
+    "title": "The Processions",
+    "year": "1919"
+   },
+   {
+    "title": "The Prophet",
+    "year": "1923"
+   },
+   {
+    "title": "Sand and Foam",
+    "year": "1926"
+   },
+   {
+    "title": "Broken Wings"
+   }
+  ]
+ },
+ "kenneth-grahame": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Kenneth_Grahame",
+   "text": "Kenneth Grahame was a Scottish writer. He is best remembered for the classic of children's literature The Wind in the Willows (1908). Born in Scotland, he spent most of his childhood with his grandmother in England, following the death of his mother and his father's inability to look after the children. After attending St Edward's School in Oxford, his ambition to attend university was thwarted and he joined the Bank of England, where he had a successful career. Before writing The Wind in the Willows, he published three other books: Pagan Papers (1893), The Golden Age (1895), and Dream Days (1898)."
+  },
+  "lifeDates": "1859–1932 · Scottish writer",
+  "portrait": {
+   "alt": "Portrait of Kenneth Grahame",
+   "credit": "Unknown artist",
+   "file": "kenneth-grahame.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:KennethGrahame.jpg"
+  },
+  "works": [
+   {
+    "title": "The Wind in the Willows",
+    "year": "1908"
+   }
+  ]
+ },
+ "l-frank-baum": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/L._Frank_Baum",
+   "text": "Lyman Frank Baum was an American author. He was best known for his children's fantasy books, particularly The Wonderful Wizard of Oz, part of a series. In addition to the 14 Oz books, Baum penned 41 other novels, 83 short stories, over 200 poems, and at least 42 scripts. He made numerous attempts to bring his works to the stage and screen; the 1939 adaptation of the first Oz book became a landmark of 20th-century cinema."
+  },
+  "lifeDates": "1856–1919 · American author",
+  "portrait": {
+   "alt": "Portrait of L. Frank Baum",
+   "credit": "George Steckel",
+   "file": "l-frank-baum.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:L._Frank_Baum_(1911).jpg"
+  },
+  "works": [
+   {
+    "title": "Mother Goose in Prose",
+    "year": "1897"
+   },
+   {
+    "title": "By the Candelabra's Glare",
+    "year": "1898"
+   },
+   {
+    "title": "Father Goose: His Book",
+    "year": "1899"
+   },
+   {
+    "title": "The Wonderful Wizard of Oz",
+    "year": "1900"
+   },
+   {
+    "title": "American Fairy Tales",
+    "year": "1901"
+   },
+   {
+    "title": "Dot and Tot of Merryland",
+    "year": "1901"
+   },
+   {
+    "title": "The Runaway Shadows",
+    "year": "1901"
+   },
+   {
+    "title": "Prince Silverwings",
+    "year": "1902"
+   },
+   {
+    "title": "The Wizard of Oz",
+    "year": "1902"
+   },
+   {
+    "title": "The Enchanted Island of Yew",
+    "year": "1903"
+   },
+   {
+    "title": "The Master Key",
+    "year": "1903"
+   },
+   {
+    "title": "A Kidnapped Santa Claus",
+    "year": "1904"
+   },
+   {
+    "title": "Queen Zixi of Ix",
+    "year": "1904"
+   },
+   {
+    "title": "The Marvelous Land of Oz",
+    "year": "1904"
+   },
+   {
+    "title": "The Fate of a Crown",
+    "year": "1905"
+   },
+   {
+    "title": "The Woggle-Bug Book",
+    "year": "1905"
+   },
+   {
+    "title": "Annabel",
+    "year": "1906"
+   },
+   {
+    "title": "Aunt Jane's Nieces",
+    "year": "1906"
+   },
+   {
+    "title": "Daughters of Destiny",
+    "year": "1906"
+   },
+   {
+    "title": "John Dough and the Cherub",
+    "year": "1906"
+   },
+   {
+    "title": "Sam Steele's Adventures on Land and Sea",
+    "year": "1906"
+   },
+   {
+    "title": "Aunt Jane's Nieces Abroad",
+    "year": "1907"
+   },
+   {
+    "title": "Father Goose's Year Book",
+    "year": "1907"
+   },
+   {
+    "title": "Ozma of Oz",
+    "year": "1907"
+   },
+   {
+    "title": "Policeman Bluejay",
+    "year": "1907"
+   },
+   {
+    "title": "Tamawaca Folks",
+    "year": "1907"
+   },
+   {
+    "title": "Aunt Jane's Nieces at Millville",
+    "year": "1908"
+   },
+   {
+    "title": "Dorothy and the Wizard in Oz",
+    "year": "1908"
+   },
+   {
+    "title": "The Fairylogue and Radio-Plays",
+    "year": "1908"
+   },
+   {
+    "title": "Aunt Jane's Nieces at Work",
+    "year": "1909"
+   },
+   {
+    "title": "The Road to Oz",
+    "year": "1909"
+   },
+   {
+    "title": "Aunt Jane's Nieces in Society",
+    "year": "1910"
+   },
+   {
+    "title": "L. Frank Baum's Juvenile Speaker",
+    "year": "1910"
+   },
+   {
+    "title": "The Emerald City of Oz",
+    "year": "1910"
+   },
+   {
+    "title": "Aunt Jane's Nieces and Uncle John",
+    "year": "1911"
+   },
+   {
+    "title": "The Boy Fortune Hunters in the South Seas",
+    "year": "1911"
+   },
+   {
+    "title": "The Daring Twins",
+    "year": "1911"
+   },
+   {
+    "title": "The Flying Girl",
+    "year": "1911"
+   },
+   {
+    "title": "The Sea Fairies",
+    "year": "1911"
+   },
+   {
+    "title": "Aunt Jane's Nieces on Vacation",
+    "year": "1912"
+   },
+   {
+    "title": "Phoebe Daring",
+    "year": "1912"
+   },
+   {
+    "title": "Sky Island",
+    "year": "1912"
+   },
+   {
+    "title": "The Life and Adventures of Santa Claus",
+    "year": "1912"
+   },
+   {
+    "title": "Aunt Jane's Nieces on the Ranch",
+    "year": "1913"
+   },
+   {
+    "title": "The Patchwork Girl of Oz",
+    "year": "1913"
+   },
+   {
+    "title": "Aunt Jane's Nieces Out West",
+    "year": "1914"
+   },
+   {
+    "title": "His Majesty, the Scarecrow of Oz",
+    "year": "1914"
+   },
+   {
+    "title": "Little Wizard Stories of Oz",
+    "year": "1914"
+   },
+   {
+    "title": "The Last Egyptian",
+    "year": "1914"
+   },
+   {
+    "title": "The Magic Cloak of Oz",
+    "year": "1914"
+   },
+   {
+    "title": "Tik-Tok of Oz",
+    "year": "1914"
+   },
+   {
+    "title": "Aunt Jane's Nieces in the Red Cross",
+    "year": "1915"
+   },
+   {
+    "title": "The Gray Nun of Belgium",
+    "year": "1915"
+   },
+   {
+    "title": "The Scarecrow of Oz",
+    "year": "1915"
+   },
+   {
+    "title": "Rinkitink in Oz",
+    "year": "1916"
+   },
+   {
+    "title": "Violet's Dreams",
+    "year": "1916"
+   },
+   {
+    "title": "The Lost Princess of Oz",
+    "year": "1917"
+   },
+   {
+    "title": "The Tin Woodman of Oz",
+    "year": "1918"
+   },
+   {
+    "title": "The Magic of Oz",
+    "year": "1919"
+   },
+   {
+    "title": "Glinda of Oz",
+    "year": "1920"
+   },
+   {
+    "title": "Animal Fairy Tales",
+    "year": "1969"
+   },
+   {
+    "title": "Mary Louise Adopts a Soldier"
+   },
+   {
+    "title": "Mary Louise Solves a Mystery"
+   },
+   {
+    "title": "Mary Louise and the Liberty Girls"
+   },
+   {
+    "title": "Mary Louise in the Country"
+   },
+   {
+    "title": "Plays of L. Frank Baum"
+   },
+   {
+    "title": "Queer Visitors from the Marvelous Land of Oz"
+   },
+   {
+    "title": "The Bluebird Books"
+   },
+   {
+    "title": "The Magical Monarch of Mo"
+   },
+   {
+    "title": "The Maid of Arran"
+   },
+   {
+    "title": "The Tik-Tok Man of Oz"
+   },
+   {
+    "title": "The Twinkle Tales"
+   },
+   {
+    "title": "The Woggle-Bug"
+   }
+  ]
+ },
+ "l-m-montgomery": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Lucy_Maud_Montgomery",
+   "text": "Lucy Maud Montgomery, published as L. M. Montgomery, was a Canadian author best known for a collection of novels, essays, short stories, and poetry beginning in 1908 with Anne of Green Gables."
+  },
+  "lifeDates": "1874–1942 · Canadian novelist",
+  "portrait": {
+   "alt": "Portrait of L. M. Montgomery",
+   "credit": "Unknown artist",
+   "file": "l-m-montgomery.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:LMM_signed_photo.jpg"
+  },
+  "works": [
+   {
+    "title": "Anne of Green Gables",
+    "year": "1908"
+   },
+   {
+    "title": "Anne of Avonlea",
+    "year": "1909"
+   },
+   {
+    "title": "The Story Girl",
+    "year": "1911"
+   },
+   {
+    "title": "The Golden Road",
+    "year": "1913"
+   },
+   {
+    "title": "Anne of the Island",
+    "year": "1915"
+   },
+   {
+    "title": "Anne's House of Dreams",
+    "year": "1917"
+   },
+   {
+    "title": "Rainbow Valley",
+    "year": "1919"
+   },
+   {
+    "title": "Rilla of Ingleside",
+    "year": "1921"
+   },
+   {
+    "title": "Emily of New Moon",
+    "year": "1923"
+   },
+   {
+    "title": "Emily Climbs",
+    "year": "1925"
+   },
+   {
+    "title": "The Blue Castle",
+    "year": "1926"
+   },
+   {
+    "title": "Emily's Quest",
+    "year": "1927"
+   },
+   {
+    "title": "Pat of Silver Bush",
+    "year": "1933"
+   },
+   {
+    "title": "Mistress Pat",
+    "year": "1935"
+   },
+   {
+    "title": "Jane of Lantern Hill",
+    "year": "1937"
+   },
+   {
+    "title": "Anne of Ingleside",
+    "year": "1939"
+   }
+  ]
+ },
+ "laozi": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Laozi",
+   "text": "Laozi was a legendary Chinese philosopher considered to be the author of the Tao Te Ching, one of the foundational texts of Taoism. Modern scholarship generally regards his biographical details as later inventions and his opus a collaboration of various writers, with the name Laozi, literally meaning 'Old Master', likely intended to portray an archaic anonymity that could converse with Confucianism. Traditional accounts addend him as Li Er, born in the 6th-century BC state of Chu during China's Spring and Autumn period."
+  },
+  "lifeDates": "Semi-legendary Chinese philosopher, founder of Taoism",
+  "works": [
+   {
+    "title": "Tao Te Ching"
+   }
+  ]
+ },
+ "leo-tolstoy": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Leo_Tolstoy",
+   "text": "Count Lev Nikolayevich Tolstoy, usually referred to in English as Leo Tolstoy, was a Russian writer. He is regarded as one of the greatest and most influential authors of all time."
+  },
+  "lifeDates": "1828–1910 · Russian writer",
+  "portrait": {
+   "alt": "Portrait of Leo Tolstoy",
+   "credit": "Sergei Prokudin-Gorskii",
+   "file": "leo-tolstoy.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Leo_Tolstoy_1908_Portrait_(3x4_cropped).jpg"
+  },
+  "works": [
+   {
+    "title": "Childhood",
+    "year": "1852"
+   },
+   {
+    "title": "Boyhood",
+    "year": "1854"
+   },
+   {
+    "title": "Sebastopol Sketches",
+    "year": "1855"
+   },
+   {
+    "title": "The Snowstorm",
+    "year": "1856"
+   },
+   {
+    "title": "Youth",
+    "year": "1857"
+   },
+   {
+    "title": "War and Peace",
+    "year": "1869"
+   },
+   {
+    "title": "Anna Karenina",
+    "year": "1877"
+   },
+   {
+    "title": "A Confession",
+    "year": "1882"
+   },
+   {
+    "title": "What is my faith",
+    "year": "1884"
+   },
+   {
+    "title": "Where Love Is, God Is",
+    "year": "1885"
+   },
+   {
+    "title": "The Kreutzer Sonata",
+    "year": "1889"
+   },
+   {
+    "title": "The Fruits of Enlightenment",
+    "year": "1890"
+   },
+   {
+    "title": "What Is Art?",
+    "year": "1897"
+   },
+   {
+    "title": "Resurrection",
+    "year": "1899"
+   },
+   {
+    "title": "Father Sergius",
+    "year": "1911"
+   },
+   {
+    "title": "The Devil",
+    "year": "1911"
+   },
+   {
+    "title": "Hadji Murat",
+    "year": "1912"
+   },
+   {
+    "title": "The Kingdom of God Is Within You"
+   }
+  ]
+ },
+ "lewis-carroll": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Lewis_Carroll",
+   "text": "Charles Lutwidge Dodgson, better known by his pen name Lewis Carroll, was an English author, poet, mathematician, photographer, and Anglican deacon. His most notable works are Alice's Adventures in Wonderland (1865) and its sequel Through the Looking-Glass (1871), some of the most important examples of Victorian literature. He was noted for his facility with word play, logic, and fantasy. His poems Jabberwocky (1871) and The Hunting of the Snark (1876) are classified in the genre of literary nonsense. Some of Alice's nonsensical wonderland logic reflects his published work on mathematical logic."
+  },
+  "lifeDates": "1832–1898 · British author and scholar",
+  "portrait": {
+   "alt": "Portrait of Lewis Carroll",
+   "credit": "Lewis Carroll",
+   "file": "lewis-carroll.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:LewisCarrollSelfPhoto.jpg"
+  },
+  "works": [
+   {
+    "title": "Alice's Adventures in Wonderland",
+    "year": "1865"
+   },
+   {
+    "title": "Phantasmagoria and Other Poems",
+    "year": "1869"
+   },
+   {
+    "title": "Jabberwocky",
+    "year": "1871"
+   },
+   {
+    "title": "Through the Looking-Glass",
+    "year": "1871"
+   },
+   {
+    "title": "The Walrus and the Carpenter",
+    "year": "1872"
+   },
+   {
+    "title": "The Hunting of the Snark",
+    "year": "1876"
+   },
+   {
+    "title": "Euclid and his Modern Rivals",
+    "year": "1879"
+   },
+   {
+    "title": "Rhyme? and Reason?",
+    "year": "1883"
+   },
+   {
+    "title": "A Tangled Tale",
+    "year": "1885"
+   },
+   {
+    "title": "The Game of Logic",
+    "year": "1886"
+   },
+   {
+    "title": "Sylvie and Bruno",
+    "year": "1889"
+   },
+   {
+    "title": "The Nursery \"Alice\"",
+    "year": "1890"
+   },
+   {
+    "title": "What the Tortoise Said to Achilles",
+    "year": "1895"
+   },
+   {
+    "title": "Three Sunsets and Other Poems",
+    "year": "1898"
+   },
+   {
+    "title": "nyctography"
+   }
+  ]
+ },
+ "louisa-may-alcott": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Louisa_May_Alcott",
+   "text": "Louisa May Alcott was an American novelist, short story writer, and poet best known for writing the novel Little Women (1868) and its sequels Good Wives (1869), Little Men (1871), and Jo's Boys (1886). Raised in New England by her transcendentalist parents, Abigail May and Amos Bronson Alcott, she grew up among many well-known intellectuals of the day, including Margaret Fuller, Ralph Waldo Emerson, Nathaniel Hawthorne, and Henry David Thoreau. Encouraged by her family, Alcott began writing from an early age."
+  },
+  "lifeDates": "1832–1888 · American novelist",
+  "portrait": {
+   "alt": "Portrait of Louisa May Alcott",
+   "credit": "Adam Cuerden",
+   "file": "louisa-may-alcott.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Louisa_May_Alcott,_c._1870_-_Warren%27s_Portraits,_Boston.jpg"
+  },
+  "works": [
+   {
+    "title": "Little Women",
+    "year": "1868"
+   },
+   {
+    "title": "An Old-Fashioned Girl",
+    "year": "1869"
+   },
+   {
+    "title": "Work: A Story of Experience",
+    "year": "1873"
+   },
+   {
+    "title": "Eight Cousins; or, The Aunt-Hill",
+    "year": "1875"
+   },
+   {
+    "title": "Rose in Bloom",
+    "year": "1876"
+   },
+   {
+    "title": "A Modern Mephistopheles",
+    "year": "1877"
+   },
+   {
+    "title": "Under the Lilacs",
+    "year": "1878"
+   },
+   {
+    "title": "Jack and Jill: A Village Story",
+    "year": "1880"
+   },
+   {
+    "title": "Jo's Boys",
+    "year": "1886"
+   },
+   {
+    "title": "Flower Fables"
+   },
+   {
+    "title": "The Brownie and the Princess"
+   }
+  ]
+ },
+ "marcel-proust": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Marcel_Proust",
+   "text": "Valentin Louis Georges Eugène Marcel Proust was a French novelist, literary critic, and essayist best known for his novel À la recherche du temps perdu, which was published in seven volumes between 1913 and 1927 and totals around 1.25 million words. He is considered by critics and writers to be one of the most influential authors of the twentieth century."
+  },
+  "lifeDates": "1871–1922 · French novelist, literary critic, and essayist",
+  "portrait": {
+   "alt": "Portrait of Marcel Proust",
+   "credit": "Otto Wegener",
+   "file": "marcel-proust.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Otto_Wegener_Proust_vers_1895_bis.jpg"
+  },
+  "works": [
+   {
+    "title": "In the Shadow of Young Girls in Flower",
+    "year": "1919"
+   },
+   {
+    "title": "Jean Santeuil",
+    "year": "1952"
+   },
+   {
+    "title": "In Search of Lost Time",
+    "year": "2000"
+   }
+  ]
+ },
+ "marcus-aurelius": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Marcus_Aurelius",
+   "text": "Marcus Aurelius Antoninus was Roman emperor from 161 to 180 and a Stoic philosopher. He was a member of the Nerva–Antonine dynasty, the last of the rulers later known as the Five Good Emperors and the last emperor of the Pax Romana, an age of relative peace, calm, and stability for the Roman Empire lasting from 27 BC to 180 AD. He served as Roman consul in 140, 145, and 161."
+  },
+  "lifeDates": "Stoic philosopher, Roman emperor from 161 to 180",
+  "portrait": {
+   "alt": "Bust of Marcus Aurelius",
+   "credit": "Daniel Martin",
+   "file": "marcus-aurelius.jpg",
+   "licence": "CC BY-SA 4.0",
+   "source": "https://commons.wikimedia.org/wiki/File:MSR-ra-61-b-1-DM.jpg"
+  },
+  "works": [
+   {
+    "title": "Meditations"
+   }
+  ]
+ },
+ "mark-twain": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Mark_Twain",
+   "text": "Samuel Langhorne Clemens, known by the pen name Mark Twain, was an American writer, humorist, and essayist. He has been praised as the \"greatest humorist the United States has produced\", with William Faulkner calling him \"the father of American literature\". Twain's novels include The Adventures of Tom Sawyer (1876) and its sequel, Adventures of Huckleberry Finn (1884), with the latter often called the \"Great American Novel\". He also wrote A Connecticut Yankee in King Arthur's Court (1889) and Pudd'nhead Wilson (1894) and cowrote The Gilded Age: A Tale of Today (1873) with Charles Dudley Warner."
+  },
+  "lifeDates": "1835–1910 · American author and humorist",
+  "portrait": {
+   "alt": "Portrait of Mark Twain",
+   "credit": "A.F. Bradley, New York",
+   "file": "mark-twain.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Mark_Twain_by_AF_Bradley_(cropped_2).jpg"
+  },
+  "works": [
+   {
+    "title": "The Adventures of Tom Sawyer",
+    "year": "1876"
+   },
+   {
+    "title": "Adventures of Huckleberry Finn",
+    "year": "1884"
+   }
+  ]
+ },
+ "mary-shelley": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Mary_Shelley",
+   "text": "Mary Wollstonecraft Shelley was an English novelist who wrote the Gothic novel Frankenstein; or, The Modern Prometheus (1818), which is considered an early example of science fiction. She also edited and promoted the works of her husband, the Romantic poet and philosopher Percy Bysshe Shelley. Her father was the political philosopher William Godwin and her mother was the philosopher and women's rights advocate Mary Wollstonecraft."
+  },
+  "lifeDates": "1797–1851 · English writer",
+  "portrait": {
+   "alt": "Portrait of Mary Shelley",
+   "credit": "Richard Rothwell",
+   "file": "mary-shelley.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Mary_Wollstonecraft_Shelley_Rothwell.tif"
+  },
+  "works": [
+   {
+    "title": "Frankenstein; or, The Modern Prometheus",
+    "year": "1818"
+   },
+   {
+    "title": "The Last Man",
+    "year": "1826"
+   }
+  ]
+ },
+ "maurice-leblanc": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Maurice_Leblanc",
+   "text": "Maurice Marie Émile Leblanc was a French novelist and writer of short stories, known primarily as the creator of the fictional gentleman thief and detective Arsène Lupin, often described as a French counterpart to Arthur Conan Doyle's creation Sherlock Holmes."
+  },
+  "lifeDates": "1864–1941 · French writer",
+  "portrait": {
+   "alt": "Portrait of Maurice Leblanc",
+   "credit": "Henri Manuel",
+   "file": "maurice-leblanc.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Maurice-leblanc.jpg"
+  },
+  "works": [
+   {
+    "title": "Le Formidable Événement",
+    "year": "1920"
+   }
+  ]
+ },
+ "miguel-de-cervantes-saavedra": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes",
+   "text": "Miguel de Cervantes Saavedra was a Spanish writer widely regarded as the greatest writer in the Spanish language and one of the world's pre-eminent novelists. He is best known for his two-part novel Don Quixote, a work considered to be the first modern novel. Don Quixote has been labelled by many well-known authors as the \"best book of all time\" and the \"best and most central work in world literature\"."
+  },
+  "lifeDates": "1547–1616 · Spanish writer",
+  "portrait": {
+   "alt": "Portrait of Miguel de Cervantes Saavedra",
+   "credit": "Attributed to Juan de Jáuregui",
+   "file": "miguel-de-cervantes-saavedra.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Cervantes_J%C3%A1uregui.jpg"
+  },
+  "works": [
+   {
+    "title": "Don Quixote",
+    "year": "1605"
+   },
+   {
+    "title": "Exemplary Novels",
+    "year": "1613"
+   }
+  ]
+ },
+ "niccolo-machiavelli": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Niccol%C3%B2_Machiavelli",
+   "text": "Niccolò di Bernardo dei Machiavelli was a Florentine diplomat, author, philosopher, and historian who lived during the Italian Renaissance. He is best known for his political treatise The Prince, written around 1513 but not published until 1532, five years after his death. He has often been called the father of modern political philosophy and political science."
+  },
+  "lifeDates": "1469–1527 · Florentine statesman, diplomat, and political theorist",
+  "portrait": {
+   "alt": "Portrait of Niccolò Machiavelli",
+   "credit": "Santi di Tito",
+   "file": "niccolo-machiavelli.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Niccol%C3%B2_Machiavelli_by_Santi_di_Tito.jpg"
+  },
+  "works": [
+   {
+    "title": "Discourses on Livy",
+    "year": "1531"
+   },
+   {
+    "title": "The Prince",
+    "year": "1532"
+   },
+   {
+    "title": "Capitoli"
+   }
+  ]
+ },
+ "oscar-wilde": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Oscar_Wilde",
+   "text": "Oscar Fingal O'Fflahertie Wills Wilde was an Irish author, poet and playwright. After writing in different literary styles throughout the 1880s, he became one of the most popular and influential dramatists in London in the early 1890s. He was a key figure in the emerging Aestheticism movement of the late 19th century and is widely regarded as the greatest playwright of the Victorian era. Wilde is best known for his Gothic novel The Picture of Dorian Gray (1890), his epigrams, plays and bedtime stories for children, as well as his criminal conviction in 1895 for gross indecency and for practicing homosexual acts."
+  },
+  "lifeDates": "1854–1900 · Irish writer",
+  "portrait": {
+   "alt": "Portrait of Oscar Wilde",
+   "credit": "Napoleon Sarony / Adam Cuerden",
+   "file": "oscar-wilde.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Oscar_Wilde_by_Napoleon_Sarony._Three-quarter-length_photograph,_seated_(cropped).jpg"
+  },
+  "works": [
+   {
+    "title": "The Picture of Dorian Gray",
+    "year": "1890"
+   },
+   {
+    "title": "The Soul of Man under Socialism",
+    "year": "1891"
+   },
+   {
+    "title": "The Ballad of Reading Gaol",
+    "year": "1898"
+   },
+   {
+    "title": "The Canterville Ghost"
+   },
+   {
+    "title": "The Importance of Being Earnest"
+   }
+  ]
+ },
+ "pauline-e-hopkins": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Pauline_Hopkins",
+   "text": "Pauline Elizabeth Hopkins was an American novelist, journalist, playwright, historian, and editor. A noted contributor to the racial, political, and feminist discourse of the time, Hopkins was among the early-20th-century intellectuals who promoted racial uplift through her writing."
+  },
+  "lifeDates": "1859–1930 · American dramatist",
+  "portrait": {
+   "alt": "Portrait of Pauline E. Hopkins",
+   "credit": "Colored American Magazine",
+   "file": "pauline-e-hopkins.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Pauline_Elizabeth_Hopkins_circa_1901.jpg"
+  },
+  "works": []
+ },
+ "plato": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Plato",
+   "text": "Plato was an ancient Greek philosopher of Classical Athens who is most commonly considered the foundational thinker of the Western philosophical tradition. An innovator of the literary dialogue and dialectic forms, Plato influenced all the major areas of theoretical philosophy and practical philosophy, and was the founder of the Academy, a philosophical school in Athens where Plato taught the collection of philosophical theories that would later become known as Platonism."
+  },
+  "lifeDates": "c. 428–347 BC · Ancient Greek philosopher",
+  "portrait": {
+   "alt": "Bust of Plato",
+   "credit": "Marie-Lan Nguyen",
+   "file": "plato.png",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Plato_Silanion_Musei_Capitolini_MC1377.png"
+  },
+  "works": [
+   {
+    "title": "Crito",
+    "year": "400 BC"
+   },
+   {
+    "title": "Euthyphro",
+    "year": "400 BC"
+   },
+   {
+    "title": "Apology",
+    "year": "395 BC"
+   },
+   {
+    "title": "Phaedrus",
+    "year": "370 BC"
+   },
+   {
+    "title": "Sophist",
+    "year": "370 BC"
+   },
+   {
+    "title": "Critias",
+    "year": "360 BC"
+   },
+   {
+    "title": "Timaeus",
+    "year": "360 BC"
+   },
+   {
+    "title": "Charmides"
+   },
+   {
+    "title": "Clitophon"
+   },
+   {
+    "title": "Cratylus"
+   },
+   {
+    "title": "Epinomis"
+   },
+   {
+    "title": "Epistles"
+   },
+   {
+    "title": "Eryxias"
+   },
+   {
+    "title": "Euthydemus"
+   },
+   {
+    "title": "First Alcibiades"
+   },
+   {
+    "title": "Gorgias"
+   },
+   {
+    "title": "Hipparchus"
+   },
+   {
+    "title": "Hippias Major"
+   },
+   {
+    "title": "Hippias Minor"
+   },
+   {
+    "title": "Ion"
+   },
+   {
+    "title": "Laches"
+   },
+   {
+    "title": "Laws"
+   },
+   {
+    "title": "Lysis"
+   },
+   {
+    "title": "Menexenus"
+   },
+   {
+    "title": "Meno"
+   },
+   {
+    "title": "Minos"
+   },
+   {
+    "title": "Parmenides"
+   },
+   {
+    "title": "Phaedo"
+   },
+   {
+    "title": "Philebus"
+   },
+   {
+    "title": "Protagoras"
+   },
+   {
+    "title": "Rival Lovers"
+   },
+   {
+    "title": "Second Alcibiades"
+   },
+   {
+    "title": "Sisyphus"
+   },
+   {
+    "title": "Statesman"
+   },
+   {
+    "title": "Symposium"
+   },
+   {
+    "title": "The Republic"
+   },
+   {
+    "title": "Theaetetus"
+   },
+   {
+    "title": "Theages"
+   }
+  ]
+ },
+ "ralph-waldo-emerson": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Ralph_Waldo_Emerson",
+   "text": "Ralph Waldo Emerson, who went by his middle name Waldo, was an American essayist, lecturer, philosopher, minister, abolitionist, and poet who led the transcendentalist movement of the mid-19th century. He was seen as a prescient critic of the countervailing pressures of society and conformity."
+  },
+  "lifeDates": "1803–1882 · American philosopher",
+  "portrait": {
+   "alt": "Portrait of Ralph Waldo Emerson",
+   "credit": "Josiah Johnson Hawes",
+   "file": "ralph-waldo-emerson.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Ralph_Waldo_Emerson_by_Josiah_Johnson_Hawes_1857.jpg"
+  },
+  "works": [
+   {
+    "title": "Concord Hymn",
+    "year": "1847"
+   },
+   {
+    "title": "The Humble-Bee",
+    "year": "1847"
+   },
+   {
+    "title": "Thine Eyes still shined",
+    "year": "1847"
+   },
+   {
+    "title": "Woodnotes I",
+    "year": "1847"
+   },
+   {
+    "title": "Music"
+   },
+   {
+    "title": "Waldeinsamkeit"
+   }
+  ]
+ },
+ "robert-louis-stevenson": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Robert_Louis_Stevenson",
+   "text": "Robert Louis Stevenson was a Scottish novelist, essayist, poet and travel writer. He is best known for the novels Treasure Island (1883), Strange Case of Dr Jekyll and Mr Hyde (1886), and Kidnapped (1886) and for the poetry collection A Child's Garden of Verses (1885)."
+  },
+  "lifeDates": "1850–1894 · Scottish novelist and poet",
+  "portrait": {
+   "alt": "Portrait of Robert Louis Stevenson",
+   "credit": "Henry Walter Barnett",
+   "file": "robert-louis-stevenson.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Robert_Louis_Stevenson_by_Henry_Walter_Barnett_bw.jpg"
+  },
+  "works": [
+   {
+    "title": "Treasure Island",
+    "year": "1883"
+   },
+   {
+    "title": "A Child's Garden of Verses",
+    "year": "1885"
+   },
+   {
+    "title": "Prince Otto",
+    "year": "1885"
+   },
+   {
+    "title": "Kidnapped",
+    "year": "1886"
+   },
+   {
+    "title": "Strange Case of Dr Jekyll and Mr Hyde",
+    "year": "1886"
+   }
+  ]
+ },
+ "robert-w-chambers": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Robert_W._Chambers",
+   "text": "Robert William Chambers was an American artist and fiction writer, best known for his book of short stories titled The King in Yellow, published in 1895."
+  },
+  "lifeDates": "1865–1933 · American artist and author",
+  "portrait": {
+   "alt": "Portrait of Robert W. Chambers",
+   "credit": "L. C. Page and Company, 1903",
+   "file": "robert-w-chambers.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Robert_William_Chambers.jpg"
+  },
+  "works": [
+   {
+    "title": "The King in Yellow",
+    "year": "1895"
+   }
+  ]
+ },
+ "selma-lagerlof": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Selma_Lagerl%C3%B6f",
+   "text": "Selma Ottilia Lovisa Lagerlöf was a Swedish writer. She published her first novel, Gösta Berling's Saga, at the age of 33. She was the first woman to win the Nobel Prize in Literature, which she was awarded in 1909. In 1914, she was the first woman to be granted a membership of the Swedish Academy."
+  },
+  "lifeDates": "1858–1940 · Swedish author",
+  "portrait": {
+   "alt": "Portrait of Selma Lagerlöf",
+   "credit": "Wikimedia Commons",
+   "file": "selma-lagerlof.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Selma_Lagerl%C3%B6f.jpg"
+  },
+  "works": [
+   {
+    "title": "Gösta Berlings Saga",
+    "year": "1891"
+   },
+   {
+    "title": "Jerusalem",
+    "year": "1901"
+   },
+   {
+    "title": "The Wonderful Adventures of Nils",
+    "year": "1906"
+   }
+  ]
+ },
+ "seneca": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Seneca_the_Younger",
+   "text": "Lucius Annaeus Seneca the Younger, usually known mononymously as Seneca, was a Stoic philosopher of Ancient Rome, a statesman, a dramatist, and in one work (Apocolocyntosis) a satirist from the post-Augustan age of Latin literature."
+  },
+  "lifeDates": "c. 4 BC–AD 65 · Roman Stoic philosopher, statesman and dramatist",
+  "portrait": {
+   "alt": "Bust of Seneca",
+   "credit": "Calidius",
+   "file": "seneca.jpg",
+   "licence": "CC BY-SA 3.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Duble_herma_of_Socrates_and_Seneca_Antikensammlung_Berlin_07.jpg"
+  },
+  "works": []
+ },
+ "sun-tzu": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Sun_Tzu",
+   "text": "Sun Tzu was a Chinese military general, strategist, philosopher, and writer who lived during the Eastern Zhou period. Sun Tzu is traditionally credited as the author of The Art of War, a Classical Chinese text on military strategy from the Warring States period, though the earliest parts of the work probably date to at least a century after him."
+  },
+  "lifeDates": "544–496 BC · Chinese general",
+  "portrait": {
+   "alt": "Portrait of Sun Tzu",
+   "credit": "Unknown artist",
+   "file": "sun-tzu.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:%E5%90%B4%E5%8F%B8%E9%A9%AC%E5%AD%99%E6%AD%A6.jpg"
+  },
+  "works": [
+   {
+    "title": "The Art of War"
+   }
+  ]
+ },
+ "victor-hugo": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Victor_Hugo",
+   "text": "Victor-Marie Hugo, vicomte Hugo was a French Romantic author, poet, essayist, playwright, journalist, human rights activist and politician."
+  },
+  "lifeDates": "1802–1885 · French writer and politician",
+  "portrait": {
+   "alt": "Portrait of Victor Hugo",
+   "credit": "Étienne Carjat",
+   "file": "victor-hugo.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Victor_Hugo_by_%C3%89tienne_Carjat_1876_-_full.jpg"
+  },
+  "works": [
+   {
+    "title": "Les Orientales",
+    "year": "1829"
+   },
+   {
+    "title": "The Hunchback of Notre Dame",
+    "year": "1831"
+   },
+   {
+    "title": "Les Contemplations",
+    "year": "1856"
+   },
+   {
+    "title": "Les Misérables",
+    "year": "1862"
+   },
+   {
+    "title": "Toilers of the Sea",
+    "year": "1866"
+   },
+   {
+    "title": "The Man Who Laughs",
+    "year": "1869"
+   },
+   {
+    "title": "Ninety-Three",
+    "year": "1874"
+   },
+   {
+    "title": "L'Art d'être grand-père",
+    "year": "1877"
+   }
+  ]
+ },
+ "virginia-woolf": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/Virginia_Woolf",
+   "text": "Adeline Virginia Woolf was an English writer and one of the most influential 20th-century modernist authors. She helped to pioneer the use of stream of consciousness narration as a literary device."
+  },
+  "lifeDates": "1882–1941 · English modernist writer",
+  "portrait": {
+   "alt": "Portrait of Virginia Woolf",
+   "credit": "George Charles Beresford / Adam Cuerden",
+   "file": "virginia-woolf.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg"
+  },
+  "works": [
+   {
+    "title": "The Voyage Out",
+    "year": "1915"
+   },
+   {
+    "title": "Mrs Dalloway",
+    "year": "1925"
+   },
+   {
+    "title": "To the Lighthouse",
+    "year": "1927"
+   },
+   {
+    "title": "Orlando: A Biography",
+    "year": "1928"
+   },
+   {
+    "title": "A Room of One's Own",
+    "year": "1929"
+   },
+   {
+    "title": "The Waves",
+    "year": "1931"
+   },
+   {
+    "title": "Flush: A Biography",
+    "year": "1933"
+   },
+   {
+    "title": "The Years",
+    "year": "1937"
+   }
+  ]
+ },
+ "william-shakespeare": {
+  "bio": {
+   "source": "https://en.wikipedia.org/wiki/William_Shakespeare",
+   "text": "William Shakespeare was an English playwright, poet and actor. He is widely regarded as the greatest writer in the English language and the world's pre-eminent dramatist. He is often called England's national poet and the \"Bard of Avon\" or simply \"the Bard\". His extant works, including collaborations, consist of some 39 plays, 154 sonnets, 3 long narrative poems and a few other verses, some of uncertain authorship. His plays have been translated into every major living language and are performed more often than those of any other playwright."
+  },
+  "lifeDates": "1564–1616 · English playwright and poet",
+  "portrait": {
+   "alt": "Portrait of William Shakespeare",
+   "credit": "Attributed to John Taylor",
+   "file": "william-shakespeare.jpg",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:William_Shakespeare_by_John_Taylor,_edited.jpg"
+  },
+  "works": [
+   {
+    "title": "Richard II",
+    "year": "1595"
+   },
+   {
+    "title": "Henry IV, Part 1",
+    "year": "1597"
+   },
+   {
+    "title": "Henry IV, Part 2",
+    "year": "1598"
+   },
+   {
+    "title": "Love's Labour's Lost",
+    "year": "1598"
+   },
+   {
+    "title": "A Midsummer Night's Dream",
+    "year": "1600"
+   },
+   {
+    "title": "Much Ado About Nothing",
+    "year": "1600"
+   },
+   {
+    "title": "The Merchant of Venice",
+    "year": "1600"
+   },
+   {
+    "title": "Hamlet",
+    "year": "1602"
+   },
+   {
+    "title": "The Merry Wives of Windsor",
+    "year": "1602"
+   },
+   {
+    "title": "King Lear",
+    "year": "1608"
+   },
+   {
+    "title": "Pericles, Prince of Tyre",
+    "year": "1609"
+   },
+   {
+    "title": "Shakespeare's sonnets",
+    "year": "1609"
+   },
+   {
+    "title": "The Two Noble Kinsmen",
+    "year": "1613"
+   },
+   {
+    "title": "Othello",
+    "year": "1622"
+   },
+   {
+    "title": "All's Well That Ends Well",
+    "year": "1623"
+   },
+   {
+    "title": "Antony and Cleopatra",
+    "year": "1623"
+   },
+   {
+    "title": "As You Like It",
+    "year": "1623"
+   },
+   {
+    "title": "Coriolanus",
+    "year": "1623"
+   },
+   {
+    "title": "Cymbeline",
+    "year": "1623"
+   },
+   {
+    "title": "Henry VI, Part 1",
+    "year": "1623"
+   },
+   {
+    "title": "Henry VI, Part 2",
+    "year": "1623"
+   },
+   {
+    "title": "Henry VI, Part 3",
+    "year": "1623"
+   },
+   {
+    "title": "Henry VIII",
+    "year": "1623"
+   },
+   {
+    "title": "King John",
+    "year": "1623"
+   },
+   {
+    "title": "Macbeth",
+    "year": "1623"
+   },
+   {
+    "title": "Measure for Measure",
+    "year": "1623"
+   },
+   {
+    "title": "The Taming of the Shrew",
+    "year": "1623"
+   },
+   {
+    "title": "The Tempest",
+    "year": "1623"
+   },
+   {
+    "title": "The Winter's Tale",
+    "year": "1623"
+   },
+   {
+    "title": "Timon of Athens",
+    "year": "1623"
+   },
+   {
+    "title": "Twelfth Night",
+    "year": "1623"
+   },
+   {
+    "title": "Henry V"
+   },
+   {
+    "title": "Julius Caesar"
+   },
+   {
+    "title": "Richard III"
+   },
+   {
+    "title": "Romeo and Juliet"
+   },
+   {
+    "title": "The Comedy of Errors"
+   },
+   {
+    "title": "The Two Gentlemen of Verona"
+   },
+   {
+    "title": "Titus Andronicus"
+   },
+   {
+    "title": "Troilus and Cressida"
+   }
+  ]
+ }
+}

@@ -52,18 +52,22 @@ export const ReadingPositionSchema = z
 export type ReadingPosition = z.infer<typeof ReadingPositionSchema>;
 
 export type ReadStatus =
-	| { kind: 'unread' }
-	| { kind: 'in-progress'; percent: number }
-	| { kind: 'finished' };
+	{ kind: 'unread' } | { kind: 'in-progress'; percent: number } | { kind: 'finished' };
 
 export const AuthorSchema = AuthorRefSchema.extend({
 	lifeDates: z.string().optional(),
 	bio: z.object({ text: z.string(), source: z.url() }).optional(),
 	portrait: z
-		.object({ url: z.string(), credit: z.string(), licence: z.string(), alt: z.string() })
+		.object({
+			url: z.string(),
+			credit: z.string(),
+			licence: z.string(),
+			source: z.url().optional(),
+			alt: z.string()
+		})
 		.optional(),
 	bibliography: z.array(
-		z.object({ title: z.string(), year: z.string(), ownedBookId: z.string().optional() })
+		z.object({ title: z.string(), year: z.string().optional(), ownedBookId: z.string().optional() })
 	)
 });
 export type Author = z.infer<typeof AuthorSchema>;

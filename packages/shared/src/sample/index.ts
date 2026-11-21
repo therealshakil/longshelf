@@ -1,10 +1,13 @@
 /**
  * SampleLibrary: the licence-free library the screens run on until the mirror exists
  * (spec 002 FR-007, research R1). Titles, authors and covers are Standard Ebooks
- * (public domain, https://standardebooks.org/about). Collections, progress, dates, bios
- * and periodicals are invented to match the approved mocks in design-mocks/.
+ * (public domain, https://standardebooks.org/about). Author bios, photos and notable
+ * works are from Wikipedia and Wikidata (DR-0005). Collections, progress, dates and periodicals
+ * are invented to match the approved mocks in design-mocks/.
  */
 import raw from './books.json' with { type: 'json' };
+import publicAuthors from './authors.json' with { type: 'json' };
+import { linkOwnedWorks } from '../library/bibliography.ts';
 import type { LibrarySource } from '../library/source.ts';
 import { ALSO_READING_MAX } from '../library/source.ts';
 import { statusFrom, titleSortKey } from '../library/status.ts';
@@ -182,28 +185,20 @@ const PERIODICALS: { publication: string; frequency: PeriodicalIssue['frequency'
 	{ publication: 'Science Monthly', frequency: 'monthly', issues: ['November', 'October'], readCount: 0 }
 ];
 
+interface PublicAuthor {
+	lifeDates: string;
+	bio: { text: string; source: string };
+	portrait?: { file: string; credit: string; licence: string; source: string; alt: string };
+	works: { title: string; year?: string }[];
+}
+
 const AUTHOR_EXTRAS: Record<string, Partial<Author>> = {
 	'jane-austen': {
 		lifeDates: '1775–1817 · English novelist',
 		bio: {
 			text: 'Born at Steventon, Hampshire, the daughter of a clergyman. Her six novels, the first four published anonymously “By a Lady”, follow the marriages, money and manners of the English landed gentry with sharp irony. She died in Winchester at 41; Northanger Abbey and Persuasion appeared after her death.',
 			source: 'https://en.wikipedia.org/wiki/Jane_Austen'
-		},
-		portrait: {
-			url: '/sample/authors/jane-austen.jpg',
-			credit: 'Sketch by Cassandra Austen, about 1810',
-			licence: 'Public domain (Wikimedia Commons)',
-			alt: 'Pencil and watercolour sketch of Jane Austen'
-		},
-		bibliography: [
-			{ title: 'Sense and Sensibility', year: '1811', ownedBookId: 'jane-austen_sense-and-sensibility' },
-			{ title: 'Pride and Prejudice', year: '1813', ownedBookId: 'jane-austen_pride-and-prejudice' },
-			{ title: 'Mansfield Park', year: '1814' },
-			{ title: 'Emma', year: '1815', ownedBookId: 'jane-austen_emma' },
-			{ title: 'Northanger Abbey', year: '1817' },
-			{ title: 'Persuasion', year: '1817', ownedBookId: 'jane-austen_persuasion' },
-			{ title: 'Lady Susan', year: '1871' }
-		]
+		}
 	}
 };
 
@@ -301,11 +296,26 @@ export function createSampleLibrary(opts: SampleOptions = {}): LibrarySource {
 	const byAuthor = (a: Book, b: Book) =>
 		a.authors[0].sort.localeCompare(b.authors[0].sort) || byTitle(a, b);
 
+	const publicAuthor = (id: string): Pick<Author, 'lifeDates' | 'bio' | 'portrait' | 'bibliography'> => {
+		const p = (publicAuthors as Record<string, PublicAuthor>)[id];
+		if (!p) return { bibliography: [] };
+		const { file, ...portrait } = p.portrait ?? {};
+		return {
+			lifeDates: p.lifeDates || undefined,
+			bio: p.bio,
+			portrait: file ? ({ ...portrait, url: `${base}/authors/${file}` } as Author['portrait']) : undefined,
+			bibliography: linkOwnedWorks(
+				p.works,
+				books.filter((b) => b.authors[0].id === id)
+			)
+		};
+	};
+
 	const authorsMap = new Map<string, Author>();
 	for (const b of books) {
 		const a = b.authors[0];
 		if (!authorsMap.has(a.id))
-			authorsMap.set(a.id, { ...a, bibliography: [], ...AUTHOR_EXTRAS[a.id] });
+			authorsMap.set(a.id, { ...a, ...publicAuthor(a.id), ...AUTHOR_EXTRAS[a.id] });
 	}
 
 	const periodicalIssues = PERIODICALS.map((p) => ({

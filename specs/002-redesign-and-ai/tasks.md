@@ -194,6 +194,7 @@ description: "Tasks for 002 redesigned screens and AI features"
   - bibliography with owned books linked and status shown, not-owned books grey with "Not in your library".
   
   Omit any missing data.
+- [X] T036a [US3] Author data (DR-0005): Wikipedia bio and free-licensed photo, life dates, and Wikidata notable works for the sample authors. The full bibliography is on hold until a source passes review.
 - [X] T037 [P] [US3] Build the shelf page `apps/web/src/routes/library/shelf/[kind]/[id]/+page.svelte`: breadcrumb, name, count, Title / Author / Recently added sort, grid, and the Calibre or AI footnote by kind.
 - [X] T038 [US3] Build the book page `apps/web/src/routes/book/[id]/+page.svelte` and `BookHeader.svelte`:
   - cover, title, author link, subtitle, publication line;

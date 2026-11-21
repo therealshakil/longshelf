@@ -258,3 +258,12 @@
 - **Sample data:** the Moby Dick position now uses a real contents link.
 - **Checked:** typecheck, lint, unit tests, and targeted e2e runs for recap backfill (AI stubbed) and the catalogue.
 - **Not checked:** a real Workers AI recap through the new flow, or "Include earlier chapters" clicked in a browser. The sample Moby Dick place is inside the 40,000-word window, so it doesn't show the coverage line.
+
+## 2026-11-21: Author bios, photos and notable works (DR-0005)
+
+- **Built:** author pages now show a Wikipedia bio, free-licensed photo with credit and licence, life dates, and Wikidata notable works marked against the library.
+- **Coverage (67 sample authors):** 67 bios, 64 photos, 57 with notable works. Boethius, Laozi and Henry Seton Merriman have no photo.
+- **Held back:** the full bibliography. About a third of 50 reviewed Open Library entries were wrong, and Wikidata's alternative is untested because its query service was rate-limiting.
+- **Data fixes:** implausible Wikidata years are hidden, and Seneca is matched to Seneca the Younger.
+- **Checked:** typecheck, targeted unit tests, all 67 author pages loading in a browser with their photos, and no sideways scroll at phone width on the page checked.
+- **Not checked:** the full e2e suite. Real Calibre authors have no lookup yet; this is sample data until the mirror exists (spec 003).

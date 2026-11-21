@@ -37,6 +37,9 @@ describe('SampleLibrary (FR-007)', () => {
 		const page = await lib.author('jane-austen');
 		expect(page?.books.length).toBe(4);
 		expect(page?.finishedCount).toBe(1);
-		expect(page?.author.bibliography.length).toBe(7);
+		const works = page?.author.bibliography ?? [];
+		expect(works.map((w) => w.title)).toContain('Mansfield Park');
+		expect(works.find((w) => w.title === 'Emma')?.ownedBookId).toBe('jane-austen_emma');
+		expect(works.find((w) => w.title === 'Mansfield Park')?.ownedBookId).toBeUndefined();
 	});
 });

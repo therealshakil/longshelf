@@ -330,3 +330,11 @@ html.chrome-hidden .r-bottom{transform:translateY(100%);opacity:0}
 .r-sync-go:hover{background:var(--accent)}.r-sync-x{font-weight:600;color:var(--muted);padding:.3rem .4rem}.r-sync-x:hover{color:var(--ink)}
 @media (max-width:52rem){.r-sync-d{display:none}}
 @media (max-width:40rem){.r-top{grid-template-columns:auto 1fr auto;row-gap:.4rem}.r-sync{grid-column:1/-1;grid-row:2;justify-self:stretch;justify-content:space-between}.r-sync>span{margin-right:auto}.page{padding-top:8rem}.r-mock{top:7.25rem}}
+
+.bib-all{margin-top:1.5rem}.bib-all summary{display:flex;align-items:center;gap:.6rem;min-height:2.75rem;cursor:pointer;font:600 1.125rem Literata,serif;color:var(--ink)}
+.bib-all summary span{font:400 .8125rem Inter,sans-serif;color:var(--muted)}.bib-all summary:hover{text-decoration:underline;text-underline-offset:.2em}
+.bib-all[open] summary{border-bottom:1px solid var(--rule)}.bib-caveat{font-size:.8125rem;color:var(--muted);margin-top:.75rem}
+.bib-all summary{list-style:none}.bib-all summary::-webkit-details-marker{display:none}
+.bib-all summary::before{content:"";width:.5rem;height:.5rem;margin:0 .25rem 0 .1rem;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .15s}
+.bib-all[open] summary::before{transform:rotate(45deg)}
+@media (prefers-reduced-motion:reduce){.bib-all summary::before{transition:none}}
