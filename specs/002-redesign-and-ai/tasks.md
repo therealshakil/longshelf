@@ -256,7 +256,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ## Phase 9: User Story 5 - Suggestions from my own library (P3)
 
-- [ ] T054 [US5] Build book text profiles and embeddings in `apps/web/src/lib/server/ai/embeddings.ts` (title, author, description, genres → `book_embedding`, rebuilt when `profile_hash` changes), run by the operator job.
+- [X] T054 [US5] Build book text profiles and embeddings in `apps/web/src/lib/server/ai/embeddings.ts` (title, author, description, genres → `book_embedding`, rebuilt when `profile_hash` changes), run by the operator job.
 - [ ] T055 [US5] Implement the suggestion engine in `apps/web/src/lib/server/ai/suggest.ts`:
   - rules in this order: next in series, Reading List, same author as a finished book, same collection as a book in progress;
   - then cosine similarity;

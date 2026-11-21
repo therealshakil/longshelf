@@ -134,7 +134,7 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
   first (FR-013). Then an embedding search over book text profiles (title, author, description,
   genres). Each result's reason names the fields that matched. With AI off, only the exact
   search runs.
-- **Vectors:** 700 × 768 floats is about 2 MB. They are loaded once per request into the
+- **Vectors:** 700 × 1,024 floats (`bge-m3`, measured 2026-11-21) is about 2.9 MB. They are loaded once per request into the
   Worker and scanned. ASSUMPTION: that is well within Worker CPU limits. Vectorize is the
   fallback if not.
 

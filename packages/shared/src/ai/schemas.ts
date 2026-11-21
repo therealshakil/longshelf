@@ -83,3 +83,15 @@ export type Search = z.infer<typeof SearchSchema>;
 export const GenreJobSchema = z.object({
 	bookIds: z.array(z.string().min(1)).optional()
 });
+
+export const EmbeddingJobResultSchema = z.object({
+	total: z.number().int().nonnegative(),
+	embedded: z.number().int().nonnegative(),
+	unchanged: z.number().int().nonnegative(),
+	removed: z.number().int().nonnegative(),
+	/** Books still to embed: run the job again to continue. */
+	remaining: z.number().int().nonnegative(),
+	/** Why it stopped early, after keeping the batches it finished. */
+	stopped: z.enum(['ai_paused', 'ai_off', 'offline']).optional()
+});
+export type EmbeddingJobResult = z.infer<typeof EmbeddingJobResultSchema>;

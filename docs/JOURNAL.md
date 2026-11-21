@@ -275,3 +275,11 @@
 - **Built:** `pnpm eval:recaps`, using the shipped window and prompts, with a resumable cache and a 6,000-neuron daily cap.
 - **Result:** 10 of 20 recaps built before the cap. SC-004 is not met or judged. Two quality problems are recorded in DR-0004.
 - **Hidden:** Story so far no longer appears on Home or in the reader, and the reader no longer sends finished chapters for AI summaries. The code stays behind `RECAPS_ENABLED`.
+
+## 2026-11-21: Spec 002 T054: book profiles and embeddings
+
+- **Built:** a text profile per book (title, author, genres, description), `bge-m3` embeddings in D1, and `POST /api/ai/jobs/embeddings`.
+- **Behaviour:** only new or changed books are embedded, books that left the library are removed, and each run does at most 144 books inside the spend guard. Run it again while `remaining` is above 0.
+- **Checked:** 10 unit tests, typecheck, lint, and a real Workers AI run with local D1: 96 sample books embedded for about 1 unit, then 0 on the second run.
+- **Not checked:** suggestion quality. Only 1 of the 96 sample books has a description and all share one genre, so the vectors mostly reflect titles and authors. Check this on richer data in T055.
+- **No UI yet:** the job has no button on the AI settings page.
