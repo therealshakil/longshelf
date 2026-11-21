@@ -16,6 +16,7 @@
 	import ErrorState from '#lib/components/ErrorState.svelte';
 	import { deviceName, splitPositions } from '#lib/library/format.ts';
 	import { sendSummary } from '#lib/reader/summaries.ts';
+	import { RECAPS_ENABLED } from '#lib/ai/features.ts';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
 	import { recapWithBackfill, type RecapView } from '#lib/ai/recap.ts';
 	import type { PageProps } from './$types';
@@ -88,7 +89,9 @@
 		else delete root.dataset.theme;
 	});
 	// Anything queued while offline goes now (US4).
-	$effect(() => void sendSummary(null));
+	$effect(() => {
+		if (RECAPS_ENABLED) void sendSummary(null);
+	});
 
 	onDestroy(() => {
 		if (typeof document !== 'undefined') delete document.documentElement.dataset.theme;
@@ -154,7 +157,7 @@
 		onContents={() => (contentsOpen = true)}
 		onText={() => (textOpen = true)}
 		onBookmark={() => (bookmarked = !bookmarked)}
-		onStorySoFar={data.ai ? openRecap : undefined}
+		onStorySoFar={RECAPS_ENABLED && data.ai ? openRecap : undefined}
 	>
 		{#snippet notice()}
 			{#if showNotice && other && positions.other}
@@ -194,6 +197,7 @@
 				{onTap}
 				{onKey}
 				onChapterFinished={(c) =>
+					RECAPS_ENABLED &&
 					c.text.length >= 400 &&
 					sendSummary({
 						bookId: book.id,

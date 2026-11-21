@@ -1,4 +1,7 @@
 import { expect, test } from '@playwright/test';
+import { RECAPS_ENABLED } from '../../src/lib/ai/features.ts';
+
+test.skip(!RECAPS_ENABLED, 'Story so far is parked (DR-0004).');
 
 /** On-demand summaries (DR-0004), with the AI endpoints stubbed so no neurons are spent. */
 test('a recap from Home fills earlier chapters and sends nothing past the place', async ({

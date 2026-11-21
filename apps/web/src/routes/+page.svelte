@@ -9,6 +9,7 @@
 	import CurrentBook from '#lib/components/CurrentBook.svelte';
 	import LedgerRow from '#lib/components/LedgerRow.svelte';
 	import PeriodicalRow from '#lib/components/PeriodicalRow.svelte';
+	import { RECAPS_ENABLED } from '#lib/ai/features.ts';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
 	import type { BookWithPositions } from '@ribbon/shared/library';
 	import { recapWithBackfill, type RecapView } from '#lib/ai/recap.ts';
@@ -88,7 +89,7 @@
 					<h3 class="also-h">Also reading</h3>
 					<ol class="ledger">
 						{#each data.also as item (item.book.id)}
-							<LedgerRow {item} onStorySoFar={data.ai ? openRecap : undefined} />
+							<LedgerRow {item} onStorySoFar={RECAPS_ENABLED && data.ai ? openRecap : undefined} />
 						{/each}
 					</ol>
 				</div>

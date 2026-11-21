@@ -69,6 +69,9 @@ agent read of those 10 found no spoilers. It found two problems:
 - The *Middlemarch* recap at chapter 19 never mentions Dorothea, because the recent window holds
   none of her chapters. This is the risk named in the challenger above.
 
+Story so far is hidden while parked, and the reader sends no chapters for summarising. Both are
+controlled by `RECAPS_ENABLED` in `apps/web/src/lib/ai/features.ts`.
+
 To resume: run `pnpm eval:recaps` from `apps/web`. It reuses the local cache in `.eval/recaps/`
 if that still exists. Then consider the step-up model and a short "who's who" from earlier chapters.
 
