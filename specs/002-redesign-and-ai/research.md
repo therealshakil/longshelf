@@ -138,6 +138,16 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
   Worker and scanned. ASSUMPTION: that is well within Worker CPU limits. Vectorize is the
   fallback if not.
 
+**Update from a real-library check (2026-11-21, owner approved, metadata only):**
+- "Like X" needs a cosine of at least 0.62, the 99th percentile of random book pairs. The first
+  value, 0.5, was about the level of two random books.
+- Read next limits each rule on a first pass (Reading List 4, authors 3, collection 3), then
+  refills spare places, so a long Reading List can't crowd out everything else.
+- Similarity in Read next only finds authors not already read; those have their own rule.
+- Repeat records of a work are shown once: same title with a shared author, or a cosine of at
+  least 0.8. In the check, true duplicates scored 0.95 or more and different works at most 0.77.
+- ASSUMPTION: one library and one agent's read are enough to set these values.
+
 **Rationale:** template reasons can't misstate why a book was suggested (honesty, FR-015).
 Embeddings are nearly free (R4).
 

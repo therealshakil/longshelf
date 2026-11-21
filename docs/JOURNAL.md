@@ -283,3 +283,11 @@
 - **Checked:** 10 unit tests, typecheck, lint, and a real Workers AI run with local D1: 96 sample books embedded for about 1 unit, then 0 on the second run.
 - **Not checked:** suggestion quality. Only 1 of the 96 sample books has a description and all share one genre, so the vectors mostly reflect titles and authors. Check this on richer data in T055.
 - **No UI yet:** the job has no button on the AI settings page.
+
+## 2026-11-21: Spec 002 T055: suggestion engine
+
+- **Built:** Read next and More like this in `suggest.ts`: series, Reading List, author, collection, then similarity, with reasons from templates only. Not yet reachable from an endpoint or the UI (T056, T057).
+- **Real-library check:** with the owner's approval, Calibre metadata was read read-only and embedded through Workers AI in the owner's account, about 200 units. Book text was not sent. The data and results stayed in a local scratchpad and are not in this repo.
+- **Fixes from that check:** a higher similarity cut-off, room for every rule, new authors from similarity, author spelling variants, and repeat records.
+- **Limits:** the real library has no reading history yet, so Read next was only tried with simulated history. Some matches are still weak, and about a fifth of books get no More like this, which is better than claiming a weak match.
+- **Checked:** 17 unit tests, typecheck and lint.
