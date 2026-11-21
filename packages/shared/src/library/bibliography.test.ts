@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { linkOwnedWorks, titleKey } from './bibliography.ts';
+import { linkOwnedWorks, shortWorkList, titleKey } from './bibliography.ts';
 
 describe('titleKey', () => {
 	it('treats forms of a title as the same work', () => {
@@ -12,6 +12,22 @@ describe('titleKey', () => {
 	it('ignores a leading article and accents', () => {
 		expect(titleKey('The Watsons')).toBe('watsons');
 		expect(titleKey('Les Misérables')).toBe('les miserables');
+	});
+});
+
+describe('shortWorkList', () => {
+	const works = ['a', 'b', 'c', 'd', 'e'].map((title) => ({
+		title,
+		...(title === 'e' ? { ownedBookId: 'e-id' } : {})
+	}));
+	it('keeps owned works and fills the limit with the earliest, in order', () => {
+		expect(shortWorkList(works, 3).map((w) => w.title)).toEqual(['a', 'b', 'e']);
+	});
+	it('keeps every owned work even past the limit', () => {
+		expect(shortWorkList(works, 0).map((w) => w.title)).toEqual(['e']);
+	});
+	it('returns a short list unchanged', () => {
+		expect(shortWorkList(works, 12)).toEqual(works);
 	});
 });
 

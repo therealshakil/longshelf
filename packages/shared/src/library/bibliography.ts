@@ -15,6 +15,15 @@ export function titleKey(title: string): string {
 		.trim();
 }
 
+/**
+ * The works to show before "Show all", in their original order: every owned work, then the
+ * earliest others up to the limit.
+ */
+export function shortWorkList<W extends { ownedBookId?: string }>(works: W[], limit = 12): W[] {
+	let spare = limit - works.filter((w) => w.ownedBookId).length;
+	return works.filter((w) => Boolean(w.ownedBookId) || spare-- > 0);
+}
+
 /** Adds the library's book id to each work the owner has. */
 export function linkOwnedWorks<W extends { title: string }>(
 	works: W[],

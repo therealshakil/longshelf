@@ -1,3 +1,4 @@
 export * from './types.ts';
 export * from './source.ts';
 export * from './status.ts';
+export { shortWorkList } from './bibliography.ts';

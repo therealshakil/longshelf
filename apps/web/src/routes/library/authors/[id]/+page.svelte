@@ -5,13 +5,19 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { statusLabel } from '@ribbon/shared/library';
+	import { shortWorkList, statusLabel } from '@ribbon/shared/library';
 	import BookTile from '#lib/components/BookTile.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	const a = $derived(data.page.author);
 	const owned = $derived(new Map(data.page.books.map((b) => [b.book.id, b])));
+	// Stored by author so moving to another author's page starts collapsed.
+	let expandedFor = $state<string | null>(null);
+	const shortList = $derived(shortWorkList(a.bibliography));
+	const canExpand = $derived(shortList.length < a.bibliography.length);
+	const expanded = $derived(expandedFor === a.id);
+	const works = $derived(expanded ? a.bibliography : shortList);
 	// Name only the sources this author's page actually uses.
 	const credits = $derived.by(() => {
 		const fromWikipedia =
@@ -73,7 +79,7 @@
 	{#if a.bibliography.length}
 		<h2 class="section-h">Notable works</h2>
 		<ol class="bib">
-			{#each a.bibliography as w (w.title)}
+			{#each works as w (w.title)}
 				{@const mine = w.ownedBookId ? owned.get(w.ownedBookId) : undefined}
 				<li class:missing={!mine}>
 					<span class="y">{w.year ?? '—'}</span>
@@ -89,6 +95,18 @@
 				</li>
 			{/each}
 		</ol>
+		{#if canExpand}
+			<button
+				type="button"
+				class="more"
+				class:open={expanded}
+				aria-expanded={expanded}
+				onclick={() => (expandedFor = expanded ? null : a.id)}
+			>
+				{expanded ? 'Show fewer' : 'Show all'}
+				{#if !expanded}<span>{a.bibliography.length} works</span>{/if}
+			</button>
+		{/if}
 	{/if}
 	{#if credits}
 		<p class="note">{credits} Your library comes from Calibre.</p>
@@ -228,6 +246,49 @@
 	.s.active {
 		color: var(--r-accent);
 		font-weight: var(--r-weight-strong);
+	}
+	.more {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		min-height: 2.75rem;
+		margin-top: 0.75rem;
+		padding: 0;
+		background: none;
+		border: 0;
+		cursor: pointer;
+		font-family: var(--r-font-reading);
+		font-size: var(--r-text-lg);
+		font-weight: var(--r-weight-title);
+		color: var(--r-ink);
+	}
+	.more:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	.more::before {
+		content: '';
+		width: 0.5rem;
+		height: 0.5rem;
+		margin: 0 0.25rem 0 0.1rem;
+		border-right: 2px solid var(--r-text-muted);
+		border-bottom: 2px solid var(--r-text-muted);
+		transform: rotate(45deg);
+		transition: transform 0.15s;
+	}
+	.more.open::before {
+		transform: rotate(-135deg);
+	}
+	.more span {
+		font-family: var(--r-font-ui, inherit);
+		font-size: var(--r-text-sm);
+		font-weight: var(--r-weight-regular);
+		color: var(--r-text-muted);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.more::before {
+			transition: none;
+		}
 	}
 	.note {
 		margin-top: 2rem;

@@ -266,4 +266,5 @@
 - **Held back:** the full bibliography. About a third of 50 reviewed Open Library entries were wrong, and Wikidata's alternative is untested because its query service was rate-limiting.
 - **Data fixes:** implausible Wikidata years are hidden, and Seneca is matched to Seneca the Younger.
 - **Checked:** typecheck, targeted unit tests, all 67 author pages loading in a browser with their photos, and no sideways scroll at phone width on the page checked.
+- **Long lists:** notable works show 12 entries, always including owned books, with a "Show all" control.
 - **Not checked:** the full e2e suite. Real Calibre authors have no lookup yet; this is sample data until the mirror exists (spec 003).
