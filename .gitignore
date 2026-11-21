@@ -18,3 +18,6 @@ playwright-report/
 apps/web/.impeccable/reference/
 apps/web/static/sample-covers/
 
+
+# Recap evaluation output
+.eval/

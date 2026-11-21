@@ -58,6 +58,20 @@ one tap. The default still stands because a returning reader most needs the rece
 the full-book cost stays available as the owner's explicit choice. T053 must check whether
 recaps from a recent window confuse characters. If they do, revisit this decision.
 
+## Update: quality check parked (2026-11-21)
+
+The owner parked recap work as not worth more effort for now. SC-004 is **not** met: 10 of 20
+recaps were built and the owner has not judged them. No later-only names were flagged, and an
+agent read of those 10 found no spoilers. It found two problems:
+
+- The *Middlemarch* recap at chapter 69 says Bulstrode married Will's mother. He married Will's
+  grandmother. The error comes from the summary of chapter LXI.
+- The *Middlemarch* recap at chapter 19 never mentions Dorothea, because the recent window holds
+  none of her chapters. This is the risk named in the challenger above.
+
+To resume: run `pnpm eval:recaps` from `apps/web`. It reuses the local cache in `.eval/recaps/`
+if that still exists. Then consider the step-up model and a short "who's who" from earlier chapters.
+
 ## Limits of the evidence
 
 - ASSUMPTION: five chapters and one reviewer are enough to reject slicing. The losses were large

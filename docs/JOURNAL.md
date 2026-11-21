@@ -268,3 +268,10 @@
 - **Checked:** typecheck, targeted unit tests, all 67 author pages loading in a browser with their photos, and no sideways scroll at phone width on the page checked.
 - **Long lists:** notable works show 12 entries, always including owned books, with a "Show all" control.
 - **Not checked:** the full e2e suite. Real Calibre authors have no lookup yet; this is sample data until the mirror exists (spec 003).
+
+## 2026-11-21: Recap quality check parked (T053)
+
+- **Owner decision:** park recap work; it isn't worth more effort at this point.
+- **Built:** `pnpm eval:recaps`, using the shipped window and prompts, with a resumable cache and a 6,000-neuron daily cap.
+- **Result:** 10 of 20 recaps built before the cap. SC-004 is not met or judged. Two quality problems are recorded in DR-0004.
+- **Unchanged:** Story so far is still in the app. It has not passed the check the spec requires before it is turned on.
