@@ -40,6 +40,10 @@ recap(book_id, upto_href, upto_percent, text, model, created_at, PRIMARY KEY (bo
 -- Text profile embedding per book, for similarity and plain-language search
 book_embedding(book_id PRIMARY KEY, profile_hash, vector BLOB, model, created_at)
 
+-- Each book's closest matches, built by `pnpm ai:neighbours` (research R6)
+-- neighbours: JSON [[bookId, score], ...]; copies: JSON [bookId, ...] or null
+book_neighbours(book_id PRIMARY KEY, model, neighbours, copies)
+
 -- Owner's dismissals of suggestions (FR-010)
 suggestion_dismissal(book_id PRIMARY KEY, kind, until)   -- kind: not_now | never; until null = never
 

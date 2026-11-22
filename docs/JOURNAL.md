@@ -295,6 +295,14 @@
 ## 2026-11-22: Spec 002 T056: suggestion endpoints
 
 - **Built:** `GET /api/ai/read-next`, `GET /api/ai/more-like/[bookId]`, and `POST`/`DELETE /api/ai/dismiss`. "Not now" lapses after 30 days, and "Never" lasts until undone. With AI off, the two suggestion reads return `ai_off`.
-- **Risk found:** on 631 real books, Read next uses about 70 ms of CPU including vector decoding, after a fivefold speed-up of the engine. The Workers Free limit is 10 ms. This was measured in Node, not on a deployed Worker, and must be settled before deployment (research R6).
+- **Risk found:** on 631 real books, Read next used about 70 ms of CPU including vector decoding. The Workers Free limit is 10 ms. Fixed in the next entry.
 - **Checked:** 31 targeted unit tests, typecheck, ESLint, Prettier on the changed code, and all endpoints against the local dev server with sample data, including dismiss and undo.
 - **Not checked:** the full e2e suite, or a deployed Worker. There is no UI yet (T057).
+
+## 2026-11-22: Precomputed suggestion matches
+
+- **Owner decision:** store each book's closest matches instead of paying for Workers or adding Vectorize (research R6).
+- **Built:** `pnpm ai:neighbours`, which runs on the operator's machine, calls no AI model and writes only changed rows to the new `book_neighbours` table. Read next and More like this now load only the rows they need.
+- **Measured in Node on 631 real books:** ranking fell from about 50 ms to about 2 ms for Read next, and from about 12 ms to under 1 ms for More like this. Results matched an unlimited comparison for all 631 books. Real data stayed in the scratchpad.
+- **Checked:** 33 targeted unit tests, typecheck, ESLint, Prettier on the changed code, and both endpoints on the local dev server with sample data.
+- **Not checked:** total CPU on a deployed Worker, or the full e2e suite. The script only targets local D1 until a production database exists.

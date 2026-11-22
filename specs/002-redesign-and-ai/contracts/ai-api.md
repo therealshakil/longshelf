@@ -18,6 +18,6 @@ All endpoints:
 | `POST /api/ai/genres/:bookId` | `{ name, action: 'promote' \| 'remove' }` | `{ ok: true, state }` | Promotion is applied to Calibre by the CLI (spec 003). |
 | `GET /api/ai/search?q=` | — | `{ mode: 'exact' \| 'meaning', items: { bookId, reason }[] }` | Exact matches first. `mode: 'exact'` with a one-line note when AI is unavailable (FR-013). |
 | `POST /api/ai/jobs/genres` | `{ bookIds?: string[] }` | `{ queued: number }` | Operator action: suggests genres for new or all books, inside the spend guard. |
-| `POST /api/ai/jobs/embeddings` | Empty JSON object | `{ total, embedded, unchanged, removed, remaining, stopped? }` | Operator action: embeds new or changed books in bounded batches inside the spend guard. Run again while `remaining` is above 0. |
+| `POST /api/ai/jobs/embeddings` | Empty JSON object | `{ total, embedded, unchanged, removed, remaining, stopped? }` | Operator action: embeds new or changed books in bounded batches inside the spend guard. Run again while `remaining` is above 0, then run `pnpm ai:neighbours` on the operator's machine so suggestions use the new vectors. |
 | `GET /api/ai/usage` | — | `{ today: { neuronsEst, calls, ceiling }, enabled }` | Operator view (constitution III). |
 | `PUT /api/ai/enabled` | `{ enabled: boolean }` | `{ ok: true }` | The owner's off switch (FR-016). |

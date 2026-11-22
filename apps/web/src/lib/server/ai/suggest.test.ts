@@ -1,13 +1,16 @@
 import type { Book, ReadStatus } from '@ribbon/shared/library';
 import { describe, expect, it } from 'vitest';
+import { buildNeighbours } from './neighbours.ts';
 import {
 	cosine,
 	MIN_SIMILARITY,
-	moreLike,
+	moreLike as moreLikeFrom,
 	READ_NEXT_MAX,
-	readNext,
+	readNext as readNextFrom,
 	type SuggestItem
 } from './suggest.ts';
+
+type TestItem = SuggestItem & { vector?: Float32Array };
 
 const UNREAD: ReadStatus = { kind: 'unread' };
 const FINISHED: ReadStatus = { kind: 'finished' };
@@ -16,7 +19,7 @@ const READING: ReadStatus = { kind: 'in-progress', percent: 40 };
 function item(
 	id: string,
 	o: Partial<Book> & { author?: string; status?: ReadStatus; at?: string; v?: number[] } = {}
-): SuggestItem {
+): TestItem {
 	const { author = `Author x${id}`, status = UNREAD, at, v, ...book } = o;
 	return {
 		book: {
@@ -33,6 +36,19 @@ function item(
 		vector: v ? Float32Array.from(v) : undefined
 	};
 }
+/** Runs the real neighbour build on the test vectors, as the operator script does. */
+function linked(items: TestItem[]): SuggestItem[] {
+	const rows = buildNeighbours(
+		items.flatMap((i) =>
+			i.vector ? [{ id: i.book.id, title: i.book.title, vector: i.vector }] : []
+		)
+	);
+	return items.map((i) => ({ ...i, ...rows.get(i.book.id) }));
+}
+const readNext = (items: TestItem[], dismissed?: Set<string>) =>
+	readNextFrom(linked(items), dismissed);
+const moreLike = (id: string, items: TestItem[], dismissed?: Set<string>) =>
+	moreLikeFrom(id, linked(items), dismissed);
 const ids = (list: { bookId: string }[]) => list.map((s) => s.bookId);
 const reasonFor = (list: { bookId: string; reason: string }[], id: string) =>
 	list.find((s) => s.bookId === id)?.reason;

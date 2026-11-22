@@ -23,6 +23,7 @@
 		"gen:tokens": "node scripts/gen-tokens.ts",
 		"design:compare": "node scripts/design-compare.ts",
 		"eval:recaps": "node scripts/eval-recaps.ts",
+		"ai:neighbours": "wrangler d1 migrations apply ribbon --local && node scripts/build-neighbours.ts",
 		"dev:remote": "node scripts/gen-tokens.ts && wrangler d1 migrations apply ribbon --local && vite dev"
 	},
 	"devDependencies": {

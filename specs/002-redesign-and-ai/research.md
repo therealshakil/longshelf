@@ -134,16 +134,23 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
   first (FR-013). Then an embedding search over book text profiles (title, author, description,
   genres). Each result's reason names the fields that matched. With AI off, only the exact
   search runs.
-- **Vectors:** 700 × 1,024 floats (`bge-m3`, measured 2026-11-21) is about 2.9 MB. They are loaded once per request into the
-  Worker and scanned. The earlier assumption that this is well within Worker CPU limits is
-  **not supported**: see the T056 timing below.
+- **Vectors:** 700 × 1,024 floats (`bge-m3`, measured 2026-11-21) is about 2.9 MB. Suggestions no
+  longer load them per request: see "Precomputed matches" below. Plain-language search (T060 onward)
+  still needs its own check against the same CPU limit.
 
-**T056 timing (2026-11-22, 631 real books, Node on the dev laptop, not a deployed Worker):**
-decoding vectors takes about 16 to 25 ms, Read next about 50 ms and More like this about 12 ms.
-That is over the 10 ms CPU limit of the Workers Free plan
-(https://developers.cloudflare.com/workers/platform/limits/). Unresolved before deployment:
-measure on a real Worker, then choose precomputed neighbours, Vectorize, or Workers Paid ($5 a
-month, a fixed cost the owner must approve).
+**Precomputed matches (2026-11-22, owner's decision, supersedes loading vectors per request):**
+- **Problem:** on 631 real books, loading vectors and ranking took about 70 ms of CPU in Node. The
+  Workers Free plan allows 10 ms (https://developers.cloudflare.com/workers/platform/limits/).
+- **Options:** precomputed matches (free, no new service); Workers Paid ($5 a month, fixed);
+  Vectorize (an established vector search service, but one more moving part for about 700 books).
+- **Decision:** `pnpm ai:neighbours` compares all books on the operator's machine and stores each
+  book's 24 closest matches in `book_neighbours`. Requests load only the rows they compare from.
+- **Strongest counter-argument:** matches go stale until the script runs again. Accepted: the
+  library changes rarely, a stale match is still a real book, and books that left are filtered out.
+- **Measured (Node, 631 real books):** Read next ranking about 2 ms, More like this under 1 ms.
+  Results matched an unlimited comparison for all 631 books.
+- **Not yet measured:** total CPU per request on a deployed Worker, including loading the library.
+  The script uses local D1 only, and needs the production database once one exists.
 
 **Update from a real-library check (2026-11-21, owner approved, metadata only):**
 - "Like X" needs a cosine of at least 0.62, the 99th percentile of random book pairs. The first

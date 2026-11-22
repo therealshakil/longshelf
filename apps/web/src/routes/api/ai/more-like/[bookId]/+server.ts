@@ -9,7 +9,10 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ params }) => {
 	const { db, store } = aiEnv();
 	await requireEnabled(store);
-	const [items, dismissed] = await Promise.all([suggestItems(db, library), activeDismissals(db)]);
+	const [items, dismissed] = await Promise.all([
+		suggestItems(db, library, () => [params.bookId]),
+		activeDismissals(db)
+	]);
 	if (!items.some((i) => i.book.id === params.bookId)) error(404, 'No such book.');
 	const body: Suggestions = { items: moreLike(params.bookId, items, dismissed) };
 	return json(body);

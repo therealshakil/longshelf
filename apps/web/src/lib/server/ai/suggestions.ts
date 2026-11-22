@@ -4,9 +4,9 @@
  */
 import { error } from '@sveltejs/kit';
 import type { LibrarySource } from '@ribbon/shared/library';
-import { decodeVector } from './embeddings.ts';
 import { isEnabled, type GuardStore } from './guard.ts';
 import { MODELS } from './models.ts';
+import { decodeNeighbours } from './neighbours.ts';
 import type { SuggestItem } from './suggest.ts';
 
 /** ASSUMPTION: starting value (data-model.md). */
@@ -41,32 +41,43 @@ export async function undoDismiss(db: D1Database, bookId: string) {
 	await db.prepare('DELETE FROM suggestion_dismissal WHERE book_id = ?').bind(bookId).run();
 }
 
-/** Every book with its status, last read time and current-model vector. */
-export async function suggestItems(db: D1Database, library: LibrarySource): Promise<SuggestItem[]> {
-	const [books, stored] = await Promise.all([
-		library.allBooks(),
-		db
-			.prepare('SELECT book_id, vector FROM book_embedding WHERE model = ?')
-			.bind(MODELS.embedding)
-			.all<{ book_id: string; vector: ArrayBuffer | Uint8Array | number[] }>()
-	]);
-	const vectors = new Map(stored.results.map((r) => [r.book_id, r.vector]));
-	return Promise.all(
+/**
+ * Every book with its status and last read time, plus stored matches for the books `seeds` picks
+ * and any known copies. Loading only those rows keeps a request inside Worker CPU limits.
+ */
+export async function suggestItems(
+	db: D1Database,
+	library: LibrarySource,
+	seeds: (items: SuggestItem[]) => string[]
+): Promise<SuggestItem[]> {
+	const books = await library.allBooks();
+	const items: SuggestItem[] = await Promise.all(
 		books.map(async (book) => {
 			const [status, positions] = await Promise.all([
 				library.status(book.id),
 				library.positions(book.id)
 			]);
-			const blob = vectors.get(book.id);
-			return {
-				book,
-				status,
-				lastReadAt: positions
-					.map((p) => p.readAt)
-					.sort()
-					.at(-1),
-				vector: blob ? decodeVector(blob) : null
-			};
+			const lastReadAt = positions
+				.map((p) => p.readAt)
+				.sort()
+				.at(-1);
+			return { book, status, lastReadAt };
 		})
 	);
+	const wanted = new Set(seeds(items));
+	const { results } = await db
+		.prepare(
+			`SELECT book_id, neighbours, copies FROM book_neighbours
+			 WHERE model = ? AND (copies IS NOT NULL OR book_id IN (SELECT value FROM json_each(?)))`
+		)
+		.bind(MODELS.embedding, JSON.stringify([...wanted]))
+		.all<{ book_id: string; neighbours: string; copies: string | null }>();
+	const rows = new Map(results.map((r) => [r.book_id, r]));
+	for (const item of items) {
+		const row = rows.get(item.book.id);
+		if (!row) continue;
+		if (row.copies) item.copies = JSON.parse(row.copies) as string[];
+		if (wanted.has(item.book.id)) item.neighbours = decodeNeighbours(row.neighbours);
+	}
+	return items;
 }

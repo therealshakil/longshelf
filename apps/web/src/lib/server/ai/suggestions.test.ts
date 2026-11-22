@@ -4,18 +4,26 @@ import type { Book, LibrarySource, ReadingPosition, ReadStatus } from '@ribbon/s
 import { describe, expect, it } from 'vitest';
 import { encodeVector } from './embeddings.ts';
 import { MODELS } from './models.ts';
+import { saveNeighbours } from './neighbours.ts';
 import { activeDismissals, dismiss, suggestItems, undoDismiss } from './suggestions.ts';
 
 /** Just enough of D1 over node:sqlite to run the real SQL against the real migration. */
 function fakeD1() {
 	const sqlite = new DatabaseSync(':memory:');
-	sqlite.exec(readFileSync('migrations/0001_ai.sql', 'utf8'));
+	for (const file of ['0001_ai', '0002_neighbours'])
+		sqlite.exec(readFileSync(`migrations/${file}.sql`, 'utf8'));
 	const statement = (sql: string, args: (string | null)[] = []) => ({
 		bind: (...next: (string | null)[]) => statement(sql, next),
 		run: async () => sqlite.prepare(sql).run(...args),
 		all: async () => ({ results: sqlite.prepare(sql).all(...args) })
 	});
-	return { sqlite, db: { prepare: (sql: string) => statement(sql) } as unknown as D1Database };
+	const db = {
+		prepare: (sql: string) => statement(sql),
+		batch: async (list: { run(): Promise<unknown> }[]) => {
+			for (const s of list) await s.run();
+		}
+	} as unknown as D1Database;
+	return { sqlite, db };
 }
 
 const NOW = new Date('2026-11-22T12:00:00.000Z');
@@ -43,30 +51,63 @@ describe('dismissals', () => {
 	});
 });
 
-describe('suggestItems', () => {
-	it('joins status, the latest read time and only current-model vectors', async () => {
-		const { db, sqlite } = fakeD1();
+describe('stored neighbours', () => {
+	const titles = new Map([
+		['a', 'Villette'],
+		['b', 'Villette'],
+		['c', 'Shirley'],
+		['far', 'Emma']
+	]);
+	const vectors: Record<string, number[]> = { a: [1, 0], b: [1, 0.01], c: [1, 0.5], far: [0, 1] };
+	const seed = (sqlite: DatabaseSync) => {
 		const save = sqlite.prepare(
-			`INSERT INTO book_embedding (book_id, profile_hash, vector, model, created_at)
+			`INSERT OR REPLACE INTO book_embedding (book_id, profile_hash, vector, model, created_at)
 			 VALUES (?, 'h', ?, ?, 'now')`
 		);
-		save.run('a', new Uint8Array(encodeVector([1, 0])), MODELS.embedding);
-		save.run('b', new Uint8Array(encodeVector([0, 1])), 'an-old-model');
-		const book = (id: string) => ({ id, title: id, authors: [], tags: [] }) as unknown as Book;
-		const reads: Record<string, string[]> = { a: ['2026-01-01T00:00:00Z', '2026-03-01T00:00:00Z'] };
-		const library = {
-			allBooks: async () => [book('a'), book('b')],
-			status: async (id: string): Promise<ReadStatus> =>
-				id === 'a' ? { kind: 'finished' } : { kind: 'unread' },
-			positions: async (id: string) =>
-				(reads[id] ?? []).map((readAt) => ({ readAt }) as ReadingPosition)
-		} as unknown as LibrarySource;
+		for (const [id, v] of Object.entries(vectors))
+			save.run(id, new Uint8Array(encodeVector(v)), MODELS.embedding);
+		save.run('old', new Uint8Array(encodeVector([1, 0])), 'an-old-model');
+	};
+	const book = (id: string) =>
+		({ id, title: titles.get(id), authors: [], tags: [] }) as unknown as Book;
+	const library = {
+		allBooks: async () => [...titles.keys()].map(book),
+		status: async (id: string): Promise<ReadStatus> =>
+			id === 'a' ? { kind: 'finished' } : { kind: 'unread' },
+		positions: async (id: string) =>
+			id === 'a'
+				? ['2026-01-01T00:00:00Z', '2026-03-01T00:00:00Z'].map(
+						(readAt) => ({ readAt }) as ReadingPosition
+					)
+				: []
+	} as unknown as LibrarySource;
 
-		const [a, b] = await suggestItems(db, library);
-		expect(a.status.kind).toBe('finished');
+	it('writes only what changed, and drops books that left', async () => {
+		const { db, sqlite } = fakeD1();
+		seed(sqlite);
+		expect(await saveNeighbours(db, titles)).toEqual({ books: 4, changed: 4, removed: 0 });
+		expect(await saveNeighbours(db, titles)).toEqual({ books: 4, changed: 0, removed: 0 });
+		sqlite.prepare("DELETE FROM book_embedding WHERE book_id = 'far'").run();
+		expect(await saveNeighbours(db, titles)).toMatchObject({ books: 3, removed: 1 });
+	});
+	it('loads matches only for the chosen books, with status and copies', async () => {
+		const { db, sqlite } = fakeD1();
+		seed(sqlite);
+		await saveNeighbours(db, titles);
+		const items = await suggestItems(db, library, () => ['a']);
+		const a = items.find((i) => i.book.id === 'a')!;
+		const c = items.find((i) => i.book.id === 'c')!;
 		expect(a.lastReadAt).toBe('2026-03-01T00:00:00Z');
-		expect([...a.vector!]).toEqual([1, 0]);
-		expect(b.lastReadAt).toBeUndefined();
-		expect(b.vector).toBeNull();
+		expect(a.neighbours?.map((n) => n.id)).toEqual(['b', 'c']);
+		expect(a.copies).toEqual(['b']);
+		expect(c.neighbours).toBeUndefined();
+	});
+	it('ignores rows from another embedding model', async () => {
+		const { db, sqlite } = fakeD1();
+		sqlite
+			.prepare("INSERT INTO book_neighbours VALUES ('a', 'an-old-model', '[[\"c\",0.9]]', NULL)")
+			.run();
+		const items = await suggestItems(db, library, () => ['a']);
+		expect(items.find((i) => i.book.id === 'a')!.neighbours).toBeUndefined();
 	});
 });

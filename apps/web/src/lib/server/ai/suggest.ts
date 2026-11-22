@@ -14,7 +14,7 @@ const READING_LIST = 'Reading List';
  */
 export const MIN_SIMILARITY = 0.62;
 /** Same title and this close: another copy, even if the author is spelled differently. */
-const SAME_WORK_SIMILARITY = 0.8;
+export const SAME_WORK_SIMILARITY = 0.8;
 const MAX_SEEDS = 5;
 /** First-pass limits, so one long rule can't fill the shelf. Spare places are refilled after. */
 const FIRST_PASS = { readingList: 4, author: 3, collection: 3 };
@@ -25,7 +25,15 @@ export interface SuggestItem {
 	status: ReadStatus;
 	/** When it was last read on any device. */
 	lastReadAt?: string;
-	vector?: Float32Array | null;
+	/** Closest matches, best first. Loaded only for the books a request compares from. */
+	neighbours?: Neighbour[];
+	/** Other records of this work, found by near-identical profiles. */
+	copies?: string[];
+}
+
+export interface Neighbour {
+	id: string;
+	score: number;
 }
 
 export interface Suggestion {
@@ -90,24 +98,31 @@ const sharedAuthor = (a: Book, b: Book) =>
 const firstAuthor = (book: Book) => authorKey(book.authors[0]?.name ?? '');
 
 /**
- * Two records of one work: the same title by a shared author, or with nearly the same profile,
- * which catches a misspelled author.
+ * Two records of one work: the same title by a shared author, or a stored copy with nearly the
+ * same profile, which catches a misspelled author.
  */
 function sameWork(a: SuggestItem, b: SuggestItem): boolean {
 	if (a.book.id === b.book.id) return true;
 	if (workKey(a.book.title) !== workKey(b.book.title)) return false;
 	if (sharedAuthor(a.book, b.book)) return true;
-	return Boolean(a.vector && b.vector && cosine(a.vector, b.vector) >= SAME_WORK_SIMILARITY);
+	return Boolean(a.copies?.includes(b.book.id) || b.copies?.includes(a.book.id));
 }
 
 const byRecent = (a: SuggestItem, b: SuggestItem) =>
 	(b.lastReadAt ?? '').localeCompare(a.lastReadAt ?? '');
 
 function eligibleItems(items: SuggestItem[], dismissed: Set<string>) {
-	const read = items.filter((i) => i.status.kind !== 'unread');
+	const readByTitle = new Map<string, SuggestItem[]>();
+	for (const r of items) {
+		if (r.status.kind === 'unread') continue;
+		const key = workKey(r.book.title);
+		readByTitle.set(key, [...(readByTitle.get(key) ?? []), r]);
+	}
 	return items.filter(
 		(i) =>
-			i.status.kind === 'unread' && !dismissed.has(i.book.id) && !read.some((r) => sameWork(r, i))
+			i.status.kind === 'unread' &&
+			!dismissed.has(i.book.id) &&
+			!readByTitle.get(workKey(i.book.title))?.some((r) => sameWork(r, i))
 	);
 }
 
@@ -130,14 +145,17 @@ function nextInSeries(read: SuggestItem[], eligible: SuggestItem[]): Candidate[]
 }
 
 function similar(seeds: SuggestItem[], eligible: SuggestItem[]): Candidate[] {
-	const usable = seeds.filter((s) => s.vector);
+	const usable = seeds.flatMap((seed) =>
+		seed.neighbours?.length
+			? [{ seed, scores: new Map(seed.neighbours.map((n) => [n.id, n.score])) }]
+			: []
+	);
 	const scored: { item: SuggestItem; score: number; seed: SuggestItem }[] = [];
 	for (const item of eligible) {
-		if (!item.vector) continue;
 		let best: { score: number; seed: SuggestItem } | null = null;
-		for (const seed of usable) {
-			const score = cosine(seed.vector!, item.vector);
-			if (!best || score > best.score) best = { score, seed };
+		for (const { seed, scores } of usable) {
+			const score = scores.get(item.book.id);
+			if (score !== undefined && (!best || score > best.score)) best = { score, seed };
 		}
 		if (best && best.score >= MIN_SIMILARITY) scored.push({ item, ...best });
 	}
@@ -145,6 +163,14 @@ function similar(seeds: SuggestItem[], eligible: SuggestItem[]): Candidate[] {
 		.sort((a, b) => b.score - a.score)
 		.map((s) => ({ item: s.item, reason: `Like ${shortTitle(s.seed.book.title)}` }));
 }
+
+/** The books Read next compares from: the most recently read. */
+export const readNextSeeds = (items: SuggestItem[]) =>
+	items
+		.filter((i) => i.status.kind !== 'unread')
+		.sort(byRecent)
+		.slice(0, MAX_SEEDS)
+		.map((i) => i.book.id);
 
 export function readNext(
 	items: SuggestItem[],
@@ -160,12 +186,20 @@ export function readNext(
 		.filter((i) => i.book.collection === READING_LIST)
 		.sort((a, b) => b.book.addedAt.localeCompare(a.book.addedAt))
 		.map((item) => ({ item, reason: 'On your Reading List' }));
-	const byAuthor = finished.flatMap((f) =>
-		eligible.flatMap((item) => {
-			const author = sharedAuthor(item.book, f.book);
-			return author ? [{ item, reason: `Another by ${author.name}` }] : [];
-		})
-	);
+	const byAuthorKey = new Map<string, { item: SuggestItem; name: string }[]>();
+	for (const item of eligible)
+		for (const a of item.book.authors) {
+			const key = authorKey(a.name);
+			byAuthorKey.set(key, [...(byAuthorKey.get(key) ?? []), { item, name: a.name }]);
+		}
+	const byAuthor = finished.flatMap((f) => {
+		const seen = new Set<string>();
+		return f.book.authors
+			.flatMap((a) => byAuthorKey.get(authorKey(a.name)) ?? [])
+			.filter(({ item }) => !seen.has(item.book.id) && seen.add(item.book.id))
+			.sort((a, b) => eligible.indexOf(a.item) - eligible.indexOf(b.item))
+			.map(({ item, name }) => ({ item, reason: `Another by ${name}` }));
+	});
 	const inCollection = inProgress.flatMap((p) => {
 		const name = p.book.collection;
 		if (!name || name === READING_LIST) return [];
@@ -173,10 +207,11 @@ export function readNext(
 			.filter((i) => i.book.collection === name)
 			.map((item) => ({ item, reason: `In your ${name} collection` }));
 	});
+	const readAuthors = new Set(read.flatMap((r) => r.book.authors.map((a) => authorKey(a.name))));
 	// Authors already read have their own rule, so similarity is for finding someone new.
 	const like = similar(
 		read.slice(0, MAX_SEEDS),
-		eligible.filter((i) => !read.some((r) => sharedAuthor(i.book, r.book)))
+		eligible.filter((i) => !i.book.authors.some((a) => readAuthors.has(authorKey(a.name))))
 	);
 	const rules: { list: Candidate[]; cap: number; perAuthor?: number }[] = [
 		{ list: nextInSeries(read, eligible), cap: limit },
@@ -217,7 +252,7 @@ export function moreLike(
 	limit = MORE_LIKE_MAX
 ): Suggestion[] {
 	const source = items.find((i) => i.book.id === bookId);
-	if (!source?.vector) return [];
+	if (!source?.neighbours?.length) return [];
 	const out: Candidate[] = [];
 	const perAuthor = new Map<string, number>();
 	const candidates = eligibleItems(items, dismissed).filter((i) => !sameWork(i, source));
