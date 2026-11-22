@@ -21,3 +21,6 @@ apps/web/static/sample-covers/
 
 # Recap evaluation output
 .eval/
+
+# Local Claude Code settings
+.claude/settings.local.json
