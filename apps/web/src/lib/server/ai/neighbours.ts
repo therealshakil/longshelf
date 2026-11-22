@@ -83,6 +83,9 @@ export async function saveNeighbours(
 		const title = titles.get(r.book_id);
 		return title ? [{ id: r.book_id, title, vector: decodeVector(r.vector) }] : [];
 	});
+	// Vectors from a different library must not erase the saved matches.
+	if (results.length && !entries.length)
+		throw new Error('No stored embeddings match this library. Saved matches were left alone.');
 	const built = buildNeighbours(entries);
 	const { results: stored } = await db
 		.prepare('SELECT book_id, model, neighbours, copies FROM book_neighbours')

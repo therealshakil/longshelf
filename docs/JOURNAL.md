@@ -306,3 +306,4 @@
 - **Measured in Node on 631 real books:** ranking fell from about 50 ms to about 2 ms for Read next, and from about 12 ms to under 1 ms for More like this. Results matched an unlimited comparison for all 631 books. Real data stayed in the scratchpad.
 - **Checked:** 33 targeted unit tests, typecheck, ESLint, Prettier on the changed code, and both endpoints on the local dev server with sample data.
 - **Not checked:** total CPU on a deployed Worker, or the full e2e suite. The script only targets local D1 until a production database exists.
+- **Fix:** the script now reads the app's library source, so spec 003's switch reaches it, and it stops without changes if no stored embedding belongs to the current library.

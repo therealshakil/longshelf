@@ -90,6 +90,13 @@ describe('stored neighbours', () => {
 		sqlite.prepare("DELETE FROM book_embedding WHERE book_id = 'far'").run();
 		expect(await saveNeighbours(db, titles)).toMatchObject({ books: 3, removed: 1 });
 	});
+	it('refuses to erase matches when no embedding belongs to this library', async () => {
+		const { db, sqlite } = fakeD1();
+		seed(sqlite);
+		await saveNeighbours(db, titles);
+		await expect(saveNeighbours(db, new Map([['other', 'Other']]))).rejects.toThrow('left alone');
+		expect(sqlite.prepare('SELECT COUNT(*) AS n FROM book_neighbours').get()).toEqual({ n: 4 });
+	});
 	it('loads matches only for the chosen books, with status and copies', async () => {
 		const { db, sqlite } = fakeD1();
 		seed(sqlite);
