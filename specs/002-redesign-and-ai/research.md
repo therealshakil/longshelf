@@ -135,8 +135,15 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
   genres). Each result's reason names the fields that matched. With AI off, only the exact
   search runs.
 - **Vectors:** 700 × 1,024 floats (`bge-m3`, measured 2026-11-21) is about 2.9 MB. They are loaded once per request into the
-  Worker and scanned. ASSUMPTION: that is well within Worker CPU limits. Vectorize is the
-  fallback if not.
+  Worker and scanned. The earlier assumption that this is well within Worker CPU limits is
+  **not supported**: see the T056 timing below.
+
+**T056 timing (2026-11-22, 631 real books, Node on the dev laptop, not a deployed Worker):**
+decoding vectors takes about 16 to 25 ms, Read next about 50 ms and More like this about 12 ms.
+That is over the 10 ms CPU limit of the Workers Free plan
+(https://developers.cloudflare.com/workers/platform/limits/). Unresolved before deployment:
+measure on a real Worker, then choose precomputed neighbours, Vectorize, or Workers Paid ($5 a
+month, a fixed cost the owner must approve).
 
 **Update from a real-library check (2026-11-21, owner approved, metadata only):**
 - "Like X" needs a cosine of at least 0.62, the 99th percentile of random book pairs. The first

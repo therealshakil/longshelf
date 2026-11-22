@@ -63,6 +63,7 @@ export const DismissSchema = z.object({
 	bookId: z.string().min(1),
 	kind: z.enum(['not_now', 'never'])
 });
+export const UndoDismissSchema = z.object({ bookId: z.string().min(1) });
 
 export const GenreStateSchema = z.enum(['suggested', 'promoted', 'in_calibre', 'removed']);
 export const BookGenresSchema = z.object({

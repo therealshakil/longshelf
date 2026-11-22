@@ -13,7 +13,7 @@ All endpoints:
 | `GET /api/ai/recap/:bookId` | Query: `percent`, `label`, `ordinal?`, `earlierChapters?`, `earlierChars?` | `{ state: 'ready', upto: { label, percent }, paragraphs: string[], note, earlier?: { percent, days } }` or `{ state: 'writing' \| 'too_early' \| 'unavailable', reason }` | Built only from chapter summaries up to the furthest position (FR-011). `too_early` below 5%. |
 | `GET /api/ai/read-next` | — | `{ items: { bookId, reason }[] }` (at most 12) | Rules first, then similarity (research R6). Excludes in-progress, finished and dismissed books. |
 | `GET /api/ai/more-like/:bookId` | — | `{ items: { bookId, reason }[] }` (at most 5) | |
-| `POST /api/ai/dismiss` | `{ bookId, kind: 'not_now' \| 'never' }` | `{ ok: true }` | `DELETE` with `{ bookId }` undoes it. |
+| `POST /api/ai/dismiss` | `{ bookId, kind: 'not_now' \| 'never' }` | `{ ok: true }` | `DELETE` with `{ bookId }` undoes it. Both need a JSON content type and still work with AI off, because no model is called. |
 | `GET /api/ai/genres/:bookId` | — | `{ genres: { name, state }[] }` | |
 | `POST /api/ai/genres/:bookId` | `{ name, action: 'promote' \| 'remove' }` | `{ ok: true, state }` | Promotion is applied to Calibre by the CLI (spec 003). |
 | `GET /api/ai/search?q=` | — | `{ mode: 'exact' \| 'meaning', items: { bookId, reason }[] }` | Exact matches first. `mode: 'exact'` with a one-line note when AI is unavailable (FR-013). |

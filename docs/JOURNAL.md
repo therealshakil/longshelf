@@ -291,3 +291,10 @@
 - **Fixes from that check:** a higher similarity cut-off, room for every rule, new authors from similarity, author spelling variants, and repeat records.
 - **Limits:** the real library has no reading history yet, so Read next was only tried with simulated history. Some matches are still weak, and about a fifth of books get no More like this, which is better than claiming a weak match.
 - **Checked:** 17 unit tests, typecheck and lint.
+
+## 2026-11-22: Spec 002 T056: suggestion endpoints
+
+- **Built:** `GET /api/ai/read-next`, `GET /api/ai/more-like/[bookId]`, and `POST`/`DELETE /api/ai/dismiss`. "Not now" lapses after 30 days, and "Never" lasts until undone. With AI off, the two suggestion reads return `ai_off`.
+- **Risk found:** on 631 real books, Read next uses about 70 ms of CPU including vector decoding, after a fivefold speed-up of the engine. The Workers Free limit is 10 ms. This was measured in Node, not on a deployed Worker, and must be settled before deployment (research R6).
+- **Checked:** 31 targeted unit tests, typecheck, ESLint, Prettier on the changed code, and all endpoints against the local dev server with sample data, including dismiss and undo.
+- **Not checked:** the full e2e suite, or a deployed Worker. There is no UI yet (T057).

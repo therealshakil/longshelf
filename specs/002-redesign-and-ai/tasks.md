@@ -264,7 +264,7 @@ description: "Tasks for 002 redesigned screens and AI features"
   - reasons come from templates only.
   
   Unit tests: every item has a reason; none outside the library; none in progress or finished (SC-005).
-- [ ] T056 [US5] Implement `GET /api/ai/read-next` (at most 12), `GET /api/ai/more-like/[bookId]` (at most 5), and `POST`/`DELETE /api/ai/dismiss`. `not_now` lapses after 30 days; `never` lasts until undone.
+- [X] T056 [US5] Implement `GET /api/ai/read-next` (at most 12), `GET /api/ai/more-like/[bookId]` (at most 5), and `POST`/`DELETE /api/ai/dismiss`. `not_now` lapses after 30 days; `never` lasts until undone.
 - [ ] T057 [US5] Build `apps/web/src/lib/components/ReadNextShelf.svelte` (two rows of six smaller covers, reason line, a ⋯ menu with Not now / Never suggest) and fill the Home and book-page slots. Catalogue page.
 
 ---

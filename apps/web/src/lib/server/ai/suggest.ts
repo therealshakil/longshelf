@@ -55,8 +55,24 @@ const shortTitle = (title: string) =>
 		.split(/\s*:\s*/)[0]
 		.trim() || title;
 
+/** Keys are compared many times per request, and Worker CPU time is tight. */
+function memo(fn: (s: string) => string) {
+	const cache = new Map<string, string>();
+	return (s: string) => {
+		let value = cache.get(s);
+		if (value === undefined) {
+			if (cache.size >= 5000) cache.clear();
+			value = fn(s);
+			cache.set(s, value);
+		}
+		return value;
+	};
+}
+
+const workKey = memo(titleKey);
+
 /** One key for spellings of a name: "H. G Wells" and "H. G. Wells", "Wells| H. G.". */
-const authorKey = (name: string) =>
+const authorKey = memo((name) =>
 	name
 		.normalize('NFD')
 		.replace(/\p{M}/gu, '')
@@ -64,13 +80,12 @@ const authorKey = (name: string) =>
 		.split(/[^\p{L}\p{N}']+/u)
 		.filter((part) => part.length > 1)
 		.sort()
-		.join(' ');
+		.join(' ')
+);
 
 /** The author of `a` who also wrote `b`, if any. */
-const sharedAuthor = (a: Book, b: Book) => {
-	const keys = new Set(b.authors.map((x) => authorKey(x.name)));
-	return a.authors.find((x) => keys.has(authorKey(x.name)));
-};
+const sharedAuthor = (a: Book, b: Book) =>
+	a.authors.find((x) => b.authors.some((y) => authorKey(x.name) === authorKey(y.name)));
 
 const firstAuthor = (book: Book) => authorKey(book.authors[0]?.name ?? '');
 
@@ -80,7 +95,7 @@ const firstAuthor = (book: Book) => authorKey(book.authors[0]?.name ?? '');
  */
 function sameWork(a: SuggestItem, b: SuggestItem): boolean {
 	if (a.book.id === b.book.id) return true;
-	if (titleKey(a.book.title) !== titleKey(b.book.title)) return false;
+	if (workKey(a.book.title) !== workKey(b.book.title)) return false;
 	if (sharedAuthor(a.book, b.book)) return true;
 	return Boolean(a.vector && b.vector && cosine(a.vector, b.vector) >= SAME_WORK_SIMILARITY);
 }
