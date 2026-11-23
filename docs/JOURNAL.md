@@ -416,3 +416,9 @@
 - **Fixed:** a saved mid-chapter place resumed with its first line about 20 px under the top bar. It now shows that line whole.
 - **Added:** a browser test for a Library tab tapped before the page is interactive, a resume test, and a `book-similar` design-compare page showing More like this filled in.
 
+## 2026-11-23: Spec 002 T066: owner sign-off
+
+- **Result:** the finish reviewer returned `ship` with no material findings, and the owner signed off the design (SC-002).
+- **Review limits:** no capture covered other Library tabs, the Aa and Contents panels, ⋯ menus, a solid Calibre genre chip, the expanded bibliography, or hover and focus states.
+- **Not checked:** the full e2e suite and `pnpm test:a11y` after the Longshelf merge.
+
