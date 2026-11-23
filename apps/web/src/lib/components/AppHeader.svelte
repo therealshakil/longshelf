@@ -34,7 +34,7 @@
 			class="flex h-11 w-full items-center gap-2.5 rounded-pill border border-control bg-raised px-4"
 		>
 			<Search class="size-5 shrink-0 text-text-muted" aria-hidden="true" />
-			<span class="sr-only">Search or ask your library</span>
+			<span class="sr-only">Search your library</span>
 			<input
 				class="min-w-0 flex-1 bg-transparent text-base text-text outline-none placeholder:text-text-muted"
 				type="search"
