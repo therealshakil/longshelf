@@ -323,3 +323,10 @@
 - **Rules:** removed genres never come back, Calibre tags aren't repeated, promoted genres are kept, and checked books aren't paid for twice. Nothing is written to Calibre.
 - **Real model check:** 20 public-domain sample books with Gemma cost about 12.5 estimated neurons. Results went to an in-memory database. Most labels looked right, but *Mrs. Dalloway* was wrongly labelled Drama.
 - **Not checked:** quality on the owner's real library, or the full e2e suite. Genres aren't visible until T059 and T060.
+
+## 2026-11-23: Spec 002 T059: genre choices API
+
+- **Built:** `GET` and `POST /api/ai/genres/[bookId]`, to list a book's genres and promote or remove one.
+- **Rules:** suggested can be promoted or removed, promoted can be removed, and removed genres stay as tombstones. A genre already in Calibre can't be changed from Ribbon. Promotion only queues the change, and nothing touches Calibre until the CLI in spec 003.
+- **Checked:** 14 genre unit tests, typecheck, ESLint, and promote, repeat, remove and a refused move through the real endpoints on local D1, with the test row removed afterwards.
+- **Not checked:** the full e2e suite. There is no UI yet (T060).

@@ -14,8 +14,8 @@ All endpoints:
 | `GET /api/ai/read-next` | — | `{ items: { bookId, reason }[] }` (at most 12) | Rules first, then similarity (research R6). Excludes in-progress, finished and dismissed books. |
 | `GET /api/ai/more-like/:bookId` | — | `{ items: { bookId, reason }[] }` (at most 5) | |
 | `POST /api/ai/dismiss` | `{ bookId, kind: 'not_now' \| 'never' }` | `{ ok: true }` | `DELETE` with `{ bookId }` undoes it. Both need a JSON content type and still work with AI off, because no model is called. |
-| `GET /api/ai/genres/:bookId` | — | `{ genres: { name, state }[] }` | |
-| `POST /api/ai/genres/:bookId` | `{ name, action: 'promote' \| 'remove' }` | `{ ok: true, state }` | Promotion is applied to Calibre by the CLI (spec 003). |
+| `GET /api/ai/genres/:bookId` | — | `{ genres: { name, state }[] }` | Calibre genres first. Removed genres are not listed. `404` for an unknown book. |
+| `POST /api/ai/genres/:bookId` | `{ name, action: 'promote' \| 'remove' }` | `{ ok: true, state }` | JSON request. Repeating a choice is harmless. `404` for an unknown book or genre, `409` for a move the state rules forbid. Works with AI off because no model is called. Promotion is applied to Calibre by the CLI (spec 003). |
 | `GET /api/ai/search?q=` | — | `{ mode: 'exact' \| 'meaning', items: { bookId, reason }[] }` | Exact matches first. `mode: 'exact'` with a one-line note when AI is unavailable (FR-013). |
 | `POST /api/ai/jobs/genres` | `{ bookIds?: string[] }` (JSON) | `{ total, checked, added, remaining, stopped? }` | Operator action: suggests 1–3 genres from a fixed list for books not yet checked, or for `bookIds`, in bounded batches inside the spend guard. Run again while `remaining` is above 0. |
 | `POST /api/ai/jobs/embeddings` | Empty JSON object | `{ total, embedded, unchanged, removed, remaining, stopped? }` | Operator action: embeds new or changed books in bounded batches inside the spend guard. Run again while `remaining` is above 0, then run `pnpm ai:neighbours` on the operator's machine so suggestions use the new vectors. |

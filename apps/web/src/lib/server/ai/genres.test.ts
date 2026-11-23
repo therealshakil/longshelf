@@ -2,7 +2,14 @@ import { readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 import type { Book } from '@ribbon/shared/library';
 import { describe, expect, it, vi } from 'vitest';
-import { genrePrompt, GENRE_SYSTEM, parseGenres, suggestGenres } from './genres.ts';
+import {
+	bookGenres,
+	changeGenre,
+	genrePrompt,
+	GENRE_SYSTEM,
+	parseGenres,
+	suggestGenres
+} from './genres.ts';
 import type { GuardStore } from './guard.ts';
 
 const book = (id: string, extra: Partial<Book> = {}): Book => ({
@@ -21,7 +28,7 @@ function fakeD1() {
 		sqlite.exec(readFileSync(`migrations/${f}.sql`, 'utf8'));
 	const statement = (sql: string, args: string[] = []) => ({
 		bind: (...next: string[]) => statement(sql, next),
-		run: async () => sqlite.prepare(sql).run(...args),
+		run: async () => ({ meta: { changes: Number(sqlite.prepare(sql).run(...args).changes) } }),
 		all: async () => ({ results: sqlite.prepare(sql).all(...args) })
 	});
 	const db = {
@@ -169,5 +176,69 @@ describe('suggestGenres', () => {
 		await expect(
 			suggestGenres({ ai: bad, db, store: store(), books: [book('a')] })
 		).rejects.toMatchObject({ status: 503 });
+	});
+});
+
+describe('owner choices', () => {
+	const NOW = new Date('2026-11-23T10:00:00.000Z');
+	function seeded() {
+		const d = fakeD1();
+		const add = d.sqlite.prepare(
+			"INSERT INTO genre_suggestion VALUES ('a', ?, ?, 'm', 'then', 'then')"
+		);
+		add.run('Gothic', 'suggested');
+		add.run('War', 'promoted');
+		add.run('Poetry', 'in_calibre');
+		add.run('Horror', 'removed');
+		return d;
+	}
+	const state = (d: ReturnType<typeof fakeD1>, genre: string) =>
+		d.sqlite.prepare('SELECT state, state_at FROM genre_suggestion WHERE genre = ?').get(genre);
+
+	it('lists Calibre genres first and hides removed ones', async () => {
+		expect((await bookGenres(seeded().db, 'a')).genres).toEqual([
+			{ name: 'Poetry', state: 'in_calibre' },
+			{ name: 'War', state: 'promoted' },
+			{ name: 'Gothic', state: 'suggested' }
+		]);
+	});
+	it('promotes a suggestion and removes a suggested or promoted genre', async () => {
+		const d = seeded();
+		expect(await changeGenre(d.db, 'a', 'Gothic', 'promote', NOW)).toEqual({
+			ok: true,
+			state: 'promoted'
+		});
+		expect(state(d, 'Gothic')).toEqual({ state: 'promoted', state_at: NOW.toISOString() });
+		expect(await changeGenre(d.db, 'a', 'War', 'remove', NOW)).toEqual({
+			ok: true,
+			state: 'removed'
+		});
+	});
+	it('treats a repeat as done without changing its time', async () => {
+		const d = seeded();
+		expect(await changeGenre(d.db, 'a', 'War', 'promote', NOW)).toEqual({
+			ok: true,
+			state: 'promoted'
+		});
+		expect(state(d, 'War')).toEqual({ state: 'promoted', state_at: 'then' });
+	});
+	it('refuses moves the state rules do not allow', async () => {
+		const d = seeded();
+		for (const [genre, action] of [
+			['Horror', 'promote'],
+			['Poetry', 'remove'],
+			['Poetry', 'promote']
+		] as const)
+			expect(await changeGenre(d.db, 'a', genre, action, NOW)).toEqual({
+				ok: false,
+				reason: 'not_allowed'
+			});
+		expect(state(d, 'Poetry')).toEqual({ state: 'in_calibre', state_at: 'then' });
+	});
+	it('reports a genre the book does not have', async () => {
+		expect(await changeGenre(seeded().db, 'a', 'Satire', 'promote', NOW)).toEqual({
+			ok: false,
+			reason: 'not_found'
+		});
 	});
 });

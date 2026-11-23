@@ -69,10 +69,16 @@ export const GenreStateSchema = z.enum(['suggested', 'promoted', 'in_calibre', '
 export const BookGenresSchema = z.object({
 	genres: z.array(z.object({ name: z.string().min(1), state: GenreStateSchema }))
 });
+export type BookGenres = z.infer<typeof BookGenresSchema>;
+export type GenreState = z.infer<typeof GenreStateSchema>;
 export const GenreActionSchema = z.object({
 	name: z.string().min(1),
 	action: z.enum(['promote', 'remove'])
 });
+
+export type GenreAction = z.infer<typeof GenreActionSchema>['action'];
+export const GenreChangeSchema = z.object({ ok: z.literal(true), state: GenreStateSchema });
+export type GenreChange = z.infer<typeof GenreChangeSchema>;
 
 export const SearchSchema = z.object({
 	mode: z.enum(['exact', 'meaning']),

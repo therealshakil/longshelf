@@ -4,7 +4,13 @@
  * the owner promotes them, and a removed genre is never suggested for that book again.
  */
 import { error, isHttpError } from '@sveltejs/kit';
-import { GenreModelOutputSchema, type GenreJobResult } from '@ribbon/shared/ai';
+import {
+	GenreModelOutputSchema,
+	type BookGenres,
+	type GenreAction,
+	type GenreJobResult,
+	type GenreState
+} from '@ribbon/shared/ai';
 import type { Book } from '@ribbon/shared/library';
 import { plainText } from './embeddings.ts';
 import type { GuardStore } from './guard.ts';
@@ -215,4 +221,58 @@ export async function suggestGenres(o: {
 		if (writes.length) await db.batch(writes);
 	}
 	return result();
+}
+
+/** What a book shows: everything except removed tombstones, Calibre's first. */
+export async function bookGenres(db: D1Database, bookId: string): Promise<BookGenres> {
+	const { results } = await db
+		.prepare(
+			`SELECT genre AS name, state FROM genre_suggestion
+			 WHERE book_id = ? AND state != 'removed'
+			 ORDER BY CASE state WHEN 'in_calibre' THEN 0 WHEN 'promoted' THEN 1 ELSE 2 END, genre`
+		)
+		.bind(bookId)
+		.all<{ name: string; state: GenreState }>();
+	return { genres: results };
+}
+
+/** Allowed moves (data-model.md). Calibre is the source of truth, so `in_calibre` stays put here. */
+const MOVES: Record<GenreAction, { to: GenreState; from: GenreState[] }> = {
+	promote: { to: 'promoted', from: ['suggested'] },
+	remove: { to: 'removed', from: ['suggested', 'promoted'] }
+};
+
+export type GenreChangeResult =
+	{ ok: true; state: GenreState } | { ok: false; reason: 'not_found' | 'not_allowed' };
+
+/** Apply one owner choice. Repeating it is harmless. Nothing here touches Calibre. */
+export async function changeGenre(
+	db: D1Database,
+	bookId: string,
+	name: string,
+	action: GenreAction,
+	now = new Date()
+): Promise<GenreChangeResult> {
+	const { to, from } = MOVES[action];
+	const current = async () =>
+		(
+			await db
+				.prepare('SELECT state FROM genre_suggestion WHERE book_id = ? AND genre = ?')
+				.bind(bookId, name)
+				.all<{ state: GenreState }>()
+		).results[0]?.state;
+	const before = await current();
+	if (!before) return { ok: false, reason: 'not_found' };
+	if (before === to) return { ok: true, state: to };
+	if (!from.includes(before)) return { ok: false, reason: 'not_allowed' };
+	// The state check is in the UPDATE, so a change made in between can't be overwritten.
+	const { meta } = await db
+		.prepare(
+			`UPDATE genre_suggestion SET state = ?, state_at = ?
+			 WHERE book_id = ? AND genre = ? AND state = ?`
+		)
+		.bind(to, now.toISOString(), bookId, name, before)
+		.run();
+	if (meta.changes) return { ok: true, state: to };
+	return (await current()) === to ? { ok: true, state: to } : { ok: false, reason: 'not_allowed' };
 }
