@@ -71,7 +71,9 @@
 					<GenreList genres={data.genres} />
 				{:else}
 					<EmptyState
-						title="No genres yet. Suggested genres appear here once AI features are switched on."
+						title={data.ai
+							? 'No genres yet. They appear here once Ribbon has suggested some.'
+							: 'No genres yet. Suggested genres appear here once AI features are switched on.'}
 					/>
 				{/if}
 				<p class="note">

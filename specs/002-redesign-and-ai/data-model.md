@@ -60,7 +60,7 @@ ai_setting(key PRIMARY KEY, value)
 State rules:
 - `genre_suggestion`: only `suggested` and `promoted` show as dashed chips. `promoted` shows
   "Waiting for sync" until the CLI reports `in_calibre`. `removed` stays as a tombstone, so the
-  same genre isn't suggested again.
+  same genre isn't suggested again. Undo moves `removed` back to `suggested` (T060).
 - `recap`: rebuilt when `furthest` moves past `upto_href`. Never built from a chapter without a
   summary.
 - `suggestion_dismissal`: `not_now` lapses after 30 days (ASSUMPTION: starting value); `never`

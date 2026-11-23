@@ -235,6 +235,17 @@ describe('owner choices', () => {
 			});
 		expect(state(d, 'Poetry')).toEqual({ state: 'in_calibre', state_at: 'then' });
 	});
+	it('restores a removed genre as a suggestion, and only a removed one', async () => {
+		const d = seeded();
+		expect(await changeGenre(d.db, 'a', 'Horror', 'restore', NOW)).toEqual({
+			ok: true,
+			state: 'suggested'
+		});
+		expect(await changeGenre(d.db, 'a', 'War', 'restore', NOW)).toEqual({
+			ok: false,
+			reason: 'not_allowed'
+		});
+	});
 	it('reports a genre the book does not have', async () => {
 		expect(await changeGenre(seeded().db, 'a', 'Satire', 'promote', NOW)).toEqual({
 			ok: false,

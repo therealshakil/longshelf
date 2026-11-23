@@ -1,11 +1,12 @@
 <!--
 	Book page (spec 002 US3): header with progress and actions, the description from Calibre, and
-	details, then More like this (US5). Genres (US6) join when that feature lands.
+	genres (US6), details, then More like this (US5).
 	Matches design-mocks/book.html.
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import BookHeader from '#lib/components/BookHeader.svelte';
+	import GenreChips from '#lib/components/GenreChips.svelte';
 	import ReadNextShelf from '#lib/components/ReadNextShelf.svelte';
 	import type { PageProps } from './$types';
 
@@ -43,6 +44,12 @@
 			{/if}
 		</section>
 		<aside>
+			{#if data.genres.length}
+				<h2 class="section-h">Genres</h2>
+				{#key item.book.id}
+					<GenreChips bookId={item.book.id} genres={data.genres} />
+				{/key}
+			{/if}
 			<h2 class="section-h">Details</h2>
 			<dl class="details">
 				{#each item.details as d (d.label)}

@@ -8,6 +8,7 @@ import {
 	GenreModelOutputSchema,
 	type BookGenres,
 	type GenreAction,
+	type GenreIndex,
 	type GenreJobResult,
 	type GenreState
 } from '@ribbon/shared/ai';
@@ -236,10 +237,22 @@ export async function bookGenres(db: D1Database, bookId: string): Promise<BookGe
 	return { genres: results };
 }
 
+export async function genreIndex(db: D1Database): Promise<GenreIndex> {
+	const { results } = await db
+		.prepare(
+			`SELECT book_id AS bookId, genre AS name, state FROM genre_suggestion
+			 WHERE state != 'removed'`
+		)
+		.all<GenreIndex['items'][number]>();
+	return { items: results };
+}
+
 /** Allowed moves (data-model.md). Calibre is the source of truth, so `in_calibre` stays put here. */
 const MOVES: Record<GenreAction, { to: GenreState; from: GenreState[] }> = {
 	promote: { to: 'promoted', from: ['suggested'] },
-	remove: { to: 'removed', from: ['suggested', 'promoted'] }
+	remove: { to: 'removed', from: ['suggested', 'promoted'] },
+	// Undo for a removal: a mis-tap shouldn't lose a genre for good.
+	restore: { to: 'suggested', from: ['removed'] }
 };
 
 export type GenreChangeResult =

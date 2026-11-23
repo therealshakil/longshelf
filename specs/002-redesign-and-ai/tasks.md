@@ -273,7 +273,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 - [X] T058 [US6] Implement the genre job `POST /api/ai/jobs/genres` and its prompt in `apps/web/src/lib/server/ai/genres.ts`. It suggests 1–3 genres per book from title, author, description and tags; skips removed tombstones; runs inside the guard.
 - [X] T059 [US6] Implement `GET`/`POST /api/ai/genres/[bookId]` (promote or remove) with the data-model state rules. Promotion shows "Waiting for sync"; nothing touches Calibre (applied by the CLI in 003, research R7).
-- [ ] T060 [US6] Build `apps/web/src/lib/components/GenreChips.svelte`: solid chips for Calibre genres; dashed chips for suggestions with Promote and a drawn ✕ icon (no glyphs); and the footnote. Fill the book page slot and the Genres tab. Catalogue page.
+- [X] T060 [US6] Build `apps/web/src/lib/components/GenreChips.svelte`: solid chips for Calibre genres; dashed chips for suggestions with Promote and a drawn ✕ icon (no glyphs); and the footnote. Fill the book page slot and the Genres tab. Catalogue page.
 
 ---
 

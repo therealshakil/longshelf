@@ -330,3 +330,12 @@
 - **Rules:** suggested can be promoted or removed, promoted can be removed, and removed genres stay as tombstones. A genre already in Calibre can't be changed from Ribbon. Promotion only queues the change, and nothing touches Calibre until the CLI in spec 003.
 - **Checked:** 14 genre unit tests, typecheck, ESLint, and promote, repeat, remove and a refused move through the real endpoints on local D1, with the test row removed afterwards.
 - **Not checked:** the full e2e suite. There is no UI yet (T060).
+
+## 2026-11-23: Spec 002 T060: genre chips and Genres tab
+
+- **Built:** genre chips on the book page, the Genres tab, genre shelves, and a catalogue page, from the approved mocks. Calibre genres are solid. Suggestions are outlined with Promote and Remove, and promoted genres say "Waiting for sync".
+- **Added to the approved design:** Undo after removing a genre, because the mock's one-click remove was otherwise permanent. A promoted genre returns as promoted.
+- **Limit:** the sample data has no saved genres until the genre job runs, so the screens were checked with stubbed data. Nothing is written to Calibre until spec 003.
+- **Checked:** genre unit tests, browser tests for genres, library, Read next and AI off on a production build, typecheck, ESLint, the Impeccable detector, and screenshots at desktop, phone and dark.
+- **Not checked:** the full e2e suite.
+

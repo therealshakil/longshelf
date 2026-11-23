@@ -71,9 +71,16 @@ export const BookGenresSchema = z.object({
 });
 export type BookGenres = z.infer<typeof BookGenresSchema>;
 export type GenreState = z.infer<typeof GenreStateSchema>;
+/** Every genre on every book, except removed ones, for the Genres tab and its shelves. */
+export const GenreIndexSchema = z.object({
+	items: z.array(
+		z.object({ bookId: z.string().min(1), name: z.string().min(1), state: GenreStateSchema })
+	)
+});
+export type GenreIndex = z.infer<typeof GenreIndexSchema>;
 export const GenreActionSchema = z.object({
 	name: z.string().min(1),
-	action: z.enum(['promote', 'remove'])
+	action: z.enum(['promote', 'remove', 'restore'])
 });
 
 export type GenreAction = z.infer<typeof GenreActionSchema>['action'];
