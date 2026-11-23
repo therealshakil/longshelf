@@ -16,6 +16,6 @@ export const meta: CatalogueMeta = {
 		III: ['pass', 'Two destinations and one search field.'],
 		IV: ['pass', 'The current page is always marked.'],
 		V: ['pass', 'No counts, badges or prompts.'],
-		VI: ['pass', 'Plain labels: Home, Library, “Search, or ask your library”.']
+		VI: ['pass', 'Plain labels: Home, Library, “Search your library”.']
 	})
 };

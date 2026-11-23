@@ -152,6 +152,21 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
 - **Not yet measured:** total CPU per request on a deployed Worker, including loading the library.
   The script uses local D1 only, and needs the production database once one exists.
 
+**Search options (2026-11-23, owner parked AI search):**
+- **Why parked:** a plain-language question can't be precomputed, so each search must compare it
+  with every book. Decoding those vectors alone took 16 to 25 ms in Node, over the Workers Free
+  10 ms limit. Not measured on a deployed Worker.
+- **Options for non-AI search, not yet decided:**
+  - PostgreSQL `pg_trgm` and full-text search: capable, but adds a database service alongside D1.
+  - SQLite FTS5 in D1: no new dependency, and it loaded in local D1. It handles words and prefixes
+    but not typos, finding 5 of 10 test searches on 631 real books.
+  - MiniSearch in the browser (MIT, no dependencies): typo-tolerant, ranked, works offline, and
+    uses no Worker CPU. It found 10 of 10, with a median search of about 2 ms on the dev laptop.
+    Indexing descriptions took about 650 ms and 970 KB, so it would need to run in the background
+    or index less.
+- **Leaning:** MiniSearch, because the design already keeps the whole catalogue in the browser.
+  Adding it needs the owner's approval.
+
 **Update from a real-library check (2026-11-21, owner approved, metadata only):**
 - "Like X" needs a cosine of at least 0.62, the 99th percentile of random book pairs. The first
   value, 0.5, was about the level of two random books.

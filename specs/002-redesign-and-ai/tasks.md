@@ -277,7 +277,9 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ---
 
-## Phase 11: User Story 7 - Ask the library in plain words (P3)
+## Phase 11: User Story 7 - Ask the library in plain words (P3) (PARKED)
+
+**Parked by the owner, 2026-11-23.** T061 to T063 are on hold. FR-013 is not met while parked. See research R6, "Search options". The unapproved results design is at https://claude.ai/artifact/CiYRYk3sNRn6Yb8j1q5njF.
 
 - [ ] T061 [US7] Design review first. Add a results mock `design-mocks/search.html` in the approved world (exact matches first, a reason per result, a one-line note when AI is off) and get the owner's approval in live review before building (spec Assumptions).
 - [ ] T062 [US7] Implement `GET /api/ai/search?q=`: exact title or author match first, then embedding similarity over profiles. Reasons name the matched fields. `mode: 'exact'` plus the note when AI is unavailable (FR-013).

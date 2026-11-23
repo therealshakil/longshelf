@@ -40,7 +40,7 @@
 				type="search"
 				name="q"
 				value={query}
-				placeholder="Search, or ask your library"
+				placeholder="Search your library"
 			/>
 		</label>
 	</form>

@@ -339,3 +339,9 @@
 - **Checked:** genre unit tests, browser tests for genres, library, Read next and AI off on a production build, typecheck, ESLint, the Impeccable detector, and screenshots at desktop, phone and dark.
 - **Not checked:** the full e2e suite.
 
+## 2026-11-23: Ask your library parked
+
+- **Owner decision:** park AI search (T061 to T063), because each question would have to be compared with every book and that is likely over the Workers Free CPU limit. FR-013 is not met while parked.
+- **Changed:** the header now says "Search your library", so it doesn't promise a feature that is parked. The search page is still a placeholder.
+- **Compared free fuzzy search:** PostgreSQL, SQLite FTS5 in D1, and MiniSearch in the browser, using the owner's metadata locally. Nothing was sent to a service, and no dependency was added to the project. Results are in research R6.
+
