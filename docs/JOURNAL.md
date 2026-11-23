@@ -307,3 +307,12 @@
 - **Checked:** 33 targeted unit tests, typecheck, ESLint, Prettier on the changed code, and both endpoints on the local dev server with sample data.
 - **Not checked:** total CPU on a deployed Worker, or the full e2e suite. The script only targets local D1 until a production database exists.
 - **Fix:** the script now reads the app's library source, so spec 003's switch reaches it, and it stops without changes if no stored embedding belongs to the current library.
+
+## 2026-11-23: Spec 002 T057: Read next shelf
+
+- **Built:** Read next on Home and More like this on book pages, from the approved design, with a catalogue page. Each book shows its reason and a menu for "Not now" or "Never suggest". The undo line stays until the owner leaves or acts again.
+- **Hidden when empty:** with AI off, no suggestions, or no close matches, the section doesn't appear. In the sample data, Middlemarch has no close match, so its page shows none.
+- **Test port:** Playwright now picks a free port and never reuses a running server, because a stale preview on port 4173 could have been tested instead of the current code.
+- **Checked:** 5 shelf browser tests run twice on a production build, Home and AI-off browser tests on the dev server, typecheck, ESLint, Prettier on changed code, the Impeccable detector, and screenshots at desktop, phone and dark.
+- **Not checked:** the full e2e suite, or a deployed Worker.
+

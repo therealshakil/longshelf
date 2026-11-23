@@ -10,6 +10,7 @@
 	import LedgerRow from '#lib/components/LedgerRow.svelte';
 	import PeriodicalRow from '#lib/components/PeriodicalRow.svelte';
 	import { RECAPS_ENABLED } from '#lib/ai/features.ts';
+	import ReadNextShelf from '#lib/components/ReadNextShelf.svelte';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
 	import type { BookWithPositions } from '@ribbon/shared/library';
 	import { recapWithBackfill, type RecapView } from '#lib/ai/recap.ts';
@@ -96,6 +97,8 @@
 			{/if}
 		</section>
 	{/if}
+
+	<ReadNextShelf title="Read next" items={data.readNext} url="/api/ai/read-next" />
 
 	<a class="more" href={resolve('/library')}
 		>Browse the library <ArrowRight class="size-4" aria-hidden="true" /></a

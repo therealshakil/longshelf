@@ -40,7 +40,7 @@ Run from the repo root (pnpm 12 via corepack, Node 24):
 - `pnpm install`: install workspace deps (build scripts are allow-listed in `pnpm-workspace.yaml`)
 - `pnpm dev`: SvelteKit dev server (`apps/web`)
 - `pnpm test`: Vitest unit tests (all packages)
-- `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on :4173)
+- `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on a free port, never reusing a running server)
 - `pnpm lint`: Prettier + ESLint
 - `pnpm typecheck`: svelte-check / tsc
 - Deploy and migrate: added in spec 002.

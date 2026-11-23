@@ -1,11 +1,12 @@
 <!--
 	Book page (spec 002 US3): header with progress and actions, the description from Calibre, and
-	details. Genres (US6) and More like this (US5) join when the AI features land.
+	details, then More like this (US5). Genres (US6) join when that feature lands.
 	Matches design-mocks/book.html.
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import BookHeader from '#lib/components/BookHeader.svelte';
+	import ReadNextShelf from '#lib/components/ReadNextShelf.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -51,6 +52,15 @@
 			</dl>
 		</aside>
 	</div>
+
+	{#key item.book.id}
+		<ReadNextShelf
+			title="More like this in your library"
+			items={data.moreLike}
+			url={`/api/ai/more-like/${encodeURIComponent(item.book.id)}`}
+			variant="book"
+		/>
+	{/key}
 </main>
 
 <style>
