@@ -366,3 +366,11 @@
 - **Checked:** 39 of 39 pairs captured, a filtered retake kept the other pairs, typecheck and ESLint.
 - **For the finish review (T066):** the reader opens Middlemarch at Chapter XXXIII at 38%, while the sample data and mock say Chapter 40.
 
+## 2026-11-23: Spec 002 T065: accessibility matrix
+
+- **Built:** `pnpm test:a11y`, 68 checks across every route at 390 and 1440 px in light and dark, Night for the reader, and the design catalogue in both themes.
+- **Stays fast:** the owner chose to keep this on demand. The old catalogue scan moved out of `pnpm test:e2e`, so everyday runs are lighter. Each feature's spec keeps a quick axe check.
+- **Found and fixed:** missing pages used SvelteKit's bare error page, with no main landmark. They now use Ribbon's error state and offer a way back to the library.
+- **For the finish review (T066):** Library tabs ignore a tap made before the page becomes interactive. One test failed intermittently because of this, so it now waits. The product behaviour is unchanged.
+- **Limits:** the matrix excludes the book's own text inside foliate's frame. Genre shelves need saved genres, so they are covered by `genres.spec.ts` and the catalogue instead.
+

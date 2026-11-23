@@ -22,11 +22,15 @@ export default defineConfig({
 		{
 			name: 'main',
 			testMatch: '**/*.spec.ts',
-			testIgnore: '**/ai-off.spec.ts',
+			testIgnore: ['**/ai-off.spec.ts', '**/a11y.spec.ts'],
 			teardown: 'ai-off'
 		},
 		// Switches AI off for the shared local database, so it runs alone, after everything else.
-		{ name: 'ai-off', testMatch: '**/ai-off.spec.ts', fullyParallel: false }
+		{ name: 'ai-off', testMatch: '**/ai-off.spec.ts', fullyParallel: false },
+		// The full accessibility matrix runs only through `pnpm test:a11y`, so everyday runs stay fast.
+		...(process.env.A11Y
+			? [{ name: 'a11y', testMatch: '**/a11y.spec.ts', fullyParallel: true }]
+			: [])
 	],
 	webServer: {
 		command: `pnpm build && wrangler d1 migrations apply ribbon --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port}`,

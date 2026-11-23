@@ -72,6 +72,7 @@ test.describe('Library', () => {
 	test('news and magazines never appear in Recently added', async ({ page }) => {
 		await page.goto('/library');
 		await expect(page.getByText('The Evening Courier')).toHaveCount(0);
+		await page.waitForLoadState('networkidle'); // the tabs work once the page is interactive
 		await page.getByRole('tab', { name: 'News & magazines' }).click();
 		await expect(page.getByRole('heading', { name: 'The Evening Courier' })).toBeVisible();
 	});

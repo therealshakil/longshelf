@@ -18,6 +18,7 @@
 		"format": "prettier --write .",
 		"test": "node scripts/gen-tokens.ts && vitest --run",
 		"test:e2e": "playwright test",
+		"test:a11y": "A11Y=1 playwright test --project=a11y",
 		"gen": "wrangler types",
 		"typecheck": "node scripts/gen-tokens.ts && wrangler types && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"gen:tokens": "node scripts/gen-tokens.ts",

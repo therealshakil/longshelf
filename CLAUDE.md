@@ -41,6 +41,7 @@ Run from the repo root (pnpm 12 via corepack, Node 24):
 - `pnpm dev`: SvelteKit dev server (`apps/web`)
 - `pnpm test`: Vitest unit tests (all packages)
 - `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on a free port, never reusing a running server)
+- `pnpm test:a11y`: full accessibility matrix (about 5.5 minutes), on demand before a release. Never part of build, push or deploy
 - `pnpm design:compare`: on-demand screenshots of each page beside its mock; filter with `--only`, `--widths`, `--themes`. Never part of build, push or deploy
 - `pnpm lint`: Prettier + ESLint
 - `pnpm typecheck`: svelte-check / tsc
