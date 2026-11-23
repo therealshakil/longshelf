@@ -28,7 +28,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 - [ ] Wrangler config, CI deploy (workspace + SvelteKit scaffold moved to spec 001)
 - [ ] D1 schema + migrations
 - [ ] Ingest API (`plan`, `commit`) with Zod contract
-- [ ] `ribbon library` (upload KEPUB as well as EPUB when present)
+- [ ] `longshelf library` (upload KEPUB as well as EPUB when present)
 - [ ] Library UI: wire the spec 002 screens to real data (download included)
 - [ ] PWA manifest + service worker (app shell, covers)
 - [ ] Cloudflare Access + service token
@@ -41,9 +41,9 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 
 ### Phase 3: device progress via Calibre columns → spec 005
 - [ ] Store device location verbatim in `native_location`; merge status and position by separate timestamps
-- [ ] Column config; `ribbon progress` (read columns, push; pull, `calibredb set_custom`)
+- [ ] Column config; `longshelf progress` (read columns, push; pull, `calibredb set_custom`)
 - [ ] "Jump to Kobo position" prompt
-- [ ] `ribbon install-timer` (systemd, launchd)
+- [ ] `longshelf install-timer` (systemd, launchd)
 
 ### Later, optional
 - [ ] Layer 2 Kobo adapter: highlights, exact positions

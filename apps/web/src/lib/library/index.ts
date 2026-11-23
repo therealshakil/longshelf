@@ -1,5 +1,5 @@
-import type { LibrarySource } from '@ribbon/shared/library';
-import { createSampleLibrary } from '@ribbon/shared/sample';
+import type { LibrarySource } from '@longshelf/shared/library';
+import { createSampleLibrary } from '@longshelf/shared/sample';
 
 /**
  * The one place that chooses where library data comes from (spec 002 FR-007).
@@ -7,9 +7,9 @@ import { createSampleLibrary } from '@ribbon/shared/sample';
  */
 export const library: LibrarySource = createSampleLibrary();
 
-export { statusLabel, statusFrom } from '@ribbon/shared/library';
+export { statusLabel, statusFrom } from '@longshelf/shared/library';
 
-import type { Book, ReadStatus } from '@ribbon/shared/library';
+import type { Book, ReadStatus } from '@longshelf/shared/library';
 
 /** Read status for a list of books, keyed by id, so tiles show it (FR-005). */
 export async function statusesFor(books: Book[]): Promise<Record<string, ReadStatus>> {

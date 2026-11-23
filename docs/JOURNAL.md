@@ -438,3 +438,9 @@
   - **Reworks:** the finish review raised 8 material findings, then 4 on its second pass. Ten were fixed or covered by tests, one was closed by the owner, and one (inventing Middlemarch matches) was declined. Earlier live-review rounds were not counted.
   - **AI running cost:** recorded estimates total about 365 neurons, plus the T053 recap evaluation, which had a 6,000-per-day cap and no recorded total. Cloudflare's actual usage and bill were not checked. No production service is running yet.
 
+
+## 2026-11-23: Internal rename to Longshelf
+
+- **Renamed:** `@ribbon/*` packages, the root package, the planned CLI command, code comments, `PRODUCT.md`, `CLAUDE.md`, `docs/DESIGN.md`, `docs/PLAN.md` and the GitHub repository.
+- **Kept:** the D1 name, `ribbon.*` browser storage keys, applied migrations, and historical records. DR-0006 records why.
+- **Cloudflare:** checked read-only. No Longshelf or Ribbon Worker, D1 database or R2 bucket exists.

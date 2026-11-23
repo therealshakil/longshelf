@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { GenreActionSchema, type GenreChange } from '@ribbon/shared/ai';
+import { GenreActionSchema, type GenreChange } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { bookGenres, changeGenre } from '#lib/server/ai/genres.ts';
 import { requireEnabled } from '#lib/server/ai/suggestions.ts';

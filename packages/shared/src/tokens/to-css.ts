@@ -30,7 +30,7 @@ const decl = (t: Token, theme: Theme) =>
  * - [data-theme] overrides: the catalogue shows themes side by side, and the reader's Night
  *   setting applies night (spec 002);
  * - a Tailwind v4 `@theme inline` block so utilities resolve to the tokens, with Tailwind's
- *   default colour palette removed so only Ribbon colours exist.
+ *   default colour palette removed so only Longshelf colours exist.
  */
 export function tokensToCss(tokens: Token[]): string {
 	const themed = tokens.filter((t) => typeof t.value !== 'string');

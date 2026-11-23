@@ -1,4 +1,4 @@
-# Ribbon: design
+# Longshelf: design
 
 ## Goals
 - Calibre on the desktop stays the only place books are managed; the cloud is a mirror.
@@ -19,7 +19,7 @@
 ```
 Kobo <-> (Kobo Utilities plugin, USB) <-> Calibre custom columns
                                               ^
-                                              | ribbon CLI (reads metadata.db read-only,
+                                              | longshelf CLI (reads metadata.db read-only,
                                               v                 writes via calibredb)
                         Cloudflare Worker (SvelteKit UI + /api) -- D1 (metadata, progress)
                         behind Cloudflare Access                \- R2 (book files, covers)
@@ -38,15 +38,15 @@ Kobo <-> (Kobo Utilities plugin, USB) <-> Calibre custom columns
 
 v1 is layers 0 and 1. Column names are configuration, so the core contains no Kobo-specific code.
 
-## ribbon CLI
+## longshelf CLI
 - Node 24, `node:sqlite`. Opens `metadata.db` read-only. Idempotent; safe to run repeatedly.
-- `ribbon library`: read books/authors/series/tags/formats; SHA-256 each file;
+- `longshelf library`: read books/authors/series/tags/formats; SHA-256 each file;
   `POST /api/ingest/plan` with `{uuid, metadataHash, fileHashes}`; server returns what is missing plus
   presigned R2 upload URLs; upload; `POST /api/ingest/commit`.
-- `ribbon progress`: read the configured custom columns (percent, location, last-read, status) and push
+- `longshelf progress`: read the configured custom columns (percent, location, last-read, status) and push
   to the cloud; pull cloud progress and, where the cloud's last-read time is newer, write the columns with
   `calibredb set_custom`.
-- `ribbon install-timer`: systemd user timer on Linux, launchd on macOS.
+- `longshelf install-timer`: systemd user timer on Linux, launchd on macOS.
 - Per-OS differences are only default paths (library, `calibredb`) and the scheduler. v1 never touches the
   device, so there is no mount detection.
 - Auth: Cloudflare Access service token.
@@ -103,7 +103,7 @@ books_fts USING fts5(title, authors, series, tags)
   position refers to markers in the KEPUB that Calibre generates at send time, which are not in the EPUB.
   Possible fix (unverified, see spike): keep KEPUB as a format in the Calibre library so the cloud and the
   device hold the same file. The web reader can then read Kobo's markers and write an exact position.
-  `ribbon library` should therefore upload KEPUB when present and the reader should prefer it.
+  `longshelf library` should therefore upload KEPUB when present and the reader should prefer it.
 - USB is the transport: web progress reaches the Kobo next time it is plugged in with Calibre open.
 - Kobo highlights are not available in layer 1.
 
@@ -114,7 +114,7 @@ books_fts USING fts5(title, authors, series, tags)
 - Whether `calibredb set_custom` works while the Calibre GUI is open, or must go through Calibre's local
   content server (`--with-library http://localhost:8080`).
 - Whether Calibre sends a library KEPUB to the device unchanged (so its markers match the cloud copy).
-Fallback if restore of our written locations fails: ribbon writes the Kobo database itself (part of layer 2).
+Fallback if restore of our written locations fails: longshelf writes the Kobo database itself (part of layer 2).
 
 ## Lessons from Calibre-Web and Calibre-Web-Automated
 Both are GPL-3: use them to understand behaviour, do not copy or closely port their code.

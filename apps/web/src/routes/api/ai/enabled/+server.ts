@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { SetEnabledSchema } from '@ribbon/shared/ai';
+import { SetEnabledSchema } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import type { RequestHandler } from './$types';
 

@@ -6,7 +6,7 @@
 	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 	import CloudOff from '@lucide/svelte/icons/cloud-off';
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
-	import type { SyncState } from '@ribbon/shared/library';
+	import type { SyncState } from '@longshelf/shared/library';
 
 	let { sync, now = new Date() }: { sync: SyncState; now?: Date } = $props();
 

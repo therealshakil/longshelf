@@ -20,7 +20,7 @@ export const BookSchema = z.object({
 	cover: CoverSchema.optional(),
 	description: z.string().optional(),
 	series: z.object({ name: z.string(), index: z.number() }).optional(),
-	/** Calibre's single-value Collection column. Read only: Ribbon never writes it. */
+	/** Calibre's single-value Collection column. Read only: Longshelf never writes it. */
 	collection: z.string().optional(),
 	tags: z.array(z.string()),
 	formats: z.array(z.string()),

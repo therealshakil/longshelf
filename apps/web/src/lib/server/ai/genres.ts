@@ -1,6 +1,6 @@
 /**
  * Suggested genres (spec 002 US6, FR-012). The model picks from a fixed list, so shelves don't
- * split over spellings and a book's text can't introduce a label. Suggestions stay in Ribbon until
+ * split over spellings and a book's text can't introduce a label. Suggestions stay in Longshelf until
  * the owner promotes them, and a removed genre is never suggested for that book again.
  */
 import { error, isHttpError } from '@sveltejs/kit';
@@ -11,8 +11,8 @@ import {
 	type GenreIndex,
 	type GenreJobResult,
 	type GenreState
-} from '@ribbon/shared/ai';
-import type { Book } from '@ribbon/shared/library';
+} from '@longshelf/shared/ai';
+import type { Book } from '@longshelf/shared/library';
 import { plainText } from './embeddings.ts';
 import type { GuardStore } from './guard.ts';
 import { MODELS } from './models.ts';

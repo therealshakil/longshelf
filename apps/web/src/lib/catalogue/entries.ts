@@ -1,4 +1,4 @@
-import { CatalogueMetaSchema, type CatalogueMeta } from '@ribbon/shared/design/meta';
+import { CatalogueMetaSchema, type CatalogueMeta } from '@longshelf/shared/design/meta';
 
 /** Every catalogue entry: one `meta.ts` per folder under routes/design. */
 const modules = import.meta.glob<{ meta: CatalogueMeta }>('../../routes/design/*/meta.ts', {

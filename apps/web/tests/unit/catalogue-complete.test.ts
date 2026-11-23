@@ -6,8 +6,8 @@ import {
 	PRINCIPLES,
 	isAssumption,
 	type CatalogueMeta
-} from '@ribbon/shared/design/meta';
-import { tokens } from '@ribbon/shared/tokens';
+} from '@longshelf/shared/design/meta';
+import { tokens } from '@longshelf/shared/tokens';
 
 /** SC-001 / contracts/tokens-and-catalogue.md: every element is catalogued, sourced and checked. */
 const modules = import.meta.glob<{ meta: CatalogueMeta }>('../../src/routes/design/*/meta.ts', {
@@ -34,7 +34,7 @@ describe('catalogue completeness', () => {
 		expect(new Set(ids).size).toBe(ids.length);
 	});
 
-	it('every Ribbon component has a catalogue page', () => {
+	it('every Longshelf component has a catalogue page', () => {
 		const dir = join(src, 'lib/components');
 		const components = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.svelte')) : [];
 		const ids = new Set(metas.map((m) => m.meta.id));

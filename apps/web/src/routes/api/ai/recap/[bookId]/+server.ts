@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import type { Recap } from '@ribbon/shared/ai';
+import type { Recap } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { ceiling } from '#lib/server/ai/guard.ts';
 import { estimateNeurons, MODELS } from '#lib/server/ai/models.ts';

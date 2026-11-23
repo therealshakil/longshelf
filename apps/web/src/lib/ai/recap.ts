@@ -1,4 +1,4 @@
-import { RecapSchema, type Recap } from '@ribbon/shared/ai';
+import { RecapSchema, type Recap } from '@longshelf/shared/ai';
 import { chapterText, type Chapter, type FoliateBook } from '#lib/reader/chapters.ts';
 import { fillMissing, RECENT_WORDS } from './backfill.ts';
 

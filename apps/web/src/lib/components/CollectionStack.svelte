@@ -1,7 +1,7 @@
 <!-- A collection or genre as three fanned covers, its name and how many books it holds. -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { ShelfSummary } from '@ribbon/shared/library';
+	import type { ShelfSummary } from '@longshelf/shared/library';
 
 	let { shelf }: { shelf: ShelfSummary } = $props();
 </script>

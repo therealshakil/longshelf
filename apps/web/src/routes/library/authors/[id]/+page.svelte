@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { shortWorkList, statusLabel } from '@ribbon/shared/library';
+	import { shortWorkList, statusLabel } from '@longshelf/shared/library';
 	import BookTile from '#lib/components/BookTile.svelte';
 	import type { PageProps } from './$types';
 

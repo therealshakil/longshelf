@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { ChapterSummaryRequestSchema } from '@ribbon/shared/ai';
+import { ChapterSummaryRequestSchema } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { releaseOnDemand, reserveOnDemand } from '#lib/server/ai/on-demand.ts';
 import { MIN_CHAPTER_CHARS, summariseChapter, summaryNeurons } from '#lib/server/ai/story.ts';

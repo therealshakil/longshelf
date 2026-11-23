@@ -106,7 +106,7 @@ export const S = {
 	},
 	approvedMocks: {
 		title: 'Approved design mocks (design-mocks/, DR-0002)',
-		publisher: 'Ribbon owner, live review',
+		publisher: 'Longshelf owner, live review',
 		checked: '2026-11-18'
 	}
 } as const satisfies Record<string, Source>;

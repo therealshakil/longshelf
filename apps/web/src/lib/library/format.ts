@@ -1,4 +1,4 @@
-import type { ReadingPosition } from '@ribbon/shared/library';
+import type { ReadingPosition } from '@longshelf/shared/library';
 
 /** Plain-words relative time for "Last read": "Yesterday, 22:40", "12 days ago". */
 export function lastReadLabel(iso: string, now = new Date()): string {

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
-import type { Book, LibrarySource, ReadingPosition, ReadStatus } from '@ribbon/shared/library';
+import type { Book, LibrarySource, ReadingPosition, ReadStatus } from '@longshelf/shared/library';
 import { describe, expect, it } from 'vitest';
 import { encodeVector } from './embeddings.ts';
 import { MODELS } from './models.ts';

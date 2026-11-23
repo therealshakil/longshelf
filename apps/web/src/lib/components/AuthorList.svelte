@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { Author } from '@ribbon/shared/library';
+	import type { Author } from '@longshelf/shared/library';
 	import { headingLetter } from '#lib/library/letter-rail.ts';
 
 	let { authors }: { authors: { author: Author; bookCount: number }[] } = $props();

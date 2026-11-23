@@ -1,9 +1,9 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
 	const lib = createSampleLibrary();
 	import CollectionStack from '#lib/components/CollectionStack.svelte';
-	import type { ShelfSummary } from '@ribbon/shared/library';
+	import type { ShelfSummary } from '@longshelf/shared/library';
 	let shelves: ShelfSummary[] = $state([]);
 	$effect(() => {
 		lib.shelves('collection').then((s) => (shelves = s));

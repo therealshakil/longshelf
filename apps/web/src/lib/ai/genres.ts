@@ -6,8 +6,8 @@ import {
 	type GenreAction,
 	type GenreIndex,
 	type GenreState
-} from '@ribbon/shared/ai';
-import { titleSortKey, type Book, type Shelf, type ShelfSummary } from '@ribbon/shared/library';
+} from '@longshelf/shared/ai';
+import { titleSortKey, type Book, type Shelf, type ShelfSummary } from '@longshelf/shared/library';
 import { library } from '#lib/library/index.ts';
 
 export type BookGenre = BookGenres['genres'][number];

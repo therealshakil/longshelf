@@ -2,8 +2,8 @@
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import StatesGrid from '#lib/catalogue/StatesGrid.svelte';
 	import LedgerRow from '#lib/components/LedgerRow.svelte';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
-	import type { BookWithPositions } from '@ribbon/shared/library';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
+	import type { BookWithPositions } from '@longshelf/shared/library';
 
 	let rows: { name: string; note: string; item: BookWithPositions }[] = $state([]);
 	$effect(() => {

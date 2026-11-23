@@ -1,6 +1,6 @@
 <!-- A responsive grid of book tiles; covers keep their ratio so nothing shifts while loading. -->
 <script lang="ts">
-	import type { Book, ReadStatus } from '@ribbon/shared/library';
+	import type { Book, ReadStatus } from '@longshelf/shared/library';
 	import BookTile from './BookTile.svelte';
 
 	let {

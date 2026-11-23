@@ -1,9 +1,9 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
 	const lib = createSampleLibrary();
 	import BookGrid from '#lib/components/BookGrid.svelte';
-	import type { Book } from '@ribbon/shared/library';
+	import type { Book } from '@longshelf/shared/library';
 	let books: Book[] = $state([]);
 	$effect(() => {
 		lib.allBooks().then((b) => (books = b));

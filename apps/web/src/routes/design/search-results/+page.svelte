@@ -2,7 +2,7 @@
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import SearchResults from '#lib/components/SearchResults.svelte';
 	import { createBookSearch, type SearchHit } from '#lib/search/book-search.ts';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
 	import { meta } from './meta';
 
 	let items: SearchHit[] = $state([]);

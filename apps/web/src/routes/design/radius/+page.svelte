@@ -1,7 +1,7 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import TokenTable from '#lib/catalogue/TokenTable.svelte';
-	import { byGroup, cssVar } from '@ribbon/shared/tokens';
+	import { byGroup, cssVar } from '@longshelf/shared/tokens';
 	import { meta } from './meta';
 
 	const radius = byGroup('radius');

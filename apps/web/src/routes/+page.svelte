@@ -12,7 +12,7 @@
 	import { RECAPS_ENABLED } from '#lib/ai/features.ts';
 	import ReadNextShelf from '#lib/components/ReadNextShelf.svelte';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
-	import type { BookWithPositions } from '@ribbon/shared/library';
+	import type { BookWithPositions } from '@longshelf/shared/library';
 	import { recapWithBackfill, type RecapView } from '#lib/ai/recap.ts';
 	import { library } from '#lib/library/index.ts';
 	import { daysAway, splitPositions } from '#lib/library/format.ts';
@@ -45,7 +45,7 @@
 			const ordinal = placeOrdinal(chapters, recapPlace, (h) => book.resolveHref?.(h)?.index);
 			return { opened: { book, chapters }, ordinal };
 		} catch {
-			return {}; // no file to read: the recap uses the summaries Ribbon already has
+			return {}; // no file to read: the recap uses the summaries Longshelf already has
 		}
 	}
 

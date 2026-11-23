@@ -2,7 +2,7 @@
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import { meta } from './meta';
 
-	const REPO = 'the Ribbon repository';
+	const REPO = 'the Longshelf repository';
 </script>
 
 <EntryPage {meta}>

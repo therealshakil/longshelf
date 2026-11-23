@@ -49,3 +49,13 @@ The owner registered both domains through Cloudflare. Each is a recurring annual
 - `longshelf.org`: the open-source project.
 
 Both sites will be specified separately later.
+
+## Update: internal rename (2026-11-23)
+
+Packages, the CLI name, current docs and the GitHub repository now use Longshelf.
+
+These keep the old name on purpose:
+
+- The D1 database name, until the hosted setup on `longshelf.app` is specified. Nothing exists on Cloudflare yet, so it can change then at no cost.
+- Browser storage keys (`ribbon.*`), because changing them would drop saved reader settings unless a migration is planned.
+- Applied migrations, and historical records: the journal, decision records, specs and approved mocks.

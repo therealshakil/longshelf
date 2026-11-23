@@ -1,4 +1,4 @@
-// Minimal types for the parts of foliate-js (vendor/foliate-js, pinned) that Ribbon uses.
+// Minimal types for the parts of foliate-js (vendor/foliate-js, pinned) that Longshelf uses.
 export interface TocItem {
 	label: string;
 	href: string;

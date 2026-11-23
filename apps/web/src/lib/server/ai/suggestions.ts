@@ -3,7 +3,7 @@
  * and vectors, and the owner's dismissals. No model is called here, so reads cost no neurons.
  */
 import { error } from '@sveltejs/kit';
-import type { LibrarySource } from '@ribbon/shared/library';
+import type { LibrarySource } from '@longshelf/shared/library';
 import { isEnabled, type GuardStore } from './guard.ts';
 import { MODELS } from './models.ts';
 import { decodeNeighbours } from './neighbours.ts';

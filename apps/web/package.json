@@ -58,7 +58,7 @@
 		"wrangler": "^4.97.0"
 	},
 	"dependencies": {
-		"@ribbon/shared": "workspace:*",
+		"@longshelf/shared": "workspace:*",
 		"cn": "^0.5.2"
 	}
 }

@@ -1,6 +1,6 @@
 <!--
 	One collection or genre (spec 002 US3): name, count, sort, and its books. Matches
-	design-mocks/shelf.html. Collections come from Calibre and are never changed by Ribbon.
+	design-mocks/shelf.html. Collections come from Calibre and are never changed by Longshelf.
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';

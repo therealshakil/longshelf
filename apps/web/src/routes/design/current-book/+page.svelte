@@ -1,8 +1,8 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import CurrentBook from '#lib/components/CurrentBook.svelte';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
-	import type { BookWithPositions } from '@ribbon/shared/library';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
+	import type { BookWithPositions } from '@longshelf/shared/library';
 
 	let current: BookWithPositions | null = $state(null);
 	$effect(() => {

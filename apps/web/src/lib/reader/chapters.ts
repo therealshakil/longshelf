@@ -46,7 +46,7 @@ export function placeLabel(toc: TocItem[], item: { href: string; label: string }
 
 /** Open a book without displaying it. */
 export async function openBook(src: string): Promise<FoliateBook> {
-	// Untyped vendor module; the parts Ribbon uses are typed in ./foliate.d.ts.
+	// Untyped vendor module; the parts Longshelf uses are typed in ./foliate.d.ts.
 	const { makeBook } = (await import('../../../../../vendor/foliate-js/view.js')) as unknown as {
 		makeBook(file: string | Blob): Promise<FoliateBook>;
 	};

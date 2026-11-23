@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
-import type { Book } from '@ribbon/shared/library';
+import type { Book } from '@longshelf/shared/library';
 import { describe, expect, it, vi } from 'vitest';
 import {
 	bookGenres,

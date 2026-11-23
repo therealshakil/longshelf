@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import type { Usage } from '@ribbon/shared/ai';
+import type { Usage } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { ceiling, isEnabled, utcDay } from '#lib/server/ai/guard.ts';
 import type { RequestHandler } from './$types';

@@ -3,7 +3,7 @@
  * between book embeddings. Reasons come from templates naming the signal that chose the book, so
  * no model can misstate why it was suggested.
  */
-import { titleKey, type Book, type ReadStatus } from '@ribbon/shared/library';
+import { titleKey, type Book, type ReadStatus } from '@longshelf/shared/library';
 
 export const READ_NEXT_MAX = 12;
 export const MORE_LIKE_MAX = 5;

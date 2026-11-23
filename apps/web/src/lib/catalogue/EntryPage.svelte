@@ -1,7 +1,7 @@
 <!-- Shared frame for one catalogue page: title, the element's states, then rationale, sources, Checks. -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { CatalogueMeta } from '@ribbon/shared/design/meta';
+	import type { CatalogueMeta } from '@longshelf/shared/design/meta';
 	import MetaBlock from './MetaBlock.svelte';
 
 	let { meta, children }: { meta: CatalogueMeta; children: Snippet } = $props();

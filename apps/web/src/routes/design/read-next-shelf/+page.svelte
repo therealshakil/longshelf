@@ -2,7 +2,7 @@
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import ReadNextShelf from '#lib/components/ReadNextShelf.svelte';
 	import type { ShelfItem } from '#lib/ai/suggestions.ts';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
 	import { meta } from './meta';
 
 	const lib = createSampleLibrary();

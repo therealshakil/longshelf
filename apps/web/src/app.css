@@ -32,8 +32,8 @@
 }
 
 /*
- * shadcn-svelte theme names, pointed at Ribbon tokens so its components inherit the design.
- * shadcn's "accent" means a hover tint; Ribbon's `accent` is the one accent colour. Components are
+ * shadcn-svelte theme names, pointed at Longshelf tokens so its components inherit the design.
+ * shadcn's "accent" means a hover tint; Longshelf's `accent` is the one accent colour. Components are
  * restyled to use `accent-surface` for hover/current, so the names don't collide in practice.
  */
 @theme inline {

@@ -1,5 +1,5 @@
-import type { CatalogueMeta } from '@ribbon/shared/design/meta';
-import { S } from '@ribbon/shared/design/sources';
+import type { CatalogueMeta } from '@longshelf/shared/design/meta';
+import { S } from '@longshelf/shared/design/sources';
 
 export const meta: CatalogueMeta = {
 	id: 'about',

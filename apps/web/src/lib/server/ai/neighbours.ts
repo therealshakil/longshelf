@@ -3,7 +3,7 @@
  * much CPU for a Worker request, so `pnpm ai:neighbours` does it on the operator's machine and
  * requests read only the rows they need.
  */
-import { titleKey } from '@ribbon/shared/library';
+import { titleKey } from '@longshelf/shared/library';
 import { decodeVector } from './embeddings.ts';
 import { MODELS } from './models.ts';
 import { MIN_SIMILARITY, SAME_WORK_SIMILARITY, type Neighbour } from './suggest.ts';

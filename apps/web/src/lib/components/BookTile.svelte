@@ -5,8 +5,8 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { Book, ReadStatus } from '@ribbon/shared/library';
-	import { statusLabel } from '@ribbon/shared/library';
+	import type { Book, ReadStatus } from '@longshelf/shared/library';
+	import { statusLabel } from '@longshelf/shared/library';
 
 	let {
 		book,

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import TokenTable from '#lib/catalogue/TokenTable.svelte';
-	import { byGroup } from '@ribbon/shared/tokens';
+	import { byGroup } from '@longshelf/shared/tokens';
 	import { meta } from './meta';
 </script>
 

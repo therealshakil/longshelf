@@ -6,7 +6,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import type { BookWithPositions } from '@ribbon/shared/library';
+	import type { BookWithPositions } from '@longshelf/shared/library';
 	import { daysAway, deviceName, splitPositions } from '#lib/library/format.ts';
 
 	let {

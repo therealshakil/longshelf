@@ -1,4 +1,4 @@
-import type { Book, ReadStatus } from '@ribbon/shared/library';
+import type { Book, ReadStatus } from '@longshelf/shared/library';
 import { describe, expect, it } from 'vitest';
 import { buildNeighbours } from './neighbours.ts';
 import {

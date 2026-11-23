@@ -9,7 +9,7 @@
 	import Download from '@lucide/svelte/icons/download';
 	import Check from '@lucide/svelte/icons/check';
 	import Ellipsis from '@lucide/svelte/icons/ellipsis';
-	import type { BookWithPositions } from '@ribbon/shared/library';
+	import type { BookWithPositions } from '@longshelf/shared/library';
 	import { deviceName, lastReadLabel, splitPositions } from '#lib/library/format.ts';
 
 	let {

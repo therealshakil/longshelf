@@ -1,4 +1,4 @@
-import type { Book } from '@ribbon/shared/library';
+import type { Book } from '@longshelf/shared/library';
 import { describe, expect, it } from 'vitest';
 import { createBookSearch, SEARCH_MAX } from './book-search.ts';
 

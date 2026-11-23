@@ -3,7 +3,7 @@
  * offline. Titles, authors and tags only: descriptions make the index far heavier on a phone.
  */
 import MiniSearch from 'minisearch';
-import type { Book } from '@ribbon/shared/library';
+import type { Book } from '@longshelf/shared/library';
 
 export const SEARCH_MAX = 50;
 const MAX_QUERY_CHARS = 200;

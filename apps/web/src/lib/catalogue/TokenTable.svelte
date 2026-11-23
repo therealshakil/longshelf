@@ -1,7 +1,7 @@
 <!-- Name, CSS variable, value and reason for a list of tokens. Optional preview column. -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { cssVar, type Token } from '@ribbon/shared/tokens';
+	import { cssVar, type Token } from '@longshelf/shared/tokens';
 
 	let {
 		tokens,

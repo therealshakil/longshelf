@@ -142,7 +142,7 @@ test.describe('Reader', () => {
 						localStorage.setItem('ribbon.reader.v1', JSON.stringify({ theme: 'night' }))
 					);
 				await openBook(page);
-				// The book's own markup (Project Gutenberg) is out of scope; Ribbon's chrome is in.
+				// The book's own markup (Project Gutenberg) is out of scope; Longshelf's chrome is in.
 				const results = await new AxeBuilder({ page })
 					.exclude('foliate-view')
 					.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])

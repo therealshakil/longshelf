@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import type { Suggestions } from '@ribbon/shared/ai';
+import type { Suggestions } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { moreLike } from '#lib/server/ai/suggest.ts';
 import { activeDismissals, requireEnabled, suggestItems } from '#lib/server/ai/suggestions.ts';

@@ -1,5 +1,5 @@
 import { library } from '#lib/library/index.ts';
-import { ALSO_READING_MAX } from '@ribbon/shared/library';
+import { ALSO_READING_MAX } from '@longshelf/shared/library';
 import { loadSuggestions } from '#lib/ai/suggestions.ts';
 import type { PageLoad } from './$types';
 

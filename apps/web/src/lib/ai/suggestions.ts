@@ -1,5 +1,5 @@
-import { SuggestionsSchema } from '@ribbon/shared/ai';
-import type { Book } from '@ribbon/shared/library';
+import { SuggestionsSchema } from '@longshelf/shared/ai';
+import type { Book } from '@longshelf/shared/library';
 import { library } from '#lib/library/index.ts';
 
 export type ShelfItem = { book: Book; reason: string };

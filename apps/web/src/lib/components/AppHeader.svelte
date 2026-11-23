@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import Search from '@lucide/svelte/icons/search';
-	import type { SyncState } from '@ribbon/shared/library';
+	import type { SyncState } from '@longshelf/shared/library';
 	import SyncStatus from './SyncStatus.svelte';
 
 	let {

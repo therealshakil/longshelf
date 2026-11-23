@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { ShelfSummary } from '@ribbon/shared/library';
+	import type { ShelfSummary } from '@longshelf/shared/library';
 
 	let { genres }: { genres: ShelfSummary[] } = $props();
 

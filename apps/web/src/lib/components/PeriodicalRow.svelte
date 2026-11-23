@@ -4,8 +4,8 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { PeriodicalIssue } from '@ribbon/shared/library';
-	import { statusLabel } from '@ribbon/shared/library';
+	import type { PeriodicalIssue } from '@longshelf/shared/library';
+	import { statusLabel } from '@longshelf/shared/library';
 
 	let { issues, label }: { issues: PeriodicalIssue[]; label: string } = $props();
 

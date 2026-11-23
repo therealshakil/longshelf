@@ -1,6 +1,6 @@
 <!-- Rationale, sources and calm-ds Check results for one catalogue entry. -->
 <script lang="ts">
-	import { PRINCIPLE_NAMES, isAssumption, type CatalogueMeta } from '@ribbon/shared/design/meta';
+	import { PRINCIPLE_NAMES, isAssumption, type CatalogueMeta } from '@longshelf/shared/design/meta';
 
 	let { meta }: { meta: CatalogueMeta } = $props();
 

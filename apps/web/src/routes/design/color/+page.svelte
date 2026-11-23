@@ -9,7 +9,7 @@
 		pairs,
 		THEMES,
 		type Theme
-	} from '@ribbon/shared/tokens';
+	} from '@longshelf/shared/tokens';
 	import { meta } from './meta';
 
 	const colours = byGroup('color');

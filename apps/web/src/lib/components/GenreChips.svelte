@@ -1,11 +1,11 @@
 <!--
 	A book's genres (spec 002 US6). Calibre's are solid. Suggestions are outlined, with Promote and
-	Remove, and stay in Ribbon until promoted. Promoting only queues the change for the next sync.
+	Remove, and stay in Longshelf until promoted. Promoting only queues the change for the next sync.
 -->
 <script lang="ts">
 	import { tick } from 'svelte';
 	import X from '@lucide/svelte/icons/x';
-	import type { GenreAction, GenreState } from '@ribbon/shared/ai';
+	import type { GenreAction, GenreState } from '@longshelf/shared/ai';
 	import { changeBookGenre, type BookGenre } from '#lib/ai/genres.ts';
 
 	let {

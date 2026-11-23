@@ -1,6 +1,6 @@
-import type { CatalogueMeta } from '@ribbon/shared/design/meta';
-import { S } from '@ribbon/shared/design/sources';
-import { byGroup } from '@ribbon/shared/tokens';
+import type { CatalogueMeta } from '@longshelf/shared/design/meta';
+import { S } from '@longshelf/shared/design/sources';
+import { byGroup } from '@longshelf/shared/tokens';
 import { checks, sourcesOf } from '#lib/catalogue/meta-helpers.ts';
 
 export const meta: CatalogueMeta = {

@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { GenreJobSchema } from '@ribbon/shared/ai';
+import { GenreJobSchema } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { suggestGenres } from '#lib/server/ai/genres.ts';
 import { library } from '#lib/library/index.ts';

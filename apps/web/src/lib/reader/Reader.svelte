@@ -36,7 +36,7 @@
 		onRelocate?: (loc: FoliateLocation) => void;
 		/**
 		 * A chapter (contents entry) was left for the next one, so the owner finished it (US4). The
-		 * text is handed over once for summarising; Ribbon doesn't keep it.
+		 * text is handed over once for summarising; Longshelf doesn't keep it.
 		 */
 		onChapterFinished?: (chapter: {
 			href: string;
@@ -115,7 +115,7 @@
 		let cancelled = false;
 		(async () => {
 			try {
-				// Untyped vendor module; the parts Ribbon uses are typed in ./foliate.d.ts.
+				// Untyped vendor module; the parts Longshelf uses are typed in ./foliate.d.ts.
 				await import('../../../../../vendor/foliate-js/view.js');
 				if (cancelled) return;
 				view = document.createElement('foliate-view') as FoliateView;

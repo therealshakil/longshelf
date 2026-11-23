@@ -4,8 +4,8 @@
  * continue. Vectors stay in the owner's D1 database.
  */
 import { error } from '@sveltejs/kit';
-import type { EmbeddingJobResult } from '@ribbon/shared/ai';
-import type { Book } from '@ribbon/shared/library';
+import type { EmbeddingJobResult } from '@longshelf/shared/ai';
+import type { Book } from '@longshelf/shared/library';
 import { check, record, type GuardStore } from './guard.ts';
 import { estimateNeurons, MODELS, tokensOf } from './models.ts';
 

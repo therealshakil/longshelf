@@ -2,8 +2,8 @@
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import StatesGrid from '#lib/catalogue/StatesGrid.svelte';
 	import BookTile from '#lib/components/BookTile.svelte';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
-	import type { Book, ReadStatus } from '@ribbon/shared/library';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
+	import type { Book, ReadStatus } from '@longshelf/shared/library';
 
 	const lib = createSampleLibrary();
 	let samples: { name: string; book: Book; status: ReadStatus; reason?: string }[] = $state([]);

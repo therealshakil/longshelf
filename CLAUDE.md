@@ -1,4 +1,4 @@
-# Ribbon
+# Longshelf
 
 Private cloud mirror of a Calibre library, with a web reader (installable PWA, offline) and
 two-way reading-progress sync. Single user per deployment.
@@ -18,13 +18,13 @@ record spike findings there. Per-feature tasks live in `specs/NNN-name/tasks.md`
 - Svelte 5, Tailwind v4, shadcn-svelte (Bits UI), Lucide icons
 - Dexie (IndexedDB), OPFS for downloaded books, SvelteKit native service worker
 - foliate-js as a pinned git submodule in `vendor/`, wrapped by one `Reader.svelte` adapter
-- `ribbon` CLI: Node 24, built-in `node:sqlite`; Linux and macOS
+- `longshelf` CLI: Node 24, built-in `node:sqlite`; Linux and macOS
 - Zod for the API contract (`packages/shared`), Vitest (+ `@cloudflare/vitest-pool-workers`), Playwright
 
 ## Layout
 ```
 apps/web/            SvelteKit app + API, wrangler.jsonc, migrations/
-packages/sync-cli/   ribbon
+packages/sync-cli/   longshelf
 packages/shared/     types + Zod schemas
 vendor/foliate-js/   submodule
 docs/                DESIGN.md, PLAN.md, JOURNAL.md, decisions/ (DR-NNNN)
@@ -33,7 +33,7 @@ specs/               Spec Kit features (NNN-name/: spec, plan, tasks)
 ```
 
 Work goes through Spec Kit: `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`.
-The Ribbon principles above are project-specific and sit alongside the constitution.
+The Longshelf principles above are project-specific and sit alongside the constitution.
 
 ## Commands
 Run from the repo root (pnpm 12 via corepack, Node 24):

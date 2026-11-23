@@ -1,5 +1,5 @@
-import type { GenreIndex } from '@ribbon/shared/ai';
-import type { Book } from '@ribbon/shared/library';
+import type { GenreIndex } from '@longshelf/shared/ai';
+import type { Book } from '@longshelf/shared/library';
 import { describe, expect, it, vi } from 'vitest';
 import { genreSlug, shelvesFrom } from './genres.ts';
 

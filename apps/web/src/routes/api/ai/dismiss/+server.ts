@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { DismissSchema, UndoDismissSchema } from '@ribbon/shared/ai';
+import { DismissSchema, UndoDismissSchema } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { dismiss, undoDismiss } from '#lib/server/ai/suggestions.ts';
 import { library } from '#lib/library/index.ts';

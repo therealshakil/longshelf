@@ -6,7 +6,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { titleSortKey } from '@ribbon/shared/library';
+	import { titleSortKey } from '@longshelf/shared/library';
 	import LibraryTabs, { TABS, type TabId } from '#lib/components/LibraryTabs.svelte';
 	import BookGrid from '#lib/components/BookGrid.svelte';
 	import AuthorList from '#lib/components/AuthorList.svelte';

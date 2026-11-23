@@ -1,5 +1,5 @@
 /**
- * On-demand summaries (DR-0004): before a recap, summarise chapters Ribbon has no summary for,
+ * On-demand summaries (DR-0004): before a recap, summarise chapters Longshelf has no summary for,
  * such as those read on a Kobo. It works back from the owner's place through a window of recent
  * text, always sending whole chapters. Text goes from the browser because the server doesn't
  * hold book files; it is used once and not stored.

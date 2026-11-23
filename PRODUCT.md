@@ -10,13 +10,13 @@ web
 One user per deployment: the owner. They are neurodivergent. They read on a phone, a tablet and a laptop through the web app, and on a Kobo Libra 2 e-reader. Their job is to browse a Calibre library of about 700 books (mostly EPUB), read in the browser, often offline, and pick up where they left off on any device.
 
 ## Product Purpose
-Ribbon is a private cloud mirror of a Calibre library. It has a web reader (an installable PWA that works offline) and syncs reading progress both ways with the e-reader, via Calibre. Success means the owner opens any book on any device at the right place without thinking about it, and Calibre on the desktop stays the only place books are managed.
+Longshelf is a private cloud mirror of a Calibre library. It has a web reader (an installable PWA that works offline) and syncs reading progress both ways with the e-reader, via Calibre. Success means the owner opens any book on any device at the right place without thinking about it, and Calibre on the desktop stays the only place books are managed.
 
 ## Positioning
 A self-hosted mirror that keeps Calibre as the source of truth. It doesn't replace it. Progress from each device is kept separately and offered ("Kobo: 63%, ch. 12. Jump there?"), never overwritten silently.
 
 ## Operating Context
-- Books are managed in Calibre on a Linux desktop (macOS wanted). The `ribbon` CLI uploads the library and syncs progress through Calibre custom columns.
+- Books are managed in Calibre on a Linux desktop (macOS wanted). The `longshelf` CLI uploads the library and syncs progress through Calibre custom columns.
 - The Kobo is loaded over USB by Calibre. The web app runs on Cloudflare behind Cloudflare Access, with a long session so it works offline.
 - Sessions are reading sessions: long, focused, often in low light, and on small screens as often as large ones.
 
@@ -28,7 +28,7 @@ A self-hosted mirror that keeps Calibre as the source of truth. It doesn't repla
 - Stack and architecture: see `docs/DESIGN.md` (architecture, not visual design) and `CLAUDE.md`.
 
 ## Brand Commitments
-- Name: Ribbon.
+- Name: Longshelf.
 - calm-ds (v0.1.0) is **guidance, not binding** (owner decision, 2026-11-18): quiet senses, predictable, one thing at a time, remember for me, no pressure, plain words, the person holds the dial. Expressive type and colour are allowed, but reading surfaces should still favour calm and focus.
 - Plain-words voice: no marketing claims, no exclamation, and no "AI-ish" copy.
 

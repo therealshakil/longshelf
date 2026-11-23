@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { Usage } from '@ribbon/shared/ai';
+	import type { Usage } from '@longshelf/shared/ai';
 	import ErrorState from '#lib/components/ErrorState.svelte';
 	import { resolve } from '$app/paths';
 

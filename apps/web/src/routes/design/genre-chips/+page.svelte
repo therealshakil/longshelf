@@ -1,7 +1,7 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import GenreChips from '#lib/components/GenreChips.svelte';
-	import type { GenreAction, GenreState } from '@ribbon/shared/ai';
+	import type { GenreAction, GenreState } from '@longshelf/shared/ai';
 	import { meta } from './meta';
 
 	const STATES: Record<GenreAction, GenreState> = {

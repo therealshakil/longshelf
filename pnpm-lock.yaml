@@ -168,7 +168,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@ribbon/shared':
+      '@longshelf/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       cn:

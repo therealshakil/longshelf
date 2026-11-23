@@ -1,6 +1,6 @@
-import type { CheckResult, Principle, Source } from '@ribbon/shared/design/meta';
-import { isAssumption } from '@ribbon/shared/design/meta';
-import type { Token } from '@ribbon/shared/tokens';
+import type { CheckResult, Principle, Source } from '@longshelf/shared/design/meta';
+import { isAssumption } from '@longshelf/shared/design/meta';
+import type { Token } from '@longshelf/shared/tokens';
 
 /** VII is deferred for every entry while user-adjustable appearance is out of scope (2026-11-14). */
 export const VII_DEFERRED: CheckResult = {

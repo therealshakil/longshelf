@@ -2,7 +2,7 @@
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
 	import StatesGrid from '#lib/catalogue/StatesGrid.svelte';
 	import TokenTable from '#lib/catalogue/TokenTable.svelte';
-	import { byGroup, contrast, getToken, THEMES, type Theme } from '@ribbon/shared/tokens';
+	import { byGroup, contrast, getToken, THEMES, type Theme } from '@longshelf/shared/tokens';
 	import { meta } from './meta';
 
 	const v = (name: string, theme: Theme) => (getToken(name).value as Record<Theme, string>)[theme];

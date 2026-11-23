@@ -1,9 +1,9 @@
 <script lang="ts">
 	import EntryPage from '#lib/catalogue/EntryPage.svelte';
-	import { createSampleLibrary } from '@ribbon/shared/sample';
+	import { createSampleLibrary } from '@longshelf/shared/sample';
 	const lib = createSampleLibrary();
 	import AuthorList from '#lib/components/AuthorList.svelte';
-	import type { Author } from '@ribbon/shared/library';
+	import type { Author } from '@longshelf/shared/library';
 	let authors: { author: Author; bookCount: number }[] = $state([]);
 	$effect(() => {
 		lib.authors().then((a) => (authors = a));
