@@ -83,7 +83,8 @@
 			</div>
 			{#if recap.coverage?.limited}
 				<p class="covers">
-					Ribbon reached today’s limit for earlier chapters. Open Story so far tomorrow to add more.
+					Longshelf reached today’s limit for earlier chapters. Open Story so far tomorrow to add
+					more.
 				</p>
 			{:else if recap.coverage && recap.earlier && onIncludeEarlier}
 				<button type="button" class="earlier" onclick={onIncludeEarlier}>

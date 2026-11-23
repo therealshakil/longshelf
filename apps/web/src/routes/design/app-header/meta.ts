@@ -8,7 +8,7 @@ export const meta: CatalogueMeta = {
 	kind: 'component',
 	order: 200,
 	rationale:
-		'The header on every page except the reader: the “Ribbon.” wordmark, a Home · Library switch, the search field and the sync status. It stays in the same place on every page, so the way home and the way to the library never move. The sync status lives here, never floating over content (FR-006).',
+		'The header on every page except the reader: the Longshelf logo and wordmark, a Home · Library switch, the search field and the sync status. It stays in the same place on every page, so the way home and the way to the library never move. The sync status lives here, never floating over content (FR-006).',
 	sources: [S.approvedMocks, S.wcag22],
 	checks: checks({
 		I: ['pass', 'No motion; the current page is marked by an oxblood underline and weight.'],

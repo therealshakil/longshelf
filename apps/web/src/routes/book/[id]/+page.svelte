@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<title>{item.book.title} · Ribbon</title>
+	<title>{item.book.title} · Longshelf</title>
 </svelte:head>
 
 <main class="page">

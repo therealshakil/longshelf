@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>{s.name} · Ribbon</title>
+	<title>{s.name} · Longshelf</title>
 </svelte:head>
 
 <main class="page">
@@ -53,8 +53,8 @@
 	<BookGrid books={s.books} statuses={data.statuses} />
 	<p class="note">
 		{s.kind === 'genre'
-			? 'Genres are suggested by AI and stay in Ribbon until you promote them to Calibre.'
-			: 'A collection from Calibre’s Collection column. Ribbon never changes it.'}
+			? 'Genres are suggested by AI and stay in Longshelf until you promote them to Calibre.'
+			: 'A collection from Calibre’s Collection column. Longshelf never changes it.'}
 	</p>
 </main>
 

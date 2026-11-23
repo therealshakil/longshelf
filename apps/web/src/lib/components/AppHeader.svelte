@@ -1,5 +1,5 @@
 <!--
-	App header on every page except the reader: the "Ribbon." wordmark, the Home · Library switch,
+	App header on every page except the reader: the Longshelf logo and wordmark, the Home · Library switch,
 	the search field and the sync status (FR-006). Matches design-mocks/index.html.
 -->
 <script lang="ts">
@@ -15,11 +15,15 @@
 	}: { current: 'home' | 'library' | null; sync: SyncState; query?: string } = $props();
 </script>
 
-<header class="flex flex-wrap items-center gap-x-8 gap-y-4 py-4">
-	<a class="wordmark no-underline" href={resolve('/')} aria-label="Ribbon, home">
-		Ribbon<span class="text-accent" aria-hidden="true">.</span>
+<header class="flex flex-wrap items-center gap-x-4 gap-y-4 py-4 sm:gap-x-8">
+	<a class="wordmark no-underline" href={resolve('/')} aria-label="Longshelf, home">
+		<svg class="mark" viewBox="0 0 256 256" aria-hidden="true">
+			<path class="mark-shelf" d="M16 16H64V192H240V240H16Z" />
+			<path class="mark-book" d="M117.27 176.00L186.82 157.37L149.55 18.27L80.00 36.91Z" />
+		</svg>
+		<span class="wordmark-text">Longshelf</span>
 	</a>
-	<nav aria-label="Main" class="flex gap-6">
+	<nav aria-label="Main" class="flex gap-4 sm:gap-6">
 		<a class="nav-link" href={resolve('/')} aria-current={current === 'home' ? 'page' : undefined}
 			>Home</a
 		>
@@ -49,11 +53,25 @@
 
 <style>
 	.wordmark {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4em;
 		font-family: var(--r-font-reading);
 		font-size: var(--r-text-xl);
 		font-weight: var(--r-weight-title);
 		color: var(--r-ink);
 		letter-spacing: -0.01em;
+	}
+	.mark {
+		width: 1.1em;
+		height: 1.1em;
+		flex: none;
+	}
+	.mark-shelf {
+		fill: var(--r-ink);
+	}
+	.mark-book {
+		fill: var(--r-accent);
 	}
 	.nav-link {
 		color: var(--r-text-muted);
@@ -83,6 +101,12 @@
 			order: 3;
 			flex-basis: 100%;
 			max-width: none;
+		}
+	}
+	/* The narrowest phones show the logo alone; the link's aria-label keeps the name. */
+	@media (max-width: 22rem) {
+		.wordmark-text {
+			display: none;
 		}
 	}
 </style>

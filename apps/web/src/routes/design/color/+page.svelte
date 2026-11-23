@@ -21,7 +21,7 @@
 
 <EntryPage {meta}>
 	<p>
-		Both themes, side by side. Your system decides which one Ribbon uses; this page shows both so
+		Both themes, side by side. Your system decides which one Longshelf uses; this page shows both so
 		you can compare without switching.
 	</p>
 

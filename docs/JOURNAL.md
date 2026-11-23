@@ -351,3 +351,18 @@
 - **Not done:** no dependency was added and search is still parked until the owner approves it.
 - **Not tested:** other Apple devices, Firefox results, or iPad service worker and persistent storage, which need HTTPS.
 
+## 2026-11-23: Product name is Longshelf
+
+- **Owner decision:** the product will be called Longshelf. Reasons and alternatives are in DR-0006.
+- **Domains:** the owner registered `longshelf.app` for the hosted version and `longshelf.org` for the open-source project. Both sites will be specified separately.
+- **Not done:** internal names (packages, database, CLI, repo) still say Ribbon.
+- **Not checked:** official trademark registers. This must happen before a public launch.
+
+## 2026-11-23: Longshelf logo and visible name
+
+- **Built:** the Bookend logo (DR-0007), favicon, app and maskable icons, web manifest, theme colours, and the logo in the header. Visible text and page titles now say Longshelf.
+- **Header:** tighter spacing on phones, and the logo alone on the narrowest screens, so the longer name fits.
+- **Checked:** typecheck, formatting, ESLint, the catalogue test, all icon URLs on a production build, nested-route icon paths, and the header at 320 to 430px wide, light and dark.
+- **Known failures:** the token-only test fails on `ReadNextShelf.svelte` and the author page, from styles this change did not touch. The home page also scrolls sideways at 320px because of its content below the header.
+- **Not checked:** the full e2e suite, or installing the app on a real device.
+

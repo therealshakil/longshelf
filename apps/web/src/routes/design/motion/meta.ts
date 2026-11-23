@@ -8,7 +8,7 @@ export const meta: CatalogueMeta = {
 	kind: 'token',
 	order: 50,
 	rationale:
-		'Ribbon does not animate. Panels open, pages change and status updates instantly, then stay still. There is no sound. A global rule removes transitions and animations from every element, including third-party components, so nothing can move by accident. Your system’s reduced-motion setting is also respected.',
+		'Longshelf does not animate. Panels open, pages change and status updates instantly, then stay still. There is no sound. A global rule removes transitions and animations from every element, including third-party components, so nothing can move by accident. Your system’s reduced-motion setting is also respected.',
 	sources: sourcesOf(byGroup('motion')),
 	checks: checks({
 		I: ['pass', 'Nothing moves, flashes or makes sound; enforced by a global rule and a test.'],

@@ -9,7 +9,7 @@
 	<div class="flex flex-col gap-3 rounded-md bg-surface p-4">
 		<p class="font-strong">There is nothing to show here, on purpose.</p>
 		<p>
-			Where other apps would fade, slide or spin, Ribbon changes instantly. Progress is shown as
+			Where other apps would fade, slide or spin, Longshelf changes instantly. Progress is shown as
 			words (“Syncing 3 of 12 books”), never as a spinner.
 		</p>
 		<p>

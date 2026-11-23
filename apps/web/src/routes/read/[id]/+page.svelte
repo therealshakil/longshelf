@@ -132,7 +132,7 @@
 <svelte:window onkeydown={onKey} />
 
 <svelte:head>
-	<title>{book?.title ?? 'Book'} · Reading · Ribbon</title>
+	<title>{book?.title ?? 'Book'} · Reading · Longshelf</title>
 </svelte:head>
 
 {#if !book}

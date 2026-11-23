@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Search · Ribbon</title>
+	<title>Search · Longshelf</title>
 </svelte:head>
 
 <main class="py-8">

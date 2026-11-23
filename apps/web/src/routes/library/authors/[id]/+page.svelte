@@ -32,7 +32,7 @@
 </script>
 
 <svelte:head>
-	<title>{a.name} · Ribbon</title>
+	<title>{a.name} · Longshelf</title>
 </svelte:head>
 
 <main class="page">

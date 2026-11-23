@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import favicon from '#lib/assets/favicon.svg';
 	import { page } from '$app/state';
 	import AppHeader from '#lib/components/AppHeader.svelte';
 	import type { LayoutProps } from './$types';
@@ -18,10 +17,6 @@
 				: null
 	);
 </script>
-
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
 
 {#if framed}
 	<div class="mx-auto max-w-[90rem] px-[clamp(1rem,4vw,3.5rem)]">
