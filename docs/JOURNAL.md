@@ -315,4 +315,4 @@
 - **Test port:** Playwright now picks a free port and never reuses a running server, because a stale preview on port 4173 could have been tested instead of the current code.
 - **Checked:** 5 shelf browser tests run twice on a production build, Home and AI-off browser tests on the dev server, typecheck, ESLint, Prettier on changed code, the Impeccable detector, and screenshots at desktop, phone and dark.
 - **Not checked:** the full e2e suite, or a deployed Worker.
-
+- **Test fix:** the AI-off browser tests switch AI off for the shared local database, which made two Read next tests fail when run alongside them. They now run alone, after the other browser tests. The shelf, Home and AI-off tests then passed, 15 of 15, on a production build.

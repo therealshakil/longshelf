@@ -18,7 +18,16 @@ const port = Number(process.env.E2E_PORT);
 
 export default defineConfig({
 	testDir: 'tests/e2e',
-	testMatch: '**/*.spec.ts',
+	projects: [
+		{
+			name: 'main',
+			testMatch: '**/*.spec.ts',
+			testIgnore: '**/ai-off.spec.ts',
+			teardown: 'ai-off'
+		},
+		// Switches AI off for the shared local database, so it runs alone, after everything else.
+		{ name: 'ai-off', testMatch: '**/ai-off.spec.ts', fullyParallel: false }
+	],
 	webServer: {
 		command: `pnpm build && wrangler d1 migrations apply ribbon --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port}`,
 		port,
