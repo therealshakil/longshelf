@@ -35,6 +35,8 @@ const TARGETS: Target[] = [
 	{ id: 'home', route: '/', mock: 'index.html' },
 	{ id: 'library', route: '/library', mock: 'library.html' },
 	{ id: 'book', route: '/book/george-eliot_middlemarch', mock: 'book.html' },
+	// Middlemarch has no close match in the sample, so this shows More like this filled in.
+	{ id: 'book-similar', route: '/book/charlotte-bronte_jane-eyre', mock: 'book.html' },
 	{ id: 'author', route: '/library/authors/jane-austen', mock: 'author.html' },
 	{ id: 'shelf', route: '/library/shelf/collection/poetry-drama', mock: 'shelf.html' },
 	{ id: 'reader', route: '/read/george-eliot_middlemarch', mock: 'reader.html' }

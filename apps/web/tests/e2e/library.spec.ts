@@ -69,6 +69,19 @@ test.describe('Library', () => {
 		expect(await label('/library/shelf/collection/stoics')).toBe('55% read');
 	});
 
+	test('a tab works before the page is interactive', async ({ browser, baseURL }) => {
+		const context = await browser.newContext({ baseURL, javaScriptEnabled: false });
+		const page = await context.newPage();
+		await page.goto('/library');
+		await page.getByRole('tab', { name: 'Authors' }).click();
+		await expect(page).toHaveURL(/\?tab=authors$/);
+		await expect(page.getByRole('tab', { name: 'Authors' })).toHaveAttribute(
+			'aria-selected',
+			'true'
+		);
+		await context.close();
+	});
+
 	test('news and magazines never appear in Recently added', async ({ page }) => {
 		await page.goto('/library');
 		await expect(page.getByText('The Evening Courier')).toHaveCount(0);

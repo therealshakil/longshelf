@@ -86,6 +86,31 @@
 		requestAnimationFrame(applyStyles);
 	});
 
+	/** A saved place can land partway through a line, so scroll back to show that line whole. */
+	async function showWholeFirstLine() {
+		const renderer = view?.renderer;
+		if (!renderer || settings.page !== 'scroll') return;
+		const contents = renderer.getContents();
+		await Promise.all(contents.map(({ doc }) => doc.fonts?.ready));
+		await new Promise(requestAnimationFrame);
+		const top = renderer.getBoundingClientRect().top;
+		for (const { doc } of contents) {
+			const frameTop = doc.defaultView?.frameElement?.getBoundingClientRect().top ?? 0;
+			const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+			const range = doc.createRange();
+			while (walker.nextNode()) {
+				if (!walker.currentNode.textContent?.trim()) continue;
+				range.selectNodeContents(walker.currentNode);
+				for (const line of range.getClientRects()) {
+					if (line.bottom + frameTop <= top + 0.5) continue;
+					const cut = top - (line.top + frameTop);
+					if (cut > 0) await renderer.scrollToAnchor((renderer.start - cut) / renderer.viewSize);
+					return;
+				}
+			}
+		}
+	}
+
 	onMount(() => {
 		let cancelled = false;
 		(async () => {
@@ -124,8 +149,10 @@
 				await view.open(src);
 				flatToc = flattenToc(view.book.toc ?? []);
 				applyStyles();
-				if (startCfi) await view.init({ lastLocation: startCfi });
-				else if (startHref && view.book.resolveHref?.(startHref)) await view.goTo(startHref);
+				if (startCfi) {
+					await view.init({ lastLocation: startCfi });
+					await showWholeFirstLine();
+				} else if (startHref && view.book.resolveHref?.(startHref)) await view.goTo(startHref);
 				else if (startFraction) await view.goToFraction(startFraction);
 				else await view.init({ showTextStart: true });
 				onReady?.({

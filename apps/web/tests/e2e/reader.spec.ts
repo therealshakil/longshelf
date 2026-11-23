@@ -76,6 +76,43 @@ test.describe('Reader', () => {
 		await expect(notice).toHaveCount(0);
 	});
 
+	test('a saved mid-chapter place resumes with its first line whole', async ({ page }) => {
+		await openBook(page);
+		await page.mouse.move(720, 450);
+		await page.mouse.wheel(0, 523);
+		await page.waitForTimeout(1000); // the place saves shortly after scrolling stops
+		await page.reload();
+		await page.waitForFunction(() => {
+			const view = document.querySelector('foliate-view') as
+				(Element & { lastLocation?: object }) | null;
+			return !!view?.lastLocation;
+		});
+		await expect
+			.poll(() =>
+				page.evaluate(() => {
+					const r = (
+						document.querySelector('foliate-view') as unknown as {
+							renderer: HTMLElement & { getContents(): { doc: Document }[] };
+						}
+					).renderer;
+					const top = r.getBoundingClientRect().top;
+					for (const { doc } of r.getContents()) {
+						const frameTop = doc.defaultView!.frameElement!.getBoundingClientRect().top;
+						const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+						const range = doc.createRange();
+						while (walker.nextNode()) {
+							if (!walker.currentNode.textContent?.trim()) continue;
+							range.selectNodeContents(walker.currentNode);
+							for (const line of range.getClientRects())
+								if (line.bottom + frameTop > top + 0.5) return top - (line.top + frameTop);
+						}
+					}
+					return Number.POSITIVE_INFINITY;
+				})
+			)
+			.toBeLessThanOrEqual(1);
+	});
+
 	test('Contents lists chapters and marks where you are', async ({ page }) => {
 		await openBook(page);
 		await page.getByRole('button', { name: 'Contents' }).click();

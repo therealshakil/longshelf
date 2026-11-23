@@ -19,6 +19,10 @@ export interface FoliateRenderer extends HTMLElement {
 	setStyles(css: string): void;
 	next(): Promise<void>;
 	prev(): Promise<void>;
+	readonly start: number;
+	readonly viewSize: number;
+	scrollToAnchor(anchor: number): Promise<void>;
+	getContents(): { doc: Document }[];
 }
 
 export interface FoliateView extends HTMLElement {

@@ -410,3 +410,9 @@
 - **Resolved:** the search page keeps plain search with the Longshelf title, and both journals are kept. Two decisions had claimed DR-0006, so plain search is now DR-0008.
 - **Still named Ribbon:** the repository, packages and internal identifiers, because DR-0006 makes the codebase rename a separate step.
 
+## 2026-11-23: Spec 002 T066: finish review, second fixes
+
+- **Owner decision:** the mock's small label above the reader's chapter heading stays removed, and the heading keeps its natural size and spacing. The reviewer's request to enlarge it is declined.
+- **Fixed:** a saved mid-chapter place resumed with its first line about 20 px under the top bar. It now shows that line whole.
+- **Added:** a browser test for a Library tab tapped before the page is interactive, a resume test, and a `book-similar` design-compare page showing More like this filled in.
+
