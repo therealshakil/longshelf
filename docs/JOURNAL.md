@@ -422,3 +422,9 @@
 - **Review limits:** no capture covered other Library tabs, the Aa and Contents panels, ⋯ menus, a solid Calibre genre chip, the expanded bibliography, or hover and focus states.
 - **Not checked:** the full e2e suite and `pnpm test:a11y` after the Longshelf merge.
 
+## 2026-11-23: Spec 002 T067: design system record
+
+- **Built:** `apps/web/DESIGN.md` and its sidecar, written from the shipped Longshelf build. `docs/DESIGN.md` stays the architecture document.
+- **Checked:** token parity, references, section order and Prettier. No page changed.
+- **Left as known drift, not made into rules:** the uppercase "New" mark, the stock Sheet close button and shadow, two ⋯ menu styles, a few off-scale sizes and ink tints, the phone reader's default text size, and `PRODUCT.md` still saying Ribbon.
+

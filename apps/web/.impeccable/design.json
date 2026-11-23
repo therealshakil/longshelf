@@ -1,0 +1,501 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-23T12:42:50.273Z",
+  "title": "Design System: Longshelf",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Grained Paper",
+        "canonical": "oklch(0.976 0.003 106)",
+        "cssVar": "--r-bg",
+        "modes": {
+          "dark": "oklch(0.227 0.004 85)",
+          "night": "oklch(0.165 0.003 68)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.001 106)",
+          "oklch(0.27 0.002 106)",
+          "oklch(0.39 0.003 106)",
+          "oklch(0.51 0.003 106)",
+          "oklch(0.63 0.003 106)",
+          "oklch(0.75 0.003 106)",
+          "oklch(0.87 0.001 106)",
+          "oklch(0.95 0.001 106)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Shaded Paper",
+        "canonical": "oklch(0.940 0.004 91)",
+        "cssVar": "--r-surface",
+        "modes": {
+          "dark": "oklch(0.281 0.006 92)",
+          "night": "oklch(0.222 0.004 85)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.001 91)",
+          "oklch(0.27 0.002 91)",
+          "oklch(0.39 0.004 91)",
+          "oklch(0.51 0.004 91)",
+          "oklch(0.63 0.004 91)",
+          "oklch(0.75 0.003 91)",
+          "oklch(0.87 0.002 91)",
+          "oklch(0.95 0.001 91)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised Paper",
+        "canonical": "oklch(0.986 0.002 90)",
+        "cssVar": "--r-raised",
+        "modes": {
+          "dark": "oklch(0.260 0.006 92)",
+          "night": "oklch(0.201 0.004 85)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.001 90)",
+          "oklch(0.27 0.001 90)",
+          "oklch(0.39 0.002 90)",
+          "oklch(0.51 0.002 90)",
+          "oklch(0.63 0.002 90)",
+          "oklch(0.75 0.002 90)",
+          "oklch(0.87 0.001 90)",
+          "oklch(0.95 0.001 90)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.214 0.002 68)",
+        "cssVar": "--r-ink",
+        "modes": {
+          "dark": "oklch(0.938 0.010 82)",
+          "night": "oklch(0.869 0.015 81)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.001 68)",
+          "oklch(0.27 0.001 68)",
+          "oklch(0.39 0.002 68)",
+          "oklch(0.51 0.002 68)",
+          "oklch(0.63 0.002 68)",
+          "oklch(0.75 0.002 68)",
+          "oklch(0.87 0.001 68)",
+          "oklch(0.95 0.001 68)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Body Ink",
+        "canonical": "oklch(0.314 0.008 85)",
+        "cssVar": "--r-text",
+        "modes": {
+          "dark": "oklch(0.874 0.013 82)",
+          "night": "oklch(0.779 0.017 79)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.002 85)",
+          "oklch(0.27 0.005 85)",
+          "oklch(0.39 0.008 85)",
+          "oklch(0.51 0.008 85)",
+          "oklch(0.63 0.008 85)",
+          "oklch(0.75 0.007 85)",
+          "oklch(0.87 0.003 85)",
+          "oklch(0.95 0.002 85)"
+        ]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Faded Ink",
+        "canonical": "oklch(0.491 0.011 78)",
+        "cssVar": "--r-text-muted",
+        "modes": {
+          "dark": "oklch(0.708 0.016 81)",
+          "night": "oklch(0.615 0.019 85)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.003 78)",
+          "oklch(0.27 0.006 78)",
+          "oklch(0.39 0.011 78)",
+          "oklch(0.51 0.011 78)",
+          "oklch(0.63 0.011 78)",
+          "oklch(0.75 0.009 78)",
+          "oklch(0.87 0.005 78)",
+          "oklch(0.95 0.003 78)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.894 0.008 91)",
+        "cssVar": "--r-border",
+        "modes": {
+          "dark": "oklch(0.330 0.011 85)",
+          "night": "oklch(0.278 0.006 78)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.002 91)",
+          "oklch(0.27 0.005 91)",
+          "oklch(0.39 0.008 91)",
+          "oklch(0.51 0.008 91)",
+          "oklch(0.63 0.008 91)",
+          "oklch(0.75 0.007 91)",
+          "oklch(0.87 0.003 91)",
+          "oklch(0.95 0.002 91)"
+        ]
+      },
+      "control": {
+        "role": "neutral",
+        "displayName": "Control Grey",
+        "canonical": "oklch(0.600 0.011 82)",
+        "cssVar": "--r-control",
+        "modes": {
+          "dark": "oklch(0.564 0.015 82)",
+          "night": "oklch(0.525 0.013 85)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.003 82)",
+          "oklch(0.27 0.006 82)",
+          "oklch(0.39 0.011 82)",
+          "oklch(0.51 0.011 82)",
+          "oklch(0.63 0.011 82)",
+          "oklch(0.75 0.009 82)",
+          "oklch(0.87 0.005 82)",
+          "oklch(0.95 0.003 82)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Oxblood",
+        "canonical": "oklch(0.413 0.106 13)",
+        "cssVar": "--r-accent",
+        "modes": {
+          "dark": "oklch(0.759 0.087 11)",
+          "night": "oklch(0.698 0.078 11)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.026 13)",
+          "oklch(0.27 0.060 13)",
+          "oklch(0.39 0.102 13)",
+          "oklch(0.51 0.106 13)",
+          "oklch(0.63 0.106 13)",
+          "oklch(0.75 0.088 13)",
+          "oklch(0.87 0.046 13)",
+          "oklch(0.95 0.026 13)"
+        ]
+      },
+      "accent-surface": {
+        "role": "primary",
+        "displayName": "Oxblood Wash",
+        "canonical": "oklch(0.934 0.012 17)",
+        "cssVar": "--r-accent-surface",
+        "modes": {
+          "dark": "oklch(0.294 0.031 9)",
+          "night": "oklch(0.245 0.022 9)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.003 17)",
+          "oklch(0.27 0.007 17)",
+          "oklch(0.39 0.012 17)",
+          "oklch(0.51 0.012 17)",
+          "oklch(0.63 0.012 17)",
+          "oklch(0.75 0.010 17)",
+          "oklch(0.87 0.005 17)",
+          "oklch(0.95 0.003 17)"
+        ]
+      },
+      "action": {
+        "role": "neutral",
+        "displayName": "Action Black",
+        "canonical": "oklch(0.235 0.004 85)",
+        "cssVar": "--r-action",
+        "modes": {
+          "dark": "oklch(0.938 0.010 82)",
+          "night": "oklch(0.869 0.015 81)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.001 85)",
+          "oklch(0.27 0.002 85)",
+          "oklch(0.39 0.004 85)",
+          "oklch(0.51 0.004 85)",
+          "oklch(0.63 0.004 85)",
+          "oklch(0.75 0.003 85)",
+          "oklch(0.87 0.002 85)",
+          "oklch(0.95 0.001 85)"
+        ]
+      },
+      "on-accent": {
+        "role": "neutral",
+        "displayName": "Paper on Action",
+        "canonical": "oklch(0.982 0.003 85)",
+        "cssVar": "--r-on-accent",
+        "modes": {
+          "dark": "oklch(0.227 0.004 85)",
+          "night": "oklch(0.165 0.003 68)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.001 85)",
+          "oklch(0.27 0.002 85)",
+          "oklch(0.39 0.003 85)",
+          "oklch(0.51 0.003 85)",
+          "oklch(0.63 0.003 85)",
+          "oklch(0.75 0.003 85)",
+          "oklch(0.87 0.001 85)",
+          "oklch(0.95 0.001 85)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus Oxblood",
+        "canonical": "oklch(0.413 0.106 13)",
+        "cssVar": "--r-focus",
+        "modes": {
+          "dark": "oklch(0.759 0.087 11)",
+          "night": "oklch(0.698 0.078 11)"
+        },
+        "tonalRamp": [
+          "oklch(0.15 0.026 13)",
+          "oklch(0.27 0.060 13)",
+          "oklch(0.39 0.102 13)",
+          "oklch(0.51 0.106 13)",
+          "oklch(0.63 0.106 13)",
+          "oklch(0.75 0.088 13)",
+          "oklch(0.87 0.046 13)",
+          "oklch(0.95 0.026 13)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The current book on Home and a book title on its page."
+      },
+      "page": {
+        "displayName": "Page",
+        "purpose": "Library, author and shelf page titles."
+      },
+      "heading": {
+        "displayName": "Heading",
+        "purpose": "Major Home sections."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Ledger book titles and the wordmark."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Book text at the default reader setting."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Interface prose, capped at 66ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Controls, chips and compact values."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Device progress, table terms, notes and read status."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-cover",
+        "value": "0 1px 2px #0002, 0 18px 30px -14px #0007",
+        "dark": "0 1px 2px #0006, 0 18px 30px -14px #000c",
+        "night": "0 1px 2px #000, 0 18px 30px -14px #000",
+        "purpose": "Large covers resting on the page."
+      },
+      {
+        "name": "shadow-tile",
+        "value": "0 1px 1px #0001, 0 8px 14px -10px #0006",
+        "dark": "0 1px 1px #0004, 0 8px 14px -10px #000a",
+        "night": "0 1px 1px #000, 0 8px 14px -10px #000",
+        "purpose": "Small covers in grids, ledgers and stacks."
+      }
+    ],
+    "motion": [
+      {
+        "name": "duration",
+        "value": "0ms",
+        "purpose": "All ordinary state changes are instant."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "200ms ease-out",
+        "purpose": "Owner-started reader bar reveal, off under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrowest",
+        "value": "22rem"
+      },
+      {
+        "name": "phone",
+        "value": "40rem"
+      },
+      {
+        "name": "notice-compact",
+        "value": "52rem"
+      },
+      {
+        "name": "shelf-compact",
+        "value": "64rem"
+      },
+      {
+        "name": "short-screen",
+        "value": "44rem height"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action in a view, such as Continue reading.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Continue reading <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:.6rem;min-height:var(--r-target);border-radius:var(--r-radius-pill);font-family:var(--r-font-ui);font-weight:var(--r-weight-strong);cursor:pointer;padding:.65rem 1.4rem;border:0;background:var(--r-action);color:var(--r-on-accent);text-decoration:none}.ds-btn-primary:hover{background:var(--r-accent)}.ds-btn-primary:focus-visible{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "A secondary book action, such as Downloaded.",
+      "html": "<button class=\"ds-btn-outline\" type=\"button\">Download</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:.6rem;min-height:var(--r-target);border-radius:var(--r-radius-pill);font-family:var(--r-font-ui);font-weight:var(--r-weight-strong);cursor:pointer;padding:0 1.1rem;border:1px solid var(--r-control);background:transparent;color:var(--r-ink)}.ds-btn-outline:hover{border-color:var(--r-ink)}.ds-btn-outline:focus-visible{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "A 44px reader or book tool with an accessible name.",
+      "html": "<button class=\"ds-btn-icon\" type=\"button\" aria-label=\"Bookmark this page\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"/></svg></button>",
+      "css": ".ds-btn-icon{display:grid;place-items:center;width:var(--r-target);height:var(--r-target);border:0;border-radius:var(--r-radius-pill);background:transparent;color:var(--r-ink);cursor:pointer}.ds-btn-icon:hover{background:color-mix(in oklab,var(--r-bg),var(--r-ink) 6%)}.ds-btn-icon:focus-visible{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "The shared header search.",
+      "html": "<label class=\"ds-search\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><span class=\"ds-sr\">Search your library</span><input type=\"search\" placeholder=\"Search your library\"></label>",
+      "css": ".ds-search{display:flex;align-items:center;gap:.625rem;width:min(100%,24rem);height:2.75rem;padding:0 1rem;border:1px solid var(--r-control);border-radius:var(--r-radius-pill);background:var(--r-raised);color:var(--r-text-muted)}.ds-search:focus-within{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}.ds-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--r-text);font:1rem var(--r-font-ui)}.ds-search input::placeholder{color:var(--r-text-muted)}.ds-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}"
+    },
+    {
+      "name": "Main Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Home and Library, with an oxblood current-page line.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><a href=\"#\" aria-current=\"page\">Home</a><a href=\"#\">Library</a></nav>",
+      "css": ".ds-nav{display:flex;gap:1.5rem;font-family:var(--r-font-ui)}.ds-nav a{padding-block:.4rem;border-bottom:.125rem solid transparent;color:var(--r-text-muted);font-weight:var(--r-weight-strong);text-decoration:none}.ds-nav a:hover{color:var(--r-ink)}.ds-nav a[aria-current=page]{color:var(--r-ink);border-color:var(--r-accent)}.ds-nav a:focus-visible{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}"
+    },
+    {
+      "name": "Genre Chips",
+      "kind": "chip",
+      "refersTo": "chip-calibre",
+      "description": "A settled Calibre genre beside a dashed suggestion with Promote.",
+      "html": "<ul class=\"ds-chips\"><li class=\"ds-chip\">Gothic fiction</li><li class=\"ds-chip ds-chip-suggested\">Letters <button type=\"button\">Promote</button></li></ul>",
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none;font-family:var(--r-font-ui)}.ds-chip{display:inline-flex;align-items:center;gap:.5rem;min-height:2rem;padding:.25rem .8rem;border:1px solid transparent;border-radius:1rem;background:color-mix(in oklab,var(--r-bg),var(--r-ink) 7%);color:var(--r-ink);font-size:var(--r-text-sm)}.ds-chip-suggested{padding-right:.3rem;border:1px dashed var(--r-text-muted);background:transparent}.ds-chip button{min-height:1.5rem;padding:0 .4rem;border:0;border-radius:.75rem;background:transparent;color:var(--r-accent);font:inherit;font-size:var(--r-text-xs);font-weight:var(--r-weight-strong);cursor:pointer}.ds-chip button:hover{background:var(--r-accent-surface)}.ds-chip button:focus-visible{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}"
+    },
+    {
+      "name": "Book Tile",
+      "kind": "card",
+      "refersTo": "book-tile",
+      "description": "A cover, title, author and read status, with no card around it.",
+      "html": "<a class=\"ds-tile\" href=\"#\"><span class=\"ds-cover\">Middlemarch</span><b>Middlemarch</b><span>George Eliot</span><small>42% read</small></a>",
+      "css": ".ds-tile{display:flex;flex-direction:column;gap:.125rem;width:9rem;color:var(--r-text-muted);font:var(--r-text-sm)/1.5 var(--r-font-ui);text-decoration:none}.ds-cover{display:grid;place-items:center;aspect-ratio:2/3;margin-bottom:.5rem;padding:.75rem;border-radius:var(--r-radius-cover);background:var(--r-surface);box-shadow:var(--r-shadow-tile);color:var(--r-ink);font-family:var(--r-font-reading);font-weight:var(--r-weight-title);text-align:center}.ds-tile b{color:var(--r-ink);font-family:var(--r-font-reading);font-size:var(--r-text-base);font-weight:var(--r-weight-title);line-height:var(--r-leading-tight)}.ds-tile small{color:var(--r-accent);font-size:var(--r-text-xs);font-weight:var(--r-weight-strong);font-variant-numeric:tabular-nums}.ds-tile:hover b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}.ds-tile:focus-visible{outline:var(--r-focus-width) solid var(--r-focus);outline-offset:var(--r-focus-offset);}"
+    },
+    {
+      "name": "Reading Progress",
+      "kind": "custom",
+      "refersTo": "progress",
+      "description": "This device in oxblood and another device as a neutral line.",
+      "html": "<div class=\"ds-progress\"><p><b>63%</b> Chapter 12</p><span class=\"ds-track\"><i style=\"width:63%\"></i></span><span class=\"ds-track ds-other\"><i style=\"width:71%\"></i></span><small>Kobo 71%</small></div>",
+      "css": ".ds-progress{width:min(100%,20rem);color:var(--r-text-muted);font:var(--r-text-sm)/1.5 var(--r-font-ui);font-variant-numeric:tabular-nums}.ds-progress p{margin:0 0 .5rem}.ds-progress b{margin-right:.5rem;color:var(--r-accent);font-size:var(--r-text-lg)}.ds-track{display:block;height:.1875rem;margin-bottom:.35rem;background:var(--r-border)}.ds-track i{display:block;height:100%;background:var(--r-accent)}.ds-other i{background:var(--r-control)}.ds-progress small{font-size:var(--r-text-xs)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Bedside Page",
+    "overview": "Longshelf is a reading place before it is an application. The current book leads, the other books follow as a quiet ledger, and the interface recedes once a page is open. Neutral grained paper, near-black ink and a single oxblood accent carry every screen, so the same place looks and behaves the same on a phone, a tablet and a laptop.\n\nLiterata gives titles and book text the voice of a printed book. Atkinson Hyperlegible Next handles the apparatus: labels, metadata, controls and progress. Structure comes from hairline rules, alignment and space. Book covers are the only objects that lift from the paper.\n\nThe system serves one neurodivergent owner in long, often low-light sessions. Stillness, plain words, visible focus and predictable placement are design materials here. The product name is Longshelf and the mark is the Bookend; the code's `--r-` token prefix remains from the working name until the separate codebase rename.",
+    "keyCharacteristics": [
+      "Paper, ink and one oxblood accent, in light, dark and Night.",
+      "Literata for titles and reading; Atkinson Hyperlegible Next for apparatus.",
+      "Hairlines and space instead of content cards.",
+      "Covers carry the only soft shadows.",
+      "State changes are instant, except the reader bars the owner summons.",
+      "Every saved place is visible, and another device's place is offered, never applied silently."
+    ],
+    "rules": [
+      {
+        "name": "The One Oxblood Rule",
+        "body": "Oxblood means your place, a way onward, or the current state. Never use it as decoration, and never add a second accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The Other Device Is Grey Rule",
+        "body": "This device's progress is oxblood. Another device's progress is a neutral bar or tick, so the two places can never be confused.",
+        "section": "colors"
+      },
+      {
+        "name": "The Night Is Quieter Rule",
+        "body": "Night removes the grain and lowers contrast from pure white while keeping reading text comfortably legible. Do not add texture or bright fills to it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Book names and titles speak in Literata. Controls and data speak in Atkinson.",
+        "section": "typography"
+      },
+      {
+        "name": "The Weight For Emphasis Rule",
+        "body": "Interface emphasis uses weight (650), not italics or underline. Italics belong to the book's own typography, such as epigraphs and verse.",
+        "section": "typography"
+      },
+      {
+        "name": "The Natural Chapter Rule",
+        "body": "A chapter heading keeps the book's natural size and spacing, in Literata at weight 500 and line height 1.15. The reader adds no label above it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Progress Rule",
+        "body": "Percentages and counts in the interface use tabular figures so they do not jitter between rows.",
+        "section": "typography"
+      },
+      {
+        "name": "The Book Leads Rule",
+        "body": "On Home, the current book comes first. Do not put a grid, dashboard or stat above it.",
+        "section": "layout"
+      },
+      {
+        "name": "The Same Place Rule",
+        "body": "Navigation, tabs and reader tools keep their order and position on every device and visit.",
+        "section": "layout"
+      },
+      {
+        "name": "The Only Books Lift Rule",
+        "body": "Do not use shadows on content sections or rows. If it is not a cover or a temporary overlay, it stays on the paper.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the semantic `--r-` tokens for all color, type, radius and shadow values, so light, dark and Night stay correct.",
+      "Do keep the 3px focus ring at a 2px offset visible on every interactive element.",
+      "Do keep primary controls at least 44px, and never let any target fall below the 24px product floor.",
+      "Do underline links in running text so they are not identified by color alone.",
+      "Do show another device's place as a neutral mark and offer it as a choice.",
+      "Do let the book's own italics, epigraphs and verse render inside the reader.",
+      "Do keep book text ragged right with no automatic hyphenation."
+    ],
+    "donts": [
+      "Don't add a second accent or use oxblood as decoration.",
+      "Don't put a small label above a heading, in the reader or anywhere else.",
+      "Don't wrap books or page sections in content cards.",
+      "Don't put shadows on anything except covers and temporary overlays.",
+      "Don't add decorative or automatic motion; the reader-bar reveal is the only animated transition.",
+      "Don't float notices or controls over book text.",
+      "Don't overwrite a reading position silently."
+    ]
+  }
+}
