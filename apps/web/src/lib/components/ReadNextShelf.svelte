@@ -196,7 +196,7 @@
 		border-radius: 50%;
 		color: var(--r-ink);
 		background: color-mix(in oklab, var(--r-bg) 88%, transparent);
-		box-shadow: 0 1px 3px #0003;
+		box-shadow: var(--r-shadow-tile);
 		opacity: 0;
 		cursor: pointer;
 	}
@@ -214,7 +214,7 @@
 		background: var(--r-bg);
 		border: 1px solid var(--r-border);
 		border-radius: var(--r-radius-sm);
-		box-shadow: 0 10px 28px -10px #0007;
+		box-shadow: var(--r-shadow-cover);
 		/* The highlighted item carries the focus ring. */
 		outline: none;
 	}
@@ -238,8 +238,8 @@
 	}
 	.pick :global(.pick-item[data-highlighted]) {
 		background: var(--r-surface);
-		outline: 3px solid var(--r-focus);
-		outline-offset: -3px;
+		outline: var(--r-focus-width) solid var(--r-focus);
+		outline-offset: calc(var(--r-focus-width) * -1);
 	}
 	@media (hover: none) {
 		li :global(.options) {
@@ -276,7 +276,6 @@
 		.pick {
 			width: auto;
 			padding: 0.4rem;
-			box-shadow: 0 12px 40px -6px #0009;
 		}
 		.pick :global(.pick-item) {
 			min-height: 3.25rem;

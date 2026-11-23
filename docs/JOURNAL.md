@@ -366,3 +366,10 @@
 - **Known failures:** the token-only test fails on `ReadNextShelf.svelte` and the author page, from styles this change did not touch. The home page also scrolls sideways at 320px because of its content below the header.
 - **Not checked:** the full e2e suite, or installing the app on a real device.
 
+## 2026-11-23: Token and narrow-phone fixes
+
+- **Fixed:** Read next and the author page now use design tokens for shadows, focus rings and borders. The author page's animated arrow now changes instantly, as the design requires.
+- **Fixed:** long book titles no longer make the home page scroll sideways at 320px. The narrowest phones get a smaller cover and title.
+- **Checked:** all 192 unit tests, typecheck, formatting, ESLint on the changed files, and no sideways scroll at 320px on home, library, search, AI settings, book, author and shelf pages.
+- **Not checked:** the full e2e suite, or a real device.
+

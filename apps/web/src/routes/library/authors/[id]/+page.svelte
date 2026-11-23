@@ -271,10 +271,9 @@
 		width: 0.5rem;
 		height: 0.5rem;
 		margin: 0 0.25rem 0 0.1rem;
-		border-right: 2px solid var(--r-text-muted);
-		border-bottom: 2px solid var(--r-text-muted);
+		border-right: 0.125rem solid var(--r-text-muted);
+		border-bottom: 0.125rem solid var(--r-text-muted);
 		transform: rotate(45deg);
-		transition: transform 0.15s;
 	}
 	.more.open::before {
 		transform: rotate(-135deg);
@@ -284,11 +283,6 @@
 		font-size: var(--r-text-sm);
 		font-weight: var(--r-weight-regular);
 		color: var(--r-text-muted);
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.more::before {
-			transition: none;
-		}
 	}
 	.note {
 		margin-top: 2rem;
