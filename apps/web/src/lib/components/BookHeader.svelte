@@ -133,7 +133,7 @@
 		background: var(--r-surface);
 	}
 	.title {
-		font-size: var(--r-text-display);
+		font-size: clamp(2.25rem, 1.6rem + 2vw, 3.25rem);
 		line-height: var(--r-leading-display);
 		font-weight: var(--r-weight-title);
 		letter-spacing: -0.015em;
@@ -281,7 +281,14 @@
 			width: 9rem;
 		}
 		.title {
-			font-size: var(--r-text-2xl);
+			font-size: 1.875rem;
+		}
+		.meta {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0.2rem;
+		}
+		dd {
+			margin-bottom: 0.5rem;
 		}
 		.go {
 			flex: 1 1 100%;

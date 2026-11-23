@@ -13,6 +13,37 @@ export interface Chapter {
 export const flattenToc = (items: TocItem[]): Chapter[] =>
 	items.flatMap((i) => [{ href: i.href, label: i.label.trim() }, ...flattenToc(i.subitems ?? [])]);
 
+const ROMAN: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+
+function fromRoman(text: string): number {
+	const values = [...text.toLowerCase()].map((c) => ROMAN[c]);
+	return values.reduce((sum, v, i) => sum + (v < (values[i + 1] ?? 0) ? -v : v), 0);
+}
+
+/** Contents labels are often shouted: "CHAPTER XL." reads as "Chapter 40". */
+function tidyLabel(label: string): string {
+	const text = label.trim().replace(/[.:]$/, '');
+	const chapter = text.match(/^chapter\s+([ivxlcdm]+)$/i);
+	if (chapter) return `Chapter ${fromRoman(chapter[1])}`;
+	if (/\p{Ll}/u.test(text)) return text;
+	return text
+		.split(/\s+/)
+		.map((word) =>
+			/^[IVXLCDM]+$/.test(word) ? word : word.charAt(0) + word.slice(1).toLowerCase()
+		)
+		.join(' ');
+}
+
+/** The reader's place: "Book IV · Chapter 40", or the chapter alone when it has no book or part. */
+export function placeLabel(toc: TocItem[], item: { href: string; label: string }): string {
+	const parent = toc.find((t) => t.subitems?.some((s) => s.href === item.href));
+	const part = parent?.label.trim().match(/^(book|part|volume)\s+([ivxlcdm]+|\d+)\b/i);
+	const chapter = tidyLabel(item.label);
+	if (!part) return chapter;
+	const kind = part[1].charAt(0).toUpperCase() + part[1].slice(1).toLowerCase();
+	return `${kind} ${part[2].toUpperCase()} · ${chapter}`;
+}
+
 /** Open a book without displaying it. */
 export async function openBook(src: string): Promise<FoliateBook> {
 	// Untyped vendor module; the parts Ribbon uses are typed in ./foliate.d.ts.

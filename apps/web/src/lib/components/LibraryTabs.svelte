@@ -16,6 +16,7 @@
 </script>
 
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { Snippet } from 'svelte';
 
 	let {
@@ -24,7 +25,15 @@
 		panel
 	}: { current: TabId; onSelect: (id: TabId) => void; panel: Snippet<[TabId]> } = $props();
 
-	let buttons: HTMLButtonElement[] = $state([]);
+	let links: HTMLAnchorElement[] = $state([]);
+
+	/** Once interactive, switch in place and keep focus; a new-tab click stays a normal link. */
+	function click(e: MouseEvent, id: TabId, i: number) {
+		if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+		e.preventDefault();
+		onSelect(id);
+		links[i]?.focus();
+	}
 
 	function key(e: KeyboardEvent, i: number) {
 		const n = TABS.length;
@@ -41,22 +50,23 @@
 		if (to < 0) return;
 		e.preventDefault();
 		onSelect(TABS[to].id);
-		buttons[to]?.focus();
+		links[to]?.focus();
 	}
 </script>
 
 <div class="tabs" role="tablist" aria-label="Browse the library">
 	{#each TABS as tab, i (tab.id)}
-		<button
-			bind:this={buttons[i]}
-			type="button"
+		<!-- A real link, so a tap works before the page is interactive. -->
+		<a
+			bind:this={links[i]}
+			href="{resolve('/library')}{tab.id === 'recent' ? '' : `?tab=${tab.id}`}"
 			role="tab"
 			id="tab-{tab.id}"
 			aria-selected={current === tab.id}
 			aria-controls="panel-{tab.id}"
 			tabindex={current === tab.id ? 0 : -1}
-			onclick={() => onSelect(tab.id)}
-			onkeydown={(e) => key(e, i)}>{tab.label}</button
+			onclick={(e) => click(e, tab.id, i)}
+			onkeydown={(e) => key(e, i)}>{tab.label}</a
 		>
 	{/each}
 </div>
@@ -73,7 +83,9 @@
 		overflow-x: auto;
 		scrollbar-width: none;
 	}
-	button {
+	a {
+		display: inline-block;
+		text-decoration: none;
 		padding: 0.7rem 0;
 		border: 0;
 		border-bottom: 0.125rem solid transparent;
@@ -83,12 +95,11 @@
 		font-weight: var(--r-weight-strong);
 		color: var(--r-text-muted);
 		white-space: nowrap;
-		cursor: pointer;
 	}
-	button:hover {
+	a:hover {
 		color: var(--r-ink);
 	}
-	button[aria-selected='true'] {
+	a[aria-selected='true'] {
 		color: var(--r-ink);
 		border-color: var(--r-accent);
 	}

@@ -374,3 +374,11 @@
 - **For the finish review (T066):** Library tabs ignore a tap made before the page becomes interactive. One test failed intermittently because of this, so it now waits. The product behaviour is unchanged.
 - **Limits:** the matrix excludes the book's own text inside foliate's frame. Genre shelves need saved genres, so they are covered by `genres.spec.ts` and the catalogue instead.
 
+## 2026-11-23: Spec 002 T066: finish review, first fixes (in progress)
+
+- **Fixed from the review:** real Middlemarch places (Chapter 40 at 47%, Kobo at Chapter 41, 49%), a 570 px reader column, epigraph styling, the Home news block, heading sizes, Author and Book phone layouts, and Library tabs as real links.
+- **Not changed:** Middlemarch still shows no More like this, because it has no close match in the sample and inventing one would make the reason untrue.
+- **Also:** Playwright now writes to its own folder, because each run was deleting `design:compare` captures.
+- **Checked:** 38 browser tests for Home, Library, reader, Read next and genres before the last reader change, then the 12 reader tests after it, plus unit tests and typecheck.
+- **Still open from the reviewer's second pass:** saved mid-chapter resume under the top bar, the chapter heading size, a populated More like this capture, and a test for a tab tap before the page is interactive. T066 stays open until these are done and the owner signs off.
+

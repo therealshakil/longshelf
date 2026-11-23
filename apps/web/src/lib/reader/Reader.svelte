@@ -8,6 +8,7 @@
 	import { chapterText, flattenToc, type Chapter, type FoliateBook } from './chapters.ts';
 	import type { FoliateLocation, FoliateView, ReaderApi } from './foliate.d.ts';
 	import { bookCss, readColours } from './reader-styles.ts';
+	import { measurePx } from './settings.ts';
 	import type { ReaderSettings } from './settings.ts';
 
 	let {
@@ -15,6 +16,7 @@
 		settings,
 		themeKey,
 		startCfi,
+		startHref,
 		startFraction,
 		onReady,
 		onRelocate,
@@ -28,6 +30,7 @@
 		/** Changes when the theme changes, so colours are re-read. */
 		themeKey: string;
 		startCfi?: string;
+		startHref?: string;
 		startFraction?: number;
 		onReady?: (api: ReaderApi) => void;
 		onRelocate?: (loc: FoliateLocation) => void;
@@ -67,7 +70,8 @@
 		if (!view?.renderer) return;
 		view.renderer.setStyles(bookCss(settings, readColours(), location.origin));
 		view.renderer.setAttribute('flow', settings.page === 'pages' ? 'paginated' : 'scrolled');
-		view.renderer.setAttribute('max-inline-size', '720px');
+		const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+		view.renderer.setAttribute('max-inline-size', `${measurePx(settings, rootPx)}px`);
 		view.renderer.setAttribute('gap', '6%');
 	}
 
@@ -121,6 +125,7 @@
 				flatToc = flattenToc(view.book.toc ?? []);
 				applyStyles();
 				if (startCfi) await view.init({ lastLocation: startCfi });
+				else if (startHref && view.book.resolveHref?.(startHref)) await view.goTo(startHref);
 				else if (startFraction) await view.goToFraction(startFraction);
 				else await view.init({ showTextStart: true });
 				onReady?.({

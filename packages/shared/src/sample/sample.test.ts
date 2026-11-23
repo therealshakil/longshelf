@@ -18,7 +18,7 @@ describe('SampleLibrary (FR-007)', () => {
 
 	it('keeps the Kobo position alongside this device', async () => {
 		const current = await lib.current();
-		expect(current?.positions.find((p) => p.source === 'kobo')?.percent).toBe(41);
+		expect(current?.positions.find((p) => p.source === 'kobo')?.percent).toBe(49);
 	});
 
 	it('never lists periodicals in Recently added', async () => {

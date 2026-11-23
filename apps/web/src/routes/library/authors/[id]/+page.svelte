@@ -52,7 +52,7 @@
 				</figcaption>
 			</figure>
 		{/if}
-		<div>
+		<div class="intro">
 			<h1>{a.name}</h1>
 			{#if a.lifeDates}<p class="life">{a.lifeDates}</p>{/if}
 			{#if a.bio}
@@ -85,7 +85,10 @@
 					<span class="y">{w.year ?? '—'}</span>
 					{#if mine}
 						<a class="t" href={resolve('/book/[id]', { id: mine.book.id })}>{w.title}</a>
-						<span class="s" class:active={mine.status.kind === 'in-progress'}
+						<span
+							class="s"
+							class:active={mine.status.kind === 'in-progress'}
+							class:done={mine.status.kind === 'finished'}
 							>{statusLabel(mine.status) ?? 'In your library'}</span
 						>
 					{:else}
@@ -164,8 +167,8 @@
 		margin-top: 0.5rem;
 	}
 	h1 {
-		font-size: var(--r-text-display);
-		line-height: var(--r-leading-display);
+		font-size: var(--r-text-page);
+		line-height: 1.1;
 		font-weight: var(--r-weight-title);
 	}
 	.life {
@@ -247,6 +250,9 @@
 		color: var(--r-accent);
 		font-weight: var(--r-weight-strong);
 	}
+	.s.done {
+		color: var(--r-text);
+	}
 	.more {
 		display: flex;
 		align-items: center;
@@ -298,16 +304,22 @@
 		color: var(--r-text-muted);
 	}
 	@media (max-width: 40rem) {
-		.top,
-		.top.no-portrait {
-			grid-template-columns: minmax(0, 1fr);
+		.top {
+			grid-template-columns: 7rem minmax(0, 1fr);
 			gap: 1.25rem;
 		}
-		figure {
-			max-inline-size: 9rem;
+		.top.no-portrait {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.bio {
+			font-size: 1.0625rem;
 		}
 		h1 {
-			font-size: var(--r-text-2xl);
+			font-size: var(--r-text-heading);
+		}
+		.grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1.25rem 0.9rem;
 		}
 	}
 </style>

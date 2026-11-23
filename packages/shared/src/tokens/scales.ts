@@ -60,6 +60,20 @@ export const type: Token[] = [
 		sources: [assume('Scale steps of about 1.25× give clear hierarchy without shouting.')]
 	},
 	{
+		name: 'text-page',
+		group: 'type',
+		value: '2.25rem',
+		rationale: 'The title of a Library, author or shelf page.',
+		sources: [S.approvedMocks]
+	},
+	{
+		name: 'text-heading',
+		group: 'type',
+		value: '1.75rem',
+		rationale: 'Section titles on Home, such as Read next.',
+		sources: [S.approvedMocks]
+	},
+	{
 		name: 'text-xs',
 		group: 'type',
 		value: '0.8125rem',

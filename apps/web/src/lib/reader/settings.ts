@@ -68,7 +68,12 @@ export function saveSettings(s: ReaderSettings): void {
 }
 
 /** Measure (characters per line) for each margin setting. */
-export const MEASURE: Record<Margins, string> = { narrow: '75ch', medium: '65ch', wide: '55ch' };
+/** In `em`, so the line stays about 60 characters at every text size. */
+export const MEASURE: Record<Margins, number> = { narrow: 33, medium: 28.5, wide: 24.5 };
+
+/** The text column in pixels, for the renderer, which sets its own column width. */
+export const measurePx = (s: Pick<ReaderSettings, 'size' | 'margins'>, rootPx = 16) =>
+	Math.round(MEASURE[s.margins] * SIZES[s.size] * rootPx);
 export const LEADING: Record<Spacing, number> = { tight: 1.5, normal: 1.7, loose: 1.9 };
 
 /** Saved place per book on this device. */

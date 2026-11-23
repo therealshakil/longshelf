@@ -134,13 +134,15 @@
 		min-width: 0;
 	}
 	.home {
-		padding: 2rem 0 2.5rem;
-		border-bottom: 1px solid var(--r-border);
+		padding-top: 2rem;
 	}
 	h2 {
 		font-size: var(--r-text-xl);
 		font-weight: var(--r-weight-title);
 		margin-bottom: 1rem;
+	}
+	.home h2 {
+		font-size: var(--r-text-heading);
 	}
 	.book h2 {
 		margin-top: 2.5rem;

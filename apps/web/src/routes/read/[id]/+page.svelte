@@ -8,6 +8,7 @@
 	import { resolve } from '$app/paths';
 	import Reader from '#lib/reader/Reader.svelte';
 	import type { FoliateLocation, ReaderApi } from '#lib/reader/foliate.d.ts';
+	import { placeLabel } from '#lib/reader/chapters.ts';
 	import { loadPlace, loadSettings, savePlace, saveSettings } from '#lib/reader/settings.ts';
 	import ReaderChrome from '#lib/components/ReaderChrome.svelte';
 	import KoboNotice from '#lib/components/KoboNotice.svelte';
@@ -75,7 +76,9 @@
 			? { device: deviceName(positions.other.source), percent: positions.other.percent }
 			: undefined
 	);
-	const chapterLabel = $derived(loc?.tocItem?.label ?? positions.here?.chapterLabel ?? '');
+	const chapterLabel = $derived(
+		loc?.tocItem ? placeLabel(api?.toc ?? [], loc.tocItem) : (positions.here?.chapterLabel ?? '')
+	);
 	const showNotice = $derived(!!other && !noticeDismissed && other.percent > percent);
 
 	$effect(() => saveSettings($state.snapshot(settings)));
@@ -119,6 +122,16 @@
 		} else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
 			e.preventDefault();
 			reader?.prev();
+		}
+	}
+
+	/** Go to the other device's chapter, or its percentage if that link isn't in this book. */
+	async function goToOther() {
+		if (!positions.other) return;
+		try {
+			await api?.goTo(positions.other.href);
+		} catch {
+			await api?.goToFraction(positions.other.percent / 100);
 		}
 	}
 
@@ -166,7 +179,7 @@
 					chapter={positions.other.chapterLabel}
 					percent={other.percent}
 					onGo={() => {
-						api?.goToFraction(other.percent / 100);
+						void goToOther();
 						noticeDismissed = true;
 					}}
 					onStay={() => (noticeDismissed = true)}
@@ -191,6 +204,7 @@
 				{settings}
 				{themeKey}
 				startCfi={saved?.cfi}
+				startHref={saved ? undefined : positions.here?.href}
 				startFraction={saved ? undefined : (positions.here?.percent ?? 0) / 100}
 				onReady={(a) => (api = a)}
 				{onRelocate}

@@ -29,12 +29,12 @@
 		{/if}
 	</a>
 	<a {href} class="title">{book.title}</a>
-	<span class="text-sm text-text-muted">{author}</span>
+	<span class="{size === 'sm' ? 'text-xs' : 'text-sm'} text-text-muted">{author}</span>
 	{#if label}
 		<span class="status" class:status-done={status?.kind === 'finished'}>{label}</span>
 	{/if}
 	{#if reason}
-		<span class="mt-1 text-sm text-accent">{reason}</span>
+		<span class="mt-1 {size === 'sm' ? 'text-xs' : 'text-sm'} text-accent">{reason}</span>
 	{/if}
 </div>
 

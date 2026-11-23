@@ -18,6 +18,8 @@ const port = Number(process.env.E2E_PORT);
 
 export default defineConfig({
 	testDir: 'tests/e2e',
+	// Playwright empties this folder on each run, so it must not hold design-compare captures.
+	outputDir: 'test-results/playwright',
 	projects: [
 		{
 			name: 'main',

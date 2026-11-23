@@ -9,8 +9,8 @@ test.describe('Home', () => {
 		await page.goto('/');
 		const current = page.getByRole('article', { name: 'Middlemarch' });
 		await expect(current).toBeVisible();
-		await expect(current.getByText('38%')).toBeVisible();
-		await expect(current.getByText('Kobo is at 41%')).toBeVisible();
+		await expect(current.getByText('47%')).toBeVisible();
+		await expect(current.getByText('Kobo is at 49%')).toBeVisible();
 		await current.getByRole('link', { name: /Continue reading/ }).click();
 		await expect(page).toHaveURL(/\/read\/george-eliot_middlemarch$/);
 	});
@@ -37,7 +37,8 @@ test.describe('Home', () => {
 			'Middlemarch',
 			'Also reading',
 			'Browse the library',
-			'Latest news & magazines'
+			'Latest news & magazines',
+			'All news & magazines'
 		]);
 	});
 

@@ -138,16 +138,21 @@ interface Progress {
 	/** Hours since last read on this device. */
 	hoursAgo: number;
 	kobo?: number;
+	koboChapter?: string;
+	koboHref?: string;
 }
 
 const IN_PROGRESS: Progress[] = [
 	{
 		slug: 'george-eliot_middlemarch',
-		percent: 38,
+		// Real places in the sample EPUB, so every screen agrees.
+		percent: 47,
 		chapter: 'Book IV, Chapter 40',
-		href: 'chapter-40',
+		href: 'OEBPS/3952173561683538746_145-h-41.htm.xhtml#pgepubid00048',
 		hoursAgo: 13,
-		kobo: 41
+		kobo: 49,
+		koboChapter: 'Book IV, Chapter 41',
+		koboHref: 'OEBPS/3952173561683538746_145-h-42.htm.xhtml#pgepubid00049'
 	},
 	{
 		slug: 'leo-tolstoy_anna-karenina_constance-garnett',
@@ -257,11 +262,11 @@ export function createSampleLibrary(opts: SampleOptions = {}): LibrarySource {
 				bookId: p.slug,
 				source: 'kobo',
 				percent: p.kobo,
-				chapterLabel: p.chapter,
-				href: p.href,
+				chapterLabel: p.koboChapter ?? p.chapter,
+				href: p.koboHref ?? p.href,
 				fraction: 0.6,
 				readAt: new Date(now.getTime() - (p.hoursAgo + 20) * HOUR).toISOString(),
-				furthestHref: p.href,
+				furthestHref: p.koboHref ?? p.href,
 				furthestPercent: p.kobo
 			});
 		positions.set(p.slug, list);

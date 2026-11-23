@@ -98,16 +98,20 @@
 		</section>
 	{/if}
 
-	<ReadNextShelf title="Read next" items={data.readNext} url="/api/ai/read-next" />
-
-	<a class="more" href={resolve('/library')}
-		>Browse the library <ArrowRight class="size-4" aria-hidden="true" /></a
-	>
+	<div class="next">
+		<ReadNextShelf title="Read next" items={data.readNext} url="/api/ai/read-next" />
+		<a class="more" href={resolve('/library')}
+			>Browse the library <ArrowRight class="size-4" aria-hidden="true" /></a
+		>
+	</div>
 
 	{#if data.periodicals.length}
 		<section class="latest" aria-labelledby="latest-h">
 			<h2 id="latest-h" class="section-h">Latest news &amp; magazines</h2>
 			<PeriodicalRow issues={data.periodicals} label="Latest issues" />
+			<a class="more" href="{resolve('/library')}?tab=news"
+				>All news &amp; magazines <ArrowRight class="size-4" aria-hidden="true" /></a
+			>
 		</section>
 	{/if}
 </main>
@@ -145,6 +149,10 @@
 		margin: 0;
 		padding: 0;
 	}
+	.next {
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid var(--r-border);
+	}
 	.more {
 		display: inline-flex;
 		align-items: center;
@@ -161,7 +169,7 @@
 		min-width: 0;
 	}
 	.section-h {
-		font-size: var(--r-text-xl);
+		font-size: var(--r-text-heading);
 		font-weight: var(--r-weight-title);
 		margin-bottom: 1rem;
 	}

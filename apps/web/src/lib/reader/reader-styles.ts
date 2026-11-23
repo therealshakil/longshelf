@@ -48,7 +48,7 @@ body {
 	font-family: ${family} !important;
 	font-size: ${SIZES[s.size]}rem !important;
 	line-height: ${LEADING[s.spacing]} !important;
-	max-width: ${MEASURE[s.margins]} !important;
+	max-width: ${MEASURE[s.margins]}em !important;
 	margin-inline: auto !important;
 	color: ${c.text} !important;
 	background: transparent !important;
@@ -62,6 +62,8 @@ p { margin: 0 !important; text-indent: 1.4em; text-align: start !important; }
 h1 + p, h2 + p, h3 + p, h4 + p, blockquote + p, hr + p, p:first-child { text-indent: 0; }
 h1, h2, h3, h4 { font-family: 'Literata', Georgia, serif; color: ${c.ink} !important; font-weight: 500; line-height: 1.15; text-align: center; margin: 1.5em 0 1em; text-indent: 0; }
 blockquote { font-size: 0.85em; font-style: italic; color: ${c.muted} !important; margin: 1em auto 2em; width: fit-content; }
+p.poem { font-size: 0.85em; font-style: italic; color: ${c.muted} !important; width: fit-content; margin: 1em auto 2em !important; text-indent: 0; }
+.poem + p { text-indent: 0; }
 a { color: ${c.accent} !important; }
 img { max-width: 100%; height: auto; }
 ::selection { background: ${c.accent}; color: ${c.bg}; }

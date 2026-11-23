@@ -86,8 +86,8 @@
 		margin-bottom: 2rem;
 	}
 	h1 {
-		font-size: var(--r-text-display);
-		line-height: var(--r-leading-display);
+		font-size: var(--r-text-page);
+		line-height: 1.1;
 		font-weight: var(--r-weight-title);
 	}
 	.meta {

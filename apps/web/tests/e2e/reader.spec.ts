@@ -13,7 +13,7 @@ async function openBook(page: Page, path = MIDDLEMARCH) {
 				for (const f of page.frames())
 					if (
 						f !== page.mainFrame() &&
-						(await f.evaluate(() => document.body?.innerText.length ?? 0)) > 200
+						(await f.evaluate(() => document.body?.innerText.length ?? 0).catch(() => 0)) > 200
 					)
 						return true;
 				return false;

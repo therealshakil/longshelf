@@ -60,7 +60,7 @@
 		aspect-ratio: 2 / 3;
 		padding: 0.75rem 0.6rem;
 		border-radius: var(--r-radius-cover);
-		background: var(--r-surface);
+		background: color-mix(in oklab, var(--r-bg), var(--r-ink) 9%);
 		box-shadow: var(--r-shadow-tile);
 		color: var(--r-ink);
 	}

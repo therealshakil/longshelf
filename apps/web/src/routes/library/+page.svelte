@@ -128,7 +128,8 @@
 		margin-bottom: 1rem;
 	}
 	h1 {
-		font-size: var(--r-text-2xl);
+		font-size: var(--r-text-page);
+		line-height: 1.1;
 		font-weight: var(--r-weight-title);
 	}
 	.group-h {
