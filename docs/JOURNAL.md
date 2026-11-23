@@ -316,3 +316,10 @@
 - **Checked:** 5 shelf browser tests run twice on a production build, Home and AI-off browser tests on the dev server, typecheck, ESLint, Prettier on changed code, the Impeccable detector, and screenshots at desktop, phone and dark.
 - **Not checked:** the full e2e suite, or a deployed Worker.
 - **Test fix:** the AI-off browser tests switch AI off for the shared local database, which made two Read next tests fail when run alongside them. They now run alone, after the other browser tests. The shelf, Home and AI-off tests then passed, 15 of 15, on a production build.
+
+## 2026-11-23: Spec 002 T058: genre suggestion job
+
+- **Built:** `POST /api/ai/jobs/genres`. It suggests 1 to 3 genres per book from a fixed list of 41, inside the spend guard, up to 60 books per run. Run it again while `remaining` is above 0.
+- **Rules:** removed genres never come back, Calibre tags aren't repeated, promoted genres are kept, and checked books aren't paid for twice. Nothing is written to Calibre.
+- **Real model check:** 20 public-domain sample books with Gemma cost about 12.5 estimated neurons. Results went to an in-memory database. Most labels looked right, but *Mrs. Dalloway* was wrongly labelled Drama.
+- **Not checked:** quality on the owner's real library, or the full e2e suite. Genres aren't visible until T059 and T060.

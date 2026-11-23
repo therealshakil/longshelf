@@ -26,7 +26,7 @@ const ENTITIES: Record<string, string> = {
 };
 
 /** Calibre descriptions are often HTML. */
-const plainText = (html: string) =>
+export const plainText = (html: string) =>
 	html
 		.replace(/<[^>]*>/g, ' ')
 		.replace(/&(amp|lt|gt|quot|apos|nbsp);/g, (_, e: string) => ENTITIES[e])

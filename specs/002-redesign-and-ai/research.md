@@ -175,6 +175,17 @@ CLI (spec 003) applies them with `calibredb set_custom` on a multi-value "Genres
 creates once with `calibredb add_custom_column`. Until 003, the UI shows "Waiting for sync"
 and nothing touches Calibre.
 
+**Genre suggestions (T058, 2026-11-23):**
+- **Options:** free-form labels from the model; a large published scheme such as BISAC or Thema;
+  or a short fixed list.
+- **Decision:** a fixed list of 41 plain genres. It keeps shelves from splitting over spellings,
+  and a book's description can't introduce a label because replies are filtered to the list.
+- **Strongest counter-argument:** a fixed list loses precise subjects. Accepted for now: this is a
+  browse route for about 700 books, and BISAC or Thema would add thousands of codes to maintain.
+- **Measured:** 20 public-domain sample books took one batch job and about 12.5 estimated neurons,
+  which implies about 440 for 700 books. Most labels looked right. *Mrs. Dalloway* was wrongly
+  given Drama, so the owner's Promote and Remove step still matters.
+
 **Source:** Calibre `calibredb` manual,
 https://manual.calibre-ebook.com/generated/en/calibredb.html. Ribbon principle 2 (CLAUDE.md):
 writes go through `calibredb`.

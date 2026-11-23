@@ -34,6 +34,9 @@ genre_suggestion(book_id, genre, state, model, created_at, state_at,
 chapter_summary(book_id, href, chapter_label, ordinal, summary, model, created_at,
                 PRIMARY KEY (book_id, href))
 
+-- Books the genre job has checked, so a rerun doesn't pay for them again
+genre_checked(book_id PRIMARY KEY, model, checked_at)
+
 -- Last recap per book, keyed by the cut-off it was built to
 recap(book_id, upto_href, upto_percent, text, model, created_at, PRIMARY KEY (book_id))
 

@@ -85,6 +85,23 @@ export const GenreJobSchema = z.object({
 	bookIds: z.array(z.string().min(1)).optional()
 });
 
+export const GenreJobResultSchema = z.object({
+	/** Books this run was asked to cover. */
+	total: z.number().int().nonnegative(),
+	checked: z.number().int().nonnegative(),
+	/** New genre suggestions saved. */
+	added: z.number().int().nonnegative(),
+	/** Books still to check: run the job again to continue. */
+	remaining: z.number().int().nonnegative(),
+	stopped: z.enum(['ai_paused', 'ai_off', 'offline']).optional()
+});
+export type GenreJobResult = z.infer<typeof GenreJobResultSchema>;
+
+/** What the genre model must return. Its text is untrusted until it passes this. */
+export const GenreModelOutputSchema = z.object({
+	books: z.array(z.object({ n: z.number().int().positive(), genres: z.array(z.string()) }))
+});
+
 export const EmbeddingJobResultSchema = z.object({
 	total: z.number().int().nonnegative(),
 	embedded: z.number().int().nonnegative(),
