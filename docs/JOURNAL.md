@@ -345,3 +345,9 @@
 - **Changed:** the header now says "Search your library", so it doesn't promise a feature that is parked. The search page is still a placeholder.
 - **Compared free fuzzy search:** PostgreSQL, SQLite FTS5 in D1, and MiniSearch in the browser, using the owner's metadata locally. Nothing was sent to a service, and no dependency was added to the project. Results are in research R6.
 
+## 2026-11-23: MiniSearch feasibility check
+
+- **Result:** MiniSearch suits Ribbon's library size, including on the owner's iPad. Details and limits are in research R6.
+- **Not done:** no dependency was added and search is still parked until the owner approves it.
+- **Not tested:** other Apple devices, Firefox results, or iPad service worker and persistent storage, which need HTTPS.
+

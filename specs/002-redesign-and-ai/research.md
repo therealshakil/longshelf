@@ -167,6 +167,26 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
 - **Leaning:** MiniSearch, because the design already keeps the whole catalogue in the browser.
   Adding it needs the owner's approval.
 
+**MiniSearch check (2026-11-23):**
+- **Project:** MIT, no dependencies, about 5.8 KB gzipped, 6.2k GitHub stars, not archived. The last
+  release, 7.2.0, was on 2025-09-16, so it is mature but quiet
+  (https://github.com/lucaong/minisearch).
+- **Owner's iPad (Safari 26.3, 810×1080, synthetic public-domain test data):** with descriptions,
+  700 books built in 118 ms and 5,000 in 737 ms (8 MB). Searches took at most 3 ms at 700 and 14 ms
+  at 5,000. IndexedDB saved and read every index.
+- **Chrome with 6× CPU slowdown, grown from 631 real records:** titles, authors and tags stayed
+  usable at 5,000 books (1.5 s build, 93 ms 95th-percentile search). With descriptions, 5,000
+  books took 27 s to build and up to 5.9 s for a search.
+- **Chrome at full laptop speed, 20,000 books:** titles, authors and tags built in 1.1 s using
+  about 23 MB. With descriptions it took 19 s, 47 MB of JSON and about 340 MB of memory.
+- **Conclusion:** suitable for this library. Index titles, authors and tags everywhere first. Add
+  descriptions only while the library stays below about 2,000 books.
+- **iOS storage:** Safari can delete script-writable storage after seven days of browser use without
+  a visit, but Home Screen web apps are exempt (https://webkit.org/tracking-prevention/). Treat the
+  saved index as a cache that can be rebuilt.
+- **Not tested:** other iPads or iPhones, Firefox results, and service worker or persistent storage
+  on the iPad, because they need HTTPS and the test page used plain HTTP.
+
 **Update from a real-library check (2026-11-21, owner approved, metadata only):**
 - "Like X" needs a cosine of at least 0.62, the 99th percentile of random book pairs. The first
   value, 0.5, was about the level of two random books.
