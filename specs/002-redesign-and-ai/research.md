@@ -164,7 +164,7 @@ spoiler-safe). Pre-written recaps per percentage (wasteful).
     uses no Worker CPU. It found 10 of 10, with a median search of about 2 ms on the dev laptop.
     Indexing descriptions took about 650 ms and 970 KB, so it would need to run in the background
     or index less.
-- **Decision:** MiniSearch in the browser, approved by the owner (DR-0006).
+- **Decision:** MiniSearch in the browser, approved by the owner (DR-0008).
 
 **MiniSearch check (2026-11-23):**
 - **Project:** MIT, no dependencies, about 5.8 KB gzipped, 6.2k GitHub stars, not archived. The last

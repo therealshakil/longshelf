@@ -76,6 +76,7 @@
 		line-height: var(--r-leading-display);
 		font-weight: var(--r-weight-title);
 		letter-spacing: -0.015em;
+		overflow-wrap: anywhere;
 	}
 	.title a {
 		color: inherit;
@@ -162,6 +163,20 @@
 		.go {
 			align-self: stretch;
 			justify-content: center;
+		}
+	}
+	/* The narrowest phones: a smaller cover and title keep long words whole. */
+	@media (max-width: 22rem) {
+		.current {
+			grid-template-columns: 5rem minmax(0, 1fr);
+			gap: 1rem;
+		}
+		.title {
+			font-size: var(--r-text-xl);
+		}
+		.go {
+			padding-inline: 0.75rem;
+			white-space: nowrap;
 		}
 	}
 </style>

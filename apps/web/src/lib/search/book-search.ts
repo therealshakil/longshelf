@@ -1,5 +1,5 @@
 /**
- * Plain library search in the browser (DR-0006). It tolerates typos, costs no Worker CPU and works
+ * Plain library search in the browser (DR-0008). It tolerates typos, costs no Worker CPU and works
  * offline. Titles, authors and tags only: descriptions make the index far heavier on a phone.
  */
 import MiniSearch from 'minisearch';

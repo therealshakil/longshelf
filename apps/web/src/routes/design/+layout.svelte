@@ -57,7 +57,7 @@
 <div class="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-8 md:flex-row md:px-8">
 	<nav aria-label="Design catalogue" class="md:w-64 md:shrink-0">
 		<p class="mb-6">
-			<a href={resolve('/')} class="text-text-muted">Ribbon</a>
+			<a href={resolve('/')} class="text-text-muted">Longshelf</a>
 			<span class="text-text-muted"> / </span>
 			<span class="font-strong">Design</span>
 		</p>

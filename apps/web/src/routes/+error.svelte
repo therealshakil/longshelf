@@ -9,13 +9,13 @@
 		missing
 			? page.error?.message && page.error.message !== 'Not Found'
 				? page.error.message
-				: 'That page isn’t in Ribbon.'
-			: 'Ribbon couldn’t open this page.'
+				: 'That page isn’t in Longshelf.'
+			: 'Longshelf couldn’t open this page.'
 	);
 </script>
 
 <svelte:head>
-	<title>{missing ? 'Not found' : 'Something went wrong'} · Ribbon</title>
+	<title>{missing ? 'Not found' : 'Something went wrong'} · Longshelf</title>
 </svelte:head>
 
 <main class="page">

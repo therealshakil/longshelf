@@ -2,7 +2,7 @@ import { bookSearch } from '#lib/search/book-search.ts';
 import { library } from '#lib/library/index.ts';
 import type { PageLoad } from './$types';
 
-// Search runs in the browser, so it works offline and uses no Worker CPU (DR-0006).
+// Search runs in the browser, so it works offline and uses no Worker CPU (DR-0008).
 export const ssr = false;
 
 export const load: PageLoad = async ({ url }) => {

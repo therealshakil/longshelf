@@ -353,7 +353,7 @@
 
 ## 2026-11-23: Plain library search
 
-- **Owner decision:** use MiniSearch in the browser (DR-0006). This is the one new dependency.
+- **Owner decision:** use MiniSearch in the browser (DR-0008). This is the one new dependency.
 - **Built:** the `/search` page from the owner's edited design: one list with cover, title, author and which details matched, plus a no-results state. It searches titles, authors and tags and tolerates typos.
 - **Changed from the draft:** the no-results hint no longer suggests "a few words about the book", because descriptions aren't searched.
 - **Checked:** 7 unit tests, 15 browser tests on a production build including axe in light and dark at phone and desktop sizes, typecheck, ESLint, the Impeccable detector, and screenshots.
@@ -381,4 +381,32 @@
 - **Also:** Playwright now writes to its own folder, because each run was deleting `design:compare` captures.
 - **Checked:** 38 browser tests for Home, Library, reader, Read next and genres before the last reader change, then the 12 reader tests after it, plus unit tests and typecheck.
 - **Still open from the reviewer's second pass:** saved mid-chapter resume under the top bar, the chapter heading size, a populated More like this capture, and a test for a tab tap before the page is interactive. T066 stays open until these are done and the owner signs off.
+
+## 2026-11-23: Product name is Longshelf
+
+- **Owner decision:** the product will be called Longshelf. Reasons and alternatives are in DR-0006.
+- **Domains:** the owner registered `longshelf.app` for the hosted version and `longshelf.org` for the open-source project. Both sites will be specified separately.
+- **Not done:** internal names (packages, database, CLI, repo) still say Ribbon.
+- **Not checked:** official trademark registers. This must happen before a public launch.
+
+## 2026-11-23: Longshelf logo and visible name
+
+- **Built:** the Bookend logo (DR-0007), favicon, app and maskable icons, web manifest, theme colours, and the logo in the header. Visible text and page titles now say Longshelf.
+- **Header:** tighter spacing on phones, and the logo alone on the narrowest screens, so the longer name fits.
+- **Checked:** typecheck, formatting, ESLint, the catalogue test, all icon URLs on a production build, nested-route icon paths, and the header at 320 to 430px wide, light and dark.
+- **Known failures:** the token-only test fails on `ReadNextShelf.svelte` and the author page, from styles this change did not touch. The home page also scrolls sideways at 320px because of its content below the header.
+- **Not checked:** the full e2e suite, or installing the app on a real device.
+
+## 2026-11-23: Token and narrow-phone fixes
+
+- **Fixed:** Read next and the author page now use design tokens for shadows, focus rings and borders. The author page's animated arrow now changes instantly, as the design requires.
+- **Fixed:** long book titles no longer make the home page scroll sideways at 320px. The narrowest phones get a smaller cover and title.
+- **Checked:** all 192 unit tests, typecheck, formatting, ESLint on the changed files, and no sideways scroll at 320px on home, library, search, AI settings, book, author and shelf pages.
+- **Not checked:** the full e2e suite, or a real device.
+
+## 2026-11-23: Merged the Longshelf branch
+
+- **Merged:** `redesign-impeccable-wt`, with the Longshelf name, Bookend logo, app icons and token fixes, into `redesign-impeccable`.
+- **Resolved:** the search page keeps plain search with the Longshelf title, and both journals are kept. Two decisions had claimed DR-0006, so plain search is now DR-0008.
+- **Still named Ribbon:** the repository, packages and internal identifiers, because DR-0006 makes the codebase rename a separate step.
 

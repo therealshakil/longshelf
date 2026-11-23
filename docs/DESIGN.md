@@ -53,7 +53,7 @@ v1 is layers 0 and 1. Column names are configuration, so the core contains no Ko
 
 ## Cloud
 - One Worker: SvelteKit with `@sveltejs/adapter-cloudflare` (Workers static assets). UI and API deploy together.
-- D1: metadata, progress, highlights. Plain SQL; `wrangler d1 migrations`. Search runs in the browser with MiniSearch (DR-0006).
+- D1: metadata, progress, highlights. Plain SQL; `wrangler d1 migrations`. Search runs in the browser with MiniSearch (DR-0008).
 - R2: files keyed by SHA-256, served immutable with Range support. Cover thumbnails via Cloudflare Image
   Transformations.
 - Auth: Cloudflare Access in front of everything, long session (about 30 days) for the offline PWA.

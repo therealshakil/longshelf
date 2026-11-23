@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head>
-	<title>Library · Ribbon</title>
+	<title>Library · Longshelf</title>
 </svelte:head>
 
 <main class="lib">
@@ -72,12 +72,12 @@
 				{:else}
 					<EmptyState
 						title={data.ai
-							? 'No genres yet. They appear here once Ribbon has suggested some.'
+							? 'No genres yet. They appear here once Longshelf has suggested some.'
 							: 'No genres yet. Suggested genres appear here once AI features are switched on.'}
 					/>
 				{/if}
 				<p class="note">
-					Genres are suggested by AI and stay in Ribbon until you promote them to Calibre.
+					Genres are suggested by AI and stay in Longshelf until you promote them to Calibre.
 				</p>
 			{:else if id === 'collections'}
 				<ul class="colls">
@@ -89,7 +89,7 @@
 						<span class="text-sm text-text-muted">{data.noCollection} books</span>
 					</li>
 				</ul>
-				<p class="note">From Calibre’s Collection column. Ribbon never changes them.</p>
+				<p class="note">From Calibre’s Collection column. Longshelf never changes them.</p>
 			{:else if id === 'news'}
 				{#each data.periodicals as p (p.publication)}
 					<section class="pub" aria-labelledby="pub-{p.issues[0]?.id}">

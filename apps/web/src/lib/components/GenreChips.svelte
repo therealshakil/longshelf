@@ -120,7 +120,7 @@
 </p>
 {#if anySuggested}
 	<p class="note">
-		Outlined genres are suggested by AI and stay in Ribbon until you promote them to Calibre.
+		Outlined genres are suggested by AI and stay in Longshelf until you promote them to Calibre.
 	</p>
 {/if}
 

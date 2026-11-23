@@ -1,4 +1,4 @@
-# DR-0006: Plain library search in the browser
+# DR-0008: Plain library search in the browser
 
 Status: **accepted** (owner, 2026-11-23).
 Supersedes: the FTS5 search table in `docs/DESIGN.md`. Spec 002 FR-013 (plain-language search) stays parked.

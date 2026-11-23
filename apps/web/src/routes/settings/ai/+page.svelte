@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-	<title>AI settings · Ribbon</title>
+	<title>AI settings · Longshelf</title>
 </svelte:head>
 
 <main class="mx-auto flex max-w-[40rem] flex-col gap-6 py-8">
@@ -47,7 +47,7 @@
 	{#if failed}
 		<ErrorState
 			what="AI settings aren’t available here."
-			lost="Nothing is lost. Ribbon works without AI; the AI parts stay hidden."
+			lost="Nothing is lost. Longshelf works without AI; the AI parts stay hidden."
 			next={{ label: 'Back to Home', href: resolve('/') }}
 		/>
 	{:else if usage}
@@ -79,7 +79,7 @@
 				{usage.today.calls === 1 ? 'request' : 'requests'}.
 			</p>
 			<p class="text-sm text-text-muted">
-				Cloudflare includes 10,000 units a day free. Ribbon stops at the limit above and starts
+				Cloudflare includes 10,000 units a day free. Longshelf stops at the limit above and starts
 				again the next day (UTC), so it costs nothing.
 			</p>
 		</section>

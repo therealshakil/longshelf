@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>{meta.title} · Ribbon design</title>
+	<title>{meta.title} · Longshelf design</title>
 </svelte:head>
 
 <article class="flex flex-col gap-12">

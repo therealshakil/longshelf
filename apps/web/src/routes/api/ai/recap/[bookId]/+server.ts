@@ -43,7 +43,7 @@ export const GET: RequestHandler = async ({ params, url }) => {
 		return json({
 			state: 'writing',
 			reason:
-				'No recap yet. Ribbon has no earlier chapters to work from, so one will be ready after your next chapter.'
+				'No recap yet. Longshelf has no earlier chapters to work from, so one will be ready after your next chapter.'
 		} satisfies Recap);
 
 	// The count matters: filling an earlier gap must rebuild a recap with the same last chapter.

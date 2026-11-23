@@ -12,13 +12,13 @@ const UNAVAILABLE: Record<string, string> = {
 	offline:
 		'Couldn’t write a recap right now. You’re offline, and recaps need a connection. It will be ready next time you open this book online.',
 	ai_paused:
-		'Couldn’t write a recap right now. Ribbon has reached today’s AI limit, and it starts again tomorrow.',
+		'Couldn’t write a recap right now. Longshelf has reached today’s AI limit, and it starts again tomorrow.',
 	on_demand_paused:
-		'Couldn’t write a recap right now. Ribbon has reached today’s limit for catching up on chapters, and it starts again tomorrow.',
+		'Couldn’t write a recap right now. Longshelf has reached today’s limit for catching up on chapters, and it starts again tomorrow.',
 	ai_off: 'AI features are switched off. You can switch them on in AI settings.'
 };
 const PAUSED_PARTWAY =
-	'This recap isn’t finished yet. Ribbon reached today’s AI limit while reading the earlier chapters. It keeps its place, so open Story so far tomorrow to finish.';
+	'This recap isn’t finished yet. Longshelf reached today’s AI limit while reading the earlier chapters. It keeps its place, so open Story so far tomorrow to finish.';
 
 /**
  * Summarise recent chapters missing before the owner's place (or all of them with `all`), then

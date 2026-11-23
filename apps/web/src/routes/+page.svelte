@@ -75,7 +75,7 @@
 </script>
 
 <svelte:head>
-	<title>Ribbon</title>
+	<title>Longshelf</title>
 </svelte:head>
 
 <main>

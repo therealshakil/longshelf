@@ -1,4 +1,4 @@
-<!-- Plain library search (DR-0006). Matches the owner's edited draft of the search design. -->
+<!-- Plain library search (DR-0008). Matches the owner's edited draft of the search design. -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.q ? `Results for “${data.q}”` : 'Search'} · Ribbon</title>
+	<title>{data.q ? `Results for “${data.q}”` : 'Search'} · Longshelf</title>
 </svelte:head>
 
 <main class="page">
