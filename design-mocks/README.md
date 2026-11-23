@@ -2,6 +2,8 @@
 
 Static HTML mocks for design review with Impeccable live mode. Not app code.
 
+**Status: approved reference (owner sign-off 2026-11-23).** The built app and `apps/web/DESIGN.md` are now the source of truth. The "Mock state" links are review controls, not product UI, and `pnpm design:compare` hides them. The mocks predate the Longshelf name.
+
 Serve from the repo root with `apps/web/node_modules/.bin/vite design-mocks --port 8411 --strictPort --host 127.0.0.1` and open http://127.0.0.1:8411/. Vite reloads the page when an HTML file changes and swaps `styles.css` in place.
 
 ## Sample data

@@ -428,3 +428,13 @@
 - **Checked:** token parity, references, section order and Prettier. No page changed.
 - **Left as known drift, not made into rules:** the uppercase "New" mark, the stock Sheet close button and shadow, two ⋯ menu styles, a few off-scale sizes and ink tints, the phone reader's default text size, and `PRODUCT.md` still saying Ribbon.
 
+## 2026-11-23: Spec 002 closing (T068, T069)
+
+- **Fixed:** slide-out panel close buttons now use the solid 3 px focus ring, checked in light and dark.
+- **Closed:** spec 001's unbuilt component tasks are marked superseded, `docs/PLAN.md` is updated, and `design-mocks/` is marked as the approved reference.
+- **Still open in spec 002:** T053 (Story so far quality) and T061 to T063 (AI search), both parked by the owner. FR-013 and SC-004 are not met.
+- **Efficacy:**
+  - **Time:** specified 2026-11-18, design signed off 2026-11-23, so 5 days. It is not deployed, so this is not idea-to-ship time.
+  - **Reworks:** the finish review raised 8 material findings, then 4 on its second pass. Ten were fixed or covered by tests, one was closed by the owner, and one (inventing Middlemarch matches) was declined. Earlier live-review rounds were not counted.
+  - **AI running cost:** recorded estimates total about 365 neurons, plus the T053 recap evaluation, which had a 6,000-per-day cap and no recorded total. Cloudflare's actual usage and bill were not checked. No production service is running yet.
+

@@ -159,26 +159,28 @@ reflects it. "Restore default appearance" resets everything after confirmation.
 
 ## Phase 6: User Story 4 - Components ready for later specs (P2)
 
+**Superseded by spec 002 (research R10), 2026-11-23.** T037–T050 will not be built here. Spec 002 built the components to the approved design, each with its catalogue page, and replaced T037's generated books with Standard Ebooks sample data.
+
 **Goal**: every component that specs 002–004 need, each with a catalogue page covering all its
 states.
 
 **Independent Test**: every component listed in FR-013 has a page with every state named below,
 and its 7 Checks are recorded.
 
-- [ ] T037 [US4] Create the realistic sample data in `apps/web/src/lib/sample/books.ts`: 700 generated books with varied title, author and series lengths, about 5% with no cover, a few with no author, and one very long title. Generate cover placeholders from tokens (title text on a muted panel), not image files.
-- [ ] T038 [P] [US4] Build `apps/web/src/lib/components/AppFrame.svelte` (header, primary navigation in a fixed order, a slot for sync status), with catalogue page `routes/design/app-frame/`.
-- [ ] T039 [P] [US4] Build `apps/web/src/lib/components/BookCard.svelte`, with states default, focused, downloaded, not downloaded, missing cover and long title. The cover area has a fixed aspect ratio so nothing shifts while it loads. "Downloaded" is shown as icon plus text. Catalogue page: `routes/design/book-card/`.
-- [ ] T040 [US4] Build `apps/web/src/lib/components/LibraryGrid.svelte`: a responsive grid of `BookCard`s with no layout shift and states default, empty and 700 books. Catalogue page: `routes/design/library-grid/`. (Depends on T039.)
-- [ ] T041 [P] [US4] Build `apps/web/src/lib/components/SearchField.svelte` and `SearchResults.svelte`: results update without moving focus or changing context. States: empty query, results, no results (with plain words and a next step). Catalogue page: `routes/design/search/`.
-- [ ] T042 [P] [US4] Build `apps/web/src/lib/components/BookDetail.svelte`: one primary action (Read), with Download as secondary; the description is collapsed until asked for (calm-ds III). States: full metadata, minimal metadata, downloaded. Catalogue page: `routes/design/book-detail/`.
-- [ ] T043 [P] [US4] Build `apps/web/src/lib/components/ReaderChrome.svelte`: top and bottom bars, a progress readout as text ("42% · Chapter 7"), and the bars hidden until asked for. States: hidden, shown, loading. Catalogue page: `routes/design/reader-chrome/`.
-- [ ] T044 [P] [US4] Build `apps/web/src/lib/components/TableOfContents.svelte`, with nested chapters and the current chapter marked by both text and shape. Catalogue page: `routes/design/toc/`.
-- [ ] T045 *(deferred with US3)* [US4] Build `apps/web/src/lib/components/ReadingControls.svelte`, the in-reader quick access to the reader preferences, reusing the T032 store. Catalogue page: `routes/design/reading-controls/`.
-- [ ] T046 [P] [US4] Build `apps/web/src/lib/components/SyncStatus.svelte`: peripheral, icon plus text, never animated. States: up to date, syncing, offline, needs attention (FR-017). Catalogue page: `routes/design/sync-status/`.
-- [ ] T047 [P] [US4] Build `apps/web/src/lib/components/EmptyState.svelte`, which states what is empty and the one next step. Examples: empty library, nothing downloaded, no search results. Catalogue page: `routes/design/empty-state/`.
-- [ ] T048 [P] [US4] Build `apps/web/src/lib/components/ErrorState.svelte`: what happened, whether anything was lost, and the one next step, with no blame and no idioms (FR-016). Examples: offline and the book isn't downloaded; sync failed but progress is saved on this device. Catalogue page: `routes/design/error-state/`.
-- [ ] T049 [P] [US4] Build `apps/web/src/lib/components/ConfirmDialog.svelte` and `UndoNotice.svelte`. Buttons name the action. The undo notice is peripheral, has no countdown, and stays until it is dismissed or the next action happens (calm-ds V). Catalogue page: `routes/design/confirm-undo/`.
-- [ ] T050 [US4] Fill in `meta.ts` for every component page from T038–T049: the rationale, the sources from research.md (or ASSUMPTION), and all 7 Checks, each with a one-line reason.
+- [ ] T037 *(superseded by spec 002)* [US4] Create the realistic sample data in `apps/web/src/lib/sample/books.ts`: 700 generated books with varied title, author and series lengths, about 5% with no cover, a few with no author, and one very long title. Generate cover placeholders from tokens (title text on a muted panel), not image files.
+- [ ] T038 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/AppFrame.svelte` (header, primary navigation in a fixed order, a slot for sync status), with catalogue page `routes/design/app-frame/`.
+- [ ] T039 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/BookCard.svelte`, with states default, focused, downloaded, not downloaded, missing cover and long title. The cover area has a fixed aspect ratio so nothing shifts while it loads. "Downloaded" is shown as icon plus text. Catalogue page: `routes/design/book-card/`.
+- [ ] T040 *(superseded by spec 002)* [US4] Build `apps/web/src/lib/components/LibraryGrid.svelte`: a responsive grid of `BookCard`s with no layout shift and states default, empty and 700 books. Catalogue page: `routes/design/library-grid/`. (Depends on T039.)
+- [ ] T041 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/SearchField.svelte` and `SearchResults.svelte`: results update without moving focus or changing context. States: empty query, results, no results (with plain words and a next step). Catalogue page: `routes/design/search/`.
+- [ ] T042 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/BookDetail.svelte`: one primary action (Read), with Download as secondary; the description is collapsed until asked for (calm-ds III). States: full metadata, minimal metadata, downloaded. Catalogue page: `routes/design/book-detail/`.
+- [ ] T043 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/ReaderChrome.svelte`: top and bottom bars, a progress readout as text ("42% · Chapter 7"), and the bars hidden until asked for. States: hidden, shown, loading. Catalogue page: `routes/design/reader-chrome/`.
+- [ ] T044 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/TableOfContents.svelte`, with nested chapters and the current chapter marked by both text and shape. Catalogue page: `routes/design/toc/`.
+- [ ] T045 *(superseded by spec 002)* *(deferred with US3)* [US4] Build `apps/web/src/lib/components/ReadingControls.svelte`, the in-reader quick access to the reader preferences, reusing the T032 store. Catalogue page: `routes/design/reading-controls/`.
+- [ ] T046 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/SyncStatus.svelte`: peripheral, icon plus text, never animated. States: up to date, syncing, offline, needs attention (FR-017). Catalogue page: `routes/design/sync-status/`.
+- [ ] T047 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/EmptyState.svelte`, which states what is empty and the one next step. Examples: empty library, nothing downloaded, no search results. Catalogue page: `routes/design/empty-state/`.
+- [ ] T048 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/ErrorState.svelte`: what happened, whether anything was lost, and the one next step, with no blame and no idioms (FR-016). Examples: offline and the book isn't downloaded; sync failed but progress is saved on this device. Catalogue page: `routes/design/error-state/`.
+- [ ] T049 *(superseded by spec 002)* [P] [US4] Build `apps/web/src/lib/components/ConfirmDialog.svelte` and `UndoNotice.svelte`. Buttons name the action. The undo notice is peripheral, has no countdown, and stays until it is dismissed or the next action happens (calm-ds V). Catalogue page: `routes/design/confirm-undo/`.
+- [ ] T050 *(superseded by spec 002)* [US4] Fill in `meta.ts` for every component page from T038–T049: the rationale, the sources from research.md (or ASSUMPTION), and all 7 Checks, each with a one-line reason.
 
 **Checkpoint**: the component set is complete; the catalogue-complete test (T023) is green.
 
