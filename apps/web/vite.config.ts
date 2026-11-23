@@ -2,9 +2,11 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { localCalibre } from './scripts/local-calibre.ts';
 
 export default defineConfig({
 	plugins: [
+		localCalibre(),
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {

@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"dev": "node scripts/gen-tokens.ts && vite dev",
+		"dev:calibre": "node scripts/gen-tokens.ts && LONGSHELF_LOCAL_CALIBRE=1 vite dev",
 		"build": "node scripts/gen-tokens.ts && wrangler types && vite build",
 		"preview": "wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
 		"prepare": "svelte-kit sync || echo ''",

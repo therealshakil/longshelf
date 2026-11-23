@@ -1,11 +1,18 @@
 import type { LibrarySource } from '@longshelf/shared/library';
+import { createSnapshotLibrary } from '@longshelf/shared/library/snapshot';
 import { createSampleLibrary } from '@longshelf/shared/sample';
+import localCalibre from 'virtual:longshelf/calibre';
 
 /**
  * The one place that chooses where library data comes from (spec 002 FR-007).
- * Sample data now; spec 003 swaps in the mirror-backed source here and nowhere else.
+ * Sample data now, or a local Calibre library under `pnpm dev:calibre` (DR-0009); spec 003 swaps
+ * in the mirror-backed source here and nowhere else.
  */
-export const library: LibrarySource = createSampleLibrary();
+export const library: LibrarySource = localCalibre
+	? createSnapshotLibrary(localCalibre, {
+			fileUrl: (b) => (b.formats.includes('EPUB') ? `/__calibre/book/${b.id}.epub` : null)
+		})
+	: createSampleLibrary();
 
 export { statusLabel, statusFrom } from '@longshelf/shared/library';
 

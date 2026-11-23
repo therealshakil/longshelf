@@ -39,6 +39,7 @@ The Longshelf principles above are project-specific and sit alongside the consti
 Run from the repo root (pnpm 12 via corepack, Node 24):
 - `pnpm install`: install workspace deps (build scripts are allow-listed in `pnpm-workspace.yaml`)
 - `pnpm dev`: SvelteKit dev server (`apps/web`)
+- `pnpm dev:calibre`: dev server on your local Calibre library, read-only with AI off (DR-0009). Set `LONGSHELF_CALIBRE_LIBRARY` to choose a library
 - `pnpm test`: Vitest unit tests (all packages)
 - `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on a free port, never reusing a running server)
 - `pnpm test:a11y`: full accessibility matrix (about 5.5 minutes), on demand before a release. Never part of build, push or deploy

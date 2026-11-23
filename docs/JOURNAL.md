@@ -449,3 +449,8 @@
 
 - **Renamed:** the local D1 database name and browser storage keys, because nothing is deployed. Reader settings saved locally under the old keys reset.
 - **Fixed:** Prettier now ignores the generated `.eval/` output, so `pnpm lint` can pass.
+
+## 2026-11-23: Local Calibre mode (DR-0009)
+
+- **Built:** `pnpm dev:calibre` runs the dev server on the local Calibre library, read-only. Production builds still use sample data.
+- **Limits:** AI is off in this mode, Calibre reading progress isn't shown yet, and the reader opens EPUB only.
