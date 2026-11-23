@@ -359,3 +359,10 @@
 - **Checked:** 7 unit tests, 15 browser tests on a production build including axe in light and dark at phone and desktop sizes, typecheck, ESLint, the Impeccable detector, and screenshots.
 - **Not checked:** the full e2e suite, the page on the iPad itself, or offline search, which needs the catalogue stored on the device (spec 003 onward).
 
+## 2026-11-23: Spec 002 T064: design compare
+
+- **Built:** `pnpm design:compare`, which captures six pages beside their approved mocks at 390, 820 and 1440 px in light and dark, plus Night for the reader, with a review page in `apps/web/test-results/design-compare/`.
+- **Stays fast:** it runs only when asked and is not part of build, tests, push or deploy. The repo has no Git hooks or CI. A full run took about 3 minutes, and one page took about 50 seconds, mostly starting the dev server. `--url` can reuse a running one.
+- **Checked:** 39 of 39 pairs captured, a filtered retake kept the other pairs, typecheck and ESLint.
+- **For the finish review (T066):** the reader opens Middlemarch at Chapter XXXIII at 38%, while the sample data and mock say Chapter 40.
+

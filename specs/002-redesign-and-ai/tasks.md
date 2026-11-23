@@ -290,7 +290,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 ## Phase 12: Polish and finish
 
-- [ ] T064 [P] Implement `pnpm design:compare` (`apps/web/scripts/design-compare.ts`). It captures every route and its mock at 390, 820 and 1440 in light and dark (plus Night for the reader) into `test-results/design-compare/`.
+- [X] T064 [P] Implement `pnpm design:compare` (`apps/web/scripts/design-compare.ts`). It captures every route and its mock at 390, 820 and 1440 in light and dark (plus Night for the reader) into `test-results/design-compare/`.
 - [ ] T065 Extend the axe matrix in `apps/web/tests/e2e/a11y.spec.ts` to every route in light, dark and night at 390 and 1440, with zero violations (SC-003).
 - [ ] T066 Run the Impeccable finish review (`impeccable-finish-reviewer` agent) against the direction contracts and mocks, fix the material findings, and get the owner's sign-off (SC-002).
 - [ ] T067 Run the `impeccable-documenter` agent to write `apps/web/DESIGN.md` from the shipped build. `docs/DESIGN.md` remains the architecture doc.
