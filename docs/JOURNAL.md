@@ -351,3 +351,11 @@
 - **Not done:** no dependency was added and search is still parked until the owner approves it.
 - **Not tested:** other Apple devices, Firefox results, or iPad service worker and persistent storage, which need HTTPS.
 
+## 2026-11-23: Plain library search
+
+- **Owner decision:** use MiniSearch in the browser (DR-0006). This is the one new dependency.
+- **Built:** the `/search` page from the owner's edited design: one list with cover, title, author and which details matched, plus a no-results state. It searches titles, authors and tags and tolerates typos.
+- **Changed from the draft:** the no-results hint no longer suggests "a few words about the book", because descriptions aren't searched.
+- **Checked:** 7 unit tests, 15 browser tests on a production build including axe in light and dark at phone and desktop sizes, typecheck, ESLint, the Impeccable detector, and screenshots.
+- **Not checked:** the full e2e suite, the page on the iPad itself, or offline search, which needs the catalogue stored on the device (spec 003 onward).
+

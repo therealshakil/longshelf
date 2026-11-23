@@ -281,6 +281,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 
 **Parked by the owner, 2026-11-23.** T061 to T063 are on hold. FR-013 is not met while parked. See research R6, "Search options". The unapproved results design is at https://claude.ai/artifact/CiYRYk3sNRn6Yb8j1q5njF.
 
+- [X] T070 Plain search (owner, DR-0006): MiniSearch over titles, authors and tags in `apps/web/src/lib/search/book-search.ts`, with the `/search` route built from the owner's edited design. E2E test in `apps/web/tests/e2e/search.spec.ts`. This does not meet FR-013, which stays parked.
 - [ ] T061 [US7] Design review first. Add a results mock `design-mocks/search.html` in the approved world (exact matches first, a reason per result, a one-line note when AI is off) and get the owner's approval in live review before building (spec Assumptions).
 - [ ] T062 [US7] Implement `GET /api/ai/search?q=`: exact title or author match first, then embedding similarity over profiles. Reasons name the matched fields. `mode: 'exact'` plus the note when AI is unavailable (FR-013).
 - [ ] T063 [US7] Build the search results route `apps/web/src/routes/search/+page.svelte` from the approved mock, fed by the header search field. E2E test in `apps/web/tests/e2e/search.spec.ts`.
