@@ -64,7 +64,9 @@ test.describe('Reader', () => {
 		await page.keyboard.press('Escape');
 		await openBook(page, '/read/herman-melville_moby-dick');
 		await expect(page.locator('html')).toHaveAttribute('data-theme', 'night');
-		const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('ribbon.reader.v1')!));
+		const saved = await page.evaluate(() =>
+			JSON.parse(localStorage.getItem('longshelf.reader.v1')!)
+		);
 		expect(saved).toMatchObject({ spacing: 'loose', theme: 'night' });
 	});
 
@@ -139,7 +141,7 @@ test.describe('Reader', () => {
 				await page.emulateMedia({ colorScheme: scheme });
 				if (theme)
 					await page.addInitScript(() =>
-						localStorage.setItem('ribbon.reader.v1', JSON.stringify({ theme: 'night' }))
+						localStorage.setItem('longshelf.reader.v1', JSON.stringify({ theme: 'night' }))
 					);
 				await openBook(page);
 				// The book's own markup (Project Gutenberg) is out of scope; Longshelf's chrome is in.

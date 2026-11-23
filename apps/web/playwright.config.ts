@@ -35,7 +35,7 @@ export default defineConfig({
 			: [])
 	],
 	webServer: {
-		command: `pnpm build && wrangler d1 migrations apply ribbon --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port}`,
+		command: `pnpm build && wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port}`,
 		port,
 		reuseExistingServer: false,
 		timeout: 180_000 // the build plus wrangler start can exceed the 60s default

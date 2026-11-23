@@ -2,7 +2,7 @@
  * Reader text settings (spec 002 FR-004): one versioned localStorage key, applied to every book on
  * this device. Storage can be unavailable (private mode); reads and writes never throw.
  */
-export const SETTINGS_KEY = 'ribbon.reader.v1';
+export const SETTINGS_KEY = 'longshelf.reader.v1';
 
 export const SIZES = [0.9375, 1, 1.125, 1.25, 1.375, 1.5, 1.75] as const; // rem
 export type Font = 'literata' | 'atkinson';
@@ -77,7 +77,7 @@ export const measurePx = (s: Pick<ReaderSettings, 'size' | 'margins'>, rootPx = 
 export const LEADING: Record<Spacing, number> = { tight: 1.5, normal: 1.7, loose: 1.9 };
 
 /** Saved place per book on this device. */
-const placeKey = (bookId: string) => `ribbon.reader.place.${bookId}`;
+const placeKey = (bookId: string) => `longshelf.reader.place.${bookId}`;
 
 export interface SavedPlace {
 	cfi: string;

@@ -19,7 +19,7 @@ const job = (n: number): SummaryJob => ({
 const respond = (status: number, message = '') =>
 	(async () => new Response(JSON.stringify({ message }), { status })) as typeof fetch;
 const queued = (s: ReturnType<typeof memory>) =>
-	JSON.parse(s.getItem('ribbon.summary-queue.v1') ?? '[]');
+	JSON.parse(s.getItem('longshelf.summary-queue.v1') ?? '[]');
 
 describe('summary queue (T049)', () => {
 	it('keeps a job when offline and sends it with the next one', async () => {

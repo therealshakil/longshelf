@@ -2,7 +2,7 @@
  * Sends finished sections for summarising (spec 002 US4, T049). If the network or AI is away,
  * the request waits in a small local queue and is sent later; with AI switched off it is dropped.
  */
-const KEY = 'ribbon.summary-queue.v1';
+const KEY = 'longshelf.summary-queue.v1';
 const MAX_QUEUED = 12; // about 12 chapters of text; older entries give way
 
 export interface SummaryJob {

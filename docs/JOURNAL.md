@@ -444,3 +444,8 @@
 - **Renamed:** `@ribbon/*` packages, the root package, the planned CLI command, code comments, `PRODUCT.md`, `CLAUDE.md`, `docs/DESIGN.md`, `docs/PLAN.md` and the GitHub repository.
 - **Kept:** the D1 name, `ribbon.*` browser storage keys, applied migrations, and historical records. DR-0006 records why.
 - **Cloudflare:** checked read-only. No Longshelf or Ribbon Worker, D1 database or R2 bucket exists.
+
+## 2026-11-23: Remaining Longshelf names
+
+- **Renamed:** the local D1 database name and browser storage keys, because nothing is deployed. Reader settings saved locally under the old keys reset.
+- **Fixed:** Prettier now ignores the generated `.eval/` output, so `pnpm lint` can pass.

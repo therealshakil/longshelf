@@ -15,4 +15,4 @@ export const GROUPS = [
 	{ kind: 'component', label: 'Components' }
 ] as const;
 
-export const LAST_PAGE_KEY = 'ribbon.design.last';
+export const LAST_PAGE_KEY = 'longshelf.design.last';

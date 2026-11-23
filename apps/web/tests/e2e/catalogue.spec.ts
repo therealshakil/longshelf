@@ -47,7 +47,7 @@ test.describe('design catalogue (US1)', () => {
 		const href = await other.getAttribute('href');
 		await page.goto(href!);
 		// The page records itself once hydrated; wait for that before leaving.
-		await page.waitForFunction((h) => localStorage.getItem('ribbon.design.last') === h, href);
+		await page.waitForFunction((h) => localStorage.getItem('longshelf.design.last') === h, href);
 		await page.goto('/');
 		await page.goto('/design');
 		await expect(page).toHaveURL(new RegExp(`${href}$`));

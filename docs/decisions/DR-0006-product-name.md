@@ -59,3 +59,7 @@ These keep the old name on purpose:
 - The D1 database name, until the hosted setup on `longshelf.app` is specified. Nothing exists on Cloudflare yet, so it can change then at no cost.
 - Browser storage keys (`ribbon.*`), because changing them would drop saved reader settings unless a migration is planned.
 - Applied migrations, and historical records: the journal, decision records, specs and approved mocks.
+
+## Update: remaining names renamed (2026-11-23)
+
+This supersedes the first two exceptions in the internal rename above. Nothing is deployed, so the owner chose to rename the D1 database and browser storage keys now (`longshelf`, `longshelf.*`). No migration was written, so reader settings saved in a local browser under the old keys reset. Applied migrations and historical records still keep the old name.

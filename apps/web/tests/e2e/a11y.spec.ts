@@ -53,7 +53,7 @@ for (const [width, height] of WIDTHS)
 				});
 				if (theme === 'night')
 					await page.addInitScript(() =>
-						localStorage.setItem('ribbon.reader.v1', JSON.stringify({ theme: 'night' }))
+						localStorage.setItem('longshelf.reader.v1', JSON.stringify({ theme: 'night' }))
 					);
 				await page.goto(route);
 				if (route === READER) {

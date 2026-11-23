@@ -10,7 +10,7 @@
 	"scripts": {
 		"dev": "node scripts/gen-tokens.ts && vite dev",
 		"build": "node scripts/gen-tokens.ts && wrangler types && vite build",
-		"preview": "wrangler d1 migrations apply ribbon --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
+		"preview": "wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "wrangler types && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -24,8 +24,8 @@
 		"gen:tokens": "node scripts/gen-tokens.ts",
 		"design:compare": "node scripts/design-compare.ts",
 		"eval:recaps": "node scripts/eval-recaps.ts",
-		"ai:neighbours": "wrangler d1 migrations apply ribbon --local && node scripts/build-neighbours.ts",
-		"dev:remote": "node scripts/gen-tokens.ts && wrangler d1 migrations apply ribbon --local && vite dev"
+		"ai:neighbours": "wrangler d1 migrations apply longshelf --local && node scripts/build-neighbours.ts",
+		"dev:remote": "node scripts/gen-tokens.ts && wrangler d1 migrations apply longshelf --local && vite dev"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.14.0",

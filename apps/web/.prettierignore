@@ -13,3 +13,6 @@ src/lib/styles/tokens.css
 
 # Impeccable design tool working files
 .impeccable/
+
+# Generated evaluation output (git-ignored)
+.eval/

@@ -20,7 +20,7 @@ import { chromium, type Browser, type Page } from '@playwright/test';
 const WEB = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MOCKS = join(WEB, '..', '..', 'design-mocks');
 const OUT = join(WEB, 'test-results', 'design-compare');
-const READER_SETTINGS_KEY = 'ribbon.reader.v1';
+const READER_SETTINGS_KEY = 'longshelf.reader.v1';
 const WIDTHS = [390, 820, 1440];
 const HEIGHTS: Record<number, number> = { 390: 844, 820: 1180, 1440: 900 };
 const THEMES = ['light', 'dark', 'night'] as const;
