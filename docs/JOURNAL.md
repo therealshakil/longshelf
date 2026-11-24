@@ -635,3 +635,10 @@
   - 0 orphaned files, 0 locks.
 - **Access probe re-run with real data:** all checks passed.
 - **Open:** SC-003 (first covers within 3 s on a phone over 4G) needs the owner's phone.
+
+## 2026-11-24: Spec 003, offline fix after the owner's phone check
+
+- **Owner's phone check:** reading, saving and installing worked. But the header never said "Offline", and reopening the installed app offline showed the browser's own blocking offline screen.
+- **Cause:** SvelteKit 3's `$app/manifest` lists paths without a leading slash (`_app/immutable/…`), while requests arrive as `/_app/immutable/…`. The service worker never served the app's code from its cache, so the app couldn't start offline. The sample-data filter didn't match either. The T036 test missed it because it reloaded the same tab, where Playwright's memory cache supplied the code.
+- **Fix:** paths are normalised to a leading slash. The header now also turns to "Offline" the moment the connection drops, through the `online`/`offline` events, not only at the next load.
+- **Test made real:** it reopens offline in a new tab, checks every `/_app/immutable/` response came from the service worker, and looks for "Offline" in the header (banner). Without the fix it fails, and with it it passes. Mirror e2e 5 passed; everyday e2e 52 passed; lint clean. Deployed.

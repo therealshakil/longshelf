@@ -74,7 +74,7 @@ test('the news issue shows its own cover on Home', async ({ page }) => {
 	await expect(page.locator('.issues img[src^="/api/covers/"]')).toBeVisible();
 });
 
-test('after a first visit, the app opens offline with the covers it has seen (SC-007)', async ({
+test('after a first visit, the app reopens offline with the covers it has seen (SC-007)', async ({
 	page,
 	context
 }) => {
@@ -83,15 +83,24 @@ test('after a first visit, the app opens offline with the covers it has seen (SC
 	// The first load installs the worker; the second is served through it and fills the caches.
 	await page.reload({ waitUntil: 'networkidle' });
 	await expect(page.locator('img[src^="/api/covers/"]').first()).toBeVisible();
+	await page.close();
 
+	// Reopen like an installed app: a new tab, offline. The app's own code must come from the
+	// service worker, not from a browser cache that a real reopen wouldn't have.
 	await context.setOffline(true);
-	await page.reload();
-	await expect(page.getByRole('heading', { name: 'Library', level: 1 })).toBeVisible();
-	const cover = page.locator('img[src^="/api/covers/"]').first();
-	await expect(cover).toBeVisible();
+	const reopened = await context.newPage();
+	const fromWorker: boolean[] = [];
+	reopened.on('response', (r) => {
+		if (r.url().includes('/_app/immutable/')) fromWorker.push(r.fromServiceWorker());
+	});
+	await reopened.goto('/library?tab=all');
+	await expect(reopened.getByRole('heading', { name: 'Library', level: 1 })).toBeVisible();
+	expect(fromWorker.length).toBeGreaterThan(0);
+	expect(fromWorker.every(Boolean)).toBe(true);
+	const cover = reopened.locator('img[src^="/api/covers/"]').first();
 	await expect
 		.poll(() => cover.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth))
 		.toBeGreaterThan(0);
-	await expect(page.getByText('Offline')).toBeVisible();
+	await expect(reopened.getByRole('banner').getByText('Offline')).toBeVisible();
 	await context.setOffline(false);
 });

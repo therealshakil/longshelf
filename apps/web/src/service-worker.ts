@@ -22,10 +22,13 @@ const CATALOG = 'catalog-v1';
 /** Tells the page a catalogue came from the cache, and why. */
 export const SOURCE_HEADER = 'x-longshelf-source';
 
+// SvelteKit 3 lists paths without a leading slash ("_app/immutable/…"), but requests arrive
+// as "/_app/immutable/…": normalise, or nothing matches and the app can't start offline.
+const abs = (p: string) => `/${p.replace(/^\/+/, '')}`;
 // Sample books and covers are demo data: too large to precache and not part of the shell.
 const SHELL_FILES = [
-	...immutable.map((f) => f.path),
-	...assets.map((f) => f.path).filter((p) => !p.startsWith('/sample/'))
+	...immutable.map((f) => abs(f.path)),
+	...assets.map((f) => abs(f.path)).filter((p) => !p.startsWith('/sample/'))
 ];
 
 self.addEventListener('install', (event) => {
