@@ -1,6 +1,6 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "web",
+	"name": "longshelf",
 	"compatibility_date": "2026-11-14",
 	"compatibility_flags": ["nodejs_als"],
 	"main": ".svelte-kit/cloudflare/_worker.js",
@@ -11,9 +11,13 @@
 	"workers_dev": true,
 	"preview_urls": true,
 	// Spec 002 (research R3): Workers AI runs in the owner's account; D1 keeps AI results.
-	// Deploy, CI and the real database id arrive with the mirror (spec 003). Until then the
-	// database is local only (wrangler dev and the e2e preview).
 	"ai": { "binding": "AI", "remote": true },
+	// Spec 003 (DR-0010): D1 holds mirror metadata; R2 holds files, covers, thumbnails and
+	// catalogues keyed by SHA-256; IMAGES makes cover thumbnails at upload (research R4).
+	// The all-zero database_id is the local placeholder. Before the first deploy, replace it
+	// with the id printed by `wrangler d1 create longshelf` (docs/DEPLOY.md).
+	"r2_buckets": [{ "binding": "BUCKET", "bucket_name": "longshelf" }],
+	"images": { "binding": "IMAGES" },
 	"d1_databases": [
 		{
 			"binding": "DB",

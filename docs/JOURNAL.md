@@ -469,3 +469,8 @@
 - **Measured:** largest file 419 MB (two over the Worker's 100 MB request limit), covers 201 MB in total, catalogue 1.3 MB (475 KB gzipped).
 - **Cost:** $0 a month expected. Risk: AI routes may exceed the Free plan's 10 ms CPU; measured in the first task before any fixed cost.
 - **Tasks:** `specs/003-library-mirror/tasks.md`, 42 tasks. MVP is setup, foundation, US1 to US3; never deploy the real library before the access probe passes.
+
+## 2026-11-24: Spec 003 T001–T002
+
+- **Config:** the Worker is now named `longshelf`, with an R2 binding (`BUCKET`) and an Images binding (`IMAGES`). The D1 id is still the local placeholder until the first deploy.
+- **Deploy:** `pnpm run deploy` builds, applies D1 migrations remotely and deploys. `.dev.vars` is ignored by git.
