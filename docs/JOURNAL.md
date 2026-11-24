@@ -516,3 +516,7 @@
   - the hash cache didn't create its folder on a fresh machine;
   - SvelteKit refused PUTs with no content type as cross-site form posts, so the CLI now sends `application/octet-stream`;
   - the CLI blamed the upload key for any 403. It now does so only for the gate's or Access's refusal.
+
+## 2026-11-24: Spec 003 T024–T025
+
+- **Read routes:** `/api/catalog` (ETag, and 304 when unchanged), `/api/covers/:sha` (thumbnail first, `?size=full` for the original), and `/api/files/:sha` (Range support for the reader; `?download=` gives a safe RFC 6266 file name). All stream from R2, and a hash is served only as the kind it was stored as. 6 tests.

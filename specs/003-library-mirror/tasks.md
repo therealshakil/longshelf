@@ -132,7 +132,7 @@ access probe).
 
 ### Tests for US2
 
-- [ ] T024 [P] [US2] Read-route tests in `apps/web/tests/unit/mirror-read.test.ts` (pool-workers):
+- [X] T024 [P] [US2] Read-route tests in `apps/web/tests/unit/mirror-read.test.ts` (pool-workers):
   - `/api/catalog` returns 200 with an ETag, then 304 for `If-None-Match`;
   - covers serve the thumbnail, `?size=full` serves the original, and a missing thumbnail falls back to the original;
   - files support `Range: bytes=0-99` (206);
@@ -142,7 +142,7 @@ access probe).
 
 ### Implementation for US2
 
-- [ ] T025 [US2] Routes `apps/web/src/routes/api/catalog/+server.ts`, `api/covers/[sha]/+server.ts` and `api/files/[sha]/+server.ts`, as in `contracts/mirror-api.md`. They stream from R2 (`range` option for files), with caching headers as in the contract table, and accept a hash only with a `blob` row of the matching kind.
+- [X] T025 [US2] Routes `apps/web/src/routes/api/catalog/+server.ts`, `api/covers/[sha]/+server.ts` and `api/files/[sha]/+server.ts`, as in `contracts/mirror-api.md`. They stream from R2 (`range` option for files), with caching headers as in the contract table, and accept a hash only with a `blob` row of the matching kind.
 - [ ] T026 [US2] Make library loading async in `apps/web/src/lib/library/index.ts`:
   - `getLibrary(fetch)` returns the sample, local or mirror source. Mirror is chosen when the build flag `PUBLIC_LIBRARY=mirror` is set, which the production build sets.
   - The mirror source is memoised by the catalogue ETag, and `fileUrl` picks EPUB, then KEPUB.
