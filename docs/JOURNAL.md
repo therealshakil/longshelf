@@ -464,3 +464,7 @@
 
 - **Opened:** branch `opds-spike`, with questions and desk findings in `docs/PLAN.md` (Spike: OPDS).
 - **Main finding so far:** OPDS on a stock Kobo needs KOReader. KOReader's Basic auth can't pass Cloudflare Access, so the feed needs its own route and auth. KOReader's own progress sync (kosync) is a possible Wi-Fi alternative to the USB and Calibre-columns path in spec 005.
+
+## 2026-11-24: OPDS spike parked
+
+- **Parked (owner decision):** OPDS and KOReader sync are a future nice-to-have, to be specced another time. The desk findings and open questions stay in `docs/PLAN.md`, and the item is listed under "Later, optional".

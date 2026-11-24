@@ -22,7 +22,9 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
       byte-identical to the library copy (if so, exact web -> Kobo positions are possible).
 - [ ] Note the exact column names and the format of the location value for a KEPUB and a plain EPUB.
 
-## Spike: OPDS (branch `opds-spike`, started 2026-11-24)
+## Spike: OPDS (parked 2026-11-24: future nice-to-have, to be specced another time)
+Nothing below has been tested. Pick it up from the first unchecked item.
+
 Question: could an OPDS feed served by the Worker replace USB for getting books onto the e-reader, and
 does KOReader's own progress sync change the plan for spec 005?
 
@@ -86,3 +88,4 @@ To check:
 ### Later, optional
 - [ ] Layer 2 Kobo adapter: highlights, exact positions
 - [ ] Reading stats
+- [ ] OPDS catalogue and KOReader progress sync (parked spike above)
