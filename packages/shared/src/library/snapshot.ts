@@ -100,7 +100,8 @@ export function createSnapshotLibrary(
 			issueDate: b.addedAt,
 			issueLabel: label,
 			frequency: 'weekly',
-			status: 'unread'
+			status: 'unread',
+			cover: b.cover
 		};
 		publications.set(publication, [...(publications.get(publication) ?? []), issue]);
 	}

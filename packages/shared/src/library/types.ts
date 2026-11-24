@@ -97,7 +97,9 @@ export const PeriodicalIssueSchema = z.object({
 	issueLabel: z.string(),
 	frequency: z.enum(['daily', 'weekly', 'monthly']),
 	status: z.enum(['new', 'unread', 'in-progress', 'finished']),
-	percent: z.number().min(0).max(100).optional()
+	percent: z.number().min(0).max(100).optional(),
+	/** The issue's own cover, when the download has one. */
+	cover: CoverSchema.optional()
 });
 export type PeriodicalIssue = z.infer<typeof PeriodicalIssueSchema>;
 

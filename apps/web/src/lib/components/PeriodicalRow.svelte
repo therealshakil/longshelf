@@ -1,5 +1,6 @@
 <!--
-	Periodical issues as plain bindings (publication and date), newest first, "New" on unopened
+	Periodical issues as their cover with the date beneath, or a plain binding (publication and
+	date) when an issue has no cover, newest first, "New" on unopened
 	issues, scrolling sideways when there are many. Never mixed into Recently added (US8).
 -->
 <script lang="ts">
@@ -21,12 +22,17 @@
 	{#each issues as issue (issue.id)}
 		<li>
 			<a class="issue" href={resolve('/read/[id]', { id: issue.id })}>
-				<span class="binding">
-					<b>{issue.publication}</b>
-					<em>{issue.issueLabel}</em>
-				</span>
+				{#if issue.cover}
+					<img class="cover" src={issue.cover.url} alt="" loading="lazy" />
+				{:else}
+					<span class="binding">
+						<b>{issue.publication}</b>
+						<em>{issue.issueLabel}</em>
+					</span>
+				{/if}
 				<span class="sr-only">{issue.publication}, {issue.issueLabel}</span>
 			</a>
+			{#if issue.cover}<span class="date" aria-hidden="true">{issue.issueLabel}</span>{/if}
 			{#if issue.status === 'new'}<span class="new">New</span>{/if}
 			{#if status(issue)}<span class="st">{status(issue)}</span>{/if}
 		</li>
@@ -77,6 +83,20 @@
 		border-top: 1px solid var(--r-border);
 		padding-top: 0.4rem;
 	}
+	.cover {
+		display: block;
+		width: 100%;
+		aspect-ratio: 2 / 3;
+		object-fit: cover;
+		border-radius: var(--r-radius-cover);
+		background: var(--r-surface);
+		box-shadow: var(--r-shadow-tile);
+	}
+	.date {
+		font-size: var(--r-text-xs);
+		color: var(--r-text-muted);
+	}
+	.issue:hover .cover,
 	.issue:hover .binding {
 		outline: 1px solid var(--r-control);
 	}

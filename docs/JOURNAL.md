@@ -454,3 +454,8 @@
 
 - **Built:** `pnpm dev:calibre` runs the dev server on the local Calibre library, read-only. Production builds still use sample data.
 - **Limits:** AI is off in this mode, Calibre reading progress isn't shown yet, and the reader opens EPUB only.
+
+## 2026-11-24: Magazine covers
+
+- **Changed (owner request):** news and magazine issues show their own cover, with the date beneath. An issue without a cover keeps the plain binding from the approved mock.
+- **Data:** `PeriodicalIssue` gains an optional `cover`. Local Calibre mode fills it from the issue's `cover.jpg`. Sample data has no issue covers, so it is unchanged.
