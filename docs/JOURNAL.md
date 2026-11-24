@@ -488,3 +488,8 @@
 - **CLI package:** `packages/sync-cli` now holds the Calibre reader, moved from the web app's local mode and extended with title sort, rating and every format's path. `pnpm dev:calibre` reads the owner's library as before (670 items).
 - **CLI config (T018, done early):** `config.ts` (XDG or macOS path, mode 0600, option > env > file).
 - **Dev and tests behind Access:** Access on the Worker also covers the remote connection that dev uses for Workers AI. Unit tests now run with no remote connections. `pnpm dev` passes Access with the CLI's service token, and applies local D1 migrations first, because the real D1 id gave dev a fresh local database.
+
+## 2026-11-24: Spec 003 T009–T010
+
+- **Test library:** `packages/sync-cli/test/fixtures/library/`, 4.8 MB, made with `calibredb`. It has 6 items: three EPUBs, one with EPUB plus PDF, one with no cover, and one news issue. Only public-domain texts and text written for the tests.
+- **Migration:** `0004_mirror.sql` (`book`, `book_file`, `blob`, `catalog` with `previous_sha256`, `ingest_run`), applied locally. It reaches the live database at the next `pnpm run deploy`.

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">5</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">ddd31fa0-0517-405a-b7e6-c2f5d81e888e</dc:identifier>
+        <dc:title>The Evening Courier [Sat, 14 Nov 2026]</dc:title>
+        <dc:creator opf:file-as="Longshelf" opf:role="aut">Longshelf</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (9.18.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:language>eng</dc:language>
+        <dc:subject>News</dc:subject>
+        <meta name="calibre:timestamp" content="2026-11-24T10:51:48.276491+00:00"/>
+        <meta name="calibre:title_sort" content="Evening Courier [Sat, 14 Nov 2026], The"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Cover" href="cover.jpg"/>
+    </guide>
+</package>
