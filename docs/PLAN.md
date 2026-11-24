@@ -36,7 +36,14 @@ licence-free synthetic one: 670 records, 1.2 MB.
   - **Owner ruling:** Read next and More like this run in the browser on the catalogue it
     already holds. The server returns only stored matches and dismissals. Cost stays $0. This
     changes T027.
-- **(a) Access identity:** pending. Needs Access enabled on the Worker.
+- **(a) Access identity:** `platform.ctx.access` isn't exposed through SvelteKit's adapter, so
+  the Worker uses the `Cf-Access-Jwt-Assertion` header (research R5 fallback).
+  - The owner's browser token carries `email`.
+  - The service token's token carries `common_name`, equal to the Client ID, and no email.
+  - Both have `type: app` and the app's `aud`.
+  - Access needed a **Service Auth** policy that includes the token. Without it, the token was
+    redirected to sign-in like an anonymous request.
+  - The library is served at `library.longshelf.app` only, with workers.dev off.
 
 ## Starting scope per spec
 

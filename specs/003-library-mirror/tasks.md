@@ -31,7 +31,7 @@ access probe).
 
 - [X] T001 Rename the Worker to `longshelf` in `apps/web/wrangler.jsonc`. Add an `r2_buckets` binding `BUCKET` (bucket `longshelf`) and an `images` binding `IMAGES`. Keep the D1 placeholder id for local runs and document where the real id goes. Run `pnpm --filter web gen` so `worker-configuration.d.ts` includes the bindings.
 - [X] T002 Add a root `deploy` script to `package.json` and an `apps/web` `deploy` script to `apps/web/package.json`: build, then `wrangler d1 migrations apply longshelf --remote`, then `wrangler deploy`. Invoke it as `pnpm run deploy`, because `pnpm deploy` is a pnpm built-in (research R7). Update the "Commands" section of `CLAUDE.md`, replacing "Deploy and migrate: added in spec 002".
-- [ ] T003 **Spike, done by the owner and the agent together.** Before anything is created on the owner's Cloudflare account, show the owner the exact commands and the expected $0 cost (FR-025), and get a yes. Then create the D1 database and R2 bucket, deploy a temporary route `apps/web/src/routes/api/spike/+server.ts`, and enable Access on workers.dev (quickstart step 3). Record in the spike log in `docs/PLAN.md`:
+- [X] T003 **Spike, done by the owner and the agent together.** Before anything is created on the owner's Cloudflare account, show the owner the exact commands and the expected $0 cost (FR-025), and get a yes. Then create the D1 database and R2 bucket, deploy a temporary route `apps/web/src/routes/api/spike/+server.ts`, and enable Access on workers.dev (quickstart step 3). Record in the spike log in `docs/PLAN.md`:
   - (a) whether `platform.ctx.access` (or the `Cf-Access-Jwt-Assertion` header) identifies the owner's email and the service token;
   - (b) whether `env.IMAGES` resizes a cover on workers.dev;
   - (c) the CPU time (`wrangler tail`) of parsing a 1.3 MB catalogue and of `readNext` over 670 books, using a synthetic catalogue of 670 Standard Ebooks-shaped records.
@@ -55,12 +55,14 @@ access probe).
   `apps/web/scripts/local-calibre.ts` imports from `@longshelf/sync-cli/calibre`. `pnpm dev:calibre` must behave exactly as before (check it starts and shows the library). Move the existing `htmlToText` tests, if any, and add tests for the format paths using a fixture.
 - [ ] T009 Build the fixture library `packages/sync-cli/test/fixtures/library/`. Use Calibre (`calibredb add`) on 6 Standard Ebooks titles from `apps/web/static/sample/`, including one with a PDF added as a second format, one without a cover, and one tagged `News` titled `The Evening Courier [Sat, 14 Nov 2026]`. Commit `metadata.db` and the files. Total under 10 MB. Add a `README.md` with the sources and CC0 note.
 - [ ] T010 Create `apps/web/migrations/0004_mirror.sql` exactly as in `data-model.md` (tables `book`, `book_file`, `blob`, `catalog` (with `previous_sha256`) and `ingest_run`; `blob.kind` CHECK in `('file','cover','thumb','catalog')`; `catalog.id` and `ingest_run.id` CHECK `= 1`; index `book_file_sha`). Additive only.
-- [ ] T011 Create `apps/web/src/lib/server/mirror/access.ts`:
-  - `identity(event)` returns `{ kind: 'owner', email } | { kind: 'cli' } | null`, using the mechanism the T003 spike confirmed (`platform.ctx.access`, or `Cf-Access-Jwt-Assertion` verified with WebCrypto against `https://<team>.cloudflareaccess.com/cdn-cgi/access/certs`, cached).
-  - The owner email and team come from Worker vars `OWNER_EMAIL` and `ACCESS_TEAM`.
+- [ ] T011 Create `apps/web/src/lib/server/mirror/access.ts` (spike result (a)):
+  - `identity(event)` returns `{ kind: 'owner', email } | { kind: 'cli' } | null`.
+  - It verifies `Cf-Access-Jwt-Assertion` with WebCrypto (RS256) against the JWKS at `https://<team>.cloudflareaccess.com/cdn-cgi/access/certs`, cached per isolate. It checks `aud` equals the app's AUD tag, `iss` equals the team domain, and `exp`/`nbf`.
+  - **Owner:** a valid token with `email`. The Access Allow policy decides who that is, with no second list in the Worker.
+  - **CLI:** a valid token with no email and `common_name` equal to the configured Client ID.
+  - Config: Worker secrets `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` and `CLI_CLIENT_ID`, set with `wrangler secret put`, never committed, and listed in `docs/DEPLOY.md`. Add them to `.dev.vars.example` with placeholder values.
   - Under `vite dev` and in tests, a dev identity applies only when `dev` is true and the host is local.
-
-  Add unit tests: missing header gives null, a wrong audience gives null, and a service token gives `cli`.
+  - Unit tests: missing header gives null; a bad signature gives null; a wrong `aud` gives null; expired gives null; an email token gives `owner`; a `common_name` token gives `cli`; an unknown `common_name` gives null.
 - [ ] T012 Update `apps/web/src/hooks.server.ts` to:
   - refuse with 403 (plain text, no library data) any request with no identity, outside local dev;
   - allow `/api/ingest/*` only for `cli`, and everything else only for `owner`;
