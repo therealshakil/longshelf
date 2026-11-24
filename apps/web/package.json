@@ -8,10 +8,11 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"scripts": {
-		"dev": "node scripts/gen-tokens.ts && vite dev",
-		"dev:calibre": "node scripts/gen-tokens.ts && LONGSHELF_LOCAL_CALIBRE=1 vite dev",
+		"dev": "node scripts/gen-tokens.ts && wrangler d1 migrations apply longshelf --local && vite dev",
+		"dev:calibre": "node scripts/gen-tokens.ts && wrangler d1 migrations apply longshelf --local && LONGSHELF_LOCAL_CALIBRE=1 vite dev",
 		"build": "node scripts/gen-tokens.ts && wrangler types && vite build",
-		"preview": "wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
+		"deploy": "LONGSHELF_LIBRARY=mirror pnpm run build && wrangler d1 migrations apply longshelf --remote && wrangler deploy",
+		"preview": "wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173 --local-upstream localhost --var LONGSHELF_DEV_IDENTITY:1",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "wrangler types && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -60,6 +61,7 @@
 	},
 	"dependencies": {
 		"@longshelf/shared": "workspace:*",
+		"@longshelf/sync-cli": "workspace:*",
 		"cn": "^0.5.2"
 	}
 }

@@ -87,9 +87,10 @@
 		<section class="flex flex-col gap-2" aria-labelledby="data-h">
 			<h2 id="data-h" class="text-xl font-title">Where your books go</h2>
 			<p>
-				AI runs on Cloudflare Workers AI in your own Cloudflare account. Chapter text is used once
-				to write a summary and isn’t kept; Cloudflare says it doesn’t train models on it. No other
-				AI company receives your books.
+				AI runs on Cloudflare Workers AI in your own Cloudflare account. While AI is on, book
+				details (titles, authors, descriptions) and some book text are sent to it. Chapter text is
+				used once to write a summary and isn’t kept; Cloudflare says it doesn’t train models on it.
+				No other AI company receives your books.
 			</p>
 		</section>
 	{:else}

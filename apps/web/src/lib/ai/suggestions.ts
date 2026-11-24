@@ -1,6 +1,7 @@
 import { SuggestionsSchema } from '@longshelf/shared/ai';
 import type { Book } from '@longshelf/shared/library';
-import { library } from '#lib/library/index.ts';
+import { library, LIBRARY_MODE } from '#lib/library/index.ts';
+import { localSuggestions } from './local-suggestions.ts';
 
 export type ShelfItem = { book: Book; reason: string };
 export type DismissKind = 'not_now' | 'never';
@@ -8,9 +9,13 @@ export type DismissKind = 'not_now' | 'never';
 /** Suggestions joined to their books. Empty when AI is off or unavailable, so the area hides. */
 export async function loadSuggestions(f: typeof fetch, url: string): Promise<ShelfItem[]> {
 	try {
-		const r = await f(url);
-		if (!r.ok) return [];
-		const { items } = SuggestionsSchema.parse(await r.json());
+		const local = LIBRARY_MODE === 'mirror' ? await localSuggestions(f, url, library) : null;
+		let items = local;
+		if (!items) {
+			const r = await f(url);
+			if (!r.ok) return [];
+			items = SuggestionsSchema.parse(await r.json()).items;
+		}
 		const found = await Promise.all(
 			items.map(async ({ bookId, reason }) => {
 				const page = await library.book(bookId);

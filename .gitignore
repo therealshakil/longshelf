@@ -24,3 +24,7 @@ apps/web/static/sample-covers/
 
 # Local Claude Code settings
 .claude/settings.local.json
+
+# Wrangler local secrets
+.dev.vars*
+!.dev.vars.example

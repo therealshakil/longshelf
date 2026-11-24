@@ -460,6 +460,95 @@
 - **Changed (owner request):** news and magazine issues show their own cover, with the date beneath. An issue without a cover keeps the plain binding from the approved mock.
 - **Data:** `PeriodicalIssue` gains an optional `cover`. Local Calibre mode fills it from the issue's `cover.jpg`. Sample data has no issue covers, so it is unchanged.
 
+## 2026-11-24: Spec 003 specified (library mirror)
+
+- **Written:** `specs/003-library-mirror/spec.md`: upload command, the spec 002 screens on real data, owner-only access, installable app, and a repeatable deploy. Reading progress stays in specs 004 and 005.
+- **Owner decisions:** upload every format (download-only where the reader can't open it), and AI on by default with a plain disclosure in Settings.
+- **Sized against:** the owner's library on this date: 670 books, about 3.3 GB.
+- **Planned (same day):** `specs/003-library-mirror/plan.md`, research R1–R10, data model, three contracts and a quickstart. DR-0010 (accepted by the owner) supersedes DESIGN.md on presigned uploads, normalised metadata tables and CI deploy.
+- **Measured:** largest file 419 MB (two over the Worker's 100 MB request limit), covers 201 MB in total, catalogue 1.3 MB (475 KB gzipped).
+- **Cost:** $0 a month expected. Risk: AI routes may exceed the Free plan's 10 ms CPU; measured in the first task before any fixed cost.
+- **Tasks:** `specs/003-library-mirror/tasks.md`, 42 tasks. MVP is setup, foundation, US1 to US3; never deploy the real library before the access probe passes.
+
+## 2026-11-24: Spec 003 T001–T002
+
+- **Config:** the Worker is now named `longshelf`, with an R2 binding (`BUCKET`) and an Images binding (`IMAGES`). The D1 id is still the local placeholder until the first deploy.
+- **Deploy:** `pnpm run deploy` builds, applies D1 migrations remotely and deploys. `.dev.vars` is ignored by git.
+
+## 2026-11-24: Spec 003 T003 spike (in progress)
+
+- **Created on Cloudflare (owner approved):** D1 `longshelf`, R2 bucket `longshelf`, Worker `longshelf` on workers.dev. It serves the sample library only, plus a temporary `/api/spike` route.
+- **Results:** in `docs/PLAN.md` spike log. The Images binding works. Read next is too heavy for the Free plan's CPU limit, so the owner ruled it moves to the browser (T027 rewritten). The Access identity check waits for Access to be enabled.
+- **Domain (owner):** the library is served only at `library.longshelf.app` (a custom domain in `wrangler.jsonc`). workers.dev and preview URLs are off, so Access on that hostname is the only way in. The bare `longshelf.app` stays free for a public page. Spec, plan, research R5 and quickstart updated.
+- **T003 done:** Access works on `library.longshelf.app`. The owner's browser token carries an email, and the upload token carries its Client ID as `common_name`; Access needed a Service Auth policy for the token. T011 is rewritten to verify the Access token signature itself. The spike route and test data are removed and redeployed.
+
+## 2026-11-24: Spec 003 T004–T008
+
+- **Shared:** `Book` gains `sort` and `rating`. `bookSortKey` uses Calibre's title sort when present. New `MirrorCatalog` with `canonicalJson`, and the ingest Zod contract (`@longshelf/shared/ingest`).
+- **CLI package:** `packages/sync-cli` now holds the Calibre reader, moved from the web app's local mode and extended with title sort, rating and every format's path. `pnpm dev:calibre` reads the owner's library as before (670 items).
+- **CLI config (T018, done early):** `config.ts` (XDG or macOS path, mode 0600, option > env > file).
+- **Dev and tests behind Access:** Access on the Worker also covers the remote connection that dev uses for Workers AI. Unit tests now run with no remote connections. `pnpm dev` passes Access with the CLI's service token, and applies local D1 migrations first, because the real D1 id gave dev a fresh local database.
+
+## 2026-11-24: Spec 003 T009–T010
+
+- **Test library:** `packages/sync-cli/test/fixtures/library/`, 4.8 MB, made with `calibredb`. It has 6 items: three EPUBs, one with EPUB plus PDF, one with no cover, and one news issue. Only public-domain texts and text written for the tests.
+- **Migration:** `0004_mirror.sql` (`book`, `book_file`, `blob`, `catalog` with `previous_sha256`, `ingest_run`), applied locally. It reaches the live database at the next `pnpm run deploy`.
+
+## 2026-11-24: Spec 003 T011–T012
+
+- **Access check in the Worker:** `lib/server/mirror/access.ts` verifies the `Cf-Access-Jwt-Assertion` token with WebCrypto against the team's keys (RS256), checking `aud`, `iss` and expiry. An email means the owner; the configured `common_name` means the CLI. `gate.ts` lets only the CLI reach `/api/ingest/*` and only the owner reach everything else. With no valid token the response is 403, so it fails closed.
+- **Hook:** `hooks.server.ts` applies the gate and sends `X-Robots-Tag: noindex, nofollow` on every response. `robots.txt` disallows everything.
+- **Local runs:** `vite dev`, and the e2e preview (with `--var LONGSHELF_DEV_IDENTITY:1`), act as the owner on localhost only.
+- **Secrets:** `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` and `CLI_CLIENT_ID` are set on the Worker. They were read from Access's own redirect and the CLI config, never printed. `.dev.vars.example` lists them.
+- **Note:** SvelteKit 3 renamed `$app/environment` to `$app/env`.
+
+## 2026-11-24: Spec 003 T013–T022 (US1 code)
+
+- **Server:**
+  - `lib/server/mirror/blobs.ts`: single uploads are hash-checked by R2. Multipart uploads are size-checked. Covers get a 400 px WebP thumbnail, quality 75, with no `blob` row because it shares the cover's hash.
+  - `ingest.ts`: plan with the run lock, books, commit and abort, plus garbage collection that keeps the previous catalogue.
+  - Routes under `/api/ingest/*`.
+- **Contract change:** book records go up in batches of 100 to `/api/ingest/books`, and `commit` only removes books and publishes the catalogue. One 1.3 MB commit body would take longer than the Free plan's 10 ms of CPU just to parse. `plan` also returns `newBooks`.
+- **CLI:** `longshelf library` (`library.ts`, `upload.ts`, `hash-cache.ts`, `report.ts`, `main.ts`) and `longshelf config set|show`.
+- **Tests:** ingest tests run on a real local D1 and R2 through wrangler's `getPlatformProxy`, instead of adding `@cloudflare/vitest-pool-workers` (same miniflare engine, no new dependency). The CLI has 19 tests.
+- **Fixed:** the e2e preview runs `wrangler dev --local-upstream localhost`. Otherwise wrangler rewrites the host to `library.longshelf.app` and the hook refuses the local identity. Dev and e2e pass Access to the remote AI binding with the CLI's token (`accessEnv()`).
+- **T023 (US1 checkpoint):** the CLI was run on a copy of the test library against a local preview. First run: "Uploaded 6 books (4.0 MB)". Second: "Nothing changed". After a title edit in Calibre: "updated 1". Fixed along the way:
+  - the hash cache didn't create its folder on a fresh machine;
+  - SvelteKit refused PUTs with no content type as cross-site form posts, so the CLI now sends `application/octet-stream`;
+  - the CLI blamed the upload key for any 403. It now does so only for the gate's or Access's refusal.
+
+## 2026-11-24: Spec 003 T024–T025
+
+- **Read routes:** `/api/catalog` (ETag, and 304 when unchanged), `/api/covers/:sha` (thumbnail first, `?size=full` for the original), and `/api/files/:sha` (Range support for the reader; `?download=` gives a safe RFC 6266 file name). All stream from R2, and a hash is served only as the kind it was stored as. 6 tests.
+
+## 2026-11-24: Spec 003 T026
+
+- **Screens on the mirror:** `#lib/library/index.ts` stays the one switch.
+  - In a deployment (`LONGSHELF_LIBRARY=mirror`, set by `pnpm run deploy`), `library` is a lazy source. It fetches `/api/catalog` once and answers through the existing snapshot code, so none of its 19 importers changed.
+  - The mirror build renders in the browser only. The sample build keeps server rendering, so e2e keeps its fixed data and its progressive-enhancement test.
+- **Checked:** a mirror build on the T023 local data. Library shows the test books with covers and "Synced 7 min ago". Home shows the news cover. The reader opens Moby Dick from `/api/files` (HTTP 200). No page errors. 5 unit tests for the loader (format order, empty mirror, Access redirect, retry).
+
+## 2026-11-24: Spec 003 T027
+
+- **Read next and More like this in the browser (owner ruling):** in a deployment, `loadSuggestions` runs the spec 002 rules (moved to `#lib/ai/suggest.ts`, with the server path re-exporting) on the catalogue the browser holds. A new `/api/ai/suggestion-data` returns only stored matches for the seed books, known copies and dismissals, so the Worker loads no library. Sample and local modes still use the server routes, so e2e is unchanged.
+- **Server book data:** `serverLibrary()` reads D1 `book` rows in a deployment (`book`, `allBooks`) and is the shared library elsewhere. Dismiss, genres and the two jobs use it.
+- **Risk kept open:** the genre and embedding jobs still load every book in one request. They're owner-started and rare. Measure them on the real library before relying on them.
+
+## 2026-11-24: Spec 003 T030, and T028/T029 decisions
+
+- **T030:** Settings, under "Where your books go", now says that while AI is on, book details (titles, authors, descriptions) and some book text are sent to Workers AI. It's checked by a new e2e test with AI on. The text sits in the existing paragraph, with no layout change.
+- **T029 (owner):** the mirror e2e is on demand (`pnpm test:e2e:mirror`), like `test:a11y`, so everyday e2e stays fast.
+- **T028 (owner):** the "Save a copy" sketch (book page ⋯ menu, one item per format with its size) was not approved as is. The design is to be changed before building.
+- e2e: 50 passed, 1 skipped, before the disclosure test moved. The moved test passes.
+- **Owner request:** the public-domain test library becomes a public showcase library on its own subdomain, with books the owner picks to represent them. Planned for Phase 2 (spec 004) in `docs/PLAN.md`, with its needs listed. Not part of spec 003.
+
+## 2026-11-24: Spec 003 T028 (Save a copy)
+
+- **Design:** the owner rejected the first sketch, a ⋯ menu group with mixed type sizes. Three options were researched and rendered: a tidied menu, a Files row in Details, and a line under the actions. Sources: NN/g says hidden menu commands are less discoverable; Apple HIG says group with separators and use submenus sparingly; Material 3 uses one label style for menu items. The owner chose **B, a Files row in Details**.
+- **Built:** each stored format links to its file with its size, saved as `Title - Author.ext`. Books with no EPUB or KEPUB get a plain "Can't be read here" line in place of the Read action. Checked on a mirror build: the PDF saved as "The King in Yellow - Robert W. Chambers.pdf".
+- **Also fixed:** the T030 Settings paragraph had been committed without formatting, which failed `pnpm lint`.
+- **Tests:** 370 unit tests; e2e 52 passed, 1 skipped; lint clean.
+
 ## 2026-11-24: OPDS spike started
 
 - **Opened:** branch `opds-spike`, with questions and desk findings in `docs/PLAN.md` (Spike: OPDS).

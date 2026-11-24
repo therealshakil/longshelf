@@ -6,7 +6,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { titleSortKey } from '@longshelf/shared/library';
+	import { bookSortKey } from '@longshelf/shared/library';
 	import LibraryTabs, { TABS, type TabId } from '#lib/components/LibraryTabs.svelte';
 	import BookGrid from '#lib/components/BookGrid.svelte';
 	import AuthorList from '#lib/components/AuthorList.svelte';
@@ -34,7 +34,7 @@
 	const byLetter = $derived(
 		Object.entries(
 			data.all.reduce<Record<string, typeof data.all>>((acc, b) => {
-				const l = headingLetter(titleSortKey(b.title));
+				const l = headingLetter(bookSortKey(b));
 				(acc[l] ??= []).push(b);
 				return acc;
 			}, {})

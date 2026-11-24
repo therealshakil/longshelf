@@ -2,7 +2,7 @@ import { error, json } from '@sveltejs/kit';
 import { DismissSchema, UndoDismissSchema } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { dismiss, undoDismiss } from '#lib/server/ai/suggestions.ts';
-import { library } from '#lib/library/index.ts';
+import { serverLibrary } from '#lib/server/mirror/server-library.ts';
 import type { RequestHandler } from './$types';
 
 /** A JSON request can't be sent from another site without a preflight. */
@@ -16,7 +16,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	requireJson(request);
 	const parsed = DismissSchema.safeParse(await request.json().catch(() => null));
 	if (!parsed.success) error(400, 'Send { "bookId", "kind": "not_now" or "never" }.');
-	if (!(await library.book(parsed.data.bookId))) error(404, 'No such book.');
+	if (!(await serverLibrary().book(parsed.data.bookId))) error(404, 'No such book.');
 	await dismiss(aiEnv().db, parsed.data.bookId, parsed.data.kind);
 	return json({ ok: true });
 };

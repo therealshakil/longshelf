@@ -31,3 +31,8 @@ export function statusLabel(status: ReadStatus): string | null {
 export function titleSortKey(title: string): string {
 	return title.replace(/^(the|a|an)\s+/i, '').toLocaleLowerCase('en');
 }
+
+/** A book's sort key: Calibre's title sort when it has one, else the The/A/An rule. */
+export function bookSortKey(book: { title: string; sort?: string }): string {
+	return book.sort ? book.sort.toLocaleLowerCase('en') : titleSortKey(book.title);
+}

@@ -22,8 +22,10 @@ beforeAll(() => {
 	writeFileSync(join(root, 'Mary Shelley/Frankenstein (1)/cover.jpg'), 'jpg');
 	const db = new DatabaseSync(join(root, 'metadata.db'));
 	db.exec(`
-		CREATE TABLE books (id INTEGER PRIMARY KEY, uuid TEXT, title TEXT, series_index REAL,
+		CREATE TABLE books (id INTEGER PRIMARY KEY, uuid TEXT, title TEXT, sort TEXT, series_index REAL,
 			timestamp TEXT, pubdate TEXT, path TEXT, has_cover INTEGER);
+		CREATE TABLE ratings (id INTEGER PRIMARY KEY, rating INTEGER);
+		CREATE TABLE books_ratings_link (id INTEGER PRIMARY KEY, book INTEGER, rating INTEGER);
 		CREATE TABLE authors (id INTEGER PRIMARY KEY, name TEXT, sort TEXT);
 		CREATE TABLE books_authors_link (id INTEGER PRIMARY KEY, book INTEGER, author INTEGER);
 		CREATE TABLE tags (id INTEGER PRIMARY KEY, name TEXT);
@@ -38,8 +40,8 @@ beforeAll(() => {
 		CREATE TABLE custom_column_1 (id INTEGER PRIMARY KEY, value TEXT);
 		CREATE TABLE books_custom_column_1_link (id INTEGER PRIMARY KEY, book INTEGER, value INTEGER);
 		INSERT INTO books VALUES
-			(1, '${BOOK}', 'Frankenstein', 1, '2026-11-20 10:00:00+00:00', '1818-01-01 00:00:00+00:00', 'Mary Shelley/Frankenstein (1)', 1),
-			(2, '${NEWS}', 'The Paper [Sat, 14 Nov 2026]', 1, '2026-11-14 10:00:00+00:00', '0101-01-01 00:00:00+00:00', 'calibre/The Paper (2)', 0);
+			(1, '${BOOK}', 'Frankenstein', 'Frankenstein', 1, '2026-11-20 10:00:00+00:00', '1818-01-01 00:00:00+00:00', 'Mary Shelley/Frankenstein (1)', 1),
+			(2, '${NEWS}', 'The Paper [Sat, 14 Nov 2026]', 'Paper [Sat, 14 Nov 2026], The', 1, '2026-11-14 10:00:00+00:00', '0101-01-01 00:00:00+00:00', 'calibre/The Paper (2)', 0);
 		INSERT INTO authors VALUES (1, 'Mary Shelley', 'Shelley, Mary');
 		INSERT INTO books_authors_link (book, author) VALUES (1, 1), (2, 1);
 		INSERT INTO tags VALUES (1, 'Gothic'), (2, 'News');

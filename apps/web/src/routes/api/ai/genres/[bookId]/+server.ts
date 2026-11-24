@@ -3,11 +3,11 @@ import { GenreActionSchema, type GenreChange } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { bookGenres, changeGenre } from '#lib/server/ai/genres.ts';
 import { requireEnabled } from '#lib/server/ai/suggestions.ts';
-import { library } from '#lib/library/index.ts';
+import { serverLibrary } from '#lib/server/mirror/server-library.ts';
 import type { RequestHandler } from './$types';
 
 async function requireBook(id: string) {
-	if (!(await library.book(id))) error(404, 'No such book.');
+	if (!(await serverLibrary().book(id))) error(404, 'No such book.');
 }
 
 export const GET: RequestHandler = async ({ params }) => {

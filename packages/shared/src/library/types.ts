@@ -26,7 +26,11 @@ export const BookSchema = z.object({
 	formats: z.array(z.string()),
 	addedAt: z.iso.date(),
 	pubYear: z.string().optional(),
-	publisher: z.string().optional()
+	publisher: z.string().optional(),
+	/** Calibre's title sort, e.g. "Tale of Two Cities, A". */
+	sort: z.string().optional(),
+	/** 0 to 5 stars (Calibre stores 0 to 10). */
+	rating: z.number().min(0).max(5).optional()
 });
 export type Book = z.infer<typeof BookSchema>;
 

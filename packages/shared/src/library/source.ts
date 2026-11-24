@@ -43,6 +43,8 @@ export interface LibrarySource {
 	positions(bookId: string): Promise<ReadingPosition[]>;
 	/** URL of the book file the reader opens (sample: static EPUB; 004: OPFS or R2). */
 	bookFileUrl(bookId: string): Promise<string | null>;
+	/** Every stored format, to save a copy (spec 003 FR-012). Only the mirror has these. */
+	files?(bookId: string): Promise<BookFile[]>;
 
 	// Status everywhere
 	status(bookId: string): Promise<ReadStatus>;
@@ -50,3 +52,13 @@ export interface LibrarySource {
 }
 
 export const ALSO_READING_MAX = 5;
+
+/** One saveable file of a book: its format, size in bytes, and a URL that downloads it. */
+export interface BookFile {
+	format: string;
+	size: number;
+	url: string;
+}
+
+/** The formats the reader opens (spec 003 FR-011). */
+export const READABLE_FORMATS = ['EPUB', 'KEPUB'];

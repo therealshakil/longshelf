@@ -1,6 +1,6 @@
 import type { LibrarySource } from './source.ts';
 import { ALSO_READING_MAX } from './source.ts';
-import { titleSortKey } from './status.ts';
+import { bookSortKey } from './status.ts';
 import type {
 	Author,
 	AuthorRef,
@@ -36,7 +36,7 @@ const slug = (name: string) =>
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/(^-|-$)/g, '');
 
-const byTitle = (a: Book, b: Book) => titleSortKey(a.title).localeCompare(titleSortKey(b.title));
+const byTitle = (a: Book, b: Book) => bookSortKey(a).localeCompare(bookSortKey(b));
 const byAuthor = (a: Book, b: Book) =>
 	(a.authors[0]?.sort ?? '').localeCompare(b.authors[0]?.sort ?? '') || byTitle(a, b);
 const byAdded = (a: Book, b: Book) => b.addedAt.localeCompare(a.addedAt);

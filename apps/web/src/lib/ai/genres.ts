@@ -7,7 +7,7 @@ import {
 	type GenreIndex,
 	type GenreState
 } from '@longshelf/shared/ai';
-import { titleSortKey, type Book, type Shelf, type ShelfSummary } from '@longshelf/shared/library';
+import { bookSortKey, type Book, type Shelf, type ShelfSummary } from '@longshelf/shared/library';
 import { library } from '#lib/library/index.ts';
 
 export type BookGenre = BookGenres['genres'][number];
@@ -23,7 +23,7 @@ export const genreSlug = (name: string) =>
 		.replace(/^-|-$/g, '');
 
 const ORDER: Record<GenreSort, (a: Book, b: Book) => number> = {
-	title: (a, b) => titleSortKey(a.title).localeCompare(titleSortKey(b.title)),
+	title: (a, b) => bookSortKey(a).localeCompare(bookSortKey(b)),
 	author: (a, b) => (a.authors[0]?.sort ?? '').localeCompare(b.authors[0]?.sort ?? ''),
 	added: (a, b) => b.addedAt.localeCompare(a.addedAt)
 };

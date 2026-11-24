@@ -9,7 +9,7 @@
 	import Download from '@lucide/svelte/icons/download';
 	import Check from '@lucide/svelte/icons/check';
 	import Ellipsis from '@lucide/svelte/icons/ellipsis';
-	import type { BookWithPositions } from '@longshelf/shared/library';
+	import { READABLE_FORMATS, type BookWithPositions } from '@longshelf/shared/library';
 	import { deviceName, lastReadLabel, splitPositions } from '#lib/library/format.ts';
 
 	let {
@@ -28,6 +28,8 @@
 	const book = $derived(item.book);
 	const pos = $derived(splitPositions(item.positions));
 	const author = $derived(book.authors[0]);
+	/** Spec 003 US2 scenario 4: no EPUB or KEPUB means no Read action, and a plain reason. */
+	const readable = $derived(book.formats.some((f) => READABLE_FORMATS.includes(f)));
 	let menuOpen = $state(false);
 </script>
 
@@ -62,10 +64,18 @@
 			</dl>
 		{/if}
 		<div class="actions">
-			<a class="go" href={resolve('/read/[id]', { id: book.id })}
-				>{item.status.kind === 'unread' ? 'Start reading' : 'Continue reading'}
-				<ArrowRight class="size-4" aria-hidden="true" /></a
-			>
+			{#if readable}
+				<a class="go" href={resolve('/read/[id]', { id: book.id })}
+					>{item.status.kind === 'unread' ? 'Start reading' : 'Continue reading'}
+					<ArrowRight class="size-4" aria-hidden="true" /></a
+				>
+			{:else}
+				<p class="unreadable">
+					{book.formats.length
+						? `Can’t be read here (${book.formats.join(', ')}). Save a copy from Details.`
+						: 'There’s no book file in Calibre.'}
+				</p>
+			{/if}
 			<button
 				type="button"
 				class="out"
@@ -205,6 +215,10 @@
 		color: var(--r-on-accent);
 		font-weight: var(--r-weight-strong);
 		text-decoration: none;
+	}
+	.unreadable {
+		color: var(--r-text-muted);
+		max-width: 22rem;
 	}
 	.go:hover {
 		background: var(--r-accent);
