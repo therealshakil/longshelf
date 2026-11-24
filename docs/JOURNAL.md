@@ -586,3 +586,10 @@
 - **Stability:** under 6 workers, a hydration-driven redirect needed more than the 5 s expect default, so it is raised to 10 s. Two full runs passed (52 passed, 1 skipped).
 - **Build reuse is safe:** the stamp sits in `.svelte-kit/cloudflare`, which the adapter deletes on every build, so a deploy build always forces e2e to rebuild.
 - **Still slow:** each e2e test spends most of its time loading pages from one local Worker. The next step would be fewer full-library page loads per test, which means test-by-test changes. Not done.
+
+## 2026-11-24: Spec 003 US5 (T037–T038)
+
+- **T037:** `docs/DEPLOY.md` is complete. There is a new root `README.md` (there was none, and the repository is public), linking deploy, design, plan and decisions.
+- **T038 on the live deployment:**
+  - `pnpm run deploy` twice: both said "No migrations to apply" and deployed cleanly (versions `9083b943`, then `a8a0b55e`). FR-023.
+  - A Worker that throws at start-up was rejected by Cloudflare at upload (error 10021). The live site kept serving `a8a0b55e`, and its upload route still answered from the real Worker. FR-024.

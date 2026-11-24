@@ -208,8 +208,8 @@ access probe).
 
 **Independent test**: follow `docs/DEPLOY.md` from scratch, then deploy a migration twice.
 
-- [ ] T037 [US5] Write `docs/DEPLOY.md` from quickstart steps 1 to 3: a costs check with the research R9 table and links (FR-025), resource creation, the real D1 id, `pnpm run deploy`, Access (from T033), and CLI config. Each step names the exact command or dashboard screen. Link it from `README.md` and `CLAUDE.md`.
-- [ ] T038 [US5] Check FR-023 and FR-024 on the deployment: run `pnpm run deploy` twice (the second applies no migrations), then deploy a build that throws at start-up in a throwaway commit (not merged), and confirm the previous version still serves. Record the results in `docs/JOURNAL.md`.
+- [X] T037 [US5] Write `docs/DEPLOY.md` from quickstart steps 1 to 3: a costs check with the research R9 table and links (FR-025), resource creation, the real D1 id, `pnpm run deploy`, Access (from T033), and CLI config. Each step names the exact command or dashboard screen. Link it from `README.md` and `CLAUDE.md`.
+- [X] T038 [US5] Check FR-023 and FR-024 on the deployment: run `pnpm run deploy` twice (the second applies no migrations), then deploy a build that throws at start-up in a throwaway commit (not merged), and confirm the previous version still serves. Record the results in `docs/JOURNAL.md`.
 
 ---
 
