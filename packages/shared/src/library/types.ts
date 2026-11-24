@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /** Library entities read by every screen (specs/002-redesign-and-ai/data-model.md). */
 
@@ -6,11 +6,14 @@ export const AuthorRefSchema = z.object({
 	id: z.string().min(1),
 	name: z.string().min(1),
 	/** Sort form, e.g. "Austen, Jane". Single-name authors sort as themselves. */
-	sort: z.string().min(1)
+	sort: z.string().min(1),
 });
 export type AuthorRef = z.infer<typeof AuthorRefSchema>;
 
-export const CoverSchema = z.object({ url: z.string().min(1), alt: z.string() });
+export const CoverSchema = z.object({
+	url: z.string().min(1),
+	alt: z.string(),
+});
 
 export const BookSchema = z.object({
 	id: z.string().min(1),
@@ -30,7 +33,7 @@ export const BookSchema = z.object({
 	/** Calibre's title sort, e.g. "Tale of Two Cities, A". */
 	sort: z.string().optional(),
 	/** 0 to 5 stars (Calibre stores 0 to 10). */
-	rating: z.number().min(0).max(5).optional()
+	rating: z.number().min(0).max(5).optional(),
 });
 export type Book = z.infer<typeof BookSchema>;
 
@@ -48,15 +51,17 @@ export const ReadingPositionSchema = z
 		cfi: z.string().optional(),
 		readAt: z.iso.datetime(),
 		furthestHref: z.string(),
-		furthestPercent: z.number().min(0).max(100)
+		furthestPercent: z.number().min(0).max(100),
 	})
 	.refine((p) => p.furthestPercent >= p.percent, {
-		message: '`furthestPercent` ≥ `percent` for the same source'
+		message: "`furthestPercent` ≥ `percent` for the same source",
 	});
 export type ReadingPosition = z.infer<typeof ReadingPositionSchema>;
 
 export type ReadStatus =
-	{ kind: 'unread' } | { kind: 'in-progress'; percent: number } | { kind: 'finished' };
+	| { kind: "unread" }
+	| { kind: "in-progress"; percent: number }
+	| { kind: "finished" };
 
 export const AuthorSchema = AuthorRefSchema.extend({
 	lifeDates: z.string().optional(),
@@ -67,16 +72,20 @@ export const AuthorSchema = AuthorRefSchema.extend({
 			credit: z.string(),
 			licence: z.string(),
 			source: z.url().optional(),
-			alt: z.string()
+			alt: z.string(),
 		})
 		.optional(),
 	bibliography: z.array(
-		z.object({ title: z.string(), year: z.string().optional(), ownedBookId: z.string().optional() })
-	)
+		z.object({
+			title: z.string(),
+			year: z.string().optional(),
+			ownedBookId: z.string().optional(),
+		}),
+	),
 });
 export type Author = z.infer<typeof AuthorSchema>;
 
-export type ShelfKind = 'collection' | 'genre';
+export type ShelfKind = "collection" | "genre";
 
 export interface ShelfSummary {
 	kind: ShelfKind;
@@ -99,11 +108,11 @@ export const PeriodicalIssueSchema = z.object({
 	issueDate: z.iso.date(),
 	/** Display label for the date, e.g. "Sat 14 Nov" or "November". */
 	issueLabel: z.string(),
-	frequency: z.enum(['daily', 'weekly', 'monthly']),
-	status: z.enum(['new', 'unread', 'in-progress', 'finished']),
+	frequency: z.enum(["daily", "weekly", "monthly"]),
+	status: z.enum(["new", "unread", "in-progress", "finished"]),
 	percent: z.number().min(0).max(100).optional(),
 	/** The issue's own cover, when the download has one. */
-	cover: CoverSchema.optional()
+	cover: CoverSchema.optional(),
 });
 export type PeriodicalIssue = z.infer<typeof PeriodicalIssueSchema>;
 
@@ -126,6 +135,8 @@ export interface BookPage extends BookWithPositions {
 }
 
 export interface SyncState {
-	state: 'up-to-date' | 'syncing' | 'offline' | 'attention';
+	state: "up-to-date" | "syncing" | "offline" | "attention";
 	lastSync?: string;
+	/** Why it needs attention: the Cloudflare Access sign-in has run out (spec 003). */
+	reason?: "sign-in";
 }

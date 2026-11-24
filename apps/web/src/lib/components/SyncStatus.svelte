@@ -3,6 +3,7 @@
 	It never floats over content.
 -->
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 	import CloudOff from '@lucide/svelte/icons/cloud-off';
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
@@ -22,7 +23,7 @@
 			case 'offline':
 				return 'Offline';
 			case 'attention':
-				return 'Sync needs attention';
+				return sync.reason === 'sign-in' ? 'Sign in again' : 'Sync needs attention';
 			default:
 				return minutes === null
 					? 'Synced'
@@ -43,7 +44,12 @@
 	{:else}
 		<RefreshCw class="size-4 shrink-0" aria-hidden="true" />
 	{/if}
-	<span class="sync-label">{label}</span>
+	{#if sync.reason === 'sign-in'}
+		<!-- A full page load, so Cloudflare Access can show its sign-in page. -->
+		<a class="sync-label" href={resolve('/')} data-sveltekit-reload>{label}</a>
+	{:else}
+		<span class="sync-label">{label}</span>
+	{/if}
 </span>
 
 <style>

@@ -187,7 +187,7 @@ access probe).
 
 **Independent test**: quickstart step 6 on a phone.
 
-- [ ] T034 [US4] `apps/web/src/service-worker.ts` (SvelteKit native, research R6):
+- [X] T034 [US4] `apps/web/src/service-worker.ts` (SvelteKit native, research R6):
   - precache `build` and `files` (the app shell);
   - cache-first for `/api/covers/*`;
   - network-first for `/api/catalog` with a cache fallback;
@@ -195,8 +195,8 @@ access probe).
   - never cache `/api/ingest/*`, `/api/ai/*` or `/api/files/*` (offline files are spec 004);
   - treat an Access redirect (an opaque redirect, or a response from `*.cloudflareaccess.com`) as offline and serve the cache;
   - activate a new version on the next open (FR-021), with no `skipWaiting` while a reader page is open.
-- [ ] T035 [US4] In `apps/web/src/app.html`, put `crossorigin="use-credentials"` on the manifest link (research R5). Check `apps/web/static/manifest.webmanifest` (name, icons, `display: standalone`) and leave it unchanged unless something is wrong. Surface the "Sign in again" sync state in `SyncStatus` (existing component; label only) when the catalogue fetch was redirected by Access.
-- [ ] T036 [US4] Add a Playwright test in `apps/web/tests/e2e/offline.spec.ts`: load Library, set the context offline, reload, then assert that the shell renders and a cover image has loaded (`naturalWidth > 0`).
+- [X] T035 [US4] In `apps/web/src/app.html`, put `crossorigin="use-credentials"` on the manifest link (research R5). Check `apps/web/static/manifest.webmanifest` (name, icons, `display: standalone`) and leave it unchanged unless something is wrong. Surface the "Sign in again" sync state in `SyncStatus` (existing component; label only) when the catalogue fetch was redirected by Access.
+- [X] T036 [US4] Add a Playwright test in `apps/web/tests/e2e/offline.spec.ts`: load Library, set the context offline, reload, then assert that the shell renders and a cover image has loaded (`naturalWidth > 0`).
 
 **Checkpoint**: the app installs on a phone and opens offline with covers (owner check).
 
@@ -215,6 +215,7 @@ access probe).
 
 ## Phase 8: Polish and real library
 
+- [ ] T043 Speed up the test suites (owner, 2026-11-24: "tests are way too slow"). Measure where `pnpm test`, `pnpm test:e2e` and `pnpm test:e2e:mirror` spend their time, then cut it without losing coverage. Record before and after in `docs/JOURNAL.md`.
 - [ ] T039 Real-library run (owner present; it uploads private data to the owner's own account). Run `longshelf library --dry-run`, then `longshelf library`, timed: SC-001 under 1 hour, a re-run under 30 s (SC-002). On a phone over 4G, the first covers in under 3 s (SC-003). Record the times in `docs/JOURNAL.md`. If SC-003 fails, open the research R2 option of leaving descriptions out of the catalogue.
 - [ ] T040 [P] SC-008: in `packages/sync-cli/test/calibre-untouched.test.ts`, hash every file in a copy of the fixture library, run the snapshot read and a `--dry-run` against a stub server, then hash again: no differences.
 - [ ] T041 [P] Docs:

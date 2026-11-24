@@ -563,3 +563,14 @@
 - **T032:** a refused upload key exits 2 with the `config set` steps. This was already built and tested in T020.
 - **T033:** `docs/DEPLOY.md`, the full procedure: cost table with sources, resources, deploy, Access including the Service Auth policy and Worker secrets, rotating the key without a redeploy, the probe, and uploading. This is also the T037 draft.
 - **CLI:** `pnpm longshelf …` from the repository root.
+
+## 2026-11-24: Spec 003 US4 (T034–T036)
+
+- **Service worker** (`src/service-worker.ts`, SvelteKit's own, with SvelteKit 3's `$app/manifest`, `$app/env` and `$app/service-worker`):
+  - The shell is precached per version, leaving out the sample data.
+  - Covers are cache-first, the catalogue network-first with the cached copy as fallback, and pages network-first with the cached start page offline.
+  - Book files, AI and ingest are never cached.
+  - A new version takes over on the next open, never mid-read.
+- **Sign in again:** when Access redirects the catalogue fetch, the worker serves the cached copy marked `sign-in`, and the header shows a "Sign in again" link that reloads into Access. Offline shows "Offline". The manifest already had `crossorigin="use-credentials"`.
+- **T036:** a mirror e2e test opens Library, goes offline, reloads, and sees the shell, a loaded cover and "Offline". Mirror e2e: 5 passed. Everyday e2e: 51 passed plus the disclosure test, which was fixed after Prettier re-wrapped its text. 370 unit tests pass.
+- **Owner:** the tests are too slow. T043 is added to optimise them next.

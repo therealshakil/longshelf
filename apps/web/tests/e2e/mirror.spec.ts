@@ -73,3 +73,25 @@ test('the news issue shows its own cover on Home', async ({ page }) => {
 	await expect(page.getByText('The Evening Courier, Sat, 14 Nov 2026')).toBeAttached();
 	await expect(page.locator('.issues img[src^="/api/covers/"]')).toBeVisible();
 });
+
+test('after a first visit, the app opens offline with the covers it has seen (SC-007)', async ({
+	page,
+	context
+}) => {
+	await page.goto('/library?tab=all');
+	await page.evaluate(() => navigator.serviceWorker.ready);
+	// The first load installs the worker; the second is served through it and fills the caches.
+	await page.reload({ waitUntil: 'networkidle' });
+	await expect(page.locator('img[src^="/api/covers/"]').first()).toBeVisible();
+
+	await context.setOffline(true);
+	await page.reload();
+	await expect(page.getByRole('heading', { name: 'Library', level: 1 })).toBeVisible();
+	const cover = page.locator('img[src^="/api/covers/"]').first();
+	await expect(cover).toBeVisible();
+	await expect
+		.poll(() => cover.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth))
+		.toBeGreaterThan(0);
+	await expect(page.getByText('Offline')).toBeVisible();
+	await context.setOffline(false);
+});
