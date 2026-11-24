@@ -474,3 +474,8 @@
 
 - **Config:** the Worker is now named `longshelf`, with an R2 binding (`BUCKET`) and an Images binding (`IMAGES`). The D1 id is still the local placeholder until the first deploy.
 - **Deploy:** `pnpm run deploy` builds, applies D1 migrations remotely and deploys. `.dev.vars` is ignored by git.
+
+## 2026-11-24: Spec 003 T003 spike (in progress)
+
+- **Created on Cloudflare (owner approved):** D1 `longshelf`, R2 bucket `longshelf`, Worker `longshelf` on workers.dev. It serves the sample library only, plus a temporary `/api/spike` route.
+- **Results:** in `docs/PLAN.md` spike log. The Images binding works. Read next is too heavy for the Free plan's CPU limit, so the owner ruled it moves to the browser (T027 rewritten). The Access identity check waits for Access to be enabled.

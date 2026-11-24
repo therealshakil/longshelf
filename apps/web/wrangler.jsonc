@@ -14,15 +14,13 @@
 	"ai": { "binding": "AI", "remote": true },
 	// Spec 003 (DR-0010): D1 holds mirror metadata; R2 holds files, covers, thumbnails and
 	// catalogues keyed by SHA-256; IMAGES makes cover thumbnails at upload (research R4).
-	// The all-zero database_id is the local placeholder. Before the first deploy, replace it
-	// with the id printed by `wrangler d1 create longshelf` (docs/DEPLOY.md).
 	"r2_buckets": [{ "binding": "BUCKET", "bucket_name": "longshelf" }],
 	"images": { "binding": "IMAGES" },
 	"d1_databases": [
 		{
 			"binding": "DB",
 			"database_name": "longshelf",
-			"database_id": "00000000-0000-0000-0000-000000000000",
+			"database_id": "eca9151d-869c-43aa-869e-9fbf5c09bd50",
 			"migrations_dir": "migrations"
 		}
 	]

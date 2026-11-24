@@ -22,6 +22,22 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
       byte-identical to the library copy (if so, exact web -> Kobo positions are possible).
 - [ ] Note the exact column names and the format of the location value for a KEPUB and a plain EPUB.
 
+## Spike log: spec 003 T003 (deployed Worker, 2026-11-24)
+
+Measured on `longshelf.<account>.workers.dev` with `wrangler tail` CPU times. The catalogue was a
+licence-free synthetic one: 670 records, 1.2 MB.
+
+- **(b) Images binding on workers.dev:** works. One 400 px WebP thumbnail came out at 138 KB, so
+  set a quality option in T015.
+- **(c) CPU:**
+  - Parsing the catalogue took 8 ms warm and 19 ms cold.
+  - Read next over 640 books took 20–24 ms warm and 59 ms cold, over the Free plan's 10 ms
+    (research R9). Cloudflare didn't stop those requests, but that isn't something to rely on.
+  - **Owner ruling:** Read next and More like this run in the browser on the catalogue it
+    already holds. The server returns only stored matches and dismissals. Cost stays $0. This
+    changes T027.
+- **(a) Access identity:** pending. Needs Access enabled on the Worker.
+
 ## Starting scope per spec
 
 ### Phase 1: mirror → spec 003 (does not depend on the spike)
