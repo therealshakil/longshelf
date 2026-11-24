@@ -11,6 +11,7 @@
     "deploy": "pnpm --filter web run deploy",
     "test": "pnpm -r --if-present test",
     "test:e2e": "pnpm --filter web test:e2e",
+    "test:e2e:mirror": "pnpm --filter web test:e2e:mirror",
     "test:a11y": "pnpm --filter web test:a11y",
     "design:compare": "pnpm --filter web design:compare",
     "lint": "pnpm -r --if-present lint",

@@ -548,3 +548,7 @@
 - **Built:** each stored format links to its file with its size, saved as `Title - Author.ext`. Books with no EPUB or KEPUB get a plain "Can't be read here" line in place of the Read action. Checked on a mirror build: the PDF saved as "The King in Yellow - Robert W. Chambers.pdf".
 - **Also fixed:** the T030 Settings paragraph had been committed without formatting, which failed `pnpm lint`.
 - **Tests:** 370 unit tests; e2e 52 passed, 1 skipped; lint clean.
+
+## 2026-11-24: Spec 003 T029
+
+- **`pnpm test:e2e:mirror` (on demand, owner):** a mirror build. The real CLI uploads the test library, then 4 tests check Library with covers, the Files row and a saved file's name, the reader on a mirrored EPUB, and the news cover, with axe on Library and the book page. 4 passed. Everyday `pnpm test:e2e` is unchanged (53 tests, the mirror spec left out). Listed in `CLAUDE.md`.
