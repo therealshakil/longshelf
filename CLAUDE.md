@@ -47,6 +47,8 @@ Run from the repo root (pnpm 12 via corepack, Node 24):
 - `pnpm design:compare`: on-demand screenshots of each page beside its mock; filter with `--only`, `--widths`, `--themes`. Never part of build, push or deploy
 - `pnpm lint`: Prettier + ESLint
 - `pnpm typecheck`: svelte-check / tsc
+- `pnpm longshelf library [--dry-run]`: upload the Calibre library to the mirror; `pnpm longshelf config set|show` (spec 003)
+- `pnpm --filter web test:access <url>`: live probe that nothing is readable without signing in (spec 003 SC-004)
 - `pnpm run deploy`: build, apply D1 migrations remotely, deploy the Worker (DR-0010). Not `pnpm deploy`, which is a pnpm built-in. Setup steps: `docs/DEPLOY.md` (spec 003)
 
 SvelteKit 3 uses `#lib/...` imports (package.json `imports`), not `$lib`.

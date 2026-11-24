@@ -552,3 +552,14 @@
 ## 2026-11-24: Spec 003 T029
 
 - **`pnpm test:e2e:mirror` (on demand, owner):** a mirror build. The real CLI uploads the test library, then 4 tests check Library with covers, the Files row and a saved file's name, the reader on a mirrored EPUB, and the news cover, with axe on Library and the book page. 4 passed. Everyday `pnpm test:e2e` is unchanged (53 tests, the mirror spec left out). Listed in `CLAUDE.md`.
+
+## 2026-11-24: Spec 003 US3 (T031–T033), and the first real deploy
+
+- **Deployed** the mirror build to `library.longshelf.app` (migration 0004 applied remotely). The real CLI uploaded the public-domain test library to the live mirror ("Uploaded 6 books (4.0 MB)"). A second run: "Nothing changed (checked 6 books in 2 s)".
+- **T031 live access probe** (`pnpm --filter web test:access <url>`), all 17 checks passed:
+  - Anonymous: every page, API and file route gets 302 to Access sign-in, with no library data.
+  - The service token gets 403 on every browser route and 200 on ingest.
+  - `X-Robots-Tag: noindex, nofollow` is present.
+- **T032:** a refused upload key exits 2 with the `config set` steps. This was already built and tested in T020.
+- **T033:** `docs/DEPLOY.md`, the full procedure: cost table with sources, resources, deploy, Access including the Service Auth policy and Worker secrets, rotating the key without a redeploy, the probe, and uploading. This is also the T037 draft.
+- **CLI:** `pnpm longshelf …` from the repository root.

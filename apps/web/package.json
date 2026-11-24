@@ -21,6 +21,7 @@
 		"test": "node scripts/gen-tokens.ts && vitest --run",
 		"test:e2e": "playwright test",
 		"test:e2e:mirror": "E2E_MIRROR=1 playwright test",
+		"test:access": "node scripts/test-access.ts",
 		"test:a11y": "A11Y=1 playwright test --project=a11y",
 		"gen": "wrangler types",
 		"typecheck": "node scripts/gen-tokens.ts && wrangler types && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
