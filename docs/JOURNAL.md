@@ -459,3 +459,8 @@
 
 - **Changed (owner request):** news and magazine issues show their own cover, with the date beneath. An issue without a cover keeps the plain binding from the approved mock.
 - **Data:** `PeriodicalIssue` gains an optional `cover`. Local Calibre mode fills it from the issue's `cover.jpg`. Sample data has no issue covers, so it is unchanged.
+
+## 2026-11-24: OPDS spike started
+
+- **Opened:** branch `opds-spike`, with questions and desk findings in `docs/PLAN.md` (Spike: OPDS).
+- **Main finding so far:** OPDS on a stock Kobo needs KOReader. KOReader's Basic auth can't pass Cloudflare Access, so the feed needs its own route and auth. KOReader's own progress sync (kosync) is a possible Wi-Fi alternative to the USB and Calibre-columns path in spec 005.
