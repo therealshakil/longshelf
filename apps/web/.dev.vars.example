@@ -1,0 +1,5 @@
+# Worker secrets for a deployment (spec 003 T011). Set them with `wrangler secret put <NAME>`;
+# never commit real values. Local dev and tests don't need them.
+ACCESS_TEAM_DOMAIN=yourteam.cloudflareaccess.com
+ACCESS_AUD=your-access-application-aud-tag
+CLI_CLIENT_ID=your-service-token-id.access

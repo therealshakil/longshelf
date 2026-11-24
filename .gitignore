@@ -27,3 +27,4 @@ apps/web/static/sample-covers/
 
 # Wrangler local secrets
 .dev.vars*
+!.dev.vars.example

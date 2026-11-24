@@ -493,3 +493,11 @@
 
 - **Test library:** `packages/sync-cli/test/fixtures/library/`, 4.8 MB, made with `calibredb`. It has 6 items: three EPUBs, one with EPUB plus PDF, one with no cover, and one news issue. Only public-domain texts and text written for the tests.
 - **Migration:** `0004_mirror.sql` (`book`, `book_file`, `blob`, `catalog` with `previous_sha256`, `ingest_run`), applied locally. It reaches the live database at the next `pnpm run deploy`.
+
+## 2026-11-24: Spec 003 T011–T012
+
+- **Access check in the Worker:** `lib/server/mirror/access.ts` verifies the `Cf-Access-Jwt-Assertion` token with WebCrypto against the team's keys (RS256), checking `aud`, `iss` and expiry. An email means the owner; the configured `common_name` means the CLI. `gate.ts` lets only the CLI reach `/api/ingest/*` and only the owner reach everything else. With no valid token the response is 403, so it fails closed.
+- **Hook:** `hooks.server.ts` applies the gate and sends `X-Robots-Tag: noindex, nofollow` on every response. `robots.txt` disallows everything.
+- **Local runs:** `vite dev`, and the e2e preview (with `--var LONGSHELF_DEV_IDENTITY:1`), act as the owner on localhost only.
+- **Secrets:** `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` and `CLI_CLIENT_ID` are set on the Worker. They were read from Access's own redirect and the CLI config, never printed. `.dev.vars.example` lists them.
+- **Note:** SvelteKit 3 renamed `$app/environment` to `$app/env`.

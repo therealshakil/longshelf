@@ -55,7 +55,7 @@ access probe).
   `apps/web/scripts/local-calibre.ts` imports from `@longshelf/sync-cli/calibre`. `pnpm dev:calibre` must behave exactly as before (check it starts and shows the library). Move the existing `htmlToText` tests, if any, and add tests for the format paths using a fixture.
 - [X] T009 Build the fixture library `packages/sync-cli/test/fixtures/library/`. Use Calibre (`calibredb add`) on 6 Standard Ebooks titles from `apps/web/static/sample/`, including one with a PDF added as a second format, one without a cover, and one tagged `News` titled `The Evening Courier [Sat, 14 Nov 2026]`. Commit `metadata.db` and the files. Total under 10 MB. Add a `README.md` with the sources and CC0 note.
 - [X] T010 Create `apps/web/migrations/0004_mirror.sql` exactly as in `data-model.md` (tables `book`, `book_file`, `blob`, `catalog` (with `previous_sha256`) and `ingest_run`; `blob.kind` CHECK in `('file','cover','thumb','catalog')`; `catalog.id` and `ingest_run.id` CHECK `= 1`; index `book_file_sha`). Additive only.
-- [ ] T011 Create `apps/web/src/lib/server/mirror/access.ts` (spike result (a)):
+- [X] T011 Create `apps/web/src/lib/server/mirror/access.ts` (spike result (a)):
   - `identity(event)` returns `{ kind: 'owner', email } | { kind: 'cli' } | null`.
   - It verifies `Cf-Access-Jwt-Assertion` with WebCrypto (RS256) against the JWKS at `https://<team>.cloudflareaccess.com/cdn-cgi/access/certs`, cached per isolate. It checks `aud` equals the app's AUD tag, `iss` equals the team domain, and `exp`/`nbf`.
   - **Owner:** a valid token with `email`. The Access Allow policy decides who that is, with no second list in the Worker.
@@ -63,7 +63,7 @@ access probe).
   - Config: Worker secrets `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` and `CLI_CLIENT_ID`, set with `wrangler secret put`, never committed, and listed in `docs/DEPLOY.md`. Add them to `.dev.vars.example` with placeholder values.
   - Under `vite dev` and in tests, a dev identity applies only when `dev` is true and the host is local.
   - Unit tests: missing header gives null; a bad signature gives null; a wrong `aud` gives null; expired gives null; an email token gives `owner`; a `common_name` token gives `cli`; an unknown `common_name` gives null.
-- [ ] T012 Update `apps/web/src/hooks.server.ts` to:
+- [X] T012 Update `apps/web/src/hooks.server.ts` to:
   - refuse with 403 (plain text, no library data) any request with no identity, outside local dev;
   - allow `/api/ingest/*` only for `cli`, and everything else only for `owner`;
   - add `X-Robots-Tag: noindex, nofollow` to every response;
