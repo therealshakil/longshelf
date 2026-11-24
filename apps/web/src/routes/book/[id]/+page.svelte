@@ -8,6 +8,7 @@
 	import BookHeader from '#lib/components/BookHeader.svelte';
 	import GenreChips from '#lib/components/GenreChips.svelte';
 	import ReadNextShelf from '#lib/components/ReadNextShelf.svelte';
+	import { fileSize } from '#lib/library/format.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -52,6 +53,19 @@
 			{/if}
 			<h2 class="section-h">Details</h2>
 			<dl class="details">
+				{#if data.files.length}
+					<!-- Spec 003 FR-012, owner-approved option B: save any stored format. -->
+					<dt>Files</dt>
+					<dd class="files">
+						{#each data.files as f (f.format)}
+							<span>
+								<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- an API file download, not a page -->
+								<a href={f.url} download>{f.format}</a>
+								<span class="size">{fileSize(f.size)}</span>
+							</span>
+						{/each}
+					</dd>
+				{/if}
 				{#each item.details as d (d.label)}
 					<dt>{d.label}</dt>
 					<dd>{d.value}</dd>
@@ -129,6 +143,17 @@
 	}
 	.details dd {
 		margin: 0;
+	}
+	.files {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+	.files a {
+		text-underline-offset: 0.2em;
+	}
+	.files .size {
+		color: var(--r-text-muted);
 	}
 	@media (max-width: 64rem) {
 		.cols {

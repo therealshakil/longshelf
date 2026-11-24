@@ -541,3 +541,10 @@
 - **T028 (owner):** the "Save a copy" sketch (book page ⋯ menu, one item per format with its size) was not approved as is. The design is to be changed before building.
 - e2e: 50 passed, 1 skipped, before the disclosure test moved. The moved test passes.
 - **Owner request:** the public-domain test library becomes a public showcase library on its own subdomain, with books the owner picks to represent them. Planned for Phase 2 (spec 004) in `docs/PLAN.md`, with its needs listed. Not part of spec 003.
+
+## 2026-11-24: Spec 003 T028 (Save a copy)
+
+- **Design:** the owner rejected the first sketch, a ⋯ menu group with mixed type sizes. Three options were researched and rendered: a tidied menu, a Files row in Details, and a line under the actions. Sources: NN/g says hidden menu commands are less discoverable; Apple HIG says group with separators and use submenus sparingly; Material 3 uses one label style for menu items. The owner chose **B, a Files row in Details**.
+- **Built:** each stored format links to its file with its size, saved as `Title - Author.ext`. Books with no EPUB or KEPUB get a plain "Can't be read here" line in place of the Read action. Checked on a mirror build: the PDF saved as "The King in Yellow - Robert W. Chambers.pdf".
+- **Also fixed:** the T030 Settings paragraph had been committed without formatting, which failed `pnpm lint`.
+- **Tests:** 370 unit tests; e2e 52 passed, 1 skipped; lint clean.

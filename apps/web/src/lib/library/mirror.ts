@@ -2,25 +2,45 @@
  * The mirror-backed library (spec 003, contracts/mirror-api.md): the whole catalogue fetched once
  * from /api/catalog, then served by the same snapshot code as local Calibre mode (DR-0009).
  */
-import type { LibrarySource, SyncState } from '@longshelf/shared/library';
+import type { Book, BookFile, LibrarySource, SyncState } from '@longshelf/shared/library';
+import { READABLE_FORMATS } from '@longshelf/shared/library';
 import type { MirrorCatalog } from '@longshelf/shared/library/catalog';
 import { createSnapshotLibrary } from '@longshelf/shared/library/snapshot';
 
-/** EPUB first, then KEPUB: the formats the reader opens (FR-011). */
-const READABLE = ['EPUB', 'KEPUB'];
-
 export function fileUrlFor(catalog: MirrorCatalog, bookId: string): string | null {
 	const files = catalog.files[bookId] ?? [];
-	for (const format of READABLE) {
+	for (const format of READABLE_FORMATS) {
 		const file = files.find((f) => f.format === format);
 		if (file) return `/api/files/${file.sha256}`;
 	}
 	return null;
 }
 
+/** The saved file's name: "Title - Author.epub"; KEPUB keeps Kobo's ".kepub.epub". */
+export function downloadName(book: Book, format: string): string {
+	const ext = format === 'KEPUB' ? 'kepub.epub' : format.toLowerCase();
+	const author = book.authors[0]?.name;
+	return `${book.title}${author ? ` - ${author}` : ''}.${ext}`;
+}
+
+export function filesFor(catalog: MirrorCatalog, book: Book): BookFile[] {
+	return (catalog.files[book.id] ?? []).map((f) => ({
+		format: f.format,
+		size: f.size,
+		url: `/api/files/${f.sha256}?download=${encodeURIComponent(downloadName(book, f.format))}`
+	}));
+}
+
 export function mirrorLibrary(catalog: MirrorCatalog, sync: SyncState): LibrarySource {
 	const source = createSnapshotLibrary(catalog, { fileUrl: (b) => fileUrlFor(catalog, b.id) });
-	return { ...source, syncStatus: async () => sync };
+	return {
+		...source,
+		syncStatus: async () => sync,
+		files: async (bookId) => {
+			const page = await source.book(bookId);
+			return page ? filesFor(catalog, page.book) : [];
+		}
+	};
 }
 
 /** Thrown when Cloudflare Access sent us to sign in instead of answering. */

@@ -15,5 +15,5 @@ export const load: PageLoad = async ({ params, fetch, parent }) => {
 				loadBookGenres(fetch, params.id)
 			])
 		: [[], []];
-	return { book, moreLike, genres };
+	return { book, moreLike, genres, files: (await library.files?.(params.id)) ?? [] };
 };

@@ -20,6 +20,19 @@ function startOfDay(d: Date): number {
 	return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 }
 
+/** A file size in plain words: "240 KB", "1.2 MB". */
+export function fileSize(bytes: number): string {
+	if (bytes < 1000) return `${bytes} bytes`;
+	const units = ['KB', 'MB', 'GB'];
+	let v = bytes / 1000;
+	let i = 0;
+	while (v >= 1000 && i < units.length - 1) {
+		v /= 1000;
+		i++;
+	}
+	return `${v < 10 ? v.toFixed(1) : Math.round(v)} ${units[i]}`;
+}
+
 export const DEVICE_NAMES: Record<string, string> = { kobo: 'Kobo', 'this-device': 'this device' };
 
 /** The position on this device, and the other device's position if it differs. */

@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { MirrorCatalog } from '@longshelf/shared/library/catalog';
 import { createSampleLibrary } from '@longshelf/shared/sample';
+import { fileSize } from '../../src/lib/library/format.ts';
 import {
+	downloadName,
 	fetchMirror,
 	fileUrlFor,
 	lazyLibrary,
@@ -71,5 +73,24 @@ describe('mirror library', () => {
 		expect((await lib.allBooks()).length).toBeGreaterThan(0);
 		await lib.syncStatus();
 		expect(load).toHaveBeenCalledTimes(2);
+	});
+});
+
+describe('saving a copy', () => {
+	it('lists every format with a download link named Title - Author', async () => {
+		const lib = await fetchMirror(respond(Response.json(catalog)));
+		const files = await lib.files!('b1');
+		expect(files.map((f) => f.format)).toEqual(['PDF', 'KEPUB', 'EPUB']);
+		expect(files[0].url).toBe(
+			`/api/files/${sha('a')}?download=${encodeURIComponent('Dracula - Bram Stoker.pdf')}`
+		);
+		expect(downloadName(catalog.books[0], 'KEPUB')).toBe('Dracula - Bram Stoker.kepub.epub');
+		expect(await lib.files!('missing')).toEqual([]);
+	});
+
+	it('writes sizes in plain words', () => {
+		expect(fileSize(512)).toBe('512 bytes');
+		expect(fileSize(240_000)).toBe('240 KB');
+		expect(fileSize(1_200_000)).toBe('1.2 MB');
 	});
 });
