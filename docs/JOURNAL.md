@@ -598,3 +598,29 @@
 
 - **T040 (SC-008):** a CLI test copies the test library, runs a full dry run through the real code, and checks every file's hash and modification time is unchanged.
 - **T041:** `docs/DESIGN.md` now describes what was built (the CLI flow, D1 row per book, the catalogue document, browser-only rendering and suggestions, Access verified in the Worker, the service worker). The "see DR-0010" banner is gone. `docs/PLAN.md` Phase 1 is ticked, except the real-library upload.
+
+## 2026-11-24: Showcase collection research (authors of African descent)
+
+- **DR-0011 (owner):** the showcase follows the US public-domain rule. Standard Ebooks and Gutenberg books are accepted on those sites' own copyright checks. Other sources are accepted only if first published in 1930 or earlier.
+- **`docs/showcase/african-descent.md`:** 240 authors searched; 175 have at least one digital copy.
+  - 520 cleared books: 62 on Standard Ebooks, 458 on Gutenberg.
+  - 866 archive.org leads still to check.
+  - Every book is listed in `african-descent-candidates.csv`.
+- **Gaps:**
+  - DocSouth refused connections, so its slave narratives need a manual search.
+  - Authors writing in French, Portuguese and African languages are under-covered.
+  - 65 authors have nothing found yet; their search links are in the doc.
+- **Next:** the owner picks the first books from the cleared list.
+
+## 2026-11-24: Spec 003 T039, first attempt failed, upload fixed
+
+- **Dry run on the real library:** 670 books, would upload 3.2 GB and remove the 6 test books (74 s, mostly hashing).
+- **First real run failed** after 298 s with "fetch failed", having stored nothing new. The lock was released correctly.
+- **Cause, measured:** uploads through the Worker ran at 5–10 Mbit/s per stream (50 MB parts took 42 s and 86 s), against 58 Mbit/s raw upload to Cloudflare. A 95 MB single request with another upload in parallel ran past Node's 300 s response wait (undici `headersTimeout`).
+- **Fix:**
+  - single uploads up to 20 MB, larger files in 10 MB parts (R2's minimum is 5 MiB), so every request finishes in seconds;
+  - network failures and 5xx answers are retried 3 times with growing pauses, which is safe because objects are content-addressed;
+  - 4 uploads at a time;
+  - a network failure now names its cause and the request.
+  - 29 CLI tests, including retry tests. Redeployed. Research R1, the contracts and DESIGN updated.
+- **Also fixed:** two Prettier runs had used Prettier's defaults instead of the project config on `packages/` (Prettier in `pnpm lint` only covers `apps/web`), which left `calibre-untouched.test.ts` committed with the wrong style. All are reformatted with the project config.

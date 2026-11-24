@@ -71,6 +71,9 @@ licence-free synthetic one: 670 records, 1.2 MB.
       - AI off, or capped hard, because anyone can call it;
       - no personal reading progress shown;
       - a recorded cost check, because public traffic counts against the free allowances.
+      - First collection: authors of African descent, under the US public-domain rule (DR-0011).
+        Candidates are in `docs/showcase/african-descent.md`, built with the scripts in
+        `docs/showcase/scripts/`.
 
 ### Phase 3: device progress via Calibre columns → spec 005
 - [ ] Store device location verbatim in `native_location`; merge status and position by separate timestamps

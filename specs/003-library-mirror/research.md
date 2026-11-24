@@ -17,9 +17,9 @@ Sources read 2026-11-24 unless stated. Measurements are from the owner's library
 
 ## R1. Upload path for book files
 
-- **Decision:** files go through the Worker into R2 using the R2 binding. Files up to 95 MB use
+- **Decision:** files go through the Worker into R2 using the R2 binding. Files up to 20 MB use
   one `put` with the SHA-256 checked by R2. Larger files use R2 multipart upload through the
-  binding, in 50 MB parts.
+  binding, in 10 MB parts.
 - **Rationale:** a request body sent to a Worker is capped at 100 MB on the Free plan
   ([Workers limits](https://developers.cloudflare.com/workers/platform/limits/)), and the library
   has two files above that. Multipart through the binding needs no S3 keys, no request signing
@@ -33,7 +33,7 @@ Sources read 2026-11-24 unless stated. Measurements are from the owner's library
     Worker never learns what arrived.
 - **Integrity:** R2 verifies the SHA-256 on a single `put`. For multipart uploads the CLI hashes
   the file before sending, and the server checks the total size at completion.
-  ASSUMPTION: a size check plus TLS is enough for the two files over 95 MB.
+  ASSUMPTION: a size check plus TLS is enough for the two files over 20 MB.
 
 ## R2. Where metadata lives, and what the app downloads
 

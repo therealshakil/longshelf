@@ -154,7 +154,10 @@ export async function runLibrary(opts: RunOptions, mirror: string): Promise<RunS
 
 		const changed = plan.changedBooks.map((id) => prepared.ingest.get(id)!);
 		for (let i = 0; i < changed.length; i += BOOKS_BATCH_MAX)
-			await opts.client.books({ runId: plan.runId, books: changed.slice(i, i + BOOKS_BATCH_MAX) });
+			await opts.client.books({
+				runId: plan.runId,
+				books: changed.slice(i, i + BOOKS_BATCH_MAX)
+			});
 
 		const catalogBytes = new TextEncoder().encode(JSON.stringify(prepared.catalog));
 		const catalogSha = sha256Of(catalogBytes);

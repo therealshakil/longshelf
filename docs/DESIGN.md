@@ -44,7 +44,7 @@ v1 is layers 0 and 1. Column names are configuration, so the core contains no Ko
 - `longshelf library` (spec 003, DR-0010): reads books and every format, SHA-256 each file through a
   cache keyed by path, size and mtime; `POST /api/ingest/plan` (takes a run lock, returns missing
   hashes and changed/removed books); uploads each missing object through the Worker into R2 (one
-  request up to 95 MB, 50 MB parts above); `POST /api/ingest/books` in batches of 100; uploads the
+  request up to 20 MB, 10 MB parts above, four at a time, retried); `POST /api/ingest/books` in batches of 100; uploads the
   catalogue document; `POST /api/ingest/commit`. Asks before removing more than 10% of the mirror.
   Contract: `specs/003-library-mirror/contracts/`.
 - `longshelf progress`: read the configured custom columns (percent, location, last-read, status) and push

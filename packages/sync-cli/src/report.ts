@@ -63,7 +63,10 @@ export function report(s: RunSummary): { text: string; code: number } {
 		for (const p of s.problems) lines.push(`  "${p.title}": ${p.message}`);
 		if (!s.dryRun) lines.push('Mirror updated for everything else.');
 	}
-	return { text: lines.join('\n'), code: s.problems.length ? EXIT.problems : EXIT.ok };
+	return {
+		text: lines.join('\n'),
+		code: s.problems.length ? EXIT.problems : EXIT.ok
+	};
 }
 
 /** A failure that ends the run, with the exit code and the next action in plain words. */

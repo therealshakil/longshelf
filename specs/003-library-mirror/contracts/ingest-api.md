@@ -41,24 +41,24 @@ Response 200:
 
 ## `PUT /api/ingest/blobs/:sha256?run=<runId>&kind=file|cover|catalog`
 
-For bodies up to 95 MB. The body is streamed to R2 with `sha256` set, so R2 rejects a mismatch.
+For bodies up to 20 MB. The body is streamed to R2 with `sha256` set, so R2 rejects a mismatch.
 On success a `blob` row is written. For `kind=cover`, the thumbnail is made and stored at
 `t/<sha256>` (research R4). Thumbnails have no `blob` row, because they share their cover's
 hash; the cover route tries `t/` and falls back to `c/`. A failed thumbnail is logged and isn't
 an error.
 
-Responses: 201 stored, 200 already present (idempotent), 400 hash mismatch, 413 over 95 MB.
+Responses: 201 stored, 200 already present (idempotent), 400 hash mismatch, 413 over 20 MB.
 
-## Multipart, for files over 95 MB
+## Multipart, for files over 20 MB
 
 - `POST /api/ingest/blobs/:sha256/multipart?run=<runId>&size=<bytes>` → `{ uploadId }`
-- `PUT /api/ingest/blobs/:sha256/multipart/:uploadId/:part` (1-based, 50 MB except the last) →
+- `PUT /api/ingest/blobs/:sha256/multipart/:uploadId/:part` (1-based, 10 MB except the last) →
   `{ part, etag }`
 - `POST /api/ingest/blobs/:sha256/multipart/:uploadId/complete` with `{ parts: {part, etag}[] }`.
   The server checks the total size against `size`, then writes the `blob` row.
 - `DELETE /api/ingest/blobs/:sha256/multipart/:uploadId` aborts.
 
-The CLI resumes an interrupted multipart upload by starting it again. Parts are 50 MB, so the
+The CLI resumes an interrupted multipart upload by starting it again. Parts are 10 MB, so the
 largest loss is one part.
 
 ## `POST /api/ingest/books`
