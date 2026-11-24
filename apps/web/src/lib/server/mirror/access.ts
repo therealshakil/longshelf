@@ -91,7 +91,8 @@ export function identityFromClaims(
 	config: AccessConfig
 ): Identity | null {
 	if (!claims) return null;
-	if (typeof claims.email === 'string' && claims.email) return { kind: 'owner', email: claims.email };
+	if (typeof claims.email === 'string' && claims.email)
+		return { kind: 'owner', email: claims.email };
 	if (config.cliClientId && claims.common_name === config.cliClientId) return { kind: 'cli' };
 	return null;
 }

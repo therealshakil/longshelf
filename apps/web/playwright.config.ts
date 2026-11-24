@@ -1,5 +1,6 @@
 import { createServer } from 'node:net';
 import { defineConfig } from '@playwright/test';
+import { accessEnv } from '@longshelf/sync-cli/config';
 
 /** A free port for this run, so tests can never reuse a stale server. */
 const freePort = () =>
@@ -35,9 +36,11 @@ export default defineConfig({
 			: [])
 	],
 	webServer: {
-		command: `pnpm build && wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port} --var LONGSHELF_DEV_IDENTITY:1`,
+		command: `pnpm build && wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port} --local-upstream localhost --var LONGSHELF_DEV_IDENTITY:1`,
 		port,
 		reuseExistingServer: false,
+		// The Workers AI binding is remote and sits behind Cloudflare Access (spec 003).
+		env: { ...(process.env as Record<string, string>), ...accessEnv() },
 		timeout: 180_000 // the build plus wrangler start can exceed the 60s default
 	},
 	use: { baseURL: `http://localhost:${port}` }

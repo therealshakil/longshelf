@@ -501,3 +501,14 @@
 - **Local runs:** `vite dev`, and the e2e preview (with `--var LONGSHELF_DEV_IDENTITY:1`), act as the owner on localhost only.
 - **Secrets:** `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` and `CLI_CLIENT_ID` are set on the Worker. They were read from Access's own redirect and the CLI config, never printed. `.dev.vars.example` lists them.
 - **Note:** SvelteKit 3 renamed `$app/environment` to `$app/env`.
+
+## 2026-11-24: Spec 003 T013–T022 (US1 code)
+
+- **Server:**
+  - `lib/server/mirror/blobs.ts`: single uploads are hash-checked by R2. Multipart uploads are size-checked. Covers get a 400 px WebP thumbnail, quality 75, with no `blob` row because it shares the cover's hash.
+  - `ingest.ts`: plan with the run lock, books, commit and abort, plus garbage collection that keeps the previous catalogue.
+  - Routes under `/api/ingest/*`.
+- **Contract change:** book records go up in batches of 100 to `/api/ingest/books`, and `commit` only removes books and publishes the catalogue. One 1.3 MB commit body would take longer than the Free plan's 10 ms of CPU just to parse. `plan` also returns `newBooks`.
+- **CLI:** `longshelf library` (`library.ts`, `upload.ts`, `hash-cache.ts`, `report.ts`, `main.ts`) and `longshelf config set|show`.
+- **Tests:** ingest tests run on a real local D1 and R2 through wrangler's `getPlatformProxy`, instead of adding `@cloudflare/vitest-pool-workers` (same miniflare engine, no new dependency). The CLI has 19 tests.
+- **Fixed:** the e2e preview runs `wrangler dev --local-upstream localhost`. Otherwise wrangler rewrites the host to `library.longshelf.app` and the hook refuses the local identity. Dev and e2e pass Access to the remote AI binding with the CLI's token (`accessEnv()`).

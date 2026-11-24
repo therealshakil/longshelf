@@ -83,7 +83,7 @@ access probe).
 
 ### Tests for US1
 
-- [ ] T013 [P] [US1] Ingest handler tests in `apps/web/tests/unit/ingest.test.ts` (`@cloudflare/vitest-pool-workers`, miniflare D1 and R2, migrations applied). Cover:
+- [X] T013 [P] [US1] Ingest handler tests in `apps/web/tests/unit/ingest.test.ts` (`@cloudflare/vitest-pool-workers`, miniflare D1 and R2, migrations applied). Cover:
   - plan with an empty mirror lists every blob;
   - a second identical plan lists nothing;
   - the lock gives 409 to a second plan, and an expired lock is taken over;
@@ -93,7 +93,7 @@ access probe).
   - commit removing more than 10% without `confirmRemovals` is rejected;
   - after commit, unreferenced blobs are deleted while the previous catalogue is kept;
   - multipart create, parts and complete gives a `blob` row, and a size mismatch is rejected.
-- [ ] T014 [P] [US1] CLI tests in `packages/sync-cli/test/`:
+- [X] T014 [P] [US1] CLI tests in `packages/sync-cli/test/`:
   - `hash-cache.test.ts`: unchanged path, size and mtime aren't rehashed; a changed mtime is;
   - `plan.test.ts`: building the plan request from a snapshot, and `metadataHash` is stable;
   - `upload.test.ts`: multipart splitting into 50 MB parts with a short last part, files at or under 95 MB go as a single PUT, and largest-first ordering with two in flight;
@@ -101,23 +101,23 @@ access probe).
 
 ### Implementation for US1
 
-- [ ] T015 [US1] `apps/web/src/lib/server/mirror/blobs.ts`:
+- [X] T015 [US1] `apps/web/src/lib/server/mirror/blobs.ts`:
   - `hasBlob` and `recordBlob`;
   - a single put to R2 key `<prefix>/<sha256>` with `{ sha256 }`, where the prefix is `f`, `c` or `k` by kind (data-model "R2 keys");
   - multipart create, part, complete and abort through the R2 binding;
   - `makeThumb(sha)`: `env.IMAGES` resizes to 400 px wide WebP, stored at `t/<sha256>` with a `thumb` blob row. Failure is logged, not thrown (research R4).
-- [ ] T016 [US1] `apps/web/src/lib/server/mirror/ingest.ts`: `plan()`, `commit()` and `abort()` as in `contracts/ingest-api.md`.
+- [X] T016 [US1] `apps/web/src/lib/server/mirror/ingest.ts`: `plan()`, `commit()` and `abort()` as in `contracts/ingest-api.md`.
   - **Commit:** one `db.batch`, validated with the T006 schemas.
   - **Garbage collection after commit:** delete R2 objects and `blob` rows not referenced by `book.cover_sha256`, `book_file.sha256`, or the current or previous catalogue, along with thumbnails whose cover is gone. Commit moves the old `catalog.sha256` into `previous_sha256`.
-- [ ] T017 [US1] Routes under `apps/web/src/routes/api/ingest/`: `plan/+server.ts`, `blobs/[sha]/+server.ts` (PUT), `blobs/[sha]/multipart/+server.ts` (POST), `blobs/[sha]/multipart/[uploadId]/[part]/+server.ts` (PUT), `blobs/[sha]/multipart/[uploadId]/complete/+server.ts` (POST), `blobs/[sha]/multipart/[uploadId]/+server.ts` (DELETE), `commit/+server.ts` and `abort/+server.ts`. Stream bodies (`request.body`) straight to R2 and never buffer a file in memory. Return 413 for a single PUT over 95 MB.
-- [ ] T018 [P] [US1] `packages/sync-cli/src/config.ts`: the config file path per OS (`$XDG_CONFIG_HOME/longshelf/config.json`; macOS `~/Library/Application Support/longshelf/config.json`), written with mode 0600. Priority is `--library` > env `LONGSHELF_*` > file > Calibre default. Also `longshelf config set|show`, with secrets masked to the last 4 characters.
-- [ ] T019 [P] [US1] `packages/sync-cli/src/hash-cache.ts`: streaming SHA-256 (`node:crypto`), and a cache file `hash-cache.json` beside the config, keyed by absolute path, size and mtimeMs.
-- [ ] T020 [US1] `packages/sync-cli/src/upload.ts`: a client using `fetch` with `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers. It runs plan, then blobs (largest first, 2 concurrent; single PUT at 95 MB or under, else multipart in 50 MB parts read with `fs.createReadStream({ start, end })`), then the catalogue blob, then commit. It calls abort on SIGINT and on fatal errors. A 401, 403 or Access login redirect maps to exit 2.
-- [ ] T021 [US1] `packages/sync-cli/src/main.ts`: the `library [--dry-run] [--yes] [--library]` and `config` commands from `contracts/cli.md`.
+- [X] T017 [US1] Routes under `apps/web/src/routes/api/ingest/`: `plan/+server.ts`, `blobs/[sha]/+server.ts` (PUT), `blobs/[sha]/multipart/+server.ts` (POST), `blobs/[sha]/multipart/[uploadId]/[part]/+server.ts` (PUT), `blobs/[sha]/multipart/[uploadId]/complete/+server.ts` (POST), `blobs/[sha]/multipart/[uploadId]/+server.ts` (DELETE), `commit/+server.ts` and `abort/+server.ts`. Stream bodies (`request.body`) straight to R2 and never buffer a file in memory. Return 413 for a single PUT over 95 MB.
+- [X] T018 [P] [US1] `packages/sync-cli/src/config.ts`: the config file path per OS (`$XDG_CONFIG_HOME/longshelf/config.json`; macOS `~/Library/Application Support/longshelf/config.json`), written with mode 0600. Priority is `--library` > env `LONGSHELF_*` > file > Calibre default. Also `longshelf config set|show`, with secrets masked to the last 4 characters.
+- [X] T019 [P] [US1] `packages/sync-cli/src/hash-cache.ts`: streaming SHA-256 (`node:crypto`), and a cache file `hash-cache.json` beside the config, keyed by absolute path, size and mtimeMs.
+- [X] T020 [US1] `packages/sync-cli/src/upload.ts`: a client using `fetch` with `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers. It runs plan, then blobs (largest first, 2 concurrent; single PUT at 95 MB or under, else multipart in 50 MB parts read with `fs.createReadStream({ start, end })`), then the catalogue blob, then commit. It calls abort on SIGINT and on fatal errors. A 401, 403 or Access login redirect maps to exit 2.
+- [X] T021 [US1] `packages/sync-cli/src/main.ts`: the `library [--dry-run] [--yes] [--library]` and `config` commands from `contracts/cli.md`.
   - It builds the `MirrorCatalog` from the T008 snapshot, with cover URLs `/api/covers/<sha>` and the files map.
   - The removal prompt follows FR-006, and `--yes` is only allowed for 10 or fewer books.
   - It reports through `report.ts`. A book whose file is missing on disk is reported by title and skipped; the run carries on.
-- [ ] T022 [P] [US1] `packages/sync-cli/src/report.ts`: the plain output and exit codes 0 to 4 exactly as in `contracts/cli.md`.
+- [X] T022 [P] [US1] `packages/sync-cli/src/report.ts`: the plain output and exit codes 0 to 4 exactly as in `contracts/cli.md`.
 - [ ] T023 [US1] Run quickstart step 5 locally (`pnpm --filter web preview` with local D1 and R2) on the fixture library: the first run uploads everything, the second prints "Nothing changed", and an edited title is reported as 1 updated. Record the result in `docs/JOURNAL.md`.
 
 **Checkpoint**: US1 works locally. Mirror data exists, but the screens don't use it yet.

@@ -4,7 +4,6 @@
  */
 import { z } from 'zod';
 import { Sha256Schema, StoredFileSchema } from './library/catalog.ts';
-import { BookSchema } from './library/types.ts';
 
 export { Sha256Schema, StoredFileSchema };
 
@@ -33,27 +32,49 @@ export const PlanResponseSchema = z.object({
 	runId: z.string().min(1),
 	missingBlobs: z.array(Sha256Schema),
 	changedBooks: z.array(z.string()),
+	/** The changed books that are new to the mirror. */
+	newBooks: z.array(z.string()),
 	removedBooks: z.array(z.object({ id: z.string(), title: z.string() })),
 	removalNeedsConfirm: z.boolean()
 });
 export type PlanResponse = z.infer<typeof PlanResponseSchema>;
 
-export const CommitBookSchema = z.object({
+/**
+ * Book metadata as sent to the Worker: shape-checked only (id and title), because parsing every
+ * field of 100 books costs Worker CPU and the caller is the owner's own CLI. The CLI builds it
+ * from the full BookSchema.
+ */
+export const IngestMetadataSchema = z.looseObject({
 	id: z.string().min(1),
-	metadata: BookSchema,
+	title: z.string().min(1)
+});
+
+export const IngestBookSchema = z.object({
+	id: z.string().min(1),
+	metadata: IngestMetadataSchema,
 	metadataHash: Sha256Schema,
 	isNews: z.boolean(),
 	coverSha256: Sha256Schema.optional(),
 	files: z.array(StoredFileSchema)
 });
-export type CommitBook = z.infer<typeof CommitBookSchema>;
+export type IngestBook = z.infer<typeof IngestBookSchema>;
+
+/** At most this many books per /api/ingest/books request. */
+export const BOOKS_BATCH_MAX = 100;
+
+export const BooksRequestSchema = z.object({
+	runId: z.string().min(1),
+	books: z.array(IngestBookSchema).max(BOOKS_BATCH_MAX)
+});
+export type BooksRequest = z.infer<typeof BooksRequestSchema>;
 
 export const CommitRequestSchema = z.object({
 	runId: z.string().min(1),
-	books: z.array(CommitBookSchema),
 	removed: z.array(z.string()),
 	confirmRemovals: z.boolean().optional(),
-	catalogSha256: Sha256Schema
+	catalogSha256: Sha256Schema,
+	added: z.number().int().nonnegative(),
+	updated: z.number().int().nonnegative()
 });
 export type CommitRequest = z.infer<typeof CommitRequestSchema>;
 

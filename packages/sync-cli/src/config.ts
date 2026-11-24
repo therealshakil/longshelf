@@ -73,3 +73,16 @@ export function writeConfigValue(key: keyof LongshelfConfig, value: string, path
 
 /** Secrets shown as ****1234. */
 export const mask = (value: string | undefined) => (value ? `****${value.slice(-4)}` : '(not set)');
+
+/**
+ * Wrangler's variables for passing Cloudflare Access with the CLI's service token, used by dev
+ * and the e2e preview for remote bindings (Workers AI). Empty when the caller already set them
+ * or nothing is configured.
+ */
+export function accessEnv(env: NodeJS.ProcessEnv = process.env): Record<string, string> {
+	if (env.CLOUDFLARE_ACCESS_CLIENT_ID) return {};
+	const { clientId, clientSecret } = loadConfig({}, env);
+	return clientId && clientSecret
+		? { CLOUDFLARE_ACCESS_CLIENT_ID: clientId, CLOUDFLARE_ACCESS_CLIENT_SECRET: clientSecret }
+		: {};
+}

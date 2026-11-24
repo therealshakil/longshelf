@@ -29,7 +29,9 @@ CREATE TABLE book_file (
 CREATE INDEX book_file_sha ON book_file (sha256);
 
 -- Every object in R2, so the plan can say what is missing without listing the bucket.
--- kind: file | cover | thumb | catalog. A row exists only after the object is fully stored.
+-- kind: file | cover | catalog. A row exists only after the object is fully stored.
+-- Thumbnails (t/<cover sha>) have no row: they share the cover's hash. 'thumb' is allowed by the
+-- CHECK but unused.
 CREATE TABLE blob (
 	sha256 TEXT PRIMARY KEY,
 	kind TEXT NOT NULL CHECK (kind IN ('file', 'cover', 'thumb', 'catalog')),

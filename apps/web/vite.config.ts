@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { loadConfig } from '@longshelf/sync-cli/config';
+import { accessEnv } from '@longshelf/sync-cli/config';
 import { localCalibre } from './scripts/local-calibre.ts';
 
 // Unit tests never open remote connections: they stay fast and need no credentials.
@@ -10,13 +10,7 @@ const remoteBindings = !process.env.VITEST;
 
 // Remote bindings (Workers AI in dev) pass Cloudflare Access with the same service token the
 // longshelf CLI uses (spec 003 research R5), unless the caller already set one.
-if (remoteBindings && !process.env.CLOUDFLARE_ACCESS_CLIENT_ID) {
-	const { clientId, clientSecret } = loadConfig();
-	if (clientId && clientSecret) {
-		process.env.CLOUDFLARE_ACCESS_CLIENT_ID = clientId;
-		process.env.CLOUDFLARE_ACCESS_CLIENT_SECRET = clientSecret;
-	}
-}
+if (remoteBindings) Object.assign(process.env, accessEnv());
 
 export default defineConfig({
 	plugins: [
