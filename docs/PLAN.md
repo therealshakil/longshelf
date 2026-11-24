@@ -9,7 +9,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 |---|---|---|---|
 | 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | MVP built (US1+US2); US4 superseded by 002 |
 | 002 | [Redesigned screens and AI features](../specs/002-redesign-and-ai/spec.md) (DR-0002, DR-0003) | 001 | Built and design signed off 2026-11-23 on sample data. Not deployed. Story so far (T053) and AI search (T061–T063) are parked; plain search shipped instead (DR-0008) |
-| 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Built and deployed 2026-11-24 with the test library; the real-library upload (T039) is next |
+| 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Built and deployed 2026-11-24; the owner's 670 books are online at library.longshelf.app |
 | 004 | Read (Phase 2) | 003 | not started |
 | 005 | Device progress (Phase 3) | 004, spike | not started |
 
@@ -55,7 +55,7 @@ licence-free synthetic one: 670 records, 1.2 MB.
 - [x] Library UI: wire the spec 002 screens to real data (save a copy from Details)
 - [x] PWA manifest + service worker (app shell, covers)
 - [x] Cloudflare Access + service token
-- [ ] Upload the owner's real library and record the SC timings (spec 003 T039)
+- [x] Upload the owner's real library and record the SC timings (spec 003 T039; phone check SC-003 by the owner)
 
 ### Phase 2: read → spec 004
 - [ ] foliate-js submodule + `Reader.svelte`

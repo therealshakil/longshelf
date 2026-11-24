@@ -624,3 +624,14 @@
   - a network failure now names its cause and the request.
   - 29 CLI tests, including retry tests. Redeployed. Research R1, the contracts and DESIGN updated.
 - **Also fixed:** two Prettier runs had used Prettier's defaults instead of the project config on `packages/` (Prettier in `pnpm lint` only covers `apps/web`), which left `calibre-untouched.test.ts` committed with the wrong style. All are reformatted with the project config.
+
+## 2026-11-24: Spec 003 T039, the real library is online
+
+- **Upload:** "Uploaded 670 books (3.2 GB), updated 0, removed 6. 0 problems" in **38.4 min** (2,305 s). SC-001 is under 1 hour. The upload link was 58 Mbit/s raw, but the effective rate through the Worker was about 11 Mbit/s.
+- **Re-run:** "Nothing changed (checked 670 books in 5 s)", **6.4 s** wall. SC-002 is under 30 s.
+- **Live D1:**
+  - 670 books, 39 of them news, and the catalogue has 670.
+  - 714 files, including both over 100 MB (the largest is 418 MB) via multipart.
+  - 0 orphaned files, 0 locks.
+- **Access probe re-run with real data:** all checks passed.
+- **Open:** SC-003 (first covers within 3 s on a phone over 4G) needs the owner's phone.
