@@ -118,7 +118,7 @@ access probe).
   - The removal prompt follows FR-006, and `--yes` is only allowed for 10 or fewer books.
   - It reports through `report.ts`. A book whose file is missing on disk is reported by title and skipped; the run carries on.
 - [X] T022 [P] [US1] `packages/sync-cli/src/report.ts`: the plain output and exit codes 0 to 4 exactly as in `contracts/cli.md`.
-- [ ] T023 [US1] Run quickstart step 5 locally (`pnpm --filter web preview` with local D1 and R2) on the fixture library: the first run uploads everything, the second prints "Nothing changed", and an edited title is reported as 1 updated. Record the result in `docs/JOURNAL.md`.
+- [X] T023 [US1] Run quickstart step 5 locally (`pnpm --filter web preview` with local D1 and R2) on the fixture library: the first run uploads everything, the second prints "Nothing changed", and an edited title is reported as 1 updated. Record the result in `docs/JOURNAL.md`.
 
 **Checkpoint**: US1 works locally. Mirror data exists, but the screens don't use it yet.
 

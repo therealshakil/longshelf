@@ -3,8 +3,15 @@
  * changed rehashes nothing (spec 003 SC-002, research R8). The cache lives beside the config.
  */
 import { createHash } from 'node:crypto';
-import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import {
+	createReadStream,
+	existsSync,
+	mkdirSync,
+	readFileSync,
+	statSync,
+	writeFileSync
+} from 'node:fs';
+import { dirname, join } from 'node:path';
 import { configDir } from './config.ts';
 
 interface Entry {
@@ -45,6 +52,7 @@ export class HashCache {
 
 	save() {
 		if (!this.dirty) return;
+		mkdirSync(dirname(this.path), { recursive: true, mode: 0o700 });
 		writeFileSync(this.path, JSON.stringify(this.entries), { mode: 0o600 });
 		this.dirty = false;
 	}

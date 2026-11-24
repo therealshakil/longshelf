@@ -512,3 +512,7 @@
 - **CLI:** `longshelf library` (`library.ts`, `upload.ts`, `hash-cache.ts`, `report.ts`, `main.ts`) and `longshelf config set|show`.
 - **Tests:** ingest tests run on a real local D1 and R2 through wrangler's `getPlatformProxy`, instead of adding `@cloudflare/vitest-pool-workers` (same miniflare engine, no new dependency). The CLI has 19 tests.
 - **Fixed:** the e2e preview runs `wrangler dev --local-upstream localhost`. Otherwise wrangler rewrites the host to `library.longshelf.app` and the hook refuses the local identity. Dev and e2e pass Access to the remote AI binding with the CLI's token (`accessEnv()`).
+- **T023 (US1 checkpoint):** the CLI was run on a copy of the test library against a local preview. First run: "Uploaded 6 books (4.0 MB)". Second: "Nothing changed". After a title edit in Calibre: "updated 1". Fixed along the way:
+  - the hash cache didn't create its folder on a fresh machine;
+  - SvelteKit refused PUTs with no content type as cross-site form posts, so the CLI now sends `application/octet-stream`;
+  - the CLI blamed the upload key for any 403. It now does so only for the gate's or Access's refusal.

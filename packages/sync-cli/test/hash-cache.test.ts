@@ -27,6 +27,14 @@ describe('HashCache', () => {
 		expect(second.hashed).toBe(1);
 	});
 
+	it('creates its folder on first save', async () => {
+		const file = join(dir, 'c.epub');
+		writeFileSync(file, 'c');
+		const cache = new HashCache(join(dir, 'new', 'folder', 'cache.json'));
+		await cache.hash(file);
+		expect(() => cache.save()).not.toThrow();
+	});
+
 	it('starts empty when the cache file is damaged', async () => {
 		const cachePath = join(dir, 'cache.json');
 		writeFileSync(cachePath, '{not json');

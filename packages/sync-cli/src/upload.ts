@@ -31,6 +31,9 @@ export interface BlobSource {
 	bytes?: Uint8Array;
 }
 
+/** Raw bytes; without a content type SvelteKit treats a PUT as a cross-site form post. */
+const OCTETS = { 'content-type': 'application/octet-stream' };
+
 const REFUSED =
 	'The mirror refused the upload key. Set a new one: longshelf config set client-id <id>, then longshelf config set client-secret <secret>.';
 
@@ -52,9 +55,15 @@ export class MirrorClient {
 				...(init.headers ?? {})
 			}
 		});
-		// Access answers a refused token with its sign-in redirect; the Worker with 401/403.
-		if (res.status === 401 || res.status === 403 || (res.status >= 300 && res.status < 400))
-			throw new RunError(EXIT.notConfigured, REFUSED);
+		// Access answers a refused token with its sign-in redirect; the Worker's gate with 401/403
+		// and its own refusal text. Other 403s (e.g. a framework check) keep their message.
+		if (res.status >= 300 && res.status < 400) throw new RunError(EXIT.notConfigured, REFUSED);
+		if (res.status === 401 || res.status === 403) {
+			const text = await res.text();
+			if (res.status === 401 || /sign in|access/i.test(text))
+				throw new RunError(EXIT.notConfigured, REFUSED);
+			throw new Error(`The mirror refused ${path.split('?')[0]}: ${text.slice(0, 200)}`);
+		}
 		if (!res.ok) {
 			const problem = (await res.json().catch(() => null)) as {
 				error?: string;
@@ -89,7 +98,11 @@ export class MirrorClient {
 		const base = `/api/ingest/blobs/${blob.sha256}`;
 		const q = `run=${encodeURIComponent(runId)}&kind=${blob.kind}`;
 		if (blob.size <= SINGLE_PUT_MAX) {
-			await this.call(`${base}?${q}`, { method: 'PUT', body: await readRange(blob, 0, blob.size) });
+			await this.call(`${base}?${q}`, {
+				method: 'PUT',
+				headers: OCTETS,
+				body: await readRange(blob, 0, blob.size)
+			});
 			return;
 		}
 		const { uploadId } = await this.post<{ uploadId: string }>(
@@ -102,6 +115,7 @@ export class MirrorClient {
 				const end = Math.min(start + PART_SIZE, blob.size);
 				const res = await this.call(`${base}/multipart/${uploadId}/${i + 1}?${q}`, {
 					method: 'PUT',
+					headers: OCTETS,
 					body: await readRange(blob, start, end)
 				});
 				parts.push((await res.json()) as { part: number; etag: string });

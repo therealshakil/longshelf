@@ -59,12 +59,28 @@ describe('MirrorClient', () => {
 
 	it('maps a refused key or an Access redirect to exit 2 with the next step', async () => {
 		for (const status of [403, 302]) {
-			const { impl } = fakeFetch(() => new Response(null, { status }));
+			const body = status === 403 ? 'Sign in to Longshelf to continue.' : null;
+			const { impl } = fakeFetch(() => new Response(body, { status }));
 			const err = await new MirrorClient(creds, impl).abort('run').catch((e) => e);
 			expect(err).toBeInstanceOf(RunError);
 			expect(err.code).toBe(EXIT.notConfigured);
 			expect(err.message).toMatch(/longshelf config set client-id/);
 		}
+	});
+
+	it('keeps the message of a 403 that is not about the key', async () => {
+		const { impl } = fakeFetch(
+			() => new Response('Cross-site PUT form submissions are forbidden', { status: 403 })
+		);
+		const err = await new MirrorClient(creds, impl).abort('run').catch((e) => e);
+		expect(err).not.toBeInstanceOf(RunError);
+		expect(err.message).toMatch(/Cross-site/);
+	});
+
+	it('marks uploads as raw bytes', async () => {
+		const { impl, calls } = fakeFetch();
+		await new MirrorClient(creds, impl).putBlob('run', memory(10));
+		expect(calls[0].headers['content-type']).toBe('application/octet-stream');
 	});
 
 	it('maps a held lock on plan to exit 3', async () => {
