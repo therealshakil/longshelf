@@ -527,3 +527,9 @@
   - In a deployment (`LONGSHELF_LIBRARY=mirror`, set by `pnpm run deploy`), `library` is a lazy source. It fetches `/api/catalog` once and answers through the existing snapshot code, so none of its 19 importers changed.
   - The mirror build renders in the browser only. The sample build keeps server rendering, so e2e keeps its fixed data and its progressive-enhancement test.
 - **Checked:** a mirror build on the T023 local data. Library shows the test books with covers and "Synced 7 min ago". Home shows the news cover. The reader opens Moby Dick from `/api/files` (HTTP 200). No page errors. 5 unit tests for the loader (format order, empty mirror, Access redirect, retry).
+
+## 2026-11-24: Spec 003 T027
+
+- **Read next and More like this in the browser (owner ruling):** in a deployment, `loadSuggestions` runs the spec 002 rules (moved to `#lib/ai/suggest.ts`, with the server path re-exporting) on the catalogue the browser holds. A new `/api/ai/suggestion-data` returns only stored matches for the seed books, known copies and dismissals, so the Worker loads no library. Sample and local modes still use the server routes, so e2e is unchanged.
+- **Server book data:** `serverLibrary()` reads D1 `book` rows in a deployment (`book`, `allBooks`) and is the shared library elsewhere. Dismiss, genres and the two jobs use it.
+- **Risk kept open:** the genre and embedding jobs still load every book in one request. They're owner-started and rare. Measure them on the real library before relying on them.

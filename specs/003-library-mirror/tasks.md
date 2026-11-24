@@ -149,7 +149,7 @@ access probe).
   - `syncStatus()` follows `contracts/mirror-api.md`.
 
   Set `export const ssr = false` in `apps/web/src/routes/+layout.ts` (research R3), and return `library` from its load. Update every importer of `library` (`+page.ts` files, components such as `+page.svelte` on Home that call `library.bookFileUrl`) to use layout data or `getLibrary`. The sample build and `pnpm dev:calibre` must still work, and the existing e2e tests must pass.
-- [ ] T027 [US2] Move Read next and More like this to the browser (owner ruling after the T003 spike; Read next took 20–59 ms of CPU against the 10 ms Free plan limit).
+- [X] T027 [US2] Move Read next and More like this to the browser (owner ruling after the T003 spike; Read next took 20–59 ms of CPU against the 10 ms Free plan limit).
   - New routes `GET /api/ai/neighbours?ids=<id,…>` (the stored `book_neighbours` rows for those ids, plus every row with `copies`) and `GET /api/ai/dismissals` (active dismissals).
   - `apps/web/src/lib/ai/suggestions.ts` runs `readNext` and `moreLike` (from `#lib/server/ai/suggest.ts`, moved to a shared browser-safe module `#lib/ai/suggest.ts`) on the browser's `LibrarySource`.
   - `api/ai/read-next` and `api/ai/more-like/[bookId]` are removed. The `/api/ai/usage` guard still gates the features.

@@ -2,7 +2,7 @@ import { error, json } from '@sveltejs/kit';
 import { GenreJobSchema } from '@longshelf/shared/ai';
 import { aiEnv } from '#lib/server/ai/env.ts';
 import { suggestGenres } from '#lib/server/ai/genres.ts';
-import { library } from '#lib/library/index.ts';
+import { serverLibrary } from '#lib/server/mirror/server-library.ts';
 import type { RequestHandler } from './$types';
 
 /** Operator action: suggest genres for unchecked books. Run again while `remaining` is above 0. */
@@ -13,6 +13,6 @@ export const POST: RequestHandler = async ({ request }) => {
 	const parsed = GenreJobSchema.safeParse(await request.json().catch(() => null));
 	if (!parsed.success) error(400, 'Send {} or { "bookIds": [...] }.');
 	const { ai, db, store } = aiEnv();
-	const books = await library.allBooks();
+	const books = await serverLibrary().allBooks();
 	return json(await suggestGenres({ ai, db, store, books, bookIds: parsed.data.bookIds }));
 };
