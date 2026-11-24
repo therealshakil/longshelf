@@ -468,3 +468,7 @@
 ## 2026-11-24: OPDS spike parked
 
 - **Parked (owner decision):** OPDS and KOReader sync are a future nice-to-have, to be specced another time. The desk findings and open questions stay in `docs/PLAN.md`, and the item is listed under "Later, optional".
+
+## 2026-11-24: Portable deployment parked
+
+- **Parked (owner decision):** a Docker image others can install is a future idea, listed in `docs/PLAN.md` under "Later, optional" with the sketch, the case against, and the cost of waiting. Longshelf stays Cloudflare-only for now.

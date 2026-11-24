@@ -89,3 +89,10 @@ To check:
 - [ ] Layer 2 Kobo adapter: highlights, exact positions
 - [ ] Reading stats
 - [ ] OPDS catalogue and KOReader progress sync (parked spike above)
+- [ ] Portable deployment (parked 2026-11-24): a Docker image others can install, beside the Cloudflare
+      deploy. Sketch: `adapter-node`; `node:sqlite` for D1 (same SQL and migrations); a volume folder for
+      R2; covers pre-sized by the CLI instead of the Images binding; AI off or any OpenAI-compatible
+      endpoint; built-in single-owner login instead of Access. Case against: Calibre-Web, Kavita,
+      Booklore and Komga already fill this space, and two hosts roughly double the test and support
+      surface. Cost of waiting: spec 003 is building D1 and R2 access directly, so this would need
+      storage interfaces retrofitted across the routes.
