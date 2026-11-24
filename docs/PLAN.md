@@ -61,6 +61,15 @@ licence-free synthetic one: 670 records, 1.2 MB.
 - [ ] Offline downloads (OPFS), storage settings page
 - [ ] Web progress, outbox, catalog snapshot in Dexie
 - [ ] Playwright smoke test: open app, go offline, open a book
+- [ ] Public showcase library (owner, 2026-11-24): a second, public deployment on its own
+      subdomain that anyone can browse and read. It holds public-domain books the owner picks to
+      represent them, and it grows out of the spec 003 test library. Needs:
+      - a separate Worker, D1 and R2, so the private library's data and key never touch it;
+      - a public, read-only mode: no Access, the fail-closed gate off for reading, ingest still
+        locked to a service token;
+      - AI off, or capped hard, because anyone can call it;
+      - no personal reading progress shown;
+      - a recorded cost check, because public traffic counts against the free allowances.
 
 ### Phase 3: device progress via Calibre columns → spec 005
 - [ ] Store device location verbatim in `native_location`; merge status and position by separate timestamps

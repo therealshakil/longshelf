@@ -540,3 +540,4 @@
 - **T029 (owner):** the mirror e2e is on demand (`pnpm test:e2e:mirror`), like `test:a11y`, so everyday e2e stays fast.
 - **T028 (owner):** the "Save a copy" sketch (book page ⋯ menu, one item per format with its size) was not approved as is. The design is to be changed before building.
 - e2e: 50 passed, 1 skipped, before the disclosure test moved. The moved test passes.
+- **Owner request:** the public-domain test library becomes a public showcase library on its own subdomain, with books the owner picks to represent them. Planned for Phase 2 (spec 004) in `docs/PLAN.md`, with its needs listed. Not part of spec 003.
