@@ -44,11 +44,11 @@ access probe).
 
 ## Phase 2: Foundational (blocks every story)
 
-- [ ] T004 [P] Add optional `sort: z.string().optional()` and `rating: z.number().min(0).max(5).optional()` to `BookSchema` in `packages/shared/src/library/types.ts`. Title ordering in `packages/shared/src/library/status.ts` (`titleSortKey`) uses `sort` when present. Add a test in `status.test.ts`.
-- [ ] T005 [P] Create `packages/shared/src/library/catalog.ts`: the `MirrorCatalog` type (`LibrarySnapshot` & `{ version: 1; files: Record<string, { format: string; sha256: string; size: number }[]> }`), its Zod schema, and `canonicalJson(value)` (sorted keys, no whitespace), used for `metadataHash`. Export it from `packages/shared/src/library/index.ts`. Add unit tests for canonical ordering.
-- [ ] T006 [P] Create `packages/shared/src/ingest.ts` with the Zod schemas from `contracts/ingest-api.md`: plan request and response, commit request and response, multipart responses, and errors. sha256 is `/^[0-9a-f]{64}$/`. Add the `./ingest` export to `packages/shared/package.json`.
-- [ ] T007 Create the `packages/sync-cli` package: `package.json` (`name: @longshelf/sync-cli`, `type: module`, `bin: { longshelf: ./src/main.ts }`, Node 24 engines, depends on `@longshelf/shared`), `tsconfig.json`, and a vitest config. Add it to `pnpm-workspace.yaml` if it isn't already matched.
-- [ ] T008 Move `readCalibreSnapshot`, `htmlToText`, `calibreLibraryPath` and `CalibreFiles` from `apps/web/scripts/local-calibre.ts` to `packages/sync-cli/src/calibre.ts`. Extend them to:
+- [X] T004 [P] Add optional `sort: z.string().optional()` and `rating: z.number().min(0).max(5).optional()` to `BookSchema` in `packages/shared/src/library/types.ts`. Title ordering in `packages/shared/src/library/status.ts` (`titleSortKey`) uses `sort` when present. Add a test in `status.test.ts`.
+- [X] T005 [P] Create `packages/shared/src/library/catalog.ts`: the `MirrorCatalog` type (`LibrarySnapshot` & `{ version: 1; files: Record<string, { format: string; sha256: string; size: number }[]> }`), its Zod schema, and `canonicalJson(value)` (sorted keys, no whitespace), used for `metadataHash`. Export it from `packages/shared/src/library/index.ts`. Add unit tests for canonical ordering.
+- [X] T006 [P] Create `packages/shared/src/ingest.ts` with the Zod schemas from `contracts/ingest-api.md`: plan request and response, commit request and response, multipart responses, and errors. sha256 is `/^[0-9a-f]{64}$/`. Add the `./ingest` export to `packages/shared/package.json`.
+- [X] T007 Create the `packages/sync-cli` package: `package.json` (`name: @longshelf/sync-cli`, `type: module`, `bin: { longshelf: ./src/main.ts }`, Node 24 engines, depends on `@longshelf/shared`), `tsconfig.json`, and a vitest config. Add it to `pnpm-workspace.yaml` if it isn't already matched.
+- [X] T008 Move `readCalibreSnapshot`, `htmlToText`, `calibreLibraryPath` and `CalibreFiles` from `apps/web/scripts/local-calibre.ts` to `packages/sync-cli/src/calibre.ts`. Extend them to:
   - read `books.sort` and `ratings` into `sort` and `rating`;
   - collect every format's path in `files.byFormat` (`Map<uuid, {format, path}[]>`), not only EPUB.
 

@@ -481,3 +481,10 @@
 - **Results:** in `docs/PLAN.md` spike log. The Images binding works. Read next is too heavy for the Free plan's CPU limit, so the owner ruled it moves to the browser (T027 rewritten). The Access identity check waits for Access to be enabled.
 - **Domain (owner):** the library is served only at `library.longshelf.app` (a custom domain in `wrangler.jsonc`). workers.dev and preview URLs are off, so Access on that hostname is the only way in. The bare `longshelf.app` stays free for a public page. Spec, plan, research R5 and quickstart updated.
 - **T003 done:** Access works on `library.longshelf.app`. The owner's browser token carries an email, and the upload token carries its Client ID as `common_name`; Access needed a Service Auth policy for the token. T011 is rewritten to verify the Access token signature itself. The spike route and test data are removed and redeployed.
+
+## 2026-11-24: Spec 003 T004–T008
+
+- **Shared:** `Book` gains `sort` and `rating`. `bookSortKey` uses Calibre's title sort when present. New `MirrorCatalog` with `canonicalJson`, and the ingest Zod contract (`@longshelf/shared/ingest`).
+- **CLI package:** `packages/sync-cli` now holds the Calibre reader, moved from the web app's local mode and extended with title sort, rating and every format's path. `pnpm dev:calibre` reads the owner's library as before (670 items).
+- **CLI config (T018, done early):** `config.ts` (XDG or macOS path, mode 0600, option > env > file).
+- **Dev and tests behind Access:** Access on the Worker also covers the remote connection that dev uses for Workers AI. Unit tests now run with no remote connections. `pnpm dev` passes Access with the CLI's service token, and applies local D1 migrations first, because the real D1 id gave dev a fresh local database.

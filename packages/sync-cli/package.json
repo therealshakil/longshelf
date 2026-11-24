@@ -1,0 +1,29 @@
+{
+	"name": "@longshelf/sync-cli",
+	"version": "0.0.1",
+	"private": true,
+	"description": "longshelf: mirror a Calibre library to a Longshelf deployment (spec 003).",
+	"type": "module",
+	"engines": {
+		"node": ">=24"
+	},
+	"bin": {
+		"longshelf": "./src/main.ts"
+	},
+	"exports": {
+		"./calibre": "./src/calibre.ts",
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"test": "vitest --run",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@longshelf/shared": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/node": "^24.0.0",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.12"
+	}
+}

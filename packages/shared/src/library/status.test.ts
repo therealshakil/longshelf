@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { statusFrom, statusLabel, titleSortKey } from './status.ts';
+import { bookSortKey, statusFrom, statusLabel, titleSortKey } from './status.ts';
 import type { ReadingPosition } from './types.ts';
 
 const pos = (percent: number, furthestPercent = percent): ReadingPosition => ({
@@ -33,5 +33,16 @@ describe('title sort', () => {
 		expect(titleSortKey('The Divine Comedy')).toBe('divine comedy');
 		expect(titleSortKey('A Tale of Two Cities')).toBe('tale of two cities');
 		expect(titleSortKey('Anna Karenina')).toBe('anna karenina');
+	});
+});
+
+describe('bookSortKey', () => {
+	it("uses Calibre's title sort when present", () => {
+		expect(bookSortKey({ title: 'A Tale of Two Cities', sort: 'Tale of Two Cities, A' })).toBe(
+			'tale of two cities, a'
+		);
+	});
+	it('falls back to the The/A/An rule', () => {
+		expect(bookSortKey({ title: 'The Divine Comedy' })).toBe('divine comedy');
 	});
 });
