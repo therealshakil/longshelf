@@ -533,3 +533,10 @@
 - **Read next and More like this in the browser (owner ruling):** in a deployment, `loadSuggestions` runs the spec 002 rules (moved to `#lib/ai/suggest.ts`, with the server path re-exporting) on the catalogue the browser holds. A new `/api/ai/suggestion-data` returns only stored matches for the seed books, known copies and dismissals, so the Worker loads no library. Sample and local modes still use the server routes, so e2e is unchanged.
 - **Server book data:** `serverLibrary()` reads D1 `book` rows in a deployment (`book`, `allBooks`) and is the shared library elsewhere. Dismiss, genres and the two jobs use it.
 - **Risk kept open:** the genre and embedding jobs still load every book in one request. They're owner-started and rare. Measure them on the real library before relying on them.
+
+## 2026-11-24: Spec 003 T030, and T028/T029 decisions
+
+- **T030:** Settings, under "Where your books go", now says that while AI is on, book details (titles, authors, descriptions) and some book text are sent to Workers AI. It's checked by a new e2e test with AI on. The text sits in the existing paragraph, with no layout change.
+- **T029 (owner):** the mirror e2e is on demand (`pnpm test:e2e:mirror`), like `test:a11y`, so everyday e2e stays fast.
+- **T028 (owner):** the "Save a copy" sketch (book page ⋯ menu, one item per format with its size) was not approved as is. The design is to be changed before building.
+- e2e: 50 passed, 1 skipped, before the disclosure test moved. The moved test passes.
