@@ -217,8 +217,8 @@ access probe).
 
 - [X] T043 Speed up the test suites (owner, 2026-11-24: "tests are way too slow"). Measure where `pnpm test`, `pnpm test:e2e` and `pnpm test:e2e:mirror` spend their time, then cut it without losing coverage. Record before and after in `docs/JOURNAL.md`.
 - [ ] T039 Real-library run (owner present; it uploads private data to the owner's own account). Run `longshelf library --dry-run`, then `longshelf library`, timed: SC-001 under 1 hour, a re-run under 30 s (SC-002). On a phone over 4G, the first covers in under 3 s (SC-003). Record the times in `docs/JOURNAL.md`. If SC-003 fails, open the research R2 option of leaving descriptions out of the catalogue.
-- [ ] T040 [P] SC-008: in `packages/sync-cli/test/calibre-untouched.test.ts`, hash every file in a copy of the fixture library, run the snapshot read and a `--dry-run` against a stub server, then hash again: no differences.
-- [ ] T041 [P] Docs:
+- [X] T040 [P] SC-008: in `packages/sync-cli/test/calibre-untouched.test.ts`, hash every file in a copy of the fixture library, run the snapshot read and a `--dry-run` against a stub server, then hash again: no differences.
+- [X] T041 [P] Docs:
   - `docs/DESIGN.md`: update the "longshelf CLI", "Cloud" and "Data model" sections to match DR-0010, and remove the "see DR-0010" banner;
   - `docs/PLAN.md`: tick Phase 1 items and mark spec 003 status;
   - `README.md`: add a short "Mirror your library" section;

@@ -593,3 +593,8 @@
 - **T038 on the live deployment:**
   - `pnpm run deploy` twice: both said "No migrations to apply" and deployed cleanly (versions `9083b943`, then `a8a0b55e`). FR-023.
   - A Worker that throws at start-up was rejected by Cloudflare at upload (error 10021). The live site kept serving `a8a0b55e`, and its upload route still answered from the real Worker. FR-024.
+
+## 2026-11-24: Spec 003 T040–T041
+
+- **T040 (SC-008):** a CLI test copies the test library, runs a full dry run through the real code, and checks every file's hash and modification time is unchanged.
+- **T041:** `docs/DESIGN.md` now describes what was built (the CLI flow, D1 row per book, the catalogue document, browser-only rendering and suggestions, Access verified in the Worker, the service worker). The "see DR-0010" banner is gone. `docs/PLAN.md` Phase 1 is ticked, except the real-library upload.

@@ -39,12 +39,14 @@ Kobo <-> (Kobo Utilities plugin, USB) <-> Calibre custom columns
 v1 is layers 0 and 1. Column names are configuration, so the core contains no Kobo-specific code.
 
 ## longshelf CLI
-> Spec 003 changes the upload path and metadata storage below: see DR-0010.
-
-- Node 24, `node:sqlite`. Opens `metadata.db` read-only. Idempotent; safe to run repeatedly.
-- `longshelf library`: read books/authors/series/tags/formats; SHA-256 each file;
-  `POST /api/ingest/plan` with `{uuid, metadataHash, fileHashes}`; server returns what is missing plus
-  presigned R2 upload URLs; upload; `POST /api/ingest/commit`.
+- Node 24, `node:sqlite`. Opens `metadata.db` read-only, with the same reader as `pnpm dev:calibre`.
+  Idempotent; safe to run repeatedly. Run as `pnpm longshelf …` (`packages/sync-cli`).
+- `longshelf library` (spec 003, DR-0010): reads books and every format, SHA-256 each file through a
+  cache keyed by path, size and mtime; `POST /api/ingest/plan` (takes a run lock, returns missing
+  hashes and changed/removed books); uploads each missing object through the Worker into R2 (one
+  request up to 95 MB, 50 MB parts above); `POST /api/ingest/books` in batches of 100; uploads the
+  catalogue document; `POST /api/ingest/commit`. Asks before removing more than 10% of the mirror.
+  Contract: `specs/003-library-mirror/contracts/`.
 - `longshelf progress`: read the configured custom columns (percent, location, last-read, status) and push
   to the cloud; pull cloud progress and, where the cloud's last-read time is newer, write the columns with
   `calibredb set_custom`.
@@ -55,15 +57,24 @@ v1 is layers 0 and 1. Column names are configuration, so the core contains no Ko
 
 ## Cloud
 - One Worker: SvelteKit with `@sveltejs/adapter-cloudflare` (Workers static assets). UI and API deploy together.
-- D1: metadata, progress, highlights. Plain SQL; `wrangler d1 migrations`. Search runs in the browser with MiniSearch (DR-0008).
-- R2: files keyed by SHA-256, served immutable with Range support. Cover thumbnails via Cloudflare Image
-  Transformations.
-- Auth: Cloudflare Access in front of everything, long session (about 30 days) for the offline PWA.
+- Served only at the owner's custom domain; workers.dev and preview URLs are off.
+- D1: one row per book with its metadata as JSON, plus file, blob, catalogue and run-lock tables
+  (DR-0010); progress and highlights come in specs 004–005. Plain SQL; `wrangler d1 migrations`.
+  Search runs in the browser with MiniSearch (DR-0008).
+- R2: files, covers and catalogues keyed by SHA-256, served immutable with Range support. Cover
+  thumbnails (400 px WebP) are made once at upload with the Images binding.
+- The browser downloads the whole catalogue (one document the CLI builds) from `/api/catalog` with an
+  ETag; the Worker only streams it, keeping requests inside the Free plan's 10 ms CPU. Pages render
+  in the browser in a deployment. Read next and More like this also run in the browser (spec 003
+  spike).
+- Auth: Cloudflare Access in front of everything (owner by email, CLI by service token), and the
+  Worker verifies the Access token itself, refusing anything without one (fails closed).
 
 ## Client (PWA)
 - Svelte 5, Tailwind v4, shadcn-svelte (Bits UI), Lucide.
-- Service worker: SvelteKit native `src/service-worker.ts`. App shell precached; covers cache-first; API
-  network-first with IndexedDB fallback.
+- Service worker: SvelteKit native `src/service-worker.ts`. App shell precached; covers cache-first;
+  catalogue network-first with the cached copy as fallback ("Offline", or "Sign in again" when Access
+  has expired). Book files offline are spec 004.
 - Dexie: whole catalog fetched as one JSON document, re-fetched only when its ETag changes (700 books is
   small; no incremental sync). Offline progress writes go to an outbox table, flushed on `online`,
   `visibilitychange` and app start (no Background Sync; iOS lacks it).
