@@ -520,3 +520,10 @@
 ## 2026-11-24: Spec 003 T024–T025
 
 - **Read routes:** `/api/catalog` (ETag, and 304 when unchanged), `/api/covers/:sha` (thumbnail first, `?size=full` for the original), and `/api/files/:sha` (Range support for the reader; `?download=` gives a safe RFC 6266 file name). All stream from R2, and a hash is served only as the kind it was stored as. 6 tests.
+
+## 2026-11-24: Spec 003 T026
+
+- **Screens on the mirror:** `#lib/library/index.ts` stays the one switch.
+  - In a deployment (`LONGSHELF_LIBRARY=mirror`, set by `pnpm run deploy`), `library` is a lazy source. It fetches `/api/catalog` once and answers through the existing snapshot code, so none of its 19 importers changed.
+  - The mirror build renders in the browser only. The sample build keeps server rendering, so e2e keeps its fixed data and its progressive-enhancement test.
+- **Checked:** a mirror build on the T023 local data. Library shows the test books with covers and "Synced 7 min ago". Home shows the news cover. The reader opens Moby Dick from `/api/files` (HTTP 200). No page errors. 5 unit tests for the loader (format order, empty mirror, Access redirect, retry).

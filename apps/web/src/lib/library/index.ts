@@ -2,17 +2,23 @@ import type { LibrarySource } from '@longshelf/shared/library';
 import { createSnapshotLibrary } from '@longshelf/shared/library/snapshot';
 import { createSampleLibrary } from '@longshelf/shared/sample';
 import localCalibre from 'virtual:longshelf/calibre';
+import { fetchMirror, lazyLibrary } from './mirror.ts';
+
+/** Set at build time: `mirror` for a deployment (`pnpm run deploy`), `sample` otherwise. */
+export const LIBRARY_MODE: 'sample' | 'mirror' = __LIBRARY_MODE__;
 
 /**
- * The one place that chooses where library data comes from (spec 002 FR-007).
- * Sample data now, or a local Calibre library under `pnpm dev:calibre` (DR-0009); spec 003 swaps
- * in the mirror-backed source here and nowhere else.
+ * The one place that chooses where library data comes from (spec 002 FR-007, spec 003 FR-010):
+ * a local Calibre library under `pnpm dev:calibre` (DR-0009), the mirror in a deployment, or the
+ * licence-free sample library.
  */
 export const library: LibrarySource = localCalibre
 	? createSnapshotLibrary(localCalibre, {
 			fileUrl: (b) => (b.formats.includes('EPUB') ? `/__calibre/book/${b.id}.epub` : null)
 		})
-	: createSampleLibrary();
+	: LIBRARY_MODE === 'mirror'
+		? lazyLibrary(() => fetchMirror())
+		: createSampleLibrary();
 
 export { statusLabel, statusFrom } from '@longshelf/shared/library';
 

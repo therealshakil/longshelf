@@ -3,3 +3,6 @@ declare module 'virtual:longshelf/calibre' {
 	const snapshot: LibrarySnapshot | null;
 	export default snapshot;
 }
+
+/** Where library data comes from in a build (vite.config.ts `define`, spec 003). */
+declare const __LIBRARY_MODE__: 'sample' | 'mirror';

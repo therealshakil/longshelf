@@ -12,7 +12,12 @@ const remoteBindings = !process.env.VITEST;
 // longshelf CLI uses (spec 003 research R5), unless the caller already set one.
 if (remoteBindings) Object.assign(process.env, accessEnv());
 
+// `mirror` for a deployment (`pnpm run deploy`); the sample library otherwise, so e2e keeps its
+// fixed data (spec 003).
+const libraryMode = process.env.LONGSHELF_LIBRARY === 'mirror' ? 'mirror' : 'sample';
+
 export default defineConfig({
+	define: { __LIBRARY_MODE__: JSON.stringify(libraryMode) },
 	plugins: [
 		localCalibre(),
 		tailwindcss(),

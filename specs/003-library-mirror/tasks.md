@@ -143,7 +143,7 @@ access probe).
 ### Implementation for US2
 
 - [X] T025 [US2] Routes `apps/web/src/routes/api/catalog/+server.ts`, `api/covers/[sha]/+server.ts` and `api/files/[sha]/+server.ts`, as in `contracts/mirror-api.md`. They stream from R2 (`range` option for files), with caching headers as in the contract table, and accept a hash only with a `blob` row of the matching kind.
-- [ ] T026 [US2] Make library loading async in `apps/web/src/lib/library/index.ts`:
+- [X] T026 [US2] Make library loading async in `apps/web/src/lib/library/index.ts`:
   - `getLibrary(fetch)` returns the sample, local or mirror source. Mirror is chosen when the build flag `PUBLIC_LIBRARY=mirror` is set, which the production build sets.
   - The mirror source is memoised by the catalogue ETag, and `fileUrl` picks EPUB, then KEPUB.
   - `syncStatus()` follows `contracts/mirror-api.md`.
