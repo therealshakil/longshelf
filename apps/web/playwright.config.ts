@@ -1,6 +1,5 @@
 import { createServer } from 'node:net';
 import { defineConfig } from '@playwright/test';
-import { accessEnv } from '@longshelf/sync-cli/config';
 
 /** A free port for this run, so tests can never reuse a stale server. */
 const freePort = () =>
@@ -23,6 +22,12 @@ const mirror = process.env.E2E_MIRROR === '1';
 
 export default defineConfig({
 	testDir: 'tests/e2e',
+	// Spread single tests, not whole files, over the workers (T043): the slowest file no longer
+	// sets the run time. Six of eight cores; the local Worker serves them all.
+	fullyParallel: true,
+	workers: 6,
+	// Under six parallel workers, hydration-driven checks can need more than the 5 s default.
+	expect: { timeout: 10_000 },
 	// Playwright empties this folder on each run, so it must not hold design-compare captures.
 	outputDir: 'test-results/playwright',
 	projects: mirror
@@ -42,11 +47,9 @@ export default defineConfig({
 					: [])
 			],
 	webServer: {
-		command: `${mirror ? 'LONGSHELF_LIBRARY=mirror ' : ''}pnpm build && wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port} --local-upstream localhost --var LONGSHELF_DEV_IDENTITY:1`,
+		command: `${mirror ? 'LONGSHELF_LIBRARY=mirror ' : ''}node scripts/build-if-changed.ts && wrangler d1 migrations apply longshelf --local && wrangler dev .svelte-kit/cloudflare/_worker.js --port ${port} --local --local-upstream localhost --var LONGSHELF_DEV_IDENTITY:1`,
 		port,
 		reuseExistingServer: false,
-		// The Workers AI binding is remote and sits behind Cloudflare Access (spec 003).
-		env: { ...(process.env as Record<string, string>), ...accessEnv() },
 		timeout: 180_000 // the build plus wrangler start can exceed the 60s default
 	},
 	use: { baseURL: `http://localhost:${port}` }

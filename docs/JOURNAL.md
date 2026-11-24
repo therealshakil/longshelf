@@ -574,3 +574,15 @@
 - **Sign in again:** when Access redirects the catalogue fetch, the worker serves the cached copy marked `sign-in`, and the header shows a "Sign in again" link that reloads into Access. Offline shows "Offline". The manifest already had `crossorigin="use-credentials"`.
 - **T036:** a mirror e2e test opens Library, goes offline, reloads, and sees the shell, a loaded cover and "Offline". Mirror e2e: 5 passed. Everyday e2e: 51 passed plus the disclosure test, which was fixed after Prettier re-wrapped its text. 370 unit tests pass.
 - **Owner:** the tests are too slow. T043 is added to optimise them next.
+
+## 2026-11-24: Spec 003 T043, faster tests (owner: "tests are way too slow")
+
+| Suite | Before | After | What changed |
+|---|---|---|---|
+| `pnpm test:e2e` | 5.4 min | 3.4 min | `fullyParallel` with 6 workers, so single tests are spread out instead of whole files (genres alone was about 55 s in a row); `wrangler dev --local`, so no remote AI proxy and no Access token needed; `scripts/build-if-changed.ts` reuses an identical build instead of spending about 50 s rebuilding |
+| `pnpm test:e2e:mirror` | 1.8 min | 1.6 min | the same, though the mirror and sample builds invalidate each other |
+| unit tests (all packages) | about 42 s | unchanged | measured: the start-up cost is module imports, not Tailwind or the pool. The floor is the 10 s ingest file (local D1/R2 calls). No cheap win |
+
+- **Stability:** under 6 workers, a hydration-driven redirect needed more than the 5 s expect default, so it is raised to 10 s. Two full runs passed (52 passed, 1 skipped).
+- **Build reuse is safe:** the stamp sits in `.svelte-kit/cloudflare`, which the adapter deletes on every build, so a deploy build always forces e2e to rebuild.
+- **Still slow:** each e2e test spends most of its time loading pages from one local Worker. The next step would be fewer full-library page loads per test, which means test-by-test changes. Not done.
