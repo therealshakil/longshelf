@@ -39,7 +39,7 @@ Kobo <-> (Kobo Utilities plugin, USB) <-> Calibre custom columns
 v1 is layers 0 and 1. Column names are configuration, so the core contains no Kobo-specific code.
 
 ## longshelf CLI
-> Spec 003 changes the upload path and metadata storage below: see DR-0010 (proposed).
+> Spec 003 changes the upload path and metadata storage below: see DR-0010.
 
 - Node 24, `node:sqlite`. Opens `metadata.db` read-only. Idempotent; safe to run repeatedly.
 - `longshelf library`: read books/authors/series/tags/formats; SHA-256 each file;

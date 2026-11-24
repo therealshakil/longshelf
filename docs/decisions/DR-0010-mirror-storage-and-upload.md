@@ -1,6 +1,6 @@
 # DR-0010: Mirror storage, upload path and deploy
 
-Status: **proposed** (spec 003 plan, 2026-11-24). Supersedes parts of `docs/DESIGN.md`: the
+Status: **accepted** (owner, 2026-11-24, spec 003 plan). Supersedes parts of `docs/DESIGN.md`: the
 presigned R2 uploads (section "longshelf CLI"), the normalised metadata tables (section "Data
 model") and the CI deploy (`docs/PLAN.md` Phase 1).
 

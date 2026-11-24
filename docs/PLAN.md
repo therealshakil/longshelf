@@ -9,7 +9,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 |---|---|---|---|
 | 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | MVP built (US1+US2); US4 superseded by 002 |
 | 002 | [Redesigned screens and AI features](../specs/002-redesign-and-ai/spec.md) (DR-0002, DR-0003) | 001 | Built and design signed off 2026-11-23 on sample data. Not deployed. Story so far (T053) and AI search (T061–T063) are parked; plain search shipped instead (DR-0008) |
-| 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Specified and planned 2026-11-24 (DR-0010 proposed) |
+| 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Specified and planned 2026-11-24 (DR-0010 accepted) |
 | 004 | Read (Phase 2) | 003 | not started |
 | 005 | Device progress (Phase 3) | 004, spike | not started |
 

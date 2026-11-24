@@ -465,6 +465,6 @@
 - **Written:** `specs/003-library-mirror/spec.md`: upload command, the spec 002 screens on real data, owner-only access, installable app, and a repeatable deploy. Reading progress stays in specs 004 and 005.
 - **Owner decisions:** upload every format (download-only where the reader can't open it), and AI on by default with a plain disclosure in Settings.
 - **Sized against:** the owner's library on this date: 670 books, about 3.3 GB.
-- **Planned (same day):** `specs/003-library-mirror/plan.md`, research R1–R10, data model, three contracts and a quickstart. DR-0010 (proposed) supersedes DESIGN.md on presigned uploads, normalised metadata tables and CI deploy.
+- **Planned (same day):** `specs/003-library-mirror/plan.md`, research R1–R10, data model, three contracts and a quickstart. DR-0010 (accepted by the owner) supersedes DESIGN.md on presigned uploads, normalised metadata tables and CI deploy.
 - **Measured:** largest file 419 MB (two over the Worker's 100 MB request limit), covers 201 MB in total, catalogue 1.3 MB (475 KB gzipped).
 - **Cost:** $0 a month expected. Risk: AI routes may exceed the Free plan's 10 ms CPU; measured in the first task before any fixed cost.
