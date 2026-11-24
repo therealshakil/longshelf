@@ -468,3 +468,4 @@
 - **Planned (same day):** `specs/003-library-mirror/plan.md`, research R1–R10, data model, three contracts and a quickstart. DR-0010 (accepted by the owner) supersedes DESIGN.md on presigned uploads, normalised metadata tables and CI deploy.
 - **Measured:** largest file 419 MB (two over the Worker's 100 MB request limit), covers 201 MB in total, catalogue 1.3 MB (475 KB gzipped).
 - **Cost:** $0 a month expected. Risk: AI routes may exceed the Free plan's 10 ms CPU; measured in the first task before any fixed cost.
+- **Tasks:** `specs/003-library-mirror/tasks.md`, 42 tasks. MVP is setup, foundation, US1 to US3; never deploy the real library before the access probe passes.

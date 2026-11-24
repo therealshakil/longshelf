@@ -41,6 +41,7 @@ CREATE TABLE blob (
 CREATE TABLE catalog (
 	id INTEGER PRIMARY KEY CHECK (id = 1),
 	sha256 TEXT NOT NULL,                -- the catalogue blob, also its ETag
+	previous_sha256 TEXT,                -- kept so a browser mid-fetch never gets a 404
 	book_count INTEGER NOT NULL,
 	committed_at TEXT NOT NULL
 );
