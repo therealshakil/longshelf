@@ -36,7 +36,7 @@ Priority, highest first:
 ## Output (FR-008)
 
 ```
-Longshelf: 670 books in Calibre, mirror at longshelf.<account>.workers.dev
+Longshelf: 670 books in Calibre, mirror at library.longshelf.app
 Uploaded 3 books (41 MB), updated 2, removed 1. 0 problems.
 ```
 With a problem:

@@ -15,7 +15,7 @@ spec 002 screens at it:
 - **Read:** the browser downloads the whole catalogue as one ETag-cached document and builds the
   existing snapshot `LibrarySource` from it. Covers and files are served from R2 by content hash.
   Thumbnails are made once, at upload.
-- **Access:** Cloudflare Access on the workers.dev URL, set up with the one-click option: the
+- **Access:** Cloudflare Access on the custom domain `library.longshelf.app` (workers.dev off), set up with the one-click option: the
   owner by email, the CLI by service token. The Worker also refuses any request without an Access
   identity.
 - **App:** browser rendering only, plus SvelteKit's own service worker.
@@ -52,7 +52,7 @@ if needed, use WebCrypto (R5).
 - `test:access`, a script that probes a live deployment (quickstart step 4).
 - Fixture library: Standard Ebooks titles only.
 
-**Target Platform**: a Cloudflare Worker on workers.dev. Evergreen browsers on phone and desktop.
+**Target Platform**: a Cloudflare Worker on the custom domain `library.longshelf.app`. Evergreen browsers on phone and desktop.
 The CLI on Linux and macOS.
 
 **Project Type**: web application plus CLI, in the pnpm workspace.

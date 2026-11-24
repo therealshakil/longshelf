@@ -298,9 +298,8 @@ library. Then deploy a change that includes a database update.
 - Free tiers cover a library of this size. `docs/DESIGN.md` estimates the ceiling at $5 a month.
   ASSUMPTION: storage free tier of about 10 GB, against a library of about 3.3 GB. The plan must
   check current pricing and quote it with sources.
-- The deployment is reached at the hosting provider's default address. A custom domain can be added
-  later without changing this spec. ASSUMPTION: the owner doesn't need a custom domain for the first
-  deploy.
+- The deployment is reached at the owner's domain, `library.longshelf.app` (owner, 2026-11-24).
+  Another deployment uses its own domain.
 - The command is run by hand for now. A timer that runs it automatically is spec 005
   (`longshelf install-timer`).
 - Reading progress, Kobo positions, highlights and offline book files are out of scope (specs 004 and

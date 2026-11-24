@@ -23,18 +23,18 @@ pnpm --filter web exec wrangler d1 create longshelf     # put the id in wrangler
 pnpm --filter web exec wrangler r2 bucket create longshelf
 pnpm run deploy                                            # build, migrate --remote, deploy
 ```
-Expected: `https://longshelf.<account>.workers.dev` serves the app.
+Expected: the custom domain in `wrangler.jsonc` `routes` (the owner's is `https://library.longshelf.app`) serves the app. workers.dev is off.
 
 ## 3. Lock it down (US3)
 
 In the dashboard, open the Worker, then Settings, then Domains & Routes. Enable Cloudflare Access
-for workers.dev with All traffic:
+for the custom domain, with All traffic:
 - Allow policy: your email. Session duration 30 days.
 - Service Auth policy: a new service token named `longshelf-cli`.
 
 Then:
 ```sh
-longshelf config set url https://longshelf.<account>.workers.dev
+longshelf config set url https://library.longshelf.app
 longshelf config set client-id <id>
 longshelf config set client-secret <secret>
 ```
@@ -42,7 +42,7 @@ longshelf config set client-secret <secret>
 ## 4. Nothing leaks (SC-004)
 
 ```sh
-pnpm --filter web test:access https://longshelf.<account>.workers.dev
+pnpm --filter web test:access https://library.longshelf.app
 ```
 This requests `/`, `/library`, `/api/catalog`, a cover, a file and `/api/ingest/plan` with no
 credentials. Expected: none returns library data (an Access login page or 403). It repeats with

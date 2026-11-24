@@ -479,3 +479,4 @@
 
 - **Created on Cloudflare (owner approved):** D1 `longshelf`, R2 bucket `longshelf`, Worker `longshelf` on workers.dev. It serves the sample library only, plus a temporary `/api/spike` route.
 - **Results:** in `docs/PLAN.md` spike log. The Images binding works. Read next is too heavy for the Free plan's CPU limit, so the owner ruled it moves to the browser (T027 rewritten). The Access identity check waits for Access to be enabled.
+- **Domain (owner):** the library is served only at `library.longshelf.app` (a custom domain in `wrangler.jsonc`). workers.dev and preview URLs are off, so Access on that hostname is the only way in. The bare `longshelf.app` stays free for a public page. Spec, plan, research R5 and quickstart updated.

@@ -93,6 +93,9 @@ Sources read 2026-11-24 unless stated. Measurements are from the owner's library
 
 ## R5. Access
 
+- **Update 2026-11-24:** the owner has the domain `longshelf.app`. The library is served only at
+  the custom domain `library.longshelf.app`. workers.dev and preview URLs are off, so Access on
+  that hostname is the only way in. The bare domain stays free for a public project page.
 - **Decision:** Cloudflare Access on the Worker, using the one-click setting for the workers.dev
   hostname, with "All traffic", one Allow policy for the owner's email, and a Service Auth policy
   for one service token used by the CLI. Session length is 30 days (FR-016).

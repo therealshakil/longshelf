@@ -8,8 +8,12 @@
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
 	},
-	"workers_dev": true,
-	"preview_urls": true,
+	// One way in: the owner's custom domain, behind Cloudflare Access (spec 003 research R5).
+	// workers.dev and preview URLs are off so nothing bypasses it. Change the domain for your
+	// own deployment (docs/DEPLOY.md).
+	"routes": [{ "pattern": "library.longshelf.app", "custom_domain": true }],
+	"workers_dev": false,
+	"preview_urls": false,
 	// Spec 002 (research R3): Workers AI runs in the owner's account; D1 keeps AI results.
 	"ai": { "binding": "AI", "remote": true },
 	// Spec 003 (DR-0010): D1 holds mirror metadata; R2 holds files, covers, thumbnails and

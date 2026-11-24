@@ -173,7 +173,7 @@ access probe).
 
   It reads hashes from the CLI's last report and never prints secrets.
 - [ ] T032 [US3] CLI credential handling: a revoked or wrong token gives exit 2, with "The mirror refused the upload key. Set a new one: longshelf config set client-id … / client-secret …". The mirror is unchanged (US3 scenario 3). Add a test in `packages/sync-cli/test/upload.test.ts` with a mocked 403 and with an Access login redirect.
-- [ ] T033 [US3] Write the Access section of `docs/DEPLOY.md` from quickstart step 3: enable Access for workers.dev with All traffic, an Allow policy for the owner's email with a 30-day session, a Service Auth policy with token `longshelf-cli`, and the `OWNER_EMAIL` and `ACCESS_TEAM` Worker vars. Include rotating the token without a redeploy (FR-017).
+- [ ] T033 [US3] Write the Access section of `docs/DEPLOY.md` from quickstart step 3: enable Access for the custom domain with All traffic, an Allow policy for the owner's email with a 30-day session, a Service Auth policy with token `longshelf-cli`, and the `OWNER_EMAIL` and `ACCESS_TEAM` Worker vars. Include rotating the token without a redeploy (FR-017).
 
 **Checkpoint**: on the deployment, the access probe passes.
 
