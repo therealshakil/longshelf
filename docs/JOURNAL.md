@@ -770,3 +770,10 @@
 - **Unchanged:** no new dependencies; expected cost £0.
 - **Next:** `/speckit-tasks`; mocks of the new screens before any UI code.
 - **Tasks:** 30 in `specs/004-reading/tasks.md`. DR-0013 accepted by the owner. MVP is US1 (offline reading), on its own PR.
+
+## 2026-11-25: Spec 004 T001 spike, Cache Storage confirmed
+
+- A download whose body fails halfway leaves nothing in Cache Storage in Chromium (`NetworkError`) or WebKit (`TypeError`), so DR-0013's choice holds for Android and iPhone. Firefox wouldn't launch on this OS.
+- foliate-js fetches a book whole (no `Range`), so a cached full response is all the reader needs.
+- T002 (phone `persist()` check) folded into the preview check: the storage page shows it.
+- Installed Playwright WebKit and Firefox locally; WebKit needed `libavif16` (owner installed it).

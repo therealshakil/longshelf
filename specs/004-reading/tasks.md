@@ -31,13 +31,13 @@ smoke test).
 **Purpose**: check the one risky assumption (research R1), and get the new screens approved
 before building them (plan "Delivery order" steps 1 and 2).
 
-- [ ] T001 **Spike** in a throwaway Playwright test `apps/web/tests/e2e/spike-cache.spec.ts`, run on the Chromium and WebKit projects (add a WebKit project temporarily if the config has none; the Playwright WebKit browser is part of the existing dependency). Record in the spike log in `docs/PLAN.md`:
+- [X] T001 **Spike** in a throwaway Playwright test `apps/web/tests/e2e/spike-cache.spec.ts`, run on the Chromium and WebKit projects (add a WebKit project temporarily if the config has none; the Playwright WebKit browser is part of the existing dependency). Record in the spike log in `docs/PLAN.md`:
   - (a) Serve a route whose body stream errors halfway (`page.route` with a `ReadableStream` that errors after 1 MB). Call `caches.open('t').then(c => c.put(url, res))`. Does `put` reject? Does `c.match(url)` return anything afterwards?
   - (b) Put a sample EPUB and a sample PDF in a cache. Register the app's service worker serving that cache (or a minimal one). Go offline with `context.setOffline(true)`. Does `/read/<id>` open both with foliate-js? Does foliate send `Range` requests?
   - (c) `navigator.storage.persist()` and `estimate()` results in each engine.
 
   Delete the spike test afterwards. If (a) shows a partial entry in either engine, stop and tell the owner: R1 switches to OPFS (DR-0013's fallback) before Phase 3.
-- [ ] T002 Ask the owner to run `navigator.storage.persist()` on their phone's installed app, using a temporary button on `/settings/ai`, or from the devtools console over USB. Record the result in the spike log. Remove the button.
+- [X] T002 (Folded into T028, owner 2026-11-25: the storage page shows whether downloads are kept, so it is read there on both phones.) Ask the owner to run `navigator.storage.persist()` on their phone's installed app, using a temporary button on `/settings/ai`, or from the devtools console over USB. Record the result in the spike log. Remove the button.
 - [ ] T003 **Mocks for owner approval** (memory: preview design before building), in the existing static mock site `design-mocks/` (served on :8411, see `design-mocks/README.md`; Standard Ebooks data only):
   - `design-mocks/book.html`: add the Download states: not downloaded, downloading with progress, downloaded (menu with Remove), update available, and a no-space message;
   - `design-mocks/library.html`: a small "on this device" mark on downloaded covers, and the offline look;

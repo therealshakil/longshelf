@@ -85,6 +85,16 @@ licence-free synthetic one: 670 records, 1.2 MB.
     redirected to sign-in like an anonymous request.
   - The library is served at `library.longshelf.app` only, with workers.dev off.
 
+## Spike log: spec 004 T001 (browser storage, 2026-11-25)
+
+- **(a) `cache.put` with a body that errors after 1 MB:**
+  - **Chromium 1254:** `put` rejects with `NetworkError`; no entry, no keys. A full 2 MB body stores 2,000,000 bytes. **Safe: R1 holds.**
+  - **Firefox (Playwright fallback build):** would not launch on this OS in 150 s. Not tested.
+  - **WebKit 2388** (after the owner installed `libavif16`): `put` rejects with `TypeError`; no entry, no keys. Full body stores. **Safe.** `persist()` false on a fresh origin; quota about 1 GB.
+  - Design guard either way: the download is aborted on timeout or offline, and the stored size is checked against the catalogue before a book counts as downloaded (FR-002).
+- **(b) foliate-js and `Range`:** from the source (`vendor/foliate-js/view.js` `fetchFile`), a URL is fetched whole and read as a Blob, so it never sends `Range`. A cached full 200 response is all it needs. The smoke test (T008) proves the offline open.
+- **(c) `persist()` / `estimate()`, Chromium, fresh test origin:** `persist()` false (no interaction history, as MDN describes); quota about 10.7 GB here. The owner's phones (Android and iPhone) are read off the storage page during the preview check: it shows whether downloads are kept (T002 folded into T028).
+
 ## Starting scope per spec
 
 ### Phase 1: mirror → spec 003 (does not depend on the spike)
