@@ -1,6 +1,6 @@
 # DR-0013: Offline books in Cache Storage, reading places in localStorage
 
-Status: **proposed** (2026-11-25, spec 004 plan). Accepted when the owner approves the plan.
+Status: **accepted** (owner, 2026-11-25, spec 004 plan).
 Supersedes the `docs/DESIGN.md` lines "Offline books: Download stores the file in OPFS" and
 "Dexie: … offline progress writes go to an outbox table" for spec 004.
 

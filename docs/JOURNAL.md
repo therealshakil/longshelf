@@ -769,3 +769,4 @@
 - **Spec wording:** FR-010 and SC-003 now ask for the latest place per book, not every intermediate one (research R4).
 - **Unchanged:** no new dependencies; expected cost £0.
 - **Next:** `/speckit-tasks`; mocks of the new screens before any UI code.
+- **Tasks:** 30 in `specs/004-reading/tasks.md`. DR-0013 accepted by the owner. MVP is US1 (offline reading), on its own PR.
