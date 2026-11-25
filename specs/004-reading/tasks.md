@@ -80,14 +80,14 @@ read.
 
 ### Tests for US1
 
-- [ ] T007 [P] [US1] Unit tests `apps/web/tests/unit/downloads.test.ts` for `lib/offline/downloads.ts`, using a fake `caches` (in-memory Map) and a fake `fetch`:
+- [X] T007 [P] [US1] Unit tests `apps/web/tests/unit/downloads.test.ts` for `lib/offline/downloads.ts`, using a fake `caches` (in-memory Map) and a fake `fetch`:
   - the stored headers (`x-longshelf-book`, `-format`, `-size`, `-title` URI-encoded, `-saved-at`);
   - a size mismatch deletes the entry and rejects with `Failed`;
   - a stream error leaves nothing;
   - `QuotaExceededError` gives `NoSpace { needed }`;
   - `status()` returns `none`, `downloaded` or `update`;
   - `persist()` is called on the first download only.
-- [ ] T008 [P] [US1] The FR-016 smoke test, `apps/web/tests/e2e/offline-reading.spec.ts`, in the default `main` project (sample mode), per research R8:
+- [X] T008 [P] [US1] The FR-016 smoke test, `apps/web/tests/e2e/offline-reading.spec.ts`, in the default `main` project (sample mode), per research R8:
   1. open a sample book's page and wait for the service worker to control the page (reload once);
   2. tap Download, then wait for "Downloaded";
   3. `context.setOffline(true)`;
@@ -97,19 +97,19 @@ read.
 
 ### Implementation for US1
 
-- [ ] T009 [US1] Create `apps/web/src/lib/offline/downloads.ts` per [contracts/client-storage.md](contracts/client-storage.md):
+- [X] T009 [US1] Create `apps/web/src/lib/offline/downloads.ts` per [contracts/client-storage.md](contracts/client-storage.md):
   - `download`: fetch, pipe through a byte-counting `TransformStream` for `onProgress`, `cache.put` into `books-v1` with the headers, compare the stored size with the expected size, call `navigator.storage.persist()` on the first download and store the answer in localStorage `longshelf.storage.persisted`;
   - also `remove`, `removeAll`, `list`, `status` and `storageInfo` (used = sum of sizes; available = `quota − usage` from `estimate()`, "about");
   - before fetching, refuse with `NoSpace` if size > available;
   - the cache key is the file URL path without its query.
-- [ ] T010 [US1] Update `apps/web/src/service-worker.ts`:
+- [X] T010 [US1] Update `apps/web/src/service-worker.ts`:
   - for `GET` on `/api/files/*` and `/sample/books/*`, answer from `books-v1` if the path is there; with `?download=`, add `Content-Disposition` as the Worker does; a `Range` request gets the full 200 (or what T001 found foliate needs);
   - otherwise use the network and don't cache;
   - update the header comment (book files are now cached when downloaded).
-- [ ] T011 [US1] Replace the placeholder toggle in `apps/web/src/lib/components/BookHeader.svelte` with the approved states (T003): Download, downloading with progress, Downloaded with Remove in its menu, Update, and the no-space and offline messages. It uses `downloads.ts` with the book's current file URL and size (from the library's `files()` / `bookFileUrl()`). Keep the `downloaded` binding or remove it from `apps/web/src/routes/book/[id]/+page.svelte`.
-- [ ] T012 [US1] Mark downloaded books in the library grids, per the approved mock. Read `list()` once per page load and pass a `Set` of book ids to the cover tiles (`apps/web/src/lib/components/` cover/tile component used by `routes/library` and the home page).
-- [ ] T013 [US1] Offline reader state in `apps/web/src/routes/read/[id]/+page.svelte` and `+page.ts`: when `navigator.onLine` is false (or the file fetch fails) and `status()` is `none`, show the approved calm message with a link to the library instead of `ErrorState`. A book that has left the catalogue but is downloaded still opens: fall back to the cached entry's title and file URL from `list()`.
-- [ ] T014 [US1] Update the catalogue edge cases: if a downloaded book's catalogue file URL differs, the book page shows Update (FR-007). After updating, the old entry is removed only once the new one is stored.
+- [X] T011 [US1] Replace the placeholder toggle in `apps/web/src/lib/components/BookHeader.svelte` with the approved states (T003): Download, downloading with progress, Downloaded with Remove in its menu, Update, and the no-space and offline messages. It uses `downloads.ts` with the book's current file URL and size (from the library's `files()` / `bookFileUrl()`). Keep the `downloaded` binding or remove it from `apps/web/src/routes/book/[id]/+page.svelte`.
+- [X] T012 [US1] Mark downloaded books in the library grids, per the approved mock. Read `list()` once per page load and pass a `Set` of book ids to the cover tiles (`apps/web/src/lib/components/` cover/tile component used by `routes/library` and the home page).
+- [X] T013 [US1] Offline reader state in `apps/web/src/routes/read/[id]/+page.svelte` and `+page.ts`: when `navigator.onLine` is false (or the file fetch fails) and `status()` is `none`, show the approved calm message with a link to the library instead of `ErrorState`. A book that has left the catalogue but is downloaded still opens: fall back to the cached entry's title and file URL from `list()`.
+- [X] T014 [US1] Update the catalogue edge cases: if a downloaded book's catalogue file URL differs, the book page shows Update (FR-007). After updating, the old entry is removed only once the new one is stored.
 
 **Checkpoint**: T007 and T008 pass. On the PR preview, quickstart step 2 works on the owner's phone. Journal line with SC-001 and SC-005 timings.
 
@@ -179,14 +179,14 @@ reader opens at the right place per FR-009.
 
 **Independent test**: quickstart step 4.
 
-- [ ] T025 [US3] Create `apps/web/src/routes/settings/storage/+page.svelte` per the approved mock (T003), using `list()` and `storageInfo()`:
+- [X] T025 [US3] Create `apps/web/src/routes/settings/storage/+page.svelte` per the approved mock (T003), using `list()` and `storageInfo()`:
   - rows with title and size, plus a mark for books no longer in the library;
   - total, "about N available", and kept or not kept, with a "Keep downloads" button that calls `persist()` again if not kept;
   - Remove per row, and Remove all with one confirmation;
   - this device's name with Rename (`renameDevice`).
 
-  Removing never touches places (FR-015). Add a link to it wherever settings are reached (the header menu or `/settings/ai`).
-- [ ] T026 [US3] On app start, reconcile: if a book's place says it was downloaded but `books-v1` has no entry (storage cleared), there's nothing to fix in data. Make sure every view reads `list()` rather than a cached flag, so a cleared cache shows as "not downloaded" (edge case "device cleared its storage"). Add a test to `downloads.test.ts` by clearing the fake cache.
+  Removing never touches places (FR-015). Add a link to it wherever settings are reached (the header menu or `/settings/ai`). (Nothing links to settings today; Storage is reached from the book page's More menu, "Downloads on this device", and from the no-space message. Owner to confirm.)
+- [X] T026 [US3] On app start, reconcile: if a book's place says it was downloaded but `books-v1` has no entry (storage cleared), there's nothing to fix in data. Make sure every view reads `list()` rather than a cached flag, so a cleared cache shows as "not downloaded" (edge case "device cleared its storage"). Add a test to `downloads.test.ts` by clearing the fake cache.
 - [ ] T027 [P] [US3] Add the storage page, and the book page's download states, to the a11y matrix (`apps/web/tests/e2e/a11y.spec.ts`) and to `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) against `design-mocks/storage.html`.
 
 **Checkpoint**: quickstart step 4 passes on the preview.

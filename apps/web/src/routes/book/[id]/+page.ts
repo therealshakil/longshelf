@@ -15,5 +15,15 @@ export const load: PageLoad = async ({ params, fetch, parent }) => {
 				loadBookGenres(fetch, params.id)
 			])
 		: [[], []];
-	return { book, moreLike, genres, files: (await library.files?.(params.id)) ?? [] };
+	const [files, fileUrl] = await Promise.all([
+		library.files?.(params.id) ?? [],
+		library.bookFileUrl(params.id)
+	]);
+	// The file the reader opens, with its format and size from the catalogue when listed (spec 004).
+	const path = (u: string) => new URL(u, 'https://x.invalid').pathname;
+	const listed = fileUrl ? files.find((f) => path(f.url) === path(fileUrl)) : undefined;
+	const file = fileUrl
+		? { url: fileUrl, format: listed?.format ?? 'EPUB', size: listed?.size }
+		: null;
+	return { book, moreLike, genres, files, file };
 };

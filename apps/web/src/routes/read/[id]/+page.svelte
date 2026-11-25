@@ -81,6 +81,19 @@
 	);
 	const showNotice = $derived(!!other && !noticeDismissed && other.percent > percent);
 
+	// Offline and not downloaded: a calm message instead of an error (spec 004 FR-005).
+	let online = $state(typeof navigator === 'undefined' ? true : navigator.onLine);
+	$effect(() => {
+		const update = () => (online = navigator.onLine);
+		addEventListener('online', update);
+		addEventListener('offline', update);
+		return () => {
+			removeEventListener('online', update);
+			removeEventListener('offline', update);
+		};
+	});
+	const offlineAway = $derived(!data.downloaded && !online);
+
 	$effect(() => saveSettings($state.snapshot(settings)));
 
 	// Theme: Paper and Night override the system; Match system leaves it alone.
@@ -201,7 +214,17 @@
 	</ReaderChrome>
 
 	<main class="page" style:top="{topHeight}px" aria-label="{book.title}, reading">
-		{#if !data.fileUrl || error}
+		{#if offlineAway}
+			<!-- Spec 004 FR-005, approved mock offline-states.html section 3. -->
+			<div class="away" role="status">
+				<h1>{book.title} isn’t on this device</h1>
+				<p>
+					You’re offline, so it can’t open now. It will open next time you’re connected, or download
+					it then to read it anywhere.
+				</p>
+				<a class="go" href={resolve('/library')}>Back to the library</a>
+			</div>
+		{:else if !data.fileUrl || error}
 			<div class="mx-auto max-w-[36rem] px-4 pt-24">
 				<ErrorState
 					what={error ? 'This book couldn’t be opened.' : 'This book isn’t on this device yet.'}
@@ -256,6 +279,42 @@
 {/if}
 
 <style>
+	.away {
+		max-width: 28rem;
+		margin: 6rem auto 0;
+		padding: 2.5rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		text-align: center;
+		border: 1px solid var(--r-border);
+		border-radius: var(--r-radius-md);
+	}
+	.away h1 {
+		font-family: var(--r-font-reading);
+		font-size: 1.375rem;
+		line-height: 1.25;
+		font-weight: var(--r-weight-title);
+		color: var(--r-ink);
+	}
+	.away p {
+		color: var(--r-text-muted);
+	}
+	.away .go {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--r-target);
+		padding: 0.65rem 1.4rem;
+		border-radius: var(--r-radius-pill);
+		background: var(--r-action);
+		color: var(--r-on-accent);
+		font-weight: var(--r-weight-strong);
+		text-decoration: none;
+	}
+	.away .go:hover {
+		background: var(--r-accent);
+	}
 	.page {
 		position: fixed;
 		inset: 3.75rem 0 4.25rem;

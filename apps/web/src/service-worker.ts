@@ -8,7 +8,9 @@
  * - Covers are cache-first: their URL is the image's hash, so they never change.
  * - The catalogue is network-first with the last copy as fallback.
  * - Pages are network-first, falling back to the cached start page offline.
- * - Book files, AI and uploads are never cached here (offline books are spec 004).
+ * - Book files the owner downloaded (spec 004, DR-0013) are answered from `books-v1`, which the
+ *   page fills; files that weren't downloaded go to the network and are never cached here.
+ * - AI and uploads are never cached.
  * A new version waits until every Longshelf tab is closed, so nothing open is interrupted
  * (FR-021); it takes over on the next open.
  */
@@ -19,6 +21,8 @@ import { self } from '$app/service-worker';
 const SHELL = `shell-${version}`;
 const COVERS = 'covers-v1';
 const CATALOG = 'catalog-v1';
+/** Filled by the page (`lib/offline/downloads.ts`); must match its BOOKS_CACHE. */
+const BOOKS = 'books-v1';
 /** Tells the page a catalogue came from the cache, and why. */
 export const SOURCE_HEADER = 'x-longshelf-source';
 
@@ -82,6 +86,22 @@ async function catalogue(request: Request) {
 	return new Response(cached.body, { status: 200, headers });
 }
 
+/**
+ * A downloaded book from `books-v1`, under its path. `?download=<name>` (Save a copy) adds the
+ * attachment header, as the Worker does. foliate-js fetches files whole, so `Range` gets the full
+ * response (T001 spike). Not downloaded: straight to the network.
+ */
+async function bookFile(request: Request) {
+	const url = new URL(request.url);
+	const hit = await (await caches.open(BOOKS)).match(url.pathname);
+	if (!hit) return fetch(request);
+	const name = url.searchParams.get('download');
+	if (!name) return hit;
+	const headers = new Headers(hit.headers);
+	headers.set('content-disposition', `attachment; filename*=UTF-8''${encodeURIComponent(name)}`);
+	return new Response(hit.body, { status: 200, headers });
+}
+
 async function page(request: Request) {
 	try {
 		const res = await fetch(request);
@@ -108,7 +128,9 @@ self.addEventListener('fetch', (event) => {
 
 	if (path.startsWith('/api/covers/')) event.respondWith(coverFirst(request));
 	else if (path === '/api/catalog') event.respondWith(catalogue(request));
+	else if (path.startsWith('/api/files/') || path.startsWith('/sample/books/'))
+		event.respondWith(bookFile(request));
 	else if (request.mode === 'navigate') event.respondWith(page(request));
 	else if (SHELL_FILES.includes(path)) event.respondWith(shellFirst(request));
-	// Everything else (book files, AI, uploads, sample data) goes straight to the network.
+	// Everything else (AI, uploads, other sample data) goes straight to the network.
 });

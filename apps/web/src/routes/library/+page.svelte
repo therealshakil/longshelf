@@ -15,6 +15,7 @@
 	import PeriodicalRow from '#lib/components/PeriodicalRow.svelte';
 	import LetterRail from '#lib/components/LetterRail.svelte';
 	import EmptyState from '#lib/components/EmptyState.svelte';
+	import OfflineNote from '#lib/components/OfflineNote.svelte';
 	import { headingLetter } from '#lib/library/letter-rail.ts';
 	import type { PageProps } from './$types';
 
@@ -52,6 +53,7 @@
 		<h1>Library</h1>
 		<span class="text-sm text-text-muted">{data.total} books</span>
 	</div>
+	<OfflineNote />
 
 	<LibraryTabs current={tab} onSelect={select}>
 		{#snippet panel(id)}
