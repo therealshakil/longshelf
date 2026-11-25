@@ -1,0 +1,17 @@
+// Applies D1 migrations to the PR-preview database (DR-0012). Must name the same database as
+// the `previews` block in wrangler.jsonc. Used only by:
+//   wrangler d1 migrations apply PREVIEW_DB --remote --config wrangler.preview-migrations.jsonc
+// Pattern from https://developers.cloudflare.com/workers/previews/resources/ (D1 migrations).
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "longshelf-preview-migrations",
+	"compatibility_date": "2026-11-14",
+	"d1_databases": [
+		{
+			"binding": "PREVIEW_DB",
+			"database_name": "longshelf-preview",
+			"database_id": "0852447d-470d-471b-99fe-a212955c1cee",
+			"migrations_dir": "migrations"
+		}
+	]
+}

@@ -1,0 +1,93 @@
+# Checks every pull request and every push to main, then gives each pull request its own
+# preview on Cloudflare (DR-0012). Production is never deployed from here: that stays
+# `pnpm run deploy` on the owner's laptop (DR-0010).
+#
+# Heavy suites (Playwright, the accessibility matrix) stay on demand, not here.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write # the preview link comment
+    env:
+      # Previews only for branches in this repository; forks never get the Cloudflare token.
+      PREVIEW: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      # pnpm comes from package.json `packageManager` through corepack, as on the laptop.
+      - run: corepack enable
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+      # The same build `pnpm run deploy` makes, so the preview is what production would get.
+      - run: pnpm build
+        env:
+          LONGSHELF_LIBRARY: mirror
+
+      - name: Migrate the preview database
+        if: env.PREVIEW == 'true'
+        working-directory: apps/web
+        run: pnpm exec wrangler d1 migrations apply PREVIEW_DB --remote --config wrangler.preview-migrations.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy the preview
+        id: preview
+        if: env.PREVIEW == 'true'
+        working-directory: apps/web
+        run: |
+          pnpm exec wrangler preview --name "pr-$PR" --message "$SHA" --json > preview.out
+          # Wrangler prints progress lines before the JSON.
+          url=$(node -e '
+            const t = require("fs").readFileSync("preview.out", "utf8");
+            const j = JSON.parse(t.slice(t.search(/^\{/m)));
+            console.log(j.preview.urls[0] ?? "");')
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Post the preview link
+        if: env.PREVIEW == 'true'
+        run: |
+          if [ -n "$URL" ]; then
+            body="**Preview:** $URL"$'\n\n'"Signed-in only, test library data. Built from $SHA."
+          else
+            body="**Preview:** deployed, but Cloudflare gave no URL. Check that preview URLs are on (docs/DEPLOY.md, PR previews)."
+          fi
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --create-if-none --body "$body"
+        env:
+          URL: ${{ steps.preview.outputs.url }}
+          PR: ${{ github.event.pull_request.number }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+          GH_TOKEN: ${{ github.token }}

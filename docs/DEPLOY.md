@@ -35,7 +35,8 @@ pnpm --filter web exec wrangler r2 bucket create longshelf
 
 In `apps/web/wrangler.jsonc`, set `routes` to your own domain (the owner's is
 `library.longshelf.app`). The domain must be a zone in the same Cloudflare account. workers.dev
-and preview URLs stay off, so the domain is the only way in.
+stays off, so the domain is the only way in. Preview URLs are on only for PR previews, behind
+their own Access app (section 7).
 
 ## 3. Deploy
 
@@ -104,6 +105,63 @@ pnpm longshelf library
 
 Run it again whenever Calibre changes. A run with nothing changed uploads nothing. If a run would
 remove more than 10% of the mirror, it lists the books and asks first.
+
+## 7. PR previews and GitHub checks (DR-0012)
+
+Every pull request is checked (lint, types, unit tests, build). Pull requests from branches in
+this repository also get their own preview at `pr-<N>-longshelf.<subdomain>.workers.dev`, posted
+as a PR comment. Previews use separate data: the `longshelf-preview` D1 database and R2 bucket,
+filled with the licence-free test library. Production is never deployed from GitHub.
+
+One-time setup:
+
+1. **Preview data** (already done for the owner's account):
+
+   ```sh
+   cd apps/web
+   pnpm exec wrangler d1 create longshelf-preview   # copy the id into wrangler.jsonc `previews`
+                                                    # and wrangler.preview-migrations.jsonc
+   pnpm exec wrangler r2 bucket create longshelf-preview
+   ```
+
+2. **API token.** [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens) →
+   **Create Token** → template **Edit Cloudflare Workers**. Make sure the permissions include
+   **Account → D1 → Edit** and **Account → Workers R2 Storage → Edit** (add them if missing).
+   Account resources: your account only. Zone resources: your domain only.
+3. **GitHub secrets** (from the repo root):
+
+   ```sh
+   gh secret set CLOUDFLARE_API_TOKEN     # paste the token
+   gh secret set CLOUDFLARE_ACCOUNT_ID    # from `pnpm --filter web exec wrangler whoami`
+   ```
+
+4. **Turn on preview URLs.** `preview_urls` is `true` in `wrangler.jsonc`; it takes effect on the
+   next `pnpm run deploy`, or straight away with `pnpm --filter web exec wrangler triggers deploy`
+   (settings and routes only, no new code).
+5. **Access for previews.** Workers & Pages → longshelf → **Access** → **Protect this Worker
+   behind Access** → **Previews only**. Allow policy: your email. Then add a second policy,
+   `Upload command`, action **Service Auth**, include service token `longshelf-cli`, so the
+   upload command can seed it. Copy the app's **AUD tag**.
+6. **Preview secrets**, shared by every preview:
+
+   ```sh
+   cd apps/web
+   pnpm exec wrangler preview base-config secret put ACCESS_TEAM_DOMAIN   # same as production
+   pnpm exec wrangler preview base-config secret put ACCESS_AUD           # the previews app's AUD
+   pnpm exec wrangler preview base-config secret put CLI_CLIENT_ID        # same as production
+   ```
+
+7. **Seed the test library** once, after the first preview exists:
+
+   ```sh
+   LONGSHELF_URL=https://pr-<N>-longshelf.<subdomain>.workers.dev \
+     pnpm longshelf library --library packages/sync-cli/test/fixtures/library
+   ```
+
+8. **Prove nothing leaks:** `pnpm --filter web test:access <preview url>`.
+
+Each push to the pull request redeploys its preview; closing the pull request deletes it. The
+data stays for the next one. Migrations are applied to the preview database before each preview.
 
 ## Local development
 

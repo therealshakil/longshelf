@@ -686,3 +686,12 @@
   - 37 new cleared books for seed authors; 10 authors move off the "nothing found" list;
   - 215 leads by authors not on the seed list.
 - **Totals now:** 557 cleared and 1,081 leads, for 185 of 240 authors. `docs/showcase/african-descent.md` has a DocSouth section with the Wayback links.
+
+## 2026-11-25: GitHub checks and PR previews (DR-0012)
+
+- **Why:** there was no CI, and the only way to try a change on Cloudflare was production.
+- **Checks:** `.github/workflows/ci.yml` runs lint, typecheck, unit tests and the mirror build on every pull request and push to `main`. Playwright and the accessibility matrix stay on demand.
+- **Previews:** Cloudflare Worker Previews (open beta), not version URLs, because version URLs run on production D1 and R2. Each pull request gets `pr-<N>`; `preview-cleanup.yml` deletes it on close.
+  - Separate data: D1 `longshelf-preview` (4 migrations applied) and R2 `longshelf-preview`, to be seeded with the test library.
+  - A trial `wrangler preview` from the laptop deployed with the preview bindings but returned no URL while `preview_urls` was off. It is now `true` in `wrangler.jsonc`, waiting for the owner to apply it.
+- **Owner setup left:** API token, GitHub secrets, Access app for previews, preview secrets, seed (`docs/DEPLOY.md` section 7).

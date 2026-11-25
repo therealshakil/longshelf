@@ -57,7 +57,7 @@ v1 is layers 0 and 1. Column names are configuration, so the core contains no Ko
 
 ## Cloud
 - One Worker: SvelteKit with `@sveltejs/adapter-cloudflare` (Workers static assets). UI and API deploy together.
-- Served only at the owner's custom domain; workers.dev and preview URLs are off.
+- Served only at the owner's custom domain; workers.dev is off. PR previews run as Worker Previews on separate D1 and R2, behind their own Access app (DR-0012).
 - D1: one row per book with its metadata as JSON, plus file, blob, catalogue and run-lock tables
   (DR-0010); progress and highlights come in specs 004–005. Plain SQL; `wrangler d1 migrations`.
   Search runs in the browser with MiniSearch (DR-0008).

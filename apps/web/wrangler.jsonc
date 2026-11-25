@@ -9,11 +9,12 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	// One way in: the owner's custom domain, behind Cloudflare Access (spec 003 research R5).
-	// workers.dev and preview URLs are off so nothing bypasses it. Change the domain for your
-	// own deployment (docs/DEPLOY.md).
+	// workers.dev is off so nothing bypasses it. Change the domain for your own deployment
+	// (docs/DEPLOY.md). Preview URLs are on for PR previews (DR-0012); they sit behind their own
+	// Access app, and the Worker refuses any request without a valid Access token either way.
 	"routes": [{ "pattern": "library.longshelf.app", "custom_domain": true }],
 	"workers_dev": false,
-	"preview_urls": false,
+	"preview_urls": true,
 	// Spec 002 (research R3): Workers AI runs in the owner's account; D1 keeps AI results.
 	"ai": { "binding": "AI", "remote": true },
 	// Spec 003 (DR-0010): D1 holds mirror metadata; R2 holds files, covers, thumbnails and
@@ -27,5 +28,21 @@
 			"database_id": "eca9151d-869c-43aa-869e-9fbf5c09bd50",
 			"migrations_dir": "migrations"
 		}
-	]
+	],
+	// PR previews (DR-0012): `wrangler preview` in .github/workflows/preview.yml. Previews inherit
+	// nothing from production, so every binding is repeated here and points at preview-only data
+	// seeded with the licence-free test library. All previews share it. Migrations for this
+	// database run through wrangler.preview-migrations.jsonc.
+	"previews": {
+		"ai": { "binding": "AI", "remote": true },
+		"r2_buckets": [{ "binding": "BUCKET", "bucket_name": "longshelf-preview" }],
+		"images": { "binding": "IMAGES" },
+		"d1_databases": [
+			{
+				"binding": "DB",
+				"database_name": "longshelf-preview",
+				"database_id": "0852447d-470d-471b-99fe-a212955c1cee"
+			}
+		]
+	}
 }
