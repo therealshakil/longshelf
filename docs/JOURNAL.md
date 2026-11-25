@@ -742,3 +742,15 @@
   - Added 1,572 cleared books, plus 16 possible sheet-music titles as leads.
 - **Totals:** 2,085 cleared books and 1,097 leads. 187 of 240 authors now have a copy; Duse Mohamed Ali and Plácido are newly found.
 - **Format:** the HathiTrust books are page scans and need OCR text or an EPUB.
+
+## 2026-11-25: PR previews live (DR-0012)
+
+- **PR #1** has a working preview at `pr-1-longshelf.berealshakil.workers.dev`, seeded with the 6-book test library (2.9 MB). `test:access` passes on the preview and on production.
+- **CI on GitHub:** install, lint, typecheck, unit tests, build, preview migrate, deploy, comment: all green.
+- **First CI runs found two clean-checkout bugs**, both fixed: lint needs the generated `tokens.css`, and the generator didn't create its folder.
+- **No second Access app:** the Worker's All traffic app already covers previews and version URLs (same AUD in the sign-in redirect).
+- **Gotchas:**
+  - Preview base-config secrets apply only to previews created after they are set; `pr-1` needed `wrangler preview secret bulk`.
+  - A seed attempt during the secrets rollout took the upload lock and then failed. Cleared on the preview D1.
+  - On workers.dev, Cloudflare sends `X-Robots-Tag: noindex` instead of the Worker's `noindex, nofollow`. `test:access` accepts that on workers.dev only.
+  - One of three `test:access` runs on the preview failed without a captured cause; the next two passed.
