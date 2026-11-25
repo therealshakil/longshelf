@@ -83,6 +83,9 @@ export function accessEnv(env: NodeJS.ProcessEnv = process.env): Record<string, 
 	if (env.CLOUDFLARE_ACCESS_CLIENT_ID) return {};
 	const { clientId, clientSecret } = loadConfig({}, env);
 	return clientId && clientSecret
-		? { CLOUDFLARE_ACCESS_CLIENT_ID: clientId, CLOUDFLARE_ACCESS_CLIENT_SECRET: clientSecret }
+		? {
+				CLOUDFLARE_ACCESS_CLIENT_ID: clientId,
+				CLOUDFLARE_ACCESS_CLIENT_SECRET: clientSecret
+			}
 		: {};
 }

@@ -7,10 +7,14 @@ import { Sha256Schema, StoredFileSchema } from './library/catalog.ts';
 
 export { Sha256Schema, StoredFileSchema };
 
-/** Files at or under this size go up in one request; larger ones use multipart (research R1). */
-export const SINGLE_PUT_MAX = 95 * 1024 * 1024;
+/**
+ * Files at or under this size go up in one request; larger ones use multipart (research R1).
+ * Kept small because uploads through the Worker ran at 5-10 Mbit/s in the T039 run, and a slow
+ * request can outlast Node's 300 s response wait.
+ */
+export const SINGLE_PUT_MAX = 20 * 1024 * 1024;
 /** Multipart part size. R2 needs equal parts (except the last) of at least 5 MiB. */
-export const PART_SIZE = 50 * 1024 * 1024;
+export const PART_SIZE = 10 * 1024 * 1024;
 /** A run removing more than this share of the mirror needs the owner's confirmation (FR-006). */
 export const REMOVAL_CONFIRM_SHARE = 0.1;
 

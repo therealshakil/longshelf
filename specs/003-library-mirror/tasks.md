@@ -156,7 +156,7 @@ access probe).
   - Per-book AI routes (`genres/[bookId]`, `dismiss`) and jobs (`jobs/genres`, `jobs/embeddings`) read book metadata from D1 `book` rows through `serverLibrary(db)` in `apps/web/src/lib/server/mirror/server-library.ts`, which implements only `book` and `allBooks`. Jobs already run in batches.
   - Update the spec 002 tests for the moved functions, and keep sample and local modes working.
 - [X] T028 [US2] Save a copy (FR-012). The owner rejected the first ⋯ menu sketch over its type sizes, then chose option B of three researched options (2026-11-24): a "Files" row at the top of Details on the book page, one link per stored format with its size, saving `Title - Author.ext` (`kepub.epub` for KEPUB). `LibrarySource.files?()` (mirror only), and `fileSize()` in `#lib/library/format.ts`. A book with no EPUB or KEPUB shows "Can't be read here (formats). Save a copy from Details." in place of the Read action (US2 scenario 4). The Download toggle is unchanged (spec 004).
-- [ ] T029 [US2] (Owner, 2026-11-24: on demand, as `pnpm test:e2e:mirror`, never part of everyday `pnpm test:e2e`.) Seed the e2e preview from the fixture library. A `globalSetup` in `apps/web/playwright.config.ts` runs `longshelf library --library packages/sync-cli/test/fixtures/library --yes` against the preview, with a local dev identity. Add `apps/web/tests/e2e/mirror.spec.ts`: Library shows the 6 fixture books, the book page shows "Save a copy", the reader opens an EPUB, and the news row shows the Evening Courier cover. Existing axe checks run on mirror mode too.
+- [X] T029 [US2] (Owner, 2026-11-24: on demand, as `pnpm test:e2e:mirror`, never part of everyday `pnpm test:e2e`.) Seed the e2e preview from the fixture library. A `globalSetup` in `apps/web/playwright.config.ts` runs `longshelf library --library packages/sync-cli/test/fixtures/library --yes` against the preview, with a local dev identity. Add `apps/web/tests/e2e/mirror.spec.ts`: Library shows the 6 fixture books, the book page shows "Save a copy", the reader opens an EPUB, and the news row shows the Evening Courier cover. Existing axe checks run on mirror mode too.
 - [X] T030 [US2] FR-026: in `apps/web/src/routes/settings/+page.svelte`, under the AI switch, add one plain sentence: "While AI is on, book details and some book text are sent to Cloudflare's AI service in your account." Keep the default on. Text only, no layout change. Add an e2e assertion.
 
 **Checkpoint**: US1 and US2 work end to end locally on the fixture library.
@@ -169,13 +169,13 @@ access probe).
 
 **Independent test**: quickstart step 4 against the deployment.
 
-- [ ] T031 [P] [US3] `apps/web/scripts/test-access.ts` and the `apps/web` script `test:access <url>`:
+- [X] T031 [P] [US3] `apps/web/scripts/test-access.ts` and the `apps/web` script `test:access <url>`:
   - without credentials, request `/`, `/library`, `/api/catalog`, `/api/covers/<sha>`, `/api/files/<sha>` and `/api/ingest/plan`, and assert that no response body contains a fixture title or any JSON book fields;
   - with the service token (from the CLI config), only `/api/ingest/*` succeeds and the browser routes give 403.
 
   It reads hashes from the CLI's last report and never prints secrets.
-- [ ] T032 [US3] CLI credential handling: a revoked or wrong token gives exit 2, with "The mirror refused the upload key. Set a new one: longshelf config set client-id … / client-secret …". The mirror is unchanged (US3 scenario 3). Add a test in `packages/sync-cli/test/upload.test.ts` with a mocked 403 and with an Access login redirect.
-- [ ] T033 [US3] Write the Access section of `docs/DEPLOY.md` from quickstart step 3: enable Access for the custom domain with All traffic, an Allow policy for the owner's email with a 30-day session, a Service Auth policy with token `longshelf-cli`, and the `OWNER_EMAIL` and `ACCESS_TEAM` Worker vars. Include rotating the token without a redeploy (FR-017).
+- [X] T032 [US3] CLI credential handling: a revoked or wrong token gives exit 2, with "The mirror refused the upload key. Set a new one: longshelf config set client-id … / client-secret …". The mirror is unchanged (US3 scenario 3). Add a test in `packages/sync-cli/test/upload.test.ts` with a mocked 403 and with an Access login redirect.
+- [X] T033 [US3] Write the Access section of `docs/DEPLOY.md` from quickstart step 3: enable Access for the custom domain with All traffic, an Allow policy for the owner's email with a 30-day session, a Service Auth policy with token `longshelf-cli`, and the `OWNER_EMAIL` and `ACCESS_TEAM` Worker vars. Include rotating the token without a redeploy (FR-017).
 
 **Checkpoint**: on the deployment, the access probe passes.
 
@@ -187,7 +187,7 @@ access probe).
 
 **Independent test**: quickstart step 6 on a phone.
 
-- [ ] T034 [US4] `apps/web/src/service-worker.ts` (SvelteKit native, research R6):
+- [X] T034 [US4] `apps/web/src/service-worker.ts` (SvelteKit native, research R6):
   - precache `build` and `files` (the app shell);
   - cache-first for `/api/covers/*`;
   - network-first for `/api/catalog` with a cache fallback;
@@ -195,8 +195,8 @@ access probe).
   - never cache `/api/ingest/*`, `/api/ai/*` or `/api/files/*` (offline files are spec 004);
   - treat an Access redirect (an opaque redirect, or a response from `*.cloudflareaccess.com`) as offline and serve the cache;
   - activate a new version on the next open (FR-021), with no `skipWaiting` while a reader page is open.
-- [ ] T035 [US4] In `apps/web/src/app.html`, put `crossorigin="use-credentials"` on the manifest link (research R5). Check `apps/web/static/manifest.webmanifest` (name, icons, `display: standalone`) and leave it unchanged unless something is wrong. Surface the "Sign in again" sync state in `SyncStatus` (existing component; label only) when the catalogue fetch was redirected by Access.
-- [ ] T036 [US4] Add a Playwright test in `apps/web/tests/e2e/offline.spec.ts`: load Library, set the context offline, reload, then assert that the shell renders and a cover image has loaded (`naturalWidth > 0`).
+- [X] T035 [US4] In `apps/web/src/app.html`, put `crossorigin="use-credentials"` on the manifest link (research R5). Check `apps/web/static/manifest.webmanifest` (name, icons, `display: standalone`) and leave it unchanged unless something is wrong. Surface the "Sign in again" sync state in `SyncStatus` (existing component; label only) when the catalogue fetch was redirected by Access.
+- [X] T036 [US4] Add a Playwright test in `apps/web/tests/e2e/offline.spec.ts`: load Library, set the context offline, reload, then assert that the shell renders and a cover image has loaded (`naturalWidth > 0`).
 
 **Checkpoint**: the app installs on a phone and opens offline with covers (owner check).
 
@@ -208,21 +208,22 @@ access probe).
 
 **Independent test**: follow `docs/DEPLOY.md` from scratch, then deploy a migration twice.
 
-- [ ] T037 [US5] Write `docs/DEPLOY.md` from quickstart steps 1 to 3: a costs check with the research R9 table and links (FR-025), resource creation, the real D1 id, `pnpm run deploy`, Access (from T033), and CLI config. Each step names the exact command or dashboard screen. Link it from `README.md` and `CLAUDE.md`.
-- [ ] T038 [US5] Check FR-023 and FR-024 on the deployment: run `pnpm run deploy` twice (the second applies no migrations), then deploy a build that throws at start-up in a throwaway commit (not merged), and confirm the previous version still serves. Record the results in `docs/JOURNAL.md`.
+- [X] T037 [US5] Write `docs/DEPLOY.md` from quickstart steps 1 to 3: a costs check with the research R9 table and links (FR-025), resource creation, the real D1 id, `pnpm run deploy`, Access (from T033), and CLI config. Each step names the exact command or dashboard screen. Link it from `README.md` and `CLAUDE.md`.
+- [X] T038 [US5] Check FR-023 and FR-024 on the deployment: run `pnpm run deploy` twice (the second applies no migrations), then deploy a build that throws at start-up in a throwaway commit (not merged), and confirm the previous version still serves. Record the results in `docs/JOURNAL.md`.
 
 ---
 
 ## Phase 8: Polish and real library
 
-- [ ] T039 Real-library run (owner present; it uploads private data to the owner's own account). Run `longshelf library --dry-run`, then `longshelf library`, timed: SC-001 under 1 hour, a re-run under 30 s (SC-002). On a phone over 4G, the first covers in under 3 s (SC-003). Record the times in `docs/JOURNAL.md`. If SC-003 fails, open the research R2 option of leaving descriptions out of the catalogue.
-- [ ] T040 [P] SC-008: in `packages/sync-cli/test/calibre-untouched.test.ts`, hash every file in a copy of the fixture library, run the snapshot read and a `--dry-run` against a stub server, then hash again: no differences.
-- [ ] T041 [P] Docs:
+- [X] T043 Speed up the test suites (owner, 2026-11-24: "tests are way too slow"). Measure where `pnpm test`, `pnpm test:e2e` and `pnpm test:e2e:mirror` spend their time, then cut it without losing coverage. Record before and after in `docs/JOURNAL.md`.
+- [X] T039 Real-library run (owner present; it uploads private data to the owner's own account). Run `longshelf library --dry-run`, then `longshelf library`, timed: SC-001 under 1 hour, a re-run under 30 s (SC-002). On a phone over 4G, the first covers in under 3 s (SC-003). Record the times in `docs/JOURNAL.md`. If SC-003 fails, open the research R2 option of leaving descriptions out of the catalogue.
+- [X] T040 [P] SC-008: in `packages/sync-cli/test/calibre-untouched.test.ts`, hash every file in a copy of the fixture library, run the snapshot read and a `--dry-run` against a stub server, then hash again: no differences.
+- [X] T041 [P] Docs:
   - `docs/DESIGN.md`: update the "longshelf CLI", "Cloud" and "Data model" sections to match DR-0010, and remove the "see DR-0010" banner;
   - `docs/PLAN.md`: tick Phase 1 items and mark spec 003 status;
   - `README.md`: add a short "Mirror your library" section;
   - `CLAUDE.md`: add `longshelf` and `test:access` to the commands.
-- [ ] T042 Run `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm test:e2e`, and the quickstart steps not yet done. Write the spec 003 closing entry in `docs/JOURNAL.md`, with an efficacy block like spec 002's: time, reworks, and actual Cloudflare usage from the dashboard.
+- [X] T042 Run `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm test:e2e`, and the quickstart steps not yet done. Write the spec 003 closing entry in `docs/JOURNAL.md`, with an efficacy block like spec 002's: time, reworks, and actual Cloudflare usage from the dashboard.
 
 ---
 

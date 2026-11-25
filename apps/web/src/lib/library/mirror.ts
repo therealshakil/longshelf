@@ -61,7 +61,15 @@ export async function fetchMirror(f: typeof fetch = fetch): Promise<LibrarySourc
 		);
 	if (!res.ok) throw new Error(`The library could not be loaded (${res.status}).`);
 	const catalog = (await res.json()) as MirrorCatalog;
-	return mirrorLibrary(catalog, { state: 'up-to-date', lastSync: catalog.readAt });
+	// The service worker marks a cached copy (spec 003 US4): offline, or signed out.
+	const source = res.headers.get('x-longshelf-source');
+	const sync: SyncState =
+		source === 'sign-in'
+			? { state: 'attention', reason: 'sign-in', lastSync: catalog.readAt }
+			: source === 'offline'
+				? { state: 'offline', lastSync: catalog.readAt }
+				: { state: 'up-to-date', lastSync: catalog.readAt };
+	return mirrorLibrary(catalog, sync);
 }
 
 /** A LibrarySource whose methods wait for the real one, so importers need no changes. */

@@ -561,3 +561,184 @@
 ## 2026-11-24: Portable deployment parked
 
 - **Parked (owner decision):** a Docker image others can install is a future idea, listed in `docs/PLAN.md` under "Later, optional" with the sketch, the case against, and the cost of waiting. Longshelf stays Cloudflare-only for now.
+
+## 2026-11-24: Spec 003 T029
+
+- **`pnpm test:e2e:mirror` (on demand, owner):** a mirror build. The real CLI uploads the test library, then 4 tests check Library with covers, the Files row and a saved file's name, the reader on a mirrored EPUB, and the news cover, with axe on Library and the book page. 4 passed. Everyday `pnpm test:e2e` is unchanged (53 tests, the mirror spec left out). Listed in `CLAUDE.md`.
+
+## 2026-11-24: Spec 003 US3 (T031–T033), and the first real deploy
+
+- **Deployed** the mirror build to `library.longshelf.app` (migration 0004 applied remotely). The real CLI uploaded the public-domain test library to the live mirror ("Uploaded 6 books (4.0 MB)"). A second run: "Nothing changed (checked 6 books in 2 s)".
+- **T031 live access probe** (`pnpm --filter web test:access <url>`), all 17 checks passed:
+  - Anonymous: every page, API and file route gets 302 to Access sign-in, with no library data.
+  - The service token gets 403 on every browser route and 200 on ingest.
+  - `X-Robots-Tag: noindex, nofollow` is present.
+- **T032:** a refused upload key exits 2 with the `config set` steps. This was already built and tested in T020.
+- **T033:** `docs/DEPLOY.md`, the full procedure: cost table with sources, resources, deploy, Access including the Service Auth policy and Worker secrets, rotating the key without a redeploy, the probe, and uploading. This is also the T037 draft.
+- **CLI:** `pnpm longshelf …` from the repository root.
+
+## 2026-11-24: Spec 003 US4 (T034–T036)
+
+- **Service worker** (`src/service-worker.ts`, SvelteKit's own, with SvelteKit 3's `$app/manifest`, `$app/env` and `$app/service-worker`):
+  - The shell is precached per version, leaving out the sample data.
+  - Covers are cache-first, the catalogue network-first with the cached copy as fallback, and pages network-first with the cached start page offline.
+  - Book files, AI and ingest are never cached.
+  - A new version takes over on the next open, never mid-read.
+- **Sign in again:** when Access redirects the catalogue fetch, the worker serves the cached copy marked `sign-in`, and the header shows a "Sign in again" link that reloads into Access. Offline shows "Offline". The manifest already had `crossorigin="use-credentials"`.
+- **T036:** a mirror e2e test opens Library, goes offline, reloads, and sees the shell, a loaded cover and "Offline". Mirror e2e: 5 passed. Everyday e2e: 51 passed plus the disclosure test, which was fixed after Prettier re-wrapped its text. 370 unit tests pass.
+- **Owner:** the tests are too slow. T043 is added to optimise them next.
+
+## 2026-11-24: Spec 003 T043, faster tests (owner: "tests are way too slow")
+
+| Suite | Before | After | What changed |
+|---|---|---|---|
+| `pnpm test:e2e` | 5.4 min | 3.4 min | `fullyParallel` with 6 workers, so single tests are spread out instead of whole files (genres alone was about 55 s in a row); `wrangler dev --local`, so no remote AI proxy and no Access token needed; `scripts/build-if-changed.ts` reuses an identical build instead of spending about 50 s rebuilding |
+| `pnpm test:e2e:mirror` | 1.8 min | 1.6 min | the same, though the mirror and sample builds invalidate each other |
+| unit tests (all packages) | about 42 s | unchanged | measured: the start-up cost is module imports, not Tailwind or the pool. The floor is the 10 s ingest file (local D1/R2 calls). No cheap win |
+
+- **Stability:** under 6 workers, a hydration-driven redirect needed more than the 5 s expect default, so it is raised to 10 s. Two full runs passed (52 passed, 1 skipped).
+- **Build reuse is safe:** the stamp sits in `.svelte-kit/cloudflare`, which the adapter deletes on every build, so a deploy build always forces e2e to rebuild.
+- **Still slow:** each e2e test spends most of its time loading pages from one local Worker. The next step would be fewer full-library page loads per test, which means test-by-test changes. Not done.
+
+## 2026-11-24: Spec 003 US5 (T037–T038)
+
+- **T037:** `docs/DEPLOY.md` is complete. There is a new root `README.md` (there was none, and the repository is public), linking deploy, design, plan and decisions.
+- **T038 on the live deployment:**
+  - `pnpm run deploy` twice: both said "No migrations to apply" and deployed cleanly (versions `9083b943`, then `a8a0b55e`). FR-023.
+  - A Worker that throws at start-up was rejected by Cloudflare at upload (error 10021). The live site kept serving `a8a0b55e`, and its upload route still answered from the real Worker. FR-024.
+
+## 2026-11-24: Spec 003 T040–T041
+
+- **T040 (SC-008):** a CLI test copies the test library, runs a full dry run through the real code, and checks every file's hash and modification time is unchanged.
+- **T041:** `docs/DESIGN.md` now describes what was built (the CLI flow, D1 row per book, the catalogue document, browser-only rendering and suggestions, Access verified in the Worker, the service worker). The "see DR-0010" banner is gone. `docs/PLAN.md` Phase 1 is ticked, except the real-library upload.
+
+## 2026-11-24: Showcase collection research (authors of African descent)
+
+- **DR-0011 (owner):** the showcase follows the US public-domain rule. Standard Ebooks and Gutenberg books are accepted on those sites' own copyright checks. Other sources are accepted only if first published in 1930 or earlier.
+- **`docs/showcase/african-descent.md`:** 240 authors searched; 175 have at least one digital copy.
+  - 520 cleared books: 62 on Standard Ebooks, 458 on Gutenberg.
+  - 866 archive.org leads still to check.
+  - Every book is listed in `african-descent-candidates.csv`.
+- **Gaps:**
+  - DocSouth refused connections, so its slave narratives need a manual search.
+  - Authors writing in French, Portuguese and African languages are under-covered.
+  - 65 authors have nothing found yet; their search links are in the doc.
+- **Next:** the owner picks the first books from the cleared list.
+
+## 2026-11-24: Spec 003 T039, first attempt failed, upload fixed
+
+- **Dry run on the real library:** 670 books, would upload 3.2 GB and remove the 6 test books (74 s, mostly hashing).
+- **First real run failed** after 298 s with "fetch failed", having stored nothing new. The lock was released correctly.
+- **Cause, measured:** uploads through the Worker ran at 5–10 Mbit/s per stream (50 MB parts took 42 s and 86 s), against 58 Mbit/s raw upload to Cloudflare. A 95 MB single request with another upload in parallel ran past Node's 300 s response wait (undici `headersTimeout`).
+- **Fix:**
+  - single uploads up to 20 MB, larger files in 10 MB parts (R2's minimum is 5 MiB), so every request finishes in seconds;
+  - network failures and 5xx answers are retried 3 times with growing pauses, which is safe because objects are content-addressed;
+  - 4 uploads at a time;
+  - a network failure now names its cause and the request.
+  - 29 CLI tests, including retry tests. Redeployed. Research R1, the contracts and DESIGN updated.
+- **Also fixed:** two Prettier runs had used Prettier's defaults instead of the project config on `packages/` (Prettier in `pnpm lint` only covers `apps/web`), which left `calibre-untouched.test.ts` committed with the wrong style. All are reformatted with the project config.
+
+## 2026-11-24: Spec 003 T039, the real library is online
+
+- **Upload:** "Uploaded 670 books (3.2 GB), updated 0, removed 6. 0 problems" in **38.4 min** (2,305 s). SC-001 is under 1 hour. The upload link was 58 Mbit/s raw, but the effective rate through the Worker was about 11 Mbit/s.
+- **Re-run:** "Nothing changed (checked 670 books in 5 s)", **6.4 s** wall. SC-002 is under 30 s.
+- **Live D1:**
+  - 670 books, 39 of them news, and the catalogue has 670.
+  - 714 files, including both over 100 MB (the largest is 418 MB) via multipart.
+  - 0 orphaned files, 0 locks.
+- **Access probe re-run with real data:** all checks passed.
+- **Open:** SC-003 (first covers within 3 s on a phone over 4G) needs the owner's phone.
+
+## 2026-11-24: Spec 003, offline fix after the owner's phone check
+
+- **Owner's phone check:** reading, saving and installing worked. But the header never said "Offline", and reopening the installed app offline showed the browser's own blocking offline screen.
+- **Cause:** SvelteKit 3's `$app/manifest` lists paths without a leading slash (`_app/immutable/…`), while requests arrive as `/_app/immutable/…`. The service worker never served the app's code from its cache, so the app couldn't start offline. The sample-data filter didn't match either. The T036 test missed it because it reloaded the same tab, where Playwright's memory cache supplied the code.
+- **Fix:** paths are normalised to a leading slash. The header now also turns to "Offline" the moment the connection drops, through the `online`/`offline` events, not only at the next load.
+- **Test made real:** it reopens offline in a new tab, checks every `/_app/immutable/` response came from the service worker, and looks for "Offline" in the header (banner). Without the fix it fails, and with it it passes. Mirror e2e 5 passed; everyday e2e 52 passed; lint clean. Deployed.
+
+## 2026-11-25: Spec 003 SC-003, covers on the owner's phone
+
+- **How:** owner's phone (Galaxy S24, Android 17, Chrome 158) over wireless debugging, driven by Playwright over CDP. Wireless debugging needs Wi-Fi, so 4G was **simulated** with Chrome's network throttling (Fast 4G: 9 Mbit/s, 165 ms; Slow 4G: 1.44 Mbit/s, 563 ms). Real phone, browser and live site; simulated network. The clock runs from navigation start until every cover in the first screen (6 covers) has loaded. 3 runs each; medians below.
+
+| Network | Warm (installed app, cached) | Cold (first ever visit, no cache, no SW) |
+|---|---|---|
+| Fast 4G | **1.3 s** (1.26 to 1.43) | **3.0 s** (2.84 to 3.61) |
+| Slow 4G | **2.5 s** (2.49 to 2.59) | **10.6 s** (10.5 to 11.0) |
+
+- **Verdict:** SC-003 passes for opening Library, which is the installed app with its cache, on both profiles. A first-ever visit passes on Fast 4G (median) and fails on Slow 4G.
+- **Why the cold Slow 4G is slow:** a first visit fetches the catalogue (1.4 MB uncompressed), the Literata font (387 KB) and 52 code chunks (287 KB uncompressed). At 563 ms per round trip, the request count matters as much as the bytes.
+- **Research R2 (descriptions out of the catalogue) not opened:** it would shrink only one of those three, and only for a one-off first visit. Revisit if a cold first visit on a slow link becomes a real use.
+- **Also seen:** the page loads Cloudflare's Web Analytics beacon (`/cdn-cgi/rum`), injected by Cloudflare and not by our code. Nothing in the docs mentions it.
+
+## 2026-11-25: Spec 003 closed (T042)
+
+- **Checks:** `pnpm lint` clean, `pnpm typecheck` 0 errors, `pnpm test` 374 passed (102 + 26 + 246), `pnpm test:e2e` 52 passed, 1 skipped.
+- **Quickstart steps not yet run, now run** on a local mirror preview with throwaway storage and a copy of the test library, so the live mirror was not touched:
+  - **FR-007 failed first.** A Ctrl-C 1.2 s into the first upload left the upload lock held. The re-run was refused with "Another upload is running" (exit 3) and would have stayed refused for 2 hours. **Cause:** Ctrl-C arrived while the plan request was still waiting for an answer. The CLI didn't know the run id yet, so it quit without releasing anything, and then the server took the lock. **Fix:** the CLI gets the pending run id as soon as the plan request goes out, and on Ctrl-C it waits for it (up to 15 s; a second Ctrl-C quits at once) and then releases the lock. A new test, `interrupt.test.ts`, fails without the fix and passes with it. After the fix, the same interrupt was followed by "Uploaded 6 books" and then "Nothing changed". CLI tests: 27.
+  - **FR-006 passes.** Pointed at an empty Calibre library, the CLI lists all 6 books and asks "Remove these 6 books from the mirror? [y/N]". On "n" it says "Nothing changed: the removals were not confirmed" (exit 4), and the next normal run says "Nothing changed". Without a terminal it refuses removals without asking.
+  - Already recorded earlier: costs and resources (T033), access (T031), upload and re-run (T023, T031), phone (2026-11-24, SC-003 above), FR-024 (T038), SC-008 (T040).
+- **Cloudflare Web Analytics:** the owner keeps it on for now. Cloudflare injects its beacon (`/cdn-cgi/rum`) into every page; our code doesn't load it. It is disclosed here; revisit it before anyone but the owner uses a deployment.
+- **Efficacy:**
+  - **Time:** spec written 2026-11-24, real library online the same day, closed 2026-11-25, so 2 days from spec to a deployed, used mirror.
+  - **Reworks after implementation:** 4.
+    - Uploads of the real library failed on large files and flaky links; fixed with smaller parts and retries (T039).
+    - The app did not reopen offline on the owner's phone; the T036 test had passed through Playwright's memory cache.
+    - The Ctrl-C lock bug above.
+    - Two Prettier runs used defaults instead of the project config. It nearly happened again here: `apps/web/prettier.config.js` is the config, and there is no `.prettierrc`.
+  - **Actual Cloudflare usage**, dashboard and `wrangler d1 info`, last 24 hours on 2026-11-25. That day included the SC-003 runs and 5 deploys.
+    - **Worker:** 2,050 invocations and 1,070 asset requests (92% from cache), 0 errors. The free allowance is 100,000 requests a day.
+    - **D1:** 2.52 MB stored, 40,322 rows read and 6,352 written. The free allowance is 5 M read and 100 k written a day, and 500 MB.
+    - **R2:** about 3.2 GB stored, taken from our own D1 records rather than the dashboard. The free allowance is 10 GB-month.
+    - Allowances: `docs/DEPLOY.md` cost table, read 2026-11-24.
+    - **Bill:** £0. R2 storage is the nearest limit, at about a third of the allowance.
+
+## 2026-11-25: Showcase research, DocSouth recovered from the Wayback Machine
+
+- **DocSouth was archived on 2026-03-30** and the live host refuses connections. Its four bulk ZIPs (text, TEI/XML and a contents CSV) are intact in the Wayback Machine. The licence is CC BY 4.0, with credit to the UNC library.
+- **Matched 711 titles** with `docs/showcase/scripts/docsouth.py`:
+  - 37 new cleared books for seed authors; 10 authors move off the "nothing found" list;
+  - 215 leads by authors not on the seed list.
+- **Totals now:** 557 cleared and 1,081 leads, for 185 of 240 authors. `docs/showcase/african-descent.md` has a DocSouth section with the Wayback links.
+
+## 2026-11-25: Showcase list keeps author-only books
+
+- **Owner rule:** a book counts only if the person is its author.
+- Dropped 44 Gutenberg rows where the person was editor, contributor, translator, compiler, commentator, introduction writer or "dubious author". Examples: *The Negro Problem* essays, Braithwaite's anthologies, Booker T. Washington's introductions. `combine.py` now skips these rows.
+- **Cleared books:** 513 (62 Standard Ebooks, 414 Gutenberg, 37 DocSouth). This is still 185 of 240 authors.
+- **Dumas (père):** 167 of the Gutenberg books, many of them editions of the same novels. Pick one edition per novel.
+- **archive.org leads** can't show the person's role, so each one is checked by hand.
+
+## 2026-11-25: Showcase becomes a complete catalogue
+
+- **Owner direction:** keep every book by these authors.
+  - Public-domain books are hosted.
+  - In-copyright books link to legal ebook stores.
+  - Each 1 January, the newly public-domain books are added.
+- Recorded in `docs/PLAN.md` Phase 2, with open questions for its spec: which stores, whether links earn money (disclosed if so), and how the yearly batch runs.
+- **HathiTrust:** the catalogue search is behind Cloudflare's bot check, but the full Hathifile (1.2 GB, every volume with a rights code) downloads directly. Matching is in progress.
+
+## 2026-11-25: GitHub checks and PR previews (DR-0012)
+
+- **Why:** there was no CI, and the only way to try a change on Cloudflare was production.
+- **Checks:** `.github/workflows/ci.yml` runs lint, typecheck, unit tests and the mirror build on every pull request and push to `main`. Playwright and the accessibility matrix stay on demand.
+- **Previews:** Cloudflare Worker Previews (open beta), not version URLs, because version URLs run on production D1 and R2. Each pull request gets `pr-<N>`; `preview-cleanup.yml` deletes it on close.
+  - Separate data: D1 `longshelf-preview` (4 migrations applied) and R2 `longshelf-preview`, to be seeded with the test library.
+  - A trial `wrangler preview` from the laptop deployed with the preview bindings but returned no URL while `preview_urls` was off. It is now `true` in `wrangler.jsonc`, waiting for the owner to apply it.
+- **Owner setup left:** API token, GitHub secrets, Access app for previews, preview secrets, seed (`docs/DEPLOY.md` section 7).
+
+## 2026-11-25: Showcase stays public domain only
+
+- **Owner:** the showcase lists and hosts only public-domain books; there are no store links for in-copyright books. This replaces the "complete catalogue" entry above. `docs/PLAN.md` is updated.
+- **Annual batch stays:** each 1 January, books entering the US public domain are added.
+- **`hathi.py`** now keeps only HathiTrust records with rights `pd` or `pdus`. It has not been run yet.
+
+## 2026-11-25: HathiTrust added (public domain only)
+
+- **Source:** the full Hathifile (1 Nov 2026, 1.2 GB), matched with `docs/showcase/scripts/hathi.py`, which keeps only `pd` and `pdus` records. A first, looser pass took in other people with the same name (Samuel Johnson the English writer, President John Quincy Adams). The rule is now:
+  - match the author's known birth or death year, or else a full three-part name;
+  - authors who came only from DocSouth are left out.
+- **Matched:** 3,198 public-domain records across 110 authors. 1,381 were already listed from other sources.
+  - Dropped 123 John Brown records (the Scottish doctor) and 106 edited books.
+  - Added 1,572 cleared books, plus 16 possible sheet-music titles as leads.
+- **Totals:** 2,085 cleared books and 1,097 leads. 187 of 240 authors now have a copy; Duse Mohamed Ali and Plácido are newly found.
+- **Format:** the HathiTrust books are page scans and need OCR text or an EPUB.

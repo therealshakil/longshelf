@@ -9,7 +9,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 |---|---|---|---|
 | 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | MVP built (US1+US2); US4 superseded by 002 |
 | 002 | [Redesigned screens and AI features](../specs/002-redesign-and-ai/spec.md) (DR-0002, DR-0003) | 001 | Built and design signed off 2026-11-23 on sample data. Not deployed. Story so far (T053) and AI search (T061–T063) are parked; plain search shipped instead (DR-0008) |
-| 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Specified and planned 2026-11-24 (DR-0010 accepted) |
+| 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Done 2026-11-25. Deployed 2026-11-24; the owner's 670 books are online at library.longshelf.app |
 | 004 | Read (Phase 2) | 003 | not started |
 | 005 | Device progress (Phase 3) | 004, spike | not started |
 
@@ -88,13 +88,14 @@ licence-free synthetic one: 670 records, 1.2 MB.
 ## Starting scope per spec
 
 ### Phase 1: mirror → spec 003 (does not depend on the spike)
-- [ ] Wrangler config, `pnpm run deploy` from the laptop (CI deferred, DR-0010; scaffold moved to spec 001)
-- [ ] D1 schema + migrations
-- [ ] Ingest API (`plan`, `commit`) with Zod contract
-- [ ] `longshelf library` (upload every format; KEPUB when present, per spec 003 FR-004)
-- [ ] Library UI: wire the spec 002 screens to real data (download included)
-- [ ] PWA manifest + service worker (app shell, covers)
-- [ ] Cloudflare Access + service token
+- [x] Wrangler config, `pnpm run deploy` from the laptop (CI deferred, DR-0010; scaffold moved to spec 001)
+- [x] D1 schema + migrations
+- [x] Ingest API (`plan`, `books`, `commit`) with Zod contract
+- [x] `longshelf library` (upload every format; KEPUB when present, per spec 003 FR-004)
+- [x] Library UI: wire the spec 002 screens to real data (save a copy from Details)
+- [x] PWA manifest + service worker (app shell, covers)
+- [x] Cloudflare Access + service token
+- [x] Upload the owner's real library and record the SC timings (spec 003 T039; phone check SC-003 by the owner)
 
 ### Phase 2: read → spec 004
 - [ ] foliate-js submodule + `Reader.svelte`
@@ -110,6 +111,12 @@ licence-free synthetic one: 670 records, 1.2 MB.
       - AI off, or capped hard, because anyone can call it;
       - no personal reading progress shown;
       - a recorded cost check, because public traffic counts against the free allowances.
+      - First collection: authors of African descent, under the US public-domain rule (DR-0011).
+        Candidates are in `docs/showcase/african-descent.md`, built with the scripts in
+        `docs/showcase/scripts/`.
+      - Public domain only (owner, 2026-11-25). The showcase lists and hosts only
+        public-domain books. Each 1 January, books entering the US public domain are added.
+        (This replaces a same-day idea to also list in-copyright books with links to ebook stores.)
 
 ### Phase 3: device progress via Calibre columns → spec 005
 - [ ] Store device location verbatim in `native_location`; merge status and position by separate timestamps

@@ -42,10 +42,13 @@ Run from the repo root (pnpm 12 via corepack, Node 24):
 - `pnpm dev:calibre`: dev server on your local Calibre library, read-only with AI off (DR-0009). Set `LONGSHELF_CALIBRE_LIBRARY` to choose a library
 - `pnpm test`: Vitest unit tests (all packages)
 - `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on a free port, never reusing a running server)
+- `pnpm test:e2e:mirror`: e2e on a mirror build, seeded by the `longshelf` CLI with the test library (spec 003). On demand, never part of build, push or deploy
 - `pnpm test:a11y`: full accessibility matrix (about 5.5 minutes), on demand before a release. Never part of build, push or deploy
 - `pnpm design:compare`: on-demand screenshots of each page beside its mock; filter with `--only`, `--widths`, `--themes`. Never part of build, push or deploy
 - `pnpm lint`: Prettier + ESLint
 - `pnpm typecheck`: svelte-check / tsc
+- `pnpm longshelf library [--dry-run]`: upload the Calibre library to the mirror; `pnpm longshelf config set|show` (spec 003)
+- `pnpm --filter web test:access <url>`: live probe that nothing is readable without signing in (spec 003 SC-004)
 - `pnpm run deploy`: build, apply D1 migrations remotely, deploy the Worker (DR-0010). Not `pnpm deploy`, which is a pnpm built-in. Setup steps: `docs/DEPLOY.md` (spec 003)
 
 SvelteKit 3 uses `#lib/...` imports (package.json `imports`), not `$lib`.

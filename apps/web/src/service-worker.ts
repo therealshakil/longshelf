@@ -1,0 +1,114 @@
+/// <reference no-default-lib="true"/>
+/// <reference lib="esnext" />
+/// <reference lib="webworker" />
+/**
+ * Installable, offline-first shell (spec 003 US4, research R6). SvelteKit's own service worker,
+ * no plugin.
+ * - App shell (built JS/CSS, fonts, icons, the start page) is precached per version.
+ * - Covers are cache-first: their URL is the image's hash, so they never change.
+ * - The catalogue is network-first with the last copy as fallback.
+ * - Pages are network-first, falling back to the cached start page offline.
+ * - Book files, AI and uploads are never cached here (offline books are spec 004).
+ * A new version waits until every Longshelf tab is closed, so nothing open is interrupted
+ * (FR-021); it takes over on the next open.
+ */
+import { assets, immutable } from '$app/manifest';
+import { version } from '$app/env';
+import { self } from '$app/service-worker';
+
+const SHELL = `shell-${version}`;
+const COVERS = 'covers-v1';
+const CATALOG = 'catalog-v1';
+/** Tells the page a catalogue came from the cache, and why. */
+export const SOURCE_HEADER = 'x-longshelf-source';
+
+// SvelteKit 3 lists paths without a leading slash ("_app/immutable/…"), but requests arrive
+// as "/_app/immutable/…": normalise, or nothing matches and the app can't start offline.
+const abs = (p: string) => `/${p.replace(/^\/+/, '')}`;
+// Sample books and covers are demo data: too large to precache and not part of the shell.
+const SHELL_FILES = [
+	...immutable.map((f) => abs(f.path)),
+	...assets.map((f) => abs(f.path)).filter((p) => !p.startsWith('/sample/'))
+];
+
+self.addEventListener('install', (event) => {
+	event.waitUntil(
+		(async () => {
+			const cache = await caches.open(SHELL);
+			await cache.addAll(SHELL_FILES);
+			// The start page, if it can be fetched now (it can't while signed out).
+			const start = await fetch('/', { redirect: 'manual' }).catch(() => null);
+			if (start?.ok) await cache.put('/', start);
+		})()
+	);
+});
+
+self.addEventListener('activate', (event) => {
+	event.waitUntil(
+		(async () => {
+			for (const key of await caches.keys())
+				if (key.startsWith('shell-') && key !== SHELL) await caches.delete(key);
+		})()
+	);
+});
+
+/** True when Cloudflare Access answered with its sign-in redirect instead of the data. */
+const signInRedirect = (res: Response) =>
+	res.type === 'opaqueredirect' || (res.status >= 300 && res.status < 400);
+
+async function coverFirst(request: Request) {
+	const cache = await caches.open(COVERS);
+	const hit = await cache.match(request);
+	if (hit) return hit;
+	const res = await fetch(request);
+	if (res.ok) await cache.put(request, res.clone());
+	return res;
+}
+
+async function catalogue(request: Request) {
+	const cache = await caches.open(CATALOG);
+	// null when offline
+	const res = await fetch(request, { redirect: 'manual' }).catch(() => null);
+	if (res?.ok) {
+		await cache.put('/api/catalog', res.clone());
+		return res;
+	}
+	if (res && res.status === 304) return res;
+	const reason = res && signInRedirect(res) ? 'sign-in' : res ? null : 'offline';
+	const cached = reason ? await cache.match('/api/catalog') : undefined;
+	if (!cached) return res ?? Response.error();
+	const headers = new Headers(cached.headers);
+	headers.set(SOURCE_HEADER, reason!);
+	return new Response(cached.body, { status: 200, headers });
+}
+
+async function page(request: Request) {
+	try {
+		const res = await fetch(request);
+		if (res.ok && new URL(request.url).pathname === '/')
+			await (await caches.open(SHELL)).put('/', res.clone());
+		return res;
+	} catch {
+		const shell = await (await caches.open(SHELL)).match('/');
+		return shell ?? Response.error();
+	}
+}
+
+async function shellFirst(request: Request) {
+	const hit = await (await caches.open(SHELL)).match(request);
+	return hit ?? fetch(request);
+}
+
+self.addEventListener('fetch', (event) => {
+	const { request } = event;
+	if (request.method !== 'GET') return;
+	const url = new URL(request.url);
+	if (url.origin !== self.location.origin) return;
+	const path = url.pathname;
+
+	if (path.startsWith('/api/covers/')) event.respondWith(coverFirst(request));
+	else if (path === '/api/catalog') event.respondWith(catalogue(request));
+	else if (request.mode === 'navigate') event.respondWith(page(request));
+	else if (SHELL_FILES.includes(path)) event.respondWith(shellFirst(request));
+	// Everything else (book files, AI, uploads, sample data) goes straight to the network.
+});

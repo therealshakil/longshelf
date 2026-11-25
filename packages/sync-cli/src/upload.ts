@@ -31,8 +31,45 @@ export interface BlobSource {
 	bytes?: Uint8Array;
 }
 
+const RETRIES = 3;
+
+/** "fetch failed" says nothing; name the request and the underlying cause. */
+function networkError(path: string, err: unknown): Error {
+	const cause = (err as { cause?: { code?: string; message?: string } })?.cause;
+	const why = cause?.code ?? cause?.message ?? (err instanceof Error ? err.message : String(err));
+	return new Error(
+		`Couldn't reach the mirror for ${path.split('?')[0]} after ${RETRIES} tries (${why}). Check the connection and run again: finished uploads are kept.`
+	);
+}
+
 /** Raw bytes; without a content type SvelteKit treats a PUT as a cross-site form post. */
 const OCTETS = { 'content-type': 'application/octet-stream' };
+
+/** Turns a final answer into the response, or a plain-words failure. */
+async function check(res: Response, path: string): Promise<Response> {
+	// Access answers a refused token with its sign-in redirect; the Worker's gate with 401/403
+	// and its own refusal text. Other 403s (e.g. a framework check) keep their message.
+	if (res.status >= 300 && res.status < 400) throw new RunError(EXIT.notConfigured, REFUSED);
+	if (res.status === 401 || res.status === 403) {
+		const text = await res.text();
+		if (res.status === 401 || /sign in|access/i.test(text))
+			throw new RunError(EXIT.notConfigured, REFUSED);
+		throw new Error(`The mirror refused ${path.split('?')[0]}: ${text.slice(0, 200)}`);
+	}
+	if (!res.ok) {
+		const problem = (await res.json().catch(() => null)) as {
+			error?: string;
+			detail?: string;
+		} | null;
+		const message = problem?.error
+			? `${problem.error}${problem.detail ? ` (${problem.detail})` : ''}`
+			: `The mirror answered ${res.status} for ${path.split('?')[0]}.`;
+		if (res.status === 409 && path === '/api/ingest/plan')
+			throw new RunError(EXIT.locked, `${message} Try again after it finishes or expires.`);
+		throw new Error(message);
+	}
+	return res;
+}
 
 const REFUSED =
 	'The mirror refused the upload key. Set a new one: longshelf config set client-id <id>, then longshelf config set client-secret <secret>.';
@@ -40,43 +77,38 @@ const REFUSED =
 export class MirrorClient {
 	readonly creds: Credentials;
 	private readonly fetchImpl: typeof fetch;
-	constructor(creds: Credentials, fetchImpl: typeof fetch = fetch) {
+	private readonly retryDelayMs: number;
+	constructor(creds: Credentials, fetchImpl: typeof fetch = fetch, retryDelayMs = 2000) {
 		this.creds = creds;
 		this.fetchImpl = fetchImpl;
+		this.retryDelayMs = retryDelayMs;
 	}
 
+	/**
+	 * Sends a request, retrying network failures and 5xx answers (every request here is safe to
+	 * repeat), then turns any other failure into a plain message.
+	 */
 	private async call(path: string, init: RequestInit = {}): Promise<Response> {
-		const res = await this.fetchImpl(`${this.creds.url}${path}`, {
-			...init,
-			redirect: 'manual',
-			headers: {
-				'CF-Access-Client-Id': this.creds.clientId,
-				'CF-Access-Client-Secret': this.creds.clientSecret,
-				...(init.headers ?? {})
+		let res: Response | null = null;
+		for (let attempt = 1; attempt <= RETRIES; attempt++) {
+			try {
+				res = await this.fetchImpl(`${this.creds.url}${path}`, {
+					...init,
+					redirect: 'manual',
+					headers: {
+						'CF-Access-Client-Id': this.creds.clientId,
+						'CF-Access-Client-Secret': this.creds.clientSecret,
+						...(init.headers ?? {})
+					}
+				});
+				if (res.status < 500) break;
+			} catch (err) {
+				if (attempt === RETRIES) throw networkError(path, err);
 			}
-		});
-		// Access answers a refused token with its sign-in redirect; the Worker's gate with 401/403
-		// and its own refusal text. Other 403s (e.g. a framework check) keep their message.
-		if (res.status >= 300 && res.status < 400) throw new RunError(EXIT.notConfigured, REFUSED);
-		if (res.status === 401 || res.status === 403) {
-			const text = await res.text();
-			if (res.status === 401 || /sign in|access/i.test(text))
-				throw new RunError(EXIT.notConfigured, REFUSED);
-			throw new Error(`The mirror refused ${path.split('?')[0]}: ${text.slice(0, 200)}`);
+			if (attempt < RETRIES)
+				await new Promise((r) => setTimeout(r, this.retryDelayMs * attempt * attempt));
 		}
-		if (!res.ok) {
-			const problem = (await res.json().catch(() => null)) as {
-				error?: string;
-				detail?: string;
-			} | null;
-			const message = problem?.error
-				? `${problem.error}${problem.detail ? ` (${problem.detail})` : ''}`
-				: `The mirror answered ${res.status} for ${path}.`;
-			if (res.status === 409 && path === '/api/ingest/plan')
-				throw new RunError(EXIT.locked, `${message} Try again after it finishes or expires.`);
-			throw new Error(message);
-		}
-		return res;
+		return check(res!, path);
 	}
 
 	private post = async <T>(path: string, data: unknown): Promise<T> =>
@@ -122,7 +154,9 @@ export class MirrorClient {
 			}
 			await this.post(`${base}/multipart/${uploadId}/complete?${q}&size=${blob.size}`, { parts });
 		} catch (err) {
-			await this.call(`${base}/multipart/${uploadId}?${q}`, { method: 'DELETE' }).catch(() => {});
+			await this.call(`${base}/multipart/${uploadId}?${q}`, {
+				method: 'DELETE'
+			}).catch(() => {});
 			throw err;
 		}
 	}
@@ -155,7 +189,7 @@ export async function uploadAll(
 	runId: string,
 	blobs: BlobSource[],
 	onDone: (blob: BlobSource) => void = () => {},
-	concurrency = 2
+	concurrency = 4
 ) {
 	const queue = [...blobs].sort((a, b) => b.size - a.size);
 	const worker = async () => {

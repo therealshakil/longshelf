@@ -17,7 +17,7 @@ longshelf config show            # secrets shown as ****1234
 2. Ask the server's `plan`.
 3. If `removalNeedsConfirm`, list the books and ask "Remove these N books from the mirror?
    [y/N]". `--yes` skips this only when 10 or fewer books would go.
-4. Upload missing blobs, largest first, two at a time, with a progress line.
+4. Upload missing blobs, largest first, four at a time, with a progress line.
 5. Build and upload the catalogue, then commit.
 6. Print the report.
 

@@ -4,5 +4,5 @@ import { expect, test } from '@playwright/test';
 test('AI settings say that book details and some book text are sent', async ({ page }) => {
 	await page.goto('/settings/ai');
 	await expect(page.getByRole('heading', { name: 'Where your books go' })).toBeVisible();
-	await expect(page.getByText(/book details\s+\(titles, authors, descriptions\)/)).toBeVisible();
+	await expect(page.getByText('book details (titles, authors, descriptions)')).toBeVisible();
 });

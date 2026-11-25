@@ -49,8 +49,12 @@ async function library(args: string[]) {
 		clientId: config.clientId,
 		clientSecret: config.clientSecret
 	});
-	let runId: string | null = null;
+	let run: Promise<string | null> | null = null;
 	process.once('SIGINT', async () => {
+		// The plan request may still be in flight: wait for its run id (a second Ctrl-C quits at
+		// once), or the server takes the upload lock after we have gone and holds it for hours.
+		const timeout = new Promise<null>((r) => setTimeout(() => r(null), 15_000).unref());
+		const runId = run && (await Promise.race([run, timeout]));
 		if (runId) await client.abort(runId).catch(() => {});
 		console.error('\nStopped. Nothing half-done is shown in the mirror; run again to finish.');
 		process.exit(130);
@@ -64,7 +68,7 @@ async function library(args: string[]) {
 			yes: values.yes,
 			confirm,
 			log: (line) => process.stderr.isTTY && process.stderr.write(`\r${line}   `),
-			onRun: (id) => (runId = id)
+			onRun: (id) => (run = id)
 		},
 		new URL(config.url).host
 	);

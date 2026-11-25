@@ -11,7 +11,7 @@ spec 002 screens at it:
 
 - **Upload:** the `longshelf library` CLI reads Calibre read-only, using the DR-0009 reader. It
   hashes files with a cache and asks the Worker what's missing. It uploads through the Worker's
-  R2 binding, in parts for files over 95 MB, then commits in one D1 batch.
+  R2 binding, in 10 MB parts for files over 20 MB (changed after the T039 run), then commits in one D1 batch.
 - **Read:** the browser downloads the whole catalogue as one ETag-cached document and builds the
   existing snapshot `LibrarySource` from it. Covers and files are served from R2 by content hash.
   Thumbnails are made once, at upload.
