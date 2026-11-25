@@ -642,3 +642,17 @@
 - **Cause:** SvelteKit 3's `$app/manifest` lists paths without a leading slash (`_app/immutable/…`), while requests arrive as `/_app/immutable/…`. The service worker never served the app's code from its cache, so the app couldn't start offline. The sample-data filter didn't match either. The T036 test missed it because it reloaded the same tab, where Playwright's memory cache supplied the code.
 - **Fix:** paths are normalised to a leading slash. The header now also turns to "Offline" the moment the connection drops, through the `online`/`offline` events, not only at the next load.
 - **Test made real:** it reopens offline in a new tab, checks every `/_app/immutable/` response came from the service worker, and looks for "Offline" in the header (banner). Without the fix it fails, and with it it passes. Mirror e2e 5 passed; everyday e2e 52 passed; lint clean. Deployed.
+
+## 2026-11-25: Spec 003 SC-003, covers on the owner's phone
+
+- **How:** owner's phone (Galaxy S24, Android 17, Chrome 158) over wireless debugging, driven by Playwright over CDP. Wireless debugging needs Wi-Fi, so 4G was **simulated** with Chrome's network throttling (Fast 4G: 9 Mbit/s, 165 ms; Slow 4G: 1.44 Mbit/s, 563 ms). Real phone, browser and live site; simulated network. The clock runs from navigation start until every cover in the first screen (6 covers) has loaded. 3 runs each; medians below.
+
+| Network | Warm (installed app, cached) | Cold (first ever visit, no cache, no SW) |
+|---|---|---|
+| Fast 4G | **1.3 s** (1.26 to 1.43) | **3.0 s** (2.84 to 3.61) |
+| Slow 4G | **2.5 s** (2.49 to 2.59) | **10.6 s** (10.5 to 11.0) |
+
+- **Verdict:** SC-003 passes for opening Library, which is the installed app with its cache, on both profiles. A first-ever visit passes on Fast 4G (median) and fails on Slow 4G.
+- **Why the cold Slow 4G is slow:** a first visit fetches the catalogue (1.4 MB uncompressed), the Literata font (387 KB) and 52 code chunks (287 KB uncompressed). At 563 ms per round trip, the request count matters as much as the bytes.
+- **Research R2 (descriptions out of the catalogue) not opened:** it would shrink only one of those three, and only for a one-off first visit. Revisit if a cold first visit on a slow link becomes a real use.
+- **Also seen:** the page loads Cloudflare's Web Analytics beacon (`/cdn-cgi/rum`), injected by Cloudflare and not by our code. Nothing in the docs mentions it.
