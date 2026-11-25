@@ -52,19 +52,19 @@ before building them (plan "Delivery order" steps 1 and 2).
 
 ## Phase 2: Foundational (blocks every story)
 
-- [ ] T004 [P] Create `packages/shared/src/progress.ts`, with Zod schemas per [contracts/progress-api.md](contracts/progress-api.md):
+- [X] T004 [P] Create `packages/shared/src/progress.ts`, with Zod schemas per [contracts/progress-api.md](contracts/progress-api.md):
   - `PlaceSchema` (`bookId`, `deviceId`, `deviceName` non-empty strings; `percent` "0–100"; `fraction` "0–1"; `chapterLabel`, `href` strings; `cfi`, `fileSha256` optional; `furthestPercent` "≥ percent"; `furthestHref`; `readAt` ISO datetime);
   - `ProgressGetSchema` `{ places: Place[] }`;
   - `ProgressPutSchema` `{ places: Place[] }`, "1 to 100 places";
   - `ProgressPutResultSchema` `{ accepted, stale }`.
 
   Export it from the package. Add unit tests beside it for the range and refine rules.
-- [ ] T005 [P] Create `apps/web/src/lib/offline/device.ts`: `thisDevice()` returns `{ id, name }` from localStorage key `longshelf.device.v1`, creating it on first use: `crypto.randomUUID()` and a name from the user agent ("Android phone", "iPhone", "iPad", "Mac", "Windows PC", "Linux PC", else "This browser"); research R7. Also `renameDevice(name)`. Reads and writes never throw (private mode returns an in-memory device). Unit tests in `apps/web/tests/unit/device.test.ts` cover the UA mapping and persistence.
-- [ ] T006 Extend `SavedPlace` in `apps/web/src/lib/reader/settings.ts` per [data-model.md](data-model.md): add `href`, `percent`, `furthestPercent`, `furthestHref`, `fileSha256?`, `readAt` and `syncedAt: string | null`.
+- [X] T005 [P] Create `apps/web/src/lib/offline/device.ts`: `thisDevice()` returns `{ id, name }` from localStorage key `longshelf.device.v1`, creating it on first use: `crypto.randomUUID()` and a name from the user agent ("Android phone", "iPhone", "iPad", "Mac", "Windows PC", "Linux PC", else "This browser"); research R7. Also `renameDevice(name)`. Reads and writes never throw (private mode returns an in-memory device). Unit tests in `apps/web/tests/unit/device.test.ts` cover the UA mapping and persistence.
+- [X] T006 Extend `SavedPlace` in `apps/web/src/lib/reader/settings.ts` per [data-model.md](data-model.md): add `href`, `percent`, `furthestPercent`, `furthestHref`, `fileSha256?`, `readAt` and `syncedAt: string | null`.
   - `loadPlace` upgrades old entries: `readAt = savedAt`, `syncedAt = null`, and `percent = fraction × 100` if missing.
   - `savePlace` ignores a write whose `readAt` is older than the stored one (the two-tab rule).
 
-  Update `apps/web/src/routes/read/[id]/+page.svelte` to fill the new fields on relocate (`readAt = now`, furthest = max). Add tests to the existing reader settings test file, or a new `apps/web/tests/unit/place-storage.test.ts`.
+  Update `apps/web/src/routes/read/[id]/+page.svelte` to fill the new fields on relocate (`readAt = now`, furthest = max). Add tests to the existing reader settings test file, or a new `apps/web/tests/unit/place-storage.test.ts`. (Done in `src/lib/reader/place-storage.test.ts`. Opening a book doesn't count as a move: a relocate to the stored CFI is not saved.)
 
 **Checkpoint**: `pnpm test`, `pnpm typecheck` and `pnpm lint` pass. Reading still saves and restores the place as before.
 

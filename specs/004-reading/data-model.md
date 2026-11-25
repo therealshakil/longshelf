@@ -14,7 +14,7 @@ Migration `apps/web/migrations/0005_reading_place.sql` (additive).
 | `percent` | REAL NOT NULL | 0–100 through the book. |
 | `chapter_label` | TEXT NOT NULL | For the notice ("ch. 12"). |
 | `href` | TEXT NOT NULL | Chapter document within the file. |
-| `fraction` | REAL NOT NULL | 0–1 within the chapter. |
+| `fraction` | REAL NOT NULL | 0–1 within the chapter. The web reader sends 0: foliate-js reports the exact place as a CFI and the book percentage, not the chapter fraction. Kobo places fill it in spec 005. |
 | `cfi` | TEXT | Exact place within this file. |
 | `file_sha256` | TEXT | The file the CFI belongs to, so another file falls back to href + fraction. |
 | `furthest_percent` | REAL NOT NULL | The furthest this device has read. |

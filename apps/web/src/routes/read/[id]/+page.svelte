@@ -102,13 +102,25 @@
 
 	function onRelocate(l: FoliateLocation) {
 		loc = l;
-		if (book)
-			savePlace(book.id, {
-				cfi: l.cfi,
-				fraction: l.fraction,
-				chapterLabel: l.tocItem?.label ?? '',
-				savedAt: new Date().toISOString()
-			});
+		if (!book) return;
+		const now = new Date().toISOString();
+		const percent = Math.round(l.fraction * 1000) / 10;
+		const before = loadPlace(book.id);
+		// Opening a book reports where it opened; that isn't a move (FR-009).
+		if (before?.cfi === l.cfi) return;
+		const further = !before || percent >= before.furthestPercent;
+		savePlace(book.id, {
+			cfi: l.cfi,
+			fraction: l.fraction,
+			chapterLabel: l.tocItem?.label ?? '',
+			savedAt: now,
+			href: l.tocItem?.href ?? '',
+			percent,
+			furthestPercent: further ? percent : before.furthestPercent,
+			furthestHref: further ? (l.tocItem?.href ?? '') : before.furthestHref,
+			readAt: now,
+			syncedAt: before?.syncedAt ?? null
+		});
 	}
 
 	// Keyboard page turning: arrows and Page Up/Down, unless a panel is open or a field has focus.
