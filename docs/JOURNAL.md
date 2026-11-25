@@ -754,3 +754,10 @@
   - A seed attempt during the secrets rollout took the upload lock and then failed. Cleared on the preview D1.
   - On workers.dev, Cloudflare sends `X-Robots-Tag: noindex` instead of the Worker's `noindex, nofollow`. `test:access` accepts that on workers.dev only.
   - One of three `test:access` runs on the preview failed without a captured cause; the next two passed.
+
+## 2026-11-25: Spec 004 specified (reading offline and across devices)
+
+- **Scope:** download books for offline reading, sync the reading place between devices (offline places queue and send later), and a storage page. Spec 003 already covers reading online and the offline library list, so they aren't repeated.
+- **Owner ruling (FR-009):** opening a book that another device read further goes straight there, unless both devices moved since they last synced; then it offers the jump, like the Kobo notice.
+- **Left out:** the public showcase (its own spec), Kobo progress (spec 005), finished status, highlights.
+- New screens get mocks for approval before code (FR-017).
