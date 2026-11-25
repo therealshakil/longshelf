@@ -146,9 +146,10 @@ remove one, and confirm it is no longer readable offline and the total falls.
   - if both devices moved, the reader MUST open where this device was and offer the other place
     ("Phone: 63%, ch. 12. Jump there?"), as the existing Kobo notice does. It MUST NOT move the
     owner without asking.
-- **FR-010**: Places recorded offline MUST be kept in order and sent to the mirror automatically
-  once there is a connection and the app is open. No place may be lost if the app is closed
-  before sending.
+- **FR-010**: The latest place of every book read offline MUST be sent to the mirror
+  automatically once there is a connection and the app is open. It MUST NOT be lost if the app
+  is closed before sending, nor overtaken by an older place. (Earlier places in the same book
+  carry no information under FR-011, so they need not be sent; plan research R4.)
 - **FR-011**: Each place MUST record when it was read and on which device. When places conflict,
   the most recently read one wins; an older place MUST never overwrite a newer one.
 - **FR-012**: Places MUST be private to the owner, behind the same sign-in as the rest of the
@@ -188,8 +189,9 @@ remove one, and confirm it is no longer readable offline and the total falls.
   under 3 seconds on the owner's phone.
 - **SC-002**: After reading on one device, the place is offered on a second device within 10
   seconds of opening the book, when both are online.
-- **SC-003**: After 30 minutes of offline reading, every place recorded reaches the mirror within
-  1 minute of the device being online with the app open, with none lost or reordered.
+- **SC-003**: After 30 minutes of offline reading, the latest place of every book read reaches
+  the mirror within 1 minute of the device being online with the app open, with none lost or
+  overtaken by an older place.
 - **SC-004**: Closing the app at any moment and reopening it on the same device returns to the
   same screen in 20 out of 20 tries.
 - **SC-005**: A typical book (under 5 MB) downloads in under 10 seconds on a home connection.

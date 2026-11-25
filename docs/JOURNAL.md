@@ -761,3 +761,11 @@
 - **Owner ruling (FR-009):** opening a book that another device read further goes straight there, unless both devices moved since they last synced; then it offers the jump, like the Kobo notice.
 - **Left out:** the public showcase (its own spec), Kobo progress (spec 005), finished status, highlights.
 - New screens get mocks for approval before code (FR-017).
+
+## 2026-11-25: Spec 004 planned (DR-0013 proposed)
+
+- **Downloads:** Cache Storage (`books-v1`), keyed by the file's content-addressed URL and served by the service worker, so the reader needs no change. OPFS (DESIGN.md's plan) is kept as the fallback if spike T001 finds `cache.put` can leave partial entries.
+- **Places:** the existing per-book localStorage place gains `readAt` and `syncedAt`. Latest-wins means one pending place per book, so no Dexie. On the mirror: a `reading_place` table with `GET`/`PUT /api/progress`.
+- **Spec wording:** FR-010 and SC-003 now ask for the latest place per book, not every intermediate one (research R4).
+- **Unchanged:** no new dependencies; expected cost £0.
+- **Next:** `/speckit-tasks`; mocks of the new screens before any UI code.
