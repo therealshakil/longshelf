@@ -52,6 +52,7 @@ for s in seeds:
             rows.append(dict(died=dy,author=n,region=s['region'],source='Standard Ebooks',id=slug,title=t,year='',lang='en',role='',status='cleared (Standard Ebooks US PD check)',url=f'https://standardebooks.org/ebooks/{slug}'))
     for h in pg.get(n,[]):
         if h['id'] in PG_EXCLUDE: continue
+        if h['role']: continue  # author only: drop editor, contributor, translator, introduction, dubious
         k=norm(h['title']); dup=k in seen; seen.add(k); r_pg+=1
         rows.append(dict(died=dy,author=n,region=s['region'],source='Project Gutenberg',id=h['id'],title=h['title'],year='',lang=h['lang'],role=h['role'],status='cleared (Gutenberg US PD check)'+('; also on Standard Ebooks' if dup else ''),url=f"https://www.gutenberg.org/ebooks/{h['id']}"))
     sur=re.sub(r',.*','',s['pg_match'].split('|')[0]).strip().lower()

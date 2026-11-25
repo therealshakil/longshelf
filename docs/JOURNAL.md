@@ -700,6 +700,23 @@
   - 215 leads by authors not on the seed list.
 - **Totals now:** 557 cleared and 1,081 leads, for 185 of 240 authors. `docs/showcase/african-descent.md` has a DocSouth section with the Wayback links.
 
+## 2026-11-25: Showcase list keeps author-only books
+
+- **Owner rule:** a book counts only if the person is its author.
+- Dropped 44 Gutenberg rows where the person was editor, contributor, translator, compiler, commentator, introduction writer or "dubious author". Examples: *The Negro Problem* essays, Braithwaite's anthologies, Booker T. Washington's introductions. `combine.py` now skips these rows.
+- **Cleared books:** 513 (62 Standard Ebooks, 414 Gutenberg, 37 DocSouth). This is still 185 of 240 authors.
+- **Dumas (père):** 167 of the Gutenberg books, many of them editions of the same novels. Pick one edition per novel.
+- **archive.org leads** can't show the person's role, so each one is checked by hand.
+
+## 2026-11-25: Showcase becomes a complete catalogue
+
+- **Owner direction:** keep every book by these authors.
+  - Public-domain books are hosted.
+  - In-copyright books link to legal ebook stores.
+  - Each 1 January, the newly public-domain books are added.
+- Recorded in `docs/PLAN.md` Phase 2, with open questions for its spec: which stores, whether links earn money (disclosed if so), and how the yearly batch runs.
+- **HathiTrust:** the catalogue search is behind Cloudflare's bot check, but the full Hathifile (1.2 GB, every volume with a rights code) downloads directly. Matching is in progress.
+
 ## 2026-11-25: GitHub checks and PR previews (DR-0012)
 
 - **Why:** there was no CI, and the only way to try a change on Cloudflare was production.
@@ -708,3 +725,20 @@
   - Separate data: D1 `longshelf-preview` (4 migrations applied) and R2 `longshelf-preview`, to be seeded with the test library.
   - A trial `wrangler preview` from the laptop deployed with the preview bindings but returned no URL while `preview_urls` was off. It is now `true` in `wrangler.jsonc`, waiting for the owner to apply it.
 - **Owner setup left:** API token, GitHub secrets, Access app for previews, preview secrets, seed (`docs/DEPLOY.md` section 7).
+
+## 2026-11-25: Showcase stays public domain only
+
+- **Owner:** the showcase lists and hosts only public-domain books; there are no store links for in-copyright books. This replaces the "complete catalogue" entry above. `docs/PLAN.md` is updated.
+- **Annual batch stays:** each 1 January, books entering the US public domain are added.
+- **`hathi.py`** now keeps only HathiTrust records with rights `pd` or `pdus`. It has not been run yet.
+
+## 2026-11-25: HathiTrust added (public domain only)
+
+- **Source:** the full Hathifile (1 Nov 2026, 1.2 GB), matched with `docs/showcase/scripts/hathi.py`, which keeps only `pd` and `pdus` records. A first, looser pass took in other people with the same name (Samuel Johnson the English writer, President John Quincy Adams). The rule is now:
+  - match the author's known birth or death year, or else a full three-part name;
+  - authors who came only from DocSouth are left out.
+- **Matched:** 3,198 public-domain records across 110 authors. 1,381 were already listed from other sources.
+  - Dropped 123 John Brown records (the Scottish doctor) and 106 edited books.
+  - Added 1,572 cleared books, plus 16 possible sheet-music titles as leads.
+- **Totals:** 2,085 cleared books and 1,097 leads. 187 of 240 authors now have a copy; Duse Mohamed Ali and Plácido are newly found.
+- **Format:** the HathiTrust books are page scans and need OCR text or an EPUB.

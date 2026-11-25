@@ -114,6 +114,9 @@ licence-free synthetic one: 670 records, 1.2 MB.
       - First collection: authors of African descent, under the US public-domain rule (DR-0011).
         Candidates are in `docs/showcase/african-descent.md`, built with the scripts in
         `docs/showcase/scripts/`.
+      - Public domain only (owner, 2026-11-25). The showcase lists and hosts only
+        public-domain books. Each 1 January, books entering the US public domain are added.
+        (This replaces a same-day idea to also list in-copyright books with links to ebook stores.)
 
 ### Phase 3: device progress via Calibre columns → spec 005
 - [ ] Store device location verbatim in `native_location`; merge status and position by separate timestamps
