@@ -549,6 +549,19 @@
 - **Also fixed:** the T030 Settings paragraph had been committed without formatting, which failed `pnpm lint`.
 - **Tests:** 370 unit tests; e2e 52 passed, 1 skipped; lint clean.
 
+## 2026-11-24: OPDS spike started
+
+- **Opened:** branch `opds-spike`, with questions and desk findings in `docs/PLAN.md` (Spike: OPDS).
+- **Main finding so far:** OPDS on a stock Kobo needs KOReader. KOReader's Basic auth can't pass Cloudflare Access, so the feed needs its own route and auth. KOReader's own progress sync (kosync) is a possible Wi-Fi alternative to the USB and Calibre-columns path in spec 005.
+
+## 2026-11-24: OPDS spike parked
+
+- **Parked (owner decision):** OPDS and KOReader sync are a future nice-to-have, to be specced another time. The desk findings and open questions stay in `docs/PLAN.md`, and the item is listed under "Later, optional".
+
+## 2026-11-24: Portable deployment parked
+
+- **Parked (owner decision):** a Docker image others can install is a future idea, listed in `docs/PLAN.md` under "Later, optional" with the sketch, the case against, and the cost of waiting. Longshelf stays Cloudflare-only for now.
+
 ## 2026-11-24: Spec 003 T029
 
 - **`pnpm test:e2e:mirror` (on demand, owner):** a mirror build. The real CLI uploads the test library, then 4 tests check Library with covers, the Files row and a saved file's name, the reader on a mirrored EPUB, and the news cover, with axe on Library and the book page. 4 passed. Everyday `pnpm test:e2e` is unchanged (53 tests, the mirror spec left out). Listed in `CLAUDE.md`.

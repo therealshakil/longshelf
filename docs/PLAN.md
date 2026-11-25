@@ -22,6 +22,46 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
       byte-identical to the library copy (if so, exact web -> Kobo positions are possible).
 - [ ] Note the exact column names and the format of the location value for a KEPUB and a plain EPUB.
 
+## Spike: OPDS (parked 2026-11-24: future nice-to-have, to be specced another time)
+Nothing below has been tested. Pick it up from the first unchecked item.
+
+Question: could an OPDS feed served by the Worker replace USB for getting books onto the e-reader, and
+does KOReader's own progress sync change the plan for spec 005?
+
+Desk findings so far:
+- OPDS is a one-way catalogue: the reader browses and downloads, nothing comes back. Clients named:
+  KOReader, Thorium, Moon+ Reader, Librera. Servers named: the Calibre content server (`/opds`),
+  Calibre-Web, Kavita, Komga, COPS. ([The Open Shelf, 2026-09-23][os]; the author promotes their own
+  app, BookShelves, so treat the setup advice as one user's view.)
+- Stock Kobo firmware has no OPDS client, so the Libra 2 would need KOReader installed alongside
+  Nickel. That conflicts with DESIGN.md's "stock firmware" assumption, so it is the owner's call. ([os])
+- KOReader's OPDS form takes a username and password and sends them as HTTP Basic auth
+  ([Booklore docs][bl]; [Standard Ebooks][se]). It cannot send Cloudflare Access service-token headers
+  (`CF-Access-Client-Id`/`-Secret`, [Cloudflare][cf]). So the feed needs a path outside Access with its
+  own Basic auth. ASSUMPTION: an Access Bypass policy on a path-scoped app does this; check the docs.
+- KOReader also has its own progress sync ("kosync"): `PUT /syncs/progress`,
+  `GET /syncs/progress/{document}`, with the book identified by a partial MD5 of the file and the
+  position stored as a percentage plus a KOReader position string ([koreader-sync-server][ks];
+  [korrosync][kr]). A Worker could serve this API too. It would be layer 1b: sync over Wi-Fi with no
+  USB and no Calibre running. KOReader positions are not EPUB CFIs, so moving between the web reader and
+  the device would be accurate to the chapter or percentage.
+
+[os]: https://medium.com/@theopenshelf/i-havent-plugged-my-e-reader-into-a-computer-in-months-opds-is-why-485f8fb405aa
+[bl]: https://booklore-app.github.io/booklore-docs/docs/integration/opds
+[se]: https://standardebooks.org/help/how-to-add-an-opds-feed-to-your-ereader
+[cf]: https://developers.cloudflare.com/cloudflare-one/access-controls/service-credentials/service-tokens/
+[ks]: https://www.github.com/koreader/koreader-sync-server
+[kr]: https://docs.rs/crate/korrosync/latest
+
+To check:
+- [ ] Owner: is running KOReader on the Libra 2 acceptable? If not, OPDS only helps phone and desktop apps.
+- [ ] Throwaway OPDS 1.2 feed (Atom) from local Calibre mode; browse and download it in a desktop client.
+- [ ] KOReader on the device: Basic auth, covers, search, and download of EPUB and KEPUB from the feed.
+- [ ] Confirm an Access Bypass path plus Worker-side Basic auth (or another way past Access for the feed).
+- [ ] kosync: confirm the routes and auth in the official server's `config/routes.lua`; how the partial
+      MD5 is computed, so the Worker can match a device book to a Calibre book; the position string format.
+- [ ] Outcome: a DR on whether OPDS and/or kosync enter specs 003 and 005.
+
 ## Spike log: spec 003 T003 (deployed Worker, 2026-11-24)
 
 Measured on `longshelf.<account>.workers.dev` with `wrangler tail` CPU times. The catalogue was a
@@ -84,3 +124,11 @@ licence-free synthetic one: 670 records, 1.2 MB.
 ### Later, optional
 - [ ] Layer 2 Kobo adapter: highlights, exact positions
 - [ ] Reading stats
+- [ ] OPDS catalogue and KOReader progress sync (parked spike above)
+- [ ] Portable deployment (parked 2026-11-24): a Docker image others can install, beside the Cloudflare
+      deploy. Sketch: `adapter-node`; `node:sqlite` for D1 (same SQL and migrations); a volume folder for
+      R2; covers pre-sized by the CLI instead of the Images binding; AI off or any OpenAI-compatible
+      endpoint; built-in single-owner login instead of Access. Case against: Calibre-Web, Kavita,
+      Booklore and Komga already fill this space, and two hosts roughly double the test and support
+      surface. Cost of waiting: spec 003 is building D1 and R2 access directly, so this would need
+      storage interfaces retrofitted across the routes.
