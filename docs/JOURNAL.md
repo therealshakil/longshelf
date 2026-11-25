@@ -656,3 +656,25 @@
 - **Why the cold Slow 4G is slow:** a first visit fetches the catalogue (1.4 MB uncompressed), the Literata font (387 KB) and 52 code chunks (287 KB uncompressed). At 563 ms per round trip, the request count matters as much as the bytes.
 - **Research R2 (descriptions out of the catalogue) not opened:** it would shrink only one of those three, and only for a one-off first visit. Revisit if a cold first visit on a slow link becomes a real use.
 - **Also seen:** the page loads Cloudflare's Web Analytics beacon (`/cdn-cgi/rum`), injected by Cloudflare and not by our code. Nothing in the docs mentions it.
+
+## 2026-11-25: Spec 003 closed (T042)
+
+- **Checks:** `pnpm lint` clean, `pnpm typecheck` 0 errors, `pnpm test` 374 passed (102 + 26 + 246), `pnpm test:e2e` 52 passed, 1 skipped.
+- **Quickstart steps not yet run, now run** on a local mirror preview with throwaway storage and a copy of the test library, so the live mirror was not touched:
+  - **FR-007 failed first.** A Ctrl-C 1.2 s into the first upload left the upload lock held. The re-run was refused with "Another upload is running" (exit 3) and would have stayed refused for 2 hours. **Cause:** Ctrl-C arrived while the plan request was still waiting for an answer. The CLI didn't know the run id yet, so it quit without releasing anything, and then the server took the lock. **Fix:** the CLI gets the pending run id as soon as the plan request goes out, and on Ctrl-C it waits for it (up to 15 s; a second Ctrl-C quits at once) and then releases the lock. A new test, `interrupt.test.ts`, fails without the fix and passes with it. After the fix, the same interrupt was followed by "Uploaded 6 books" and then "Nothing changed". CLI tests: 27.
+  - **FR-006 passes.** Pointed at an empty Calibre library, the CLI lists all 6 books and asks "Remove these 6 books from the mirror? [y/N]". On "n" it says "Nothing changed: the removals were not confirmed" (exit 4), and the next normal run says "Nothing changed". Without a terminal it refuses removals without asking.
+  - Already recorded earlier: costs and resources (T033), access (T031), upload and re-run (T023, T031), phone (2026-11-24, SC-003 above), FR-024 (T038), SC-008 (T040).
+- **Cloudflare Web Analytics:** the owner keeps it on for now. Cloudflare injects its beacon (`/cdn-cgi/rum`) into every page; our code doesn't load it. It is disclosed here; revisit it before anyone but the owner uses a deployment.
+- **Efficacy:**
+  - **Time:** spec written 2026-11-24, real library online the same day, closed 2026-11-25, so 2 days from spec to a deployed, used mirror.
+  - **Reworks after implementation:** 4.
+    - Uploads of the real library failed on large files and flaky links; fixed with smaller parts and retries (T039).
+    - The app did not reopen offline on the owner's phone; the T036 test had passed through Playwright's memory cache.
+    - The Ctrl-C lock bug above.
+    - Two Prettier runs used defaults instead of the project config. It nearly happened again here: `apps/web/prettier.config.js` is the config, and there is no `.prettierrc`.
+  - **Actual Cloudflare usage**, dashboard and `wrangler d1 info`, last 24 hours on 2026-11-25. That day included the SC-003 runs and 5 deploys.
+    - **Worker:** 2,050 invocations and 1,070 asset requests (92% from cache), 0 errors. The free allowance is 100,000 requests a day.
+    - **D1:** 2.52 MB stored, 40,322 rows read and 6,352 written. The free allowance is 5 M read and 100 k written a day, and 500 MB.
+    - **R2:** about 3.2 GB stored, taken from our own D1 records rather than the dashboard. The free allowance is 10 GB-month.
+    - Allowances: `docs/DEPLOY.md` cost table, read 2026-11-24.
+    - **Bill:** £0. R2 storage is the nearest limit, at about a third of the allowance.

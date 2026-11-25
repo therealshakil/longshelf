@@ -24,8 +24,11 @@ export interface RunOptions {
 	/** Asks the owner a yes/no question; resolves true for yes. */
 	confirm: (question: string) => Promise<boolean>;
 	log?: (line: string) => void;
-	/** Lets a caller abort the run on Ctrl-C. */
-	onRun?: (runId: string | null) => void;
+	/**
+	 * Lets a caller abort the run on Ctrl-C. Called with the pending run id as soon as the plan
+	 * request is sent, so a Ctrl-C during that request still releases the lock it takes.
+	 */
+	onRun?: (runId: Promise<string | null> | null) => void;
 }
 
 interface Prepared {
@@ -106,8 +109,14 @@ export async function runLibrary(opts: RunOptions, mirror: string): Promise<RunS
 	const log = opts.log ?? (() => {});
 	const prepared = await prepare(opts.library, opts.cache);
 	const total = prepared.plan.length;
-	const plan = await opts.client.plan({ books: prepared.plan });
-	opts.onRun?.(plan.runId);
+	const planning = opts.client.plan({ books: prepared.plan });
+	opts.onRun?.(
+		planning.then(
+			(p) => p.runId,
+			() => null
+		)
+	);
+	const plan = await planning;
 	const finish = async () => {
 		await opts.client.abort(plan.runId).catch(() => {});
 		opts.onRun?.(null);

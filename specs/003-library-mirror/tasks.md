@@ -223,7 +223,7 @@ access probe).
   - `docs/PLAN.md`: tick Phase 1 items and mark spec 003 status;
   - `README.md`: add a short "Mirror your library" section;
   - `CLAUDE.md`: add `longshelf` and `test:access` to the commands.
-- [ ] T042 Run `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm test:e2e`, and the quickstart steps not yet done. Write the spec 003 closing entry in `docs/JOURNAL.md`, with an efficacy block like spec 002's: time, reworks, and actual Cloudflare usage from the dashboard.
+- [X] T042 Run `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm test:e2e`, and the quickstart steps not yet done. Write the spec 003 closing entry in `docs/JOURNAL.md`, with an efficacy block like spec 002's: time, reworks, and actual Cloudflare usage from the dashboard.
 
 ---
 
