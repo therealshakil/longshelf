@@ -79,8 +79,11 @@ if (!token) {
 		}
 	);
 	check(r.status === 200, `service token ${INGEST}: ${r.status}`);
+	// On workers.dev preview URLs Cloudflare replaces the Worker's header with plain `noindex`
+	// (seen 2026-11-25 on pr-1; same code gives `noindex, nofollow` on the custom domain).
+	const preview = new URL(url).hostname.endsWith('.workers.dev');
 	check(
-		r.robots === 'noindex, nofollow',
+		r.robots === 'noindex, nofollow' || (preview && r.robots === 'noindex'),
 		`X-Robots-Tag on Worker responses: ${r.robots ?? 'missing'}`
 	);
 }

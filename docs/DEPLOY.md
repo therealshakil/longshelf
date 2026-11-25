@@ -138,17 +138,20 @@ One-time setup:
 4. **Turn on preview URLs.** `preview_urls` is `true` in `wrangler.jsonc`; it takes effect on the
    next `pnpm run deploy`, or straight away with `pnpm --filter web exec wrangler triggers deploy`
    (settings and routes only, no new code).
-5. **Access for previews.** Workers & Pages → longshelf → **Access** → **Protect this Worker
-   behind Access** → **Previews only**. Allow policy: your email. Then add a second policy,
-   `Upload command`, action **Service Auth**, include service token `longshelf-cli`, so the
-   upload command can seed it. Copy the app's **AUD tag**.
-6. **Preview secrets**, shared by every preview:
+5. **Access for previews.** If the Worker's Access app is set to **All traffic** (section 4,
+   step 1), it already covers previews and version URLs: same app, same AUD, same policies,
+   including `Upload command`. Check: the sign-in redirect from a preview URL carries the same
+   `kid` as the custom domain's. Only with **Custom domain only** do you need a second
+   **Previews only** app with the same two policies.
+6. **Preview secrets**, the same values as production (team domain, the app's AUD, the service
+   token's Client ID). The base config applies only to previews created after it is set; give an
+   existing preview the same values with `wrangler preview secret bulk <file> --name pr-<N>`.
 
    ```sh
    cd apps/web
-   pnpm exec wrangler preview base-config secret put ACCESS_TEAM_DOMAIN   # same as production
-   pnpm exec wrangler preview base-config secret put ACCESS_AUD           # the previews app's AUD
-   pnpm exec wrangler preview base-config secret put CLI_CLIENT_ID        # same as production
+   pnpm exec wrangler preview base-config secret put ACCESS_TEAM_DOMAIN
+   pnpm exec wrangler preview base-config secret put ACCESS_AUD
+   pnpm exec wrangler preview base-config secret put CLI_CLIENT_ID
    ```
 
 7. **Seed the test library** once, after the first preview exists:
@@ -158,7 +161,13 @@ One-time setup:
      pnpm longshelf library --library packages/sync-cli/test/fixtures/library
    ```
 
-8. **Prove nothing leaks:** `pnpm --filter web test:access <preview url>`.
+   If a failed attempt leaves the upload lock held, it expires after 2 hours; on the preview
+   data only, clear it sooner with `pnpm exec wrangler d1 execute PREVIEW_DB --remote --config
+   wrangler.preview-migrations.jsonc --command "DELETE FROM ingest_run"`.
+
+8. **Prove nothing leaks:** `pnpm --filter web test:access <preview url>`. On workers.dev,
+   Cloudflare sends `X-Robots-Tag: noindex` in place of the Worker's `noindex, nofollow`; the
+   probe accepts that there only.
 
 Each push to the pull request redeploys its preview; closing the pull request deletes it. The
 data stays for the next one. Migrations are applied to the preview database before each preview.

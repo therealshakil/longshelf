@@ -37,10 +37,11 @@ Requirements:
   licence-free test library. All previews share them; migrations only ever add (DEPLOY.md).
   Migrations go through `apps/web/wrangler.preview-migrations.jsonc`, the pattern from
   [Previews resources](https://developers.cloudflare.com/workers/previews/resources/).
-- Previews sit behind a **Previews only** Worker-level Access app
+- Previews sit behind the Worker's existing **All traffic** Access app
   ([Cloudflare Access for Workers](https://developers.cloudflare.com/workers/configuration/cloudflare-access/)),
-  with its own AUD given to previews as a secret. The app's own check (`access.ts`) still fails
-  closed.
+  which already covered them: a preview's sign-in redirect carries the same AUD as the custom
+  domain's (checked 2026-11-25). Previews get the production Access values as secrets. The app's
+  own check (`access.ts`) still fails closed.
 
 ## Challenger
 
@@ -60,5 +61,7 @@ fallback is the `--env` preview Worker above. Production does not depend on them
   workers.dev URLs. They run against production data but leak nothing: the Worker refuses any
   request without a valid Access token for the production AUD (`access.ts`, SC-004).
   `workers_dev` stays off, so `longshelf.<subdomain>.workers.dev` doesn't exist.
-- Owner setup: one API token, two GitHub secrets, one Access app, three preview secrets
-  (`docs/DEPLOY.md`, PR previews).
+- Version URLs also sit behind that Access app (anonymous request to a production version URL
+  redirected to sign-in, 2026-11-25).
+- Owner setup: one API token, two GitHub secrets, three preview secrets (`docs/DEPLOY.md`
+  section 7). No second Access app was needed.
