@@ -678,3 +678,11 @@
     - **R2:** about 3.2 GB stored, taken from our own D1 records rather than the dashboard. The free allowance is 10 GB-month.
     - Allowances: `docs/DEPLOY.md` cost table, read 2026-11-24.
     - **Bill:** £0. R2 storage is the nearest limit, at about a third of the allowance.
+
+## 2026-11-25: Showcase research, DocSouth recovered from the Wayback Machine
+
+- **DocSouth was archived on 2026-03-30** and the live host refuses connections. Its four bulk ZIPs (text, TEI/XML and a contents CSV) are intact in the Wayback Machine. The licence is CC BY 4.0, with credit to the UNC library.
+- **Matched 711 titles** with `docs/showcase/scripts/docsouth.py`:
+  - 37 new cleared books for seed authors; 10 authors move off the "nothing found" list;
+  - 215 leads by authors not on the seed list.
+- **Totals now:** 557 cleared and 1,081 leads, for 185 of 240 authors. `docs/showcase/african-descent.md` has a DocSouth section with the Wayback links.

@@ -3,10 +3,14 @@
 Candidate books for the public showcase library (`docs/PLAN.md`, Phase 2). Built 2026-11-24.
 Copyright rule: **US public domain** ([DR-0011](../decisions/DR-0011-showcase-copyright-rule.md)).
 
-- **240 authors searched.** 175 have at least one digital copy, and 65 have none found yet.
-- **520 cleared books:** 62 on Standard Ebooks and 458 on Project Gutenberg. Both sites check US copyright before publishing, so these can go straight in.
-- **866 archive.org leads:** scans dated 1930 or earlier whose creator matches the author's name. Each one needs checking (right author, first-edition date, scan quality) before it's added.
-- **Every book, with links:** [`african-descent-candidates.csv`](african-descent-candidates.csv). Sort by `source`; Standard Ebooks is the best edition, then Gutenberg, then archive.org.
+- **240 authors searched.** 185 have at least one digital copy, and 55 have none found yet.
+- **557 cleared books, which can go straight in:**
+  - 62 on Standard Ebooks and 458 on Project Gutenberg. Both sites check US copyright before publishing.
+  - 37 from DocSouth: hand-corrected transcriptions, published by 1930, under CC BY 4.0.
+- **1,081 leads to check before adding:**
+  - 866 archive.org scans dated 1930 or earlier whose creator matches the author's name. Check the author, the first-edition date and the scan quality.
+  - 215 DocSouth texts by authors not on the seed list. These are mostly first-person slave narratives and Black church histories. Check each author (see [DocSouth](#docsouth)).
+- **Every book, with links:** [`african-descent-candidates.csv`](african-descent-candidates.csv). Sort by `source`. Best editions first: Standard Ebooks, then DocSouth or Gutenberg, then archive.org. The per-author tables below count Standard Ebooks, Gutenberg and archive.org only.
 
 ## How this list was built
 
@@ -25,8 +29,6 @@ Copyright rule: **US public domain** ([DR-0011](../decisions/DR-0011-showcase-co
    arrives.
 
 **Gaps:**
-- [Documenting the American South](https://docsouth.unc.edu/neh/) refused connections from this
-  machine. It holds about 300 slave narratives, many not on Gutenberg, so search it by hand.
 - Authors writing in French, Portuguese, Spanish and African languages are under-covered,
   because their books sit in national libraries such as
   [Gallica](https://gallica.bnf.fr) and the [Biblioteca Nacional Digital](https://bndigital.bn.gov.br).
@@ -36,6 +38,35 @@ Copyright rule: **US public domain** ([DR-0011](../decisions/DR-0011-showcase-co
 
 Link key: SE = Standard Ebooks, PG = Gutenberg search, IA = archive.org search,
 Hathi = HathiTrust (full view only), WS = Wikisource.
+
+## DocSouth
+
+[Documenting the American South](https://docsouth.unc.edu/) (UNC Chapel Hill) was archived on
+30 March 2026, and the live site now refuses connections. Its bulk "DocSouth Data" downloads
+survive in the Wayback Machine, checked 2026-11-25 and confirmed intact with `unzip -t`:
+
+| Collection | Wayback copy |
+|---|---|
+| North American Slave Narratives | [na-slave-narratives.zip](https://web.archive.org/web/20260916203045/https://docsouth.unc.edu/full-text/na-slave-narratives.zip) (49 MB) |
+| First-Person Narratives of the American South | [first-person-narratives-american-south.zip](https://web.archive.org/web/20260916203138/https://docsouth.unc.edu/full-text/first-person-narratives-american-south.zip) (36 MB) |
+| The Church in the Southern Black Community | [church-southern-black-community.zip](https://web.archive.org/web/20261102190047/https://docsouth.unc.edu/full-text/church-southern-black-community.zip) (30 MB) |
+| Library of Southern Literature | [library-southern-literature.zip](https://web.archive.org/web/20260916203139/https://docsouth.unc.edu/full-text/library-southern-literature.zip) (39 MB) |
+
+- **Contents:** each ZIP holds plain text and TEI/XML for every title, plus a `toc.csv` (title, author, date, URL).
+- **Licence:** the readme says the texts, encoding and metadata are under
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The one exception is *Fields's
+  Observation*, which has no known rights. Credit "University Library, The University of North
+  Carolina at Chapel Hill" on every DocSouth-sourced book.
+- **Sorting:** all 711 titles were matched against the seed list.
+  - 37 new titles for seed authors are marked cleared.
+  - 215 texts by other authors from the Slave Narratives and Church collections, or with a race
+    keyword in the title, are kept as leads.
+  - 80 texts by authors I know to be white (abolitionist biographers, pro-slavery writers,
+    Mark Twain, and so on) were dropped. This list is from memory (ASSUMPTION).
+  - The Library of Southern Literature and First-Person Narratives collections are otherwise
+    mostly white Southern authors, so those were skipped.
+- **Ebooks:** none are included. The TEI/XML would need converting to EPUB, which is work for
+  the ingest step.
 
 ## North America
 
@@ -251,26 +282,17 @@ These searches found nothing. They need a manual search, because names are often
 | Author | Region | Search |
 |---|---|---|
 | Jupiter Hammon | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Jupiter+Hammon) · [IA](https://archive.org/search?query=%22Jupiter+Hammon%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Jupiter+Hammon&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJupiter+Hammon) |
-| Briton Hammon | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Briton+Hammon) · [IA](https://archive.org/search?query=%22Briton+Hammon%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Briton+Hammon&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ABriton+Hammon) |
 | Lucy Terry | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Lucy+Terry) · [IA](https://archive.org/search?query=%22Lucy+Terry%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Lucy+Terry&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ALucy+Terry) |
 | Absalom Jones | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Absalom+Jones) · [IA](https://archive.org/search?query=%22Absalom+Jones%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Absalom+Jones&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AAbsalom+Jones) |
 | Prince Hall | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Prince+Hall) · [IA](https://archive.org/search?query=%22Prince+Hall%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Prince+Hall&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3APrince+Hall) |
 | Zilpha Elaw | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Zilpha+Elaw) · [IA](https://archive.org/search?query=%22Zilpha+Elaw%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Zilpha+Elaw&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AZilpha+Elaw) |
-| William Grimes | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=William+Grimes) · [IA](https://archive.org/search?query=%22William+Grimes%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=William+Grimes&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AWilliam+Grimes) |
-| John S. Jacobs | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=John+S.+Jacobs) · [IA](https://archive.org/search?query=%22John+S.+Jacobs%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=John+S.+Jacobs&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJohn+S.+Jacobs) |
-| Jermain Wesley Loguen | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Jermain+Wesley+Loguen) · [IA](https://archive.org/search?query=%22Jermain+Wesley+Loguen%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Jermain+Wesley+Loguen&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJermain+Wesley+Loguen) |
-| Israel Campbell | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Israel+Campbell) · [IA](https://archive.org/search?query=%22Israel+Campbell%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Israel+Campbell&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AIsrael+Campbell) |
-| Peter Randolph | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Peter+Randolph) · [IA](https://archive.org/search?query=%22Peter+Randolph%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Peter+Randolph&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3APeter+Randolph) |
-| Thomas H. Jones | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Thomas+H.+Jones) · [IA](https://archive.org/search?query=%22Thomas+H.+Jones%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Thomas+H.+Jones&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AThomas+H.+Jones) |
 | William Parker | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=William+Parker) · [IA](https://archive.org/search?query=%22William+Parker%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=William+Parker&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AWilliam+Parker) |
-| Sam Aleckson | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Sam+Aleckson) · [IA](https://archive.org/search?query=%22Sam+Aleckson%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Sam+Aleckson&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ASam+Aleckson) |
 | James M. Whitfield | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=James+M.+Whitfield) · [IA](https://archive.org/search?query=%22James+M.+Whitfield%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=James+M.+Whitfield&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJames+M.+Whitfield) |
 | Ann Plato | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Ann+Plato) · [IA](https://archive.org/search?query=%22Ann+Plato%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Ann+Plato&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AAnn+Plato) |
 | Charlotte Forten Grimké | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Charlotte+Forten+Grimk%C3%A9) · [IA](https://archive.org/search?query=%22Charlotte+Forten+Grimk%C3%A9%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Charlotte+Forten+Grimk%C3%A9&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ACharlotte+Forten+Grimk%C3%A9) |
 | Victoria Earle Matthews | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Victoria+Earle+Matthews) · [IA](https://archive.org/search?query=%22Victoria+Earle+Matthews%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Victoria+Earle+Matthews&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AVictoria+Earle+Matthews) |
 | J. McHenry Jones | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=J.+McHenry+Jones) · [IA](https://archive.org/search?query=%22J.+McHenry+Jones%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=J.+McHenry+Jones&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJ.+McHenry+Jones) |
 | Walter H. Stowers | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Walter+H.+Stowers) · [IA](https://archive.org/search?query=%22Walter+H.+Stowers%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Walter+H.+Stowers&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AWalter+H.+Stowers) |
-| Hallie Quinn Brown | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Hallie+Quinn+Brown) · [IA](https://archive.org/search?query=%22Hallie+Quinn+Brown%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Hallie+Quinn+Brown&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AHallie+Quinn+Brown) |
 | Nannie Helen Burroughs | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Nannie+Helen+Burroughs) · [IA](https://archive.org/search?query=%22Nannie+Helen+Burroughs%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Nannie+Helen+Burroughs&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ANannie+Helen+Burroughs) |
 | Daniel Webster Davis | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Daniel+Webster+Davis) · [IA](https://archive.org/search?query=%22Daniel+Webster+Davis%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Daniel+Webster+Davis&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ADaniel+Webster+Davis) |
 | James D. Corrothers | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=James+D.+Corrothers) · [IA](https://archive.org/search?query=%22James+D.+Corrothers%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=James+D.+Corrothers&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJames+D.+Corrothers) |
@@ -280,7 +302,6 @@ These searches found nothing. They need a manual search, because names are often
 | Anne Spencer | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Anne+Spencer) · [IA](https://archive.org/search?query=%22Anne+Spencer%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Anne+Spencer&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AAnne+Spencer) |
 | Gwendolyn B. Bennett | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Gwendolyn+B.+Bennett) · [IA](https://archive.org/search?query=%22Gwendolyn+B.+Bennett%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Gwendolyn+B.+Bennett&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AGwendolyn+B.+Bennett) |
 | Arna Bontemps | North America | [PG](https://www.gutenberg.org/ebooks/search/?query=Arna+Bontemps) · [IA](https://archive.org/search?query=%22Arna+Bontemps%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Arna+Bontemps&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AArna+Bontemps) |
-| John Jea | Britain | [PG](https://www.gutenberg.org/ebooks/search/?query=John+Jea) · [IA](https://archive.org/search?query=%22John+Jea%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=John+Jea&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AJohn+Jea) |
 | Francis Williams | Caribbean | [PG](https://www.gutenberg.org/ebooks/search/?query=Francis+Williams) · [IA](https://archive.org/search?query=%22Francis+Williams%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Francis+Williams&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AFrancis+Williams) |
 | Una Marson | Caribbean | [PG](https://www.gutenberg.org/ebooks/search/?query=Una+Marson) · [IA](https://archive.org/search?query=%22Una+Marson%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Una+Marson&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3AUna+Marson) |
 | Duse Mohamed Ali | Britain | [PG](https://www.gutenberg.org/ebooks/search/?query=Duse+Mohamed+Ali) · [IA](https://archive.org/search?query=%22Duse+Mohamed+Ali%22&and%5B%5D=mediatype%3A%22texts%22) · [Hathi](https://catalog.hathitrust.org/Search/Home?lookfor=Duse+Mohamed+Ali&type=author&ft=ft) · [WS](https://en.wikisource.org/w/index.php?search=Author%3ADuse+Mohamed+Ali) |
