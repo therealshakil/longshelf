@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Storage · Longshelf (design mock, spec 004)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,400..600&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>if(location.hash==='#dark'||location.hash==='#light')document.documentElement.dataset.theme=location.hash.slice(1)</script>
+<style>
+/* Spec 004 US3. Page-local styles; the shared sheet is the approved 002 reference. */
+.st{max-width:40rem;margin:0 auto;padding:2rem 0 4rem;display:flex;flex-direction:column;gap:2rem}
+.st h1{font:600 1.75rem/1.15 Literata;color:var(--ink)}
+.st h2{font:600 1.25rem/1.2 Literata;margin-bottom:.75rem}
+.st .lead{color:var(--muted);margin-top:.4rem}
+.st section{border-bottom:1px solid var(--rule);padding-bottom:2rem}
+.st section:last-of-type{border-bottom:0}
+.sum{display:grid;grid-template-columns:auto 1fr;gap:.45rem 1.5rem}
+.sum dt{color:var(--muted)}.sum dd{color:var(--ink)}
+.kept{display:flex;gap:.6rem;align-items:flex-start;margin-top:1rem;padding:.85rem 1rem;border:1px solid var(--rule);border-radius:.5rem}
+.kept svg{margin-top:.1rem;color:var(--accent)}
+.kept p{flex:1}.kept .btn-out{margin-top:.6rem}
+.dl{display:flex;flex-direction:column}
+.dl li{display:grid;grid-template-columns:2.75rem 1fr auto;gap:.9rem;align-items:center;padding:.8rem 0;border-top:1px solid var(--rule)}
+.dl li:last-child{border-bottom:1px solid var(--rule)}
+.dl img{width:2.75rem;border-radius:2px}
+.dl .t{font:600 1.0625rem/1.25 Literata;color:var(--ink)}
+.dl .m{font-size:.875rem;color:var(--muted)}
+.dl .gone{font-size:.875rem;color:var(--accent)}
+.rm{all:unset;cursor:pointer;font-size:.9375rem;color:var(--ink);padding:.45rem .8rem;border:1px solid var(--control);border-radius:1.25rem}
+.rm:hover{border-color:var(--ink)}
+.all{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.all .note{font-size:.875rem;color:var(--muted)}
+.dev{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.dev b{font:600 1.125rem Literata;color:var(--ink)}
+.confirm{margin-top:1rem;padding:1rem;border:1px solid var(--control);border-radius:.5rem;display:none}
+.wrap:has(#confirm:target) .confirm{display:block}
+.kept-no{display:none}.wrap:has(#notkept:target) .kept-yes{display:none}.wrap:has(#notkept:target) .kept-no{display:flex}
+.empty{color:var(--muted)}
+.hasnot{display:none}.wrap:has(#empty:target) .has{display:none}.wrap:has(#empty:target) .hasnot{display:block}
+</style>
+</head><body><div class="wrap" id="state"><span id="notkept"></span><span id="confirm"></span><span id="empty"></span>
+<header><a class="wm" href="index.html" aria-label="Longshelf, home">Longshelf</a><nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="library.html">Library</a></nav></header>
+<main class="st" aria-labelledby="st-h">
+<div><h1 id="st-h">Storage</h1><p class="lead">Books you have downloaded to this device. They open with no connection.</p></div>
+
+<section aria-labelledby="sp-h"><h2 id="sp-h">On this device</h2>
+<dl class="sum"><dt>Downloaded</dt><dd>3 books · 14.6 MB</dd><dt>Space left</dt><dd>About 4.2 GB</dd></dl>
+<div class="kept kept-yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg><p>This device has agreed to keep your downloads. It won’t clear them to make space.</p></div>
+<div class="kept kept-no"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"/></svg><div><p>This device may clear your downloads if it runs low on space. Your reading places are safe either way.</p><button class="btn-out"><span>Ask to keep downloads</span></button></div></div>
+</section>
+
+<section aria-labelledby="bk-h2"><h2 id="bk-h2">Downloaded books</h2>
+<ul class="dl has">
+<li><img src="se-covers/george-eliot_middlemarch.jpg" alt=""><div><p class="t">Middlemarch</p><p class="m">George Eliot · EPUB · 2.1 MB</p></div><button class="rm" aria-label="Remove Middlemarch from this device">Remove</button></li>
+<li><img src="se-covers/leo-tolstoy_anna-karenina_constance-garnett.jpg" alt=""><div><p class="t">Anna Karenina</p><p class="m">Leo Tolstoy · EPUB · 3.4 MB</p></div><button class="rm" aria-label="Remove Anna Karenina from this device">Remove</button></li>
+<li><img src="se-covers/charlotte-bronte_jane-eyre.jpg" alt=""><div><p class="t">Jane Eyre</p><p class="m">Charlotte Brontë · PDF · 9.1 MB</p><p class="gone">No longer in your library. This copy still opens.</p></div><button class="rm" aria-label="Remove Jane Eyre from this device">Remove</button></li>
+</ul>
+<p class="empty hasnot">Nothing downloaded yet. Use Download on a book’s page to keep it here.</p>
+<div class="all has"><a class="rm" href="#confirm">Remove all downloads</a><span class="note">Reading places are kept.</span></div>
+<div class="confirm" role="alertdialog" aria-labelledby="cf-h"><p id="cf-h"><b>Remove all 3 books from this device?</b> They stay in your library, and your places are kept. You can download them again when online.</p><div class="all"><button class="rm">Remove all</button><a class="btn-link" href="storage.html">Keep them</a></div></div>
+</section>
+
+<section aria-labelledby="dv-h"><h2 id="dv-h">This device</h2>
+<div class="dev"><b>Android phone</b><button class="rm">Rename</button></div>
+<p class="lead">Your other devices show this name when they offer to take you to where you stopped here.</p>
+</section>
+</main>
+<p class="mockswitch2"><span>Mock state:</span><a href="storage.html">Kept</a><a href="#notkept">Not kept</a><a href="#confirm">Remove all, confirm</a><a href="#empty">Nothing downloaded</a></p>
+</div></body></html>

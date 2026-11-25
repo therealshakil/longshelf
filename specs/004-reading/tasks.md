@@ -38,7 +38,7 @@ before building them (plan "Delivery order" steps 1 and 2).
 
   Delete the spike test afterwards. If (a) shows a partial entry in either engine, stop and tell the owner: R1 switches to OPFS (DR-0013's fallback) before Phase 3.
 - [X] T002 (Folded into T028, owner 2026-11-25: the storage page shows whether downloads are kept, so it is read there on both phones.) Ask the owner to run `navigator.storage.persist()` on their phone's installed app, using a temporary button on `/settings/ai`, or from the devtools console over USB. Record the result in the spike log. Remove the button.
-- [ ] T003 **Mocks for owner approval** (memory: preview design before building), in the existing static mock site `design-mocks/` (served on :8411, see `design-mocks/README.md`; Standard Ebooks data only):
+- [X] T003 (Approved by the owner 2026-11-25: `design-mocks/offline-states.html` and `design-mocks/storage.html`. Build note: keep the chapter and percent in the device notice at phone width.) **Mocks for owner approval** (memory: preview design before building), in the existing static mock site `design-mocks/` (served on :8411, see `design-mocks/README.md`; Standard Ebooks data only):
   - `design-mocks/book.html`: add the Download states: not downloaded, downloading with progress, downloaded (menu with Remove), update available, and a no-space message;
   - `design-mocks/library.html`: a small "on this device" mark on downloaded covers, and the offline look;
   - `design-mocks/reader.html`: the offline "not downloaded" message, and the FR-009 notice naming a device ("Android phone: 45%… Jump there?");

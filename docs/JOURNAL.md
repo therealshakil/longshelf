@@ -777,3 +777,5 @@
 - foliate-js fetches a book whole (no `Range`), so a cached full response is all the reader needs.
 - T002 (phone `persist()` check) folded into the preview check: the storage page shows it.
 - Installed Playwright WebKit and Firefox locally; WebKit needed `libavif16` (owner installed it).
+- **T003 mocks approved** (owner, 2026-11-25): `design-mocks/offline-states.html` (Download button's 7 states, ✓ on downloaded covers, offline line, offline reader message, device notice) and `design-mocks/storage.html`. Build note: keep chapter and percent in the device notice on phones.
+- **T003 mocks approved** (owner, 2026-11-25): `design-mocks/offline-states.html` (Download button's 7 states, ✓ on downloaded covers, offline line, offline reader message, device notice) and `design-mocks/storage.html`. Build note: keep chapter and percent in the device notice on phones.

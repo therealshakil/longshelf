@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Offline states · Longshelf (design mock, spec 004)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,400..600&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>if(location.hash==='#dark'||location.hash==='#light')document.documentElement.dataset.theme=location.hash.slice(1)</script>
+<style>
+/* Spec 004 review sheet: every new state side by side. Not a page in the app. */
+.os{max-width:56rem;margin:0 auto;padding:2rem 0 4rem;display:flex;flex-direction:column;gap:2.75rem}
+.os h1{font:600 1.75rem/1.15 Literata;color:var(--ink)}
+.os h2{font:600 1.25rem/1.2 Literata;margin-bottom:.35rem}
+.os .why{color:var(--muted);font-size:.9375rem;margin-bottom:1.1rem;max-width:40rem}
+.states{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr));gap:1rem}
+.state{border:1px dashed var(--control);border-radius:.6rem;padding:1rem;display:flex;flex-direction:column;gap:.7rem}
+.state .lab{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.state .msg{font-size:.875rem;color:var(--muted)}
+.state .msg b{color:var(--ink);font-weight:600}
+.dlp{display:flex;flex-direction:column;gap:.35rem;width:100%}
+.dlp .track{height:3px;background:var(--rule);border-radius:2px;overflow:hidden}.dlp .track i{display:block;height:100%;width:46%;background:var(--accent)}
+.dlp .row{display:flex;justify-content:space-between;gap:1rem;font-size:.875rem;color:var(--muted)}
+.dlp button{all:unset;cursor:pointer;color:var(--ink);text-decoration:underline;text-underline-offset:.15em}
+.btn-out[aria-disabled=true]{color:var(--muted);border-color:var(--rule);cursor:default}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,8.5rem));gap:1.1rem}
+.tile{position:relative}.tile .tt{font:600 .9375rem/1.2 Literata;color:var(--ink);display:block;margin-top:.5rem}
+.here{position:absolute;top:.35rem;right:.35rem;display:grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgb(0 0 0/.25)}
+.here svg{width:1rem;height:1rem}
+.banner{display:flex;gap:.6rem;align-items:flex-start;padding:.75rem 1rem;border:1px solid var(--rule);border-radius:.5rem;font-size:.9375rem;margin-bottom:1rem;max-width:40rem}
+.banner svg{margin-top:.1rem;color:var(--accent)}
+.away{max-width:28rem;margin:1rem auto;text-align:center;display:flex;flex-direction:column;gap:.75rem;align-items:center;padding:2.5rem 1.5rem;border:1px solid var(--rule);border-radius:.6rem}
+.away h3{font:600 1.375rem/1.25 Literata}
+.away p{color:var(--muted)}
+.r-sync{white-space:normal;flex-wrap:wrap;max-width:30rem}
+.r-sync-x{color:var(--muted);text-decoration:underline;text-underline-offset:.15em}
+@media (max-width:40rem){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head><body><div class="wrap">
+<header><a class="wm" href="index.html" aria-label="Longshelf, home">Longshelf</a><nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="library.html">Library</a></nav></header>
+<main class="os">
+<div><h1>Reading offline: new states</h1><p class="why">Spec 004 review sheet. Each box is one state of an existing screen; everything else on those screens stays as approved in spec 002.</p></div>
+
+<section aria-labelledby="a-h"><h2 id="a-h">1. Book page: the Download button</h2>
+<p class="why">Replaces the placeholder toggle beside Continue reading. Remove download stays in the More menu (⋯).</p>
+<div class="states">
+<div class="state"><span class="lab">Not downloaded</span><button class="btn-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 20h14"/></svg><span>Download · 2.1 MB</span></button></div>
+<div class="state"><span class="lab">Downloading</span><div class="dlp" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" aria-label="Downloading Middlemarch"><div class="row"><span>Downloading… 1.0 of 2.1 MB</span><button>Cancel</button></div><div class="track"><i></i></div></div></div>
+<div class="state"><span class="lab">Downloaded</span><button class="btn-out" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg><span>On this device · 2.1 MB</span></button><p class="msg">Opens with no connection.</p></div>
+<div class="state"><span class="lab">Newer copy in your library</span><button class="btn-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"/></svg><span>Update · 2.3 MB</span></button><p class="msg">The book changed in Calibre. Your copy still opens until you update.</p></div>
+<div class="state"><span class="lab">Not enough space</span><button class="btn-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 20h14"/></svg><span>Download · 9.1 MB</span></button><p class="msg" role="status"><b>Not enough space on this device.</b> It needs 9.1 MB and about 3 MB is free. <a class="btn-link" href="storage.html">Free some space in Storage</a></p></div>
+<div class="state"><span class="lab">Offline, not downloaded</span><button class="btn-out" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 20h14"/></svg><span>Download when online</span></button></div>
+<div class="state"><span class="lab">Download stopped</span><button class="btn-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m-5-5 5 5 5-5M5 20h14"/></svg><span>Try again · 2.1 MB</span></button><p class="msg" role="status">The connection dropped, so nothing was saved.</p></div>
+</div></section>
+
+<section aria-labelledby="b-h"><h2 id="b-h">2. Library: books on this device</h2>
+<p class="why">A small mark on the cover of downloaded books. Offline, a one-line note sits above the grid; other books look the same and say what they need only when opened.</p>
+<p class="banner" role="status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><path d="M3 3l18 18"/></svg><span><b>Offline.</b> Books marked <span aria-hidden="true">✓</span> are on this device and open now.</span></p>
+<ol class="tiles">
+<li class="tile"><a class="cv" href="#"><img src="se-covers/george-eliot_middlemarch.jpg" alt=""></a><span class="here" title="On this device" aria-label="On this device"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg></span><a class="tt" href="#">Middlemarch</a></li>
+<li class="tile"><a class="cv" href="#"><img src="se-covers/jane-austen_persuasion.jpg" alt=""></a><a class="tt" href="#">Persuasion</a></li>
+<li class="tile"><a class="cv" href="#"><img src="se-covers/leo-tolstoy_anna-karenina_constance-garnett.jpg" alt=""></a><span class="here" title="On this device" aria-label="On this device"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg></span><a class="tt" href="#">Anna Karenina</a></li>
+<li class="tile"><a class="cv" href="#"><img src="se-covers/virginia-woolf_to-the-lighthouse.jpg" alt=""></a><a class="tt" href="#">To the Lighthouse</a></li>
+</ol></section>
+
+<section aria-labelledby="c-h"><h2 id="c-h">3. Reader: a book that isn't on this device, offline</h2>
+<p class="why">In place of the error page. Nothing is lost, and there is one way forward.</p>
+<div class="away" role="status"><h3>Persuasion isn’t on this device</h3><p>You’re offline, so it can’t open now. It will open next time you’re connected, or download it then to read it anywhere.</p><a class="go" href="library.html">Back to the library</a></div>
+</section>
+
+<section aria-labelledby="d-h"><h2 id="d-h">4. Reader: another device is further on</h2>
+<p class="why">The approved Kobo notice, now naming any device. Shown only when both devices moved; otherwise the book simply opens at the newer place.</p>
+<div class="r-sync" role="status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"/></svg><span><b>Android phone is further on</b> <span class="r-sync-d">· Chapter 41, 45%</span></span><a class="r-sync-go" href="#">Go there</a><a class="r-sync-x" href="#">Stay</a></div>
+</section>
+</main>
+</div></body></html>
