@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -31,8 +31,7 @@
 
 ## Notes
 
-- One open question (FR-009): whether the Calibre gap review belongs in Longshelf or in
-  Calibre's own metadata download. Stories 1 and 2 do not depend on it.
-- Named constraints (Open Library's rate limits, writing through Calibre's own tools, dev mode
+- FR-009 settled by the owner on 2026-11-26 (option B): Calibre gaps are filled in Calibre.
+- Named constraints (public dumps only, no per-book requests, dev mode
   staying offline) are owner constraints, not implementation choices.
 - SC-001's 60% is an assumption, to be checked in the planning spike.
