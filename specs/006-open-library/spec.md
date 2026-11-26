@@ -6,7 +6,7 @@
 
 **Status**: Draft (proposal; the owner locks)
 
-**Input**: User description: "Enrich library data with Open Library: author details Calibre can't hold (birth and death dates, short bio, photo, other works not in the library) and the first publication year of each work beside the edition's year. Gaps in Calibre's own fields (descriptions, years, publishers, tags) are filled in Calibre with its built-in metadata download, not here (owner, 2026-11-26: option B). Use Open Library's public data dumps, so nothing about the library is sent to Open Library (owner, 2026-11-26). Dev mode stays offline (DR-0009)."
+**Input**: User description: "Enrich library data with Open Library: author details Calibre can't hold (birth and death dates, short bio, photo, other works not in the library) and the first publication year of each work beside the edition's year. Author photos are kept (owner, 2026-11-26). Gaps in Calibre's own fields (descriptions, years, publishers, tags) are filled in Calibre with its built-in metadata download, not here (owner, 2026-11-26: option B). Use Open Library's public data dumps, so book lookups stay on the owner's computer; only author photos are fetched by ID (owner, 2026-11-26). Dev mode stays offline (DR-0009)."
 
 ## Where we start
 
@@ -29,15 +29,15 @@ public dumps on the owner's computer.
 ### User Story 1 - Learn about an author (Priority: P1)
 
 The owner opens an author from a book page. Beside the books they own, they see when the
-author was born and died, a short bio, and a list of the author's other works that are not in
-the library.
+author was born and died, a short bio, a photo, and a list of the author's other works that
+are not in the library.
 
 **Why this priority**: This is the one gain Calibre cannot give at all, since it has nowhere to
 store author details. It adds something new without competing with Calibre.
 
 **Independent Test**: Run the matching step for a library with one well-known author, publish,
-open the author in the app, and see dates, bio and other works. Turn off the network and open
-the author again: the details are still there.
+open the author in the app, and see dates, bio, photo and other works. Turn off the network and
+open the author again: the details are still there.
 
 **Acceptance Scenarios**:
 
@@ -95,8 +95,9 @@ years on the book page.
 
 - **FR-001**: Matching MUST run only when the owner runs a command on their computer. The web
   app, the mirror and dev mode MUST NOT contact Open Library.
-- **FR-002**: Nothing that identifies a book or author in the library MUST be sent to Open
-  Library or the Internet Archive. Data comes only from downloading the public dumps whole.
+- **FR-002**: Data MUST come from downloading the public dumps whole, with one exception:
+  author photos (FR-008). No other request MAY name a book, ISBN or author. Nothing about the
+  owner is ever sent (owner, 2026-11-26).
 - **FR-003**: The matching step MUST keep only the records that match the library. The full
   dumps MUST NOT be kept after a run unless the owner asks to keep them.
 - **FR-004**: An author MUST be matched only when the match is confident: by an identifier
@@ -108,8 +109,9 @@ years on the book page.
   alongside, and separate from, the data that comes from Calibre, and MUST be readable offline
   in the app like the rest of the catalogue.
 - **FR-007**: Every shown detail from Open Library MUST name its source with a link.
-- **FR-008**: Author photos MUST NOT be fetched one by one, since a per-author request would
-  reveal which authors are in the library (FR-002). Photos are left out of this spec.
+- **FR-008**: Author photos MUST be fetched by Open Library's photo ID during the run, at a
+  polite pace, and copied into the mirror, so that viewing a page never contacts a third
+  party. A photo already copied is not fetched again.
 - **FR-009**: Calibre MUST NOT be written to by this feature.
 - **FR-010**: The public showcase library MUST NOT receive anything from this feature until a
   separate decision covers it.
@@ -117,7 +119,7 @@ years on the book page.
 ### Key Entities
 
 - **Author details**: an author in the library, the Open Library record it matched, how it was
-  matched, birth and death dates, bio, other works, and which dump it came from.
+  matched, birth and death dates, bio, photo, other works, and which dump it came from.
 - **Work details**: a book in the library, the Open Library work it matched, the first
   published year, and which dump it came from.
 - **Dump state**: which monthly dump was last used, and how far an interrupted run got.
@@ -133,8 +135,9 @@ years on the book page.
   in the planning spike and recorded, since it depends on the owner's connection.
 - **SC-004**: With the network off, author details and first-published years open in the app
   as fast as the rest of the catalogue.
-- **SC-005**: During a run, a network capture shows requests only for the dump files, and none
-  carrying a book title, ISBN or author name.
+- **SC-005**: During a run, a network capture shows requests only for the dump files and for
+  author photos by ID, and none carrying a book title, ISBN or author name. Opening an author
+  page in the app makes no request outside the mirror.
 - **SC-006**: After a run, the matched data the owner's computer keeps is under 50 MB.
   (Assumption: to be checked in the spike.)
 
@@ -149,8 +152,9 @@ years on the book page.
   ([Open Library FAQ](https://openlibrary.org/help/faq/using),
   [Thoth wiki](https://github.com/thoth-pub/thoth/wiki/Open-Library)). For a private,
   single-owner mirror with attribution (FR-007), either is fine. To be confirmed in planning.
-- Author photos may come back in a later spec if a way exists to get them without a
-  per-author request (for example, a bulk archive).
+- A photo request shows Open Library which author photos were fetched, not who asked or why.
+  The owner judged this acceptable (2026-11-26). Photo rights vary by photo; copies stay in the
+  private mirror for the owner's own viewing, and FR-010 keeps them off the public showcase.
 - Adopt Before Building (constitution V): planning records a DR comparing Open Library's dumps
   with at least Wikidata's dumps for author details, before any build.
 - Author details extend the existing author page (`library/authors/[id]`) and book page. The
