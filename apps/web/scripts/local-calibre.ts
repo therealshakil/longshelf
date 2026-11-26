@@ -1,10 +1,13 @@
 /**
- * Dev-only: run the app against a local Calibre library (DR-0009). `metadata.db` is opened
- * read-only by the shared reader in @longshelf/sync-cli. Nothing here reaches a production
- * build, where the virtual module is null.
+ * Dev-only: run the app against a local Calibre library (DR-0009). At startup `metadata.db` is
+ * copied with SQLite's backup API to a cache folder outside the repo, and the app reads the copy,
+ * so dev never holds the live database open. Covers and EPUBs are still served read-only from the
+ * library. Nothing here reaches a production build, where the virtual module is null.
  */
-import { createReadStream, existsSync } from 'node:fs';
-import { resolve, sep } from 'node:path';
+import { createReadStream, existsSync, mkdirSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join, resolve, sep } from 'node:path';
+import { backup, DatabaseSync } from 'node:sqlite';
 import type { Plugin } from 'vite';
 import {
 	calibreLibraryPath,
@@ -17,6 +20,21 @@ export { htmlToText, readCalibreSnapshot } from '@longshelf/sync-cli/calibre';
 const VIRTUAL_ID = 'virtual:longshelf/calibre';
 const RESOLVED_ID = `\0${VIRTUAL_ID}`;
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+/** Copies the library's `metadata.db` to `dest`, consistent even while Calibre is open. */
+export async function copyCalibreDb(
+	root: string,
+	dest = join(process.env.XDG_CACHE_HOME || join(homedir(), '.cache'), 'longshelf/dev/metadata.db')
+): Promise<string> {
+	mkdirSync(join(dest, '..'), { recursive: true });
+	const source = new DatabaseSync(join(root, 'metadata.db'), { readOnly: true, timeout: 5000 });
+	try {
+		await backup(source, dest);
+	} finally {
+		source.close();
+	}
+	return dest;
+}
 
 /** Only a file inside the library, for a book that exists, is ever served. */
 export function fileForRequest(url: string, root: string, files: CalibreFiles) {
@@ -32,12 +50,12 @@ export function localCalibre(): Plugin {
 	let data: ReturnType<typeof readCalibreSnapshot> | null = null;
 	return {
 		name: 'longshelf-local-calibre',
-		config(_, { command }) {
+		async config(_, { command }) {
 			if (command !== 'serve' || process.env.LONGSHELF_LOCAL_CALIBRE !== '1') return;
 			root = calibreLibraryPath();
-			data = readCalibreSnapshot(root);
+			data = readCalibreSnapshot(root, await copyCalibreDb(root));
 			console.log(
-				`\n  Local Calibre: ${data.snapshot.books.length} books, ${data.snapshot.news.length} news issues (read-only, AI off)\n`
+				`\n  Local Calibre: ${data.snapshot.books.length} books, ${data.snapshot.news.length} news issues (from a copy, read-only, AI off)\n`
 			);
 		},
 		resolveId: (id) => (id === VIRTUAL_ID ? RESOLVED_ID : undefined),

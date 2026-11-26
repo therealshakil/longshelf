@@ -5,6 +5,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createSnapshotLibrary, parseIssueTitle } from '@longshelf/shared/library/snapshot';
 import {
+	copyCalibreDb,
 	fileForRequest,
 	htmlToText,
 	localCalibre,
@@ -106,6 +107,16 @@ describe('local Calibre', () => {
 			delete process.env.LONGSHELF_LOCAL_CALIBRE;
 			delete process.env.LONGSHELF_CALIBRE_LIBRARY;
 		}
+	});
+
+	it('reads a copy of metadata.db, leaving the library untouched', async () => {
+		const dest = join(root, 'cache/dev/metadata.db');
+		expect(await copyCalibreDb(root, dest)).toBe(dest);
+		const { snapshot, files } = readCalibreSnapshot(root, dest);
+		expect(snapshot.books.map((b) => b.title)).toEqual(['Frankenstein']);
+		expect(files.epub.get(BOOK)).toBe(
+			join(root, 'Mary Shelley/Frankenstein (1)/Frankenstein.epub')
+		);
 	});
 
 	it('parses text helpers', () => {
