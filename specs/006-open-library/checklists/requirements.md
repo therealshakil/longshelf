@@ -32,6 +32,7 @@
 ## Notes
 
 - FR-009 settled by the owner on 2026-11-26 (option B): Calibre gaps are filled in Calibre.
-- Named constraints (public dumps only, no per-book requests, dev mode
+- Named constraints (lookups in the mirror, never on the owner's devices, dev mode
   staying offline) are owner constraints, not implementation choices.
-- SC-001's 60% is an assumption, to be checked in the planning spike.
+- SC-001's 60% and the request estimate are assumptions, to be checked in the planning spike.
+- Challenger review 2026-11-26 (constitution VII): findings 2, 5, 6, 7 folded in; 3 and 4 dropped with the move to the cloud; 1 set aside, since the source is the owner's choice.
