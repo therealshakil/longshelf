@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-26
 
-**Status**: Draft (proposal; the owner locks)
+**Status**: Locked (owner, 2026-11-26)
 
 **Input**: User description: "Enrich library data with Open Library: author details Calibre can't hold (birth and death dates, short bio, photo, other works not in the library) and the first publication year of each work beside the edition's year. Gaps in Calibre's own fields are filled in Calibre with its built-in metadata download, not here (owner, 2026-11-26: option B). Author photos are kept (owner, 2026-11-26). The author service lives in the cloud: the app must not depend on the owner's laptop, which only syncs the library (owner, 2026-11-26)."
 
