@@ -42,5 +42,6 @@ export function splitPositions(positions: ReadingPosition[]) {
 	return { here, other };
 }
 
-/** Kobo shown as "Kobo"; anything else by its id. */
-export const deviceName = (source: string) => DEVICE_NAMES[source] ?? source;
+/** A device by its own name (spec 004 FR-013), Kobo as "Kobo", anything else by its id. */
+export const deviceName = (p: Pick<ReadingPosition, 'source' | 'deviceName'>) =>
+	p.deviceName ?? DEVICE_NAMES[p.source] ?? p.source;

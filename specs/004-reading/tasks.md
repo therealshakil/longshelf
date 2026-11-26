@@ -124,7 +124,7 @@ reader opens at the right place per FR-009.
 
 ### Tests for US2
 
-- [ ] T015 [P] [US2] Pool-workers tests `apps/web/tests/unit/progress-api.test.ts` (D1 in miniflare, as `mirror-read.test.ts` does):
+- [X] T015 [P] [US2] Pool-workers tests `apps/web/tests/unit/progress-api.test.ts` (D1 in miniflare, as `mirror-read.test.ts` does):
   - PUT then GET round-trips;
   - an older `readAt` lands in `stale` and doesn't overwrite;
   - a `readAt` more than 5 minutes in the future is clamped to server time;
@@ -132,14 +132,14 @@ reader opens at the right place per FR-009.
   - no identity or the service token gives 403;
   - GET's `ETag` and `If-None-Match` give 304;
   - every response has `X-Robots-Tag: noindex, nofollow`.
-- [ ] T016 [P] [US2] Unit tests `apps/web/tests/unit/places.test.ts` for the FR-009 decision (research R6):
+- [X] T016 [P] [US2] Unit tests `apps/web/tests/unit/places.test.ts` for the FR-009 decision (research R6):
   - no newer remote: open here;
   - newer remote and `readAt <= syncedAt`: open there and adopt with the remote `readAt`;
   - newer remote and `readAt > syncedAt`: open here and offer;
   - a remote place for another file falls back from CFI to href + fraction to percent.
 
   Also for merging mirror rows into `book.positions` (this device's row is replaced by the local place as `this-device`).
-- [ ] T017 [P] [US2] Unit tests `apps/web/tests/unit/outbox.test.ts`:
+- [X] T017 [P] [US2] Unit tests `apps/web/tests/unit/outbox.test.ts`:
   - pending = `syncedAt === null || readAt > syncedAt`;
   - after a 200, `syncedAt = readAt` only if the place hasn't moved meanwhile;
   - `stale` counts as sent;
@@ -149,25 +149,25 @@ reader opens at the right place per FR-009.
 
 ### Implementation for US2
 
-- [ ] T018 [US2] Migration `apps/web/migrations/0005_reading_place.sql`: table `reading_place` with the columns in [data-model.md](data-model.md) (`book_id`, `device_id`, `device_name`, `percent`, `chapter_label`, `href`, `fraction`, `cfi`, `file_sha256`, `furthest_percent`, `furthest_href`, `read_at`, `received_at`), `PRIMARY KEY (book_id, device_id)`, and no foreign key to `book`. Apply it locally (`wrangler d1 migrations apply longshelf --local`). The preview database gets it from CI (DR-0012).
-- [ ] T019 [US2] `apps/web/src/lib/server/mirror/progress.ts` and `apps/web/src/routes/api/progress/+server.ts`:
+- [X] T018 [US2] Migration `apps/web/migrations/0005_reading_place.sql`: table `reading_place` with the columns in [data-model.md](data-model.md) (`book_id`, `device_id`, `device_name`, `percent`, `chapter_label`, `href`, `fraction`, `cfi`, `file_sha256`, `furthest_percent`, `furthest_href`, `read_at`, `received_at`), `PRIMARY KEY (book_id, device_id)`, and no foreign key to `book`. Apply it locally (`wrangler d1 migrations apply longshelf --local`). The preview database gets it from CI (DR-0012).
+- [X] T019 [US2] `apps/web/src/lib/server/mirror/progress.ts` and `apps/web/src/routes/api/progress/+server.ts`:
   - GET: all rows, weak ETag from `max(received_at)` and the count;
   - PUT: validate with `ProgressPutSchema`, clamp `readAt`, then one D1 `batch` of `INSERT … ON CONFLICT(book_id, device_id) DO UPDATE SET … WHERE excluded.read_at > reading_place.read_at`;
   - work out `accepted` and `stale` from the rows after the batch.
 
   Owner-only: add `/api/progress` to the owner routes in `apps/web/src/lib/server/mirror/gate.ts`, and update `gate.test.ts`. Also add it to `apps/web/scripts/test-access.ts` as an owner-only route.
-- [ ] T020 [US2] Service worker: `GET /api/progress` network-first with the `catalog-v1` cache fallback and the `x-longshelf-source` header, exactly like `catalogue()` in `apps/web/src/service-worker.ts`.
-- [ ] T021 [US2] Create `apps/web/src/lib/reader/outbox.ts`:
+- [X] T020 [US2] Service worker: `GET /api/progress` network-first with the `catalog-v1` cache fallback and the `x-longshelf-source` header, exactly like `catalogue()` in `apps/web/src/service-worker.ts`.
+- [X] T021 [US2] Create `apps/web/src/lib/reader/outbox.ts`:
   - `queueSend()` (debounced 10 s), `flush({ keepalive })` and `pendingPlaces()`, which scans `longshelf.reader.place.*` keys;
   - wire `flush` on app start, `online` and `visibilitychange` (hidden → `keepalive: true`) in `apps/web/src/routes/+layout.svelte`;
   - on 403, set the existing sync status to "Sign in again", keeping places pending.
-- [ ] T022 [US2] Create `apps/web/src/lib/reader/places.ts`: `fetchPlaces()` (GET `/api/progress`, mirror mode only; sample mode returns the sample positions as now), `mergePositions(book, rows, local)`, and `chooseOpen(local, remotes)` (research R6). Make mirror-mode `positions()` and `book.positions` use it: in `apps/web/src/lib/library/mirror.ts`, load places alongside the catalogue and join them into the snapshot's positions. Device names come from the rows, falling back to `deviceName()` for `kobo`.
-- [ ] T023 [US2] Reader open rule in `apps/web/src/routes/read/[id]/+page.svelte`:
+- [X] T022 [US2] Create `apps/web/src/lib/reader/places.ts`: `fetchPlaces()` (GET `/api/progress`, mirror mode only; sample mode returns the sample positions as now), `mergePositions(book, rows, local)`, and `chooseOpen(local, remotes)` (research R6). Make mirror-mode `positions()` and `book.positions` use it: in `apps/web/src/lib/library/mirror.ts`, load places alongside the catalogue and join them into the snapshot's positions. Device names come from the rows, falling back to `deviceName()` for `kobo`.
+- [X] T023 [US2] (Built 2026-11-26. Draft wording awaiting the owner: a more recent place that is not further on reads "Read more recently on <device>"; shown on /design/kobo-notice. Filename kept as KoboNotice, the text is now device-neutral.) Reader open rule in `apps/web/src/routes/read/[id]/+page.svelte`:
   - use `chooseOpen` for `startCfi`, `startHref` and `startFraction`;
   - when it adopts, `savePlace` with the remote `readAt` and `syncedAt`;
   - when it offers, show the existing `KoboNotice` with the device's name and place (rename the component to `PlaceNotice` if its text is Kobo-specific);
   - on relocate, `savePlace` and then `queueSend()`.
-- [ ] T024 [US2] Use the device's real name from `thisDevice()` in every place sent, and show other devices by their `deviceName` wherever `deviceName()` is used (`apps/web/src/lib/library/format.ts` and its callers).
+- [X] T024 [US2] Use the device's real name from `thisDevice()` in every place sent, and show other devices by their `deviceName` wherever `deviceName()` is used (`apps/web/src/lib/library/format.ts` and its callers).
 
 **Checkpoint**: T015 to T017 pass. Quickstart step 3 passes on the preview with two devices. Journal line with SC-002 and SC-003.
 

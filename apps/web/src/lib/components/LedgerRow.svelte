@@ -39,7 +39,7 @@
 				<span class="trk trk-other" aria-hidden="true"
 					><i style:width="{pos.other.percent}%"></i></span
 				>
-				<span>{deviceName(pos.other.source)} {pos.other.percent}%</span>
+				<span>{deviceName(pos.other)} {pos.other.percent}%</span>
 			</span>
 		{/if}
 		{#if away >= 7 && onStorySoFar}

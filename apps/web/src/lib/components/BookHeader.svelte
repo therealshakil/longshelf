@@ -60,7 +60,7 @@
 				</dd>
 				{#if pos.other}
 					<dt>Elsewhere</dt>
-					<dd>{deviceName(pos.other.source)} is at {pos.other.percent}%</dd>
+					<dd>{deviceName(pos.other)} is at {pos.other.percent}%</dd>
 				{/if}
 				<dt>Last read</dt>
 				<dd>{lastReadLabel(pos.here.readAt)}, on this device</dd>

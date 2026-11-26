@@ -25,12 +25,13 @@ const BROWSER = [
 	'/api/catalog',
 	`/api/covers/${ANY}`,
 	`/api/files/${ANY}`,
-	'/api/ai/usage'
+	'/api/ai/usage',
+	'/api/progress'
 ];
 const INGEST = '/api/ingest/abort';
 
 /** Signs of library data in a body: catalogue JSON or book fields. */
-const LEAK = /"books"\s*:|"title"\s*:|"authors"\s*:|"metadata"\s*:|application\/epub/;
+const LEAK = /"books"\s*:|"title"\s*:|"authors"\s*:|"metadata"\s*:|"places"\s*:|application\/epub/;
 
 let failures = 0;
 const check = (ok: boolean, line: string) => {

@@ -6,7 +6,7 @@
  * no plugin.
  * - App shell (built JS/CSS, fonts, icons, the start page) is precached per version.
  * - Covers are cache-first: their URL is the image's hash, so they never change.
- * - The catalogue is network-first with the last copy as fallback.
+ * - The catalogue and reading places (spec 004) are network-first with the last copy as fallback.
  * - Pages are network-first, falling back to the cached start page offline.
  * - Book files the owner downloaded (spec 004, DR-0013) are answered from `books-v1`, which the
  *   page fills; files that weren't downloaded go to the network and are never cached here.
@@ -69,17 +69,18 @@ async function coverFirst(request: Request) {
 	return res;
 }
 
-async function catalogue(request: Request) {
+/** The catalogue or the reading places: the network, else the last copy marked with why. */
+async function lastCopy(request: Request, path: string) {
 	const cache = await caches.open(CATALOG);
 	// null when offline
 	const res = await fetch(request, { redirect: 'manual' }).catch(() => null);
 	if (res?.ok) {
-		await cache.put('/api/catalog', res.clone());
+		await cache.put(path, res.clone());
 		return res;
 	}
 	if (res && res.status === 304) return res;
 	const reason = res && signInRedirect(res) ? 'sign-in' : res ? null : 'offline';
-	const cached = reason ? await cache.match('/api/catalog') : undefined;
+	const cached = reason ? await cache.match(path) : undefined;
 	if (!cached) return res ?? Response.error();
 	const headers = new Headers(cached.headers);
 	headers.set(SOURCE_HEADER, reason!);
@@ -127,7 +128,8 @@ self.addEventListener('fetch', (event) => {
 	const path = url.pathname;
 
 	if (path.startsWith('/api/covers/')) event.respondWith(coverFirst(request));
-	else if (path === '/api/catalog') event.respondWith(catalogue(request));
+	else if (path === '/api/catalog' || path === '/api/progress')
+		event.respondWith(lastCopy(request, path));
 	else if (path.startsWith('/api/files/') || path.startsWith('/sample/books/'))
 		event.respondWith(bookFile(request));
 	else if (request.mode === 'navigate') event.respondWith(page(request));

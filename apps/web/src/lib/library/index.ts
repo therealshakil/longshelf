@@ -7,6 +7,9 @@ import { fetchMirror, lazyLibrary } from './mirror.ts';
 /** Set at build time: `mirror` for a deployment (`pnpm run deploy`), `sample` otherwise. */
 export const LIBRARY_MODE: 'sample' | 'mirror' = __LIBRARY_MODE__;
 
+/** Reading places go to the mirror only when there is one (spec 004 US2). */
+export const SYNCS_PLACES = !localCalibre && LIBRARY_MODE === 'mirror';
+
 /**
  * The one place that chooses where library data comes from (spec 002 FR-007, spec 003 FR-010):
  * a local Calibre library under `pnpm dev:calibre` (DR-0009), the mirror in a deployment, or the

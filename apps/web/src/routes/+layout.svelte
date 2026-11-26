@@ -2,6 +2,8 @@
 	import '../app.css';
 	import { page } from '$app/state';
 	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { SYNCS_PLACES } from '#lib/library/index.ts';
+	import { flush, flushNow, onSendResult } from '#lib/reader/outbox.ts';
 	import type { LayoutProps } from './$types';
 
 	let { children, data }: LayoutProps = $props();
@@ -17,8 +19,35 @@
 			removeEventListener('offline', update);
 		};
 	});
+	// Reading places go to the mirror on start, when back online, and as the page is hidden
+	// (spec 004 FR-010). A refused send means the sign-in ran out: places wait for it.
+	let signIn = $state(false);
+	$effect(() => {
+		if (!SYNCS_PLACES) return;
+		const off = onSendResult((r) => {
+			if (r === 'sign-in') signIn = true;
+			else if (r === 'sent' || r === 'nothing') signIn = false;
+		});
+		const send = () => void flush();
+		const hide = () => {
+			if (document.visibilityState === 'hidden') void flushNow({ keepalive: true });
+		};
+		send();
+		addEventListener('online', send);
+		document.addEventListener('visibilitychange', hide);
+		return () => {
+			off();
+			removeEventListener('online', send);
+			document.removeEventListener('visibilitychange', hide);
+		};
+	});
+
 	const sync = $derived(
-		online ? data.sync : { ...data.sync, state: 'offline' as const, reason: undefined }
+		!online
+			? { ...data.sync, state: 'offline' as const, reason: undefined }
+			: signIn
+				? { ...data.sync, state: 'attention' as const, reason: 'sign-in' as const }
+				: data.sync
 	);
 
 	const path = $derived(page.url.pathname);

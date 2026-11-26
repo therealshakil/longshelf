@@ -16,6 +16,9 @@
 	import ContentsPanel from '#lib/components/ContentsPanel.svelte';
 	import ErrorState from '#lib/components/ErrorState.svelte';
 	import { deviceName, splitPositions } from '#lib/library/format.ts';
+	import { SYNCS_PLACES } from '#lib/library/index.ts';
+	import { adoptedPlace, chooseOpen, fileShaOf, startAt } from '#lib/reader/places.ts';
+	import { queueSend } from '#lib/reader/outbox.ts';
 	import { sendSummary } from '#lib/reader/summaries.ts';
 	import { RECAPS_ENABLED } from '#lib/ai/features.ts';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
@@ -26,7 +29,32 @@
 
 	const book = $derived(data.book?.book);
 	const positions = $derived(splitPositions(data.book?.positions ?? []));
-	const saved = $derived(book ? loadPlace(book.id) : null);
+	const fileSha = $derived(fileShaOf(data.fileUrl));
+
+	// Where to open (spec 004 FR-009): here, at a more recent place from another device (adopt),
+	// or here with that place offered. Worked out once per book, from the places at open.
+	const opening = $derived.by(() => {
+		if (!book) return null;
+		const saved = loadPlace(book.id);
+		const here = positions.here;
+		const mine = saved ?? (here ? { readAt: here.readAt, syncedAt: here.readAt } : null);
+		const choice = chooseOpen(mine, data.book?.positions ?? []);
+		if (choice.kind === 'adopt') {
+			// Keeps the other device's readAt, so adopting is never a move of its own.
+			savePlace(book.id, adoptedPlace(choice.from, fileSha));
+			return { choice, start: startAt(choice.from, fileSha) };
+		}
+		const start = saved?.cfi
+			? { cfi: saved.cfi }
+			: saved
+				? { href: saved.href || undefined, fraction: saved.percent / 100 }
+				: here
+					? startAt(here, fileSha)
+					: {};
+		return { choice, start };
+	});
+	/** The first location reported after opening is where it opened, not a move. */
+	let opened = false;
 
 	let settings = $state(loadSettings());
 	let hidden = $state(false);
@@ -73,13 +101,22 @@
 	const percent = $derived(loc ? Math.round(loc.fraction * 100) : (positions.here?.percent ?? 0));
 	const other = $derived(
 		positions.other
-			? { device: deviceName(positions.other.source), percent: positions.other.percent }
+			? { device: deviceName(positions.other), percent: positions.other.percent }
 			: undefined
+	);
+	// Offered: a more recent place when both devices moved (FR-009), or, as in spec 002, a
+	// place further on.
+	const offered = $derived(
+		opening?.choice.kind === 'offer'
+			? opening.choice.from
+			: positions.other && positions.other.percent > percent
+				? positions.other
+				: undefined
 	);
 	const chapterLabel = $derived(
 		loc?.tocItem ? placeLabel(api?.toc ?? [], loc.tocItem) : (positions.here?.chapterLabel ?? '')
 	);
-	const showNotice = $derived(!!other && !noticeDismissed && other.percent > percent);
+	const showNotice = $derived(!!offered && !noticeDismissed);
 
 	// Offline and not downloaded: a calm message instead of an error (spec 004 FR-005).
 	let online = $state(typeof navigator === 'undefined' ? true : navigator.onLine);
@@ -119,8 +156,15 @@
 		const now = new Date().toISOString();
 		const percent = Math.round(l.fraction * 1000) / 10;
 		const before = loadPlace(book.id);
-		// Opening a book reports where it opened; that isn't a move (FR-009).
+		// Opening a book reports where it opened; that isn't a move (FR-009). An adopted place
+		// from another file gets this file's exact place, keeping its time.
+		const first = !opened;
+		opened = true;
 		if (before?.cfi === l.cfi) return;
+		if (first && before) {
+			savePlace(book.id, { ...before, cfi: l.cfi, ...(fileSha ? { fileSha256: fileSha } : {}) });
+			return;
+		}
 		const further = !before || percent >= before.furthestPercent;
 		savePlace(book.id, {
 			cfi: l.cfi,
@@ -131,9 +175,11 @@
 			percent,
 			furthestPercent: further ? percent : before.furthestPercent,
 			furthestHref: further ? (l.tocItem?.href ?? '') : before.furthestHref,
+			...(fileSha ? { fileSha256: fileSha } : {}),
 			readAt: now,
 			syncedAt: before?.syncedAt ?? null
 		});
+		if (SYNCS_PLACES) queueSend();
 	}
 
 	// Keyboard page turning: arrows and Page Up/Down, unless a panel is open or a field has focus.
@@ -150,13 +196,14 @@
 		}
 	}
 
-	/** Go to the other device's chapter, or its percentage if that link isn't in this book. */
+	/** Go to the offered place: exact on the same file, else its chapter, else its percentage. */
 	async function goToOther() {
-		if (!positions.other) return;
+		if (!offered) return;
+		const to = startAt(offered, fileSha);
 		try {
-			await api?.goTo(positions.other.href);
+			await api?.goTo((to.cfi ?? to.href)!);
 		} catch {
-			await api?.goToFraction(positions.other.percent / 100);
+			await api?.goToFraction(offered.percent / 100);
 		}
 	}
 
@@ -198,11 +245,12 @@
 		onStorySoFar={RECAPS_ENABLED && data.ai ? openRecap : undefined}
 	>
 		{#snippet notice()}
-			{#if showNotice && other && positions.other}
+			{#if showNotice && offered}
 				<KoboNotice
-					device={other.device}
-					chapter={positions.other.chapterLabel}
-					percent={other.percent}
+					device={deviceName(offered)}
+					chapter={offered.chapterLabel}
+					percent={offered.percent}
+					further={offered.percent > percent}
 					onGo={() => {
 						void goToOther();
 						noticeDismissed = true;
@@ -238,9 +286,9 @@
 				src={data.fileUrl}
 				{settings}
 				{themeKey}
-				startCfi={saved?.cfi}
-				startHref={saved ? undefined : positions.here?.href}
-				startFraction={saved ? undefined : (positions.here?.percent ?? 0) / 100}
+				startCfi={opening?.start.cfi}
+				startHref={opening?.start.href}
+				startFraction={opening?.start.fraction}
 				onReady={(a) => (api = a)}
 				{onRelocate}
 				{onTap}
