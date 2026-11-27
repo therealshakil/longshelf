@@ -23,8 +23,11 @@ const ROUTES = [
 	'/search?q=war',
 	'/search?q=xylophone',
 	'/settings/ai',
+	'/settings/storage',
 	READER
 ];
+// Spec 004: the book page and Storage once a book is on this device.
+const DOWNLOAD = '/book/bram-stoker_dracula';
 const WIDTHS = [
 	[390, 844],
 	[1440, 900]
@@ -63,6 +66,21 @@ for (const [width, height] of WIDTHS)
 				await expect(page.locator('main, [role="main"], foliate-view').first()).toBeAttached();
 				expect(await violations(page, route)).toEqual([]);
 			});
+
+for (const [width, height] of WIDTHS)
+	for (const theme of ['light', 'dark'] as const)
+		test(`downloaded book and storage at ${width} px, ${theme}`, async ({ page }) => {
+			await page.setViewportSize({ width, height });
+			await page.emulateMedia({ colorScheme: theme, reducedMotion: 'reduce' });
+			await page.goto(DOWNLOAD);
+			await page.getByRole('button', { name: /^Download/ }).click();
+			await expect(page.getByText(/^On this device/)).toBeVisible({ timeout: 15_000 });
+			const found = await violations(page, DOWNLOAD);
+			await page.goto('/settings/storage');
+			await expect(page.getByText('Dracula').first()).toBeVisible();
+			found.push(...(await violations(page, '/settings/storage')));
+			expect(found).toEqual([]);
+		});
 
 for (const theme of ['light', 'dark'] as const)
 	test(`catalogue pages, ${theme}`, async ({ page }) => {

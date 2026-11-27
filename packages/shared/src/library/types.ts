@@ -49,6 +49,10 @@ export const ReadingPositionSchema = z
 		href: z.string(),
 		fraction: z.number().min(0).max(1),
 		cfi: z.string().optional(),
+		/** The file the CFI belongs to; another file falls back to href, then percent (spec 004 R6). */
+		fileSha256: z.string().optional(),
+		/** The device's own name, from the mirror (spec 004 FR-013). */
+		deviceName: z.string().optional(),
 		readAt: z.iso.datetime(),
 		furthestHref: z.string(),
 		furthestPercent: z.number().min(0).max(100),

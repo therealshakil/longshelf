@@ -754,3 +754,37 @@
   - A seed attempt during the secrets rollout took the upload lock and then failed. Cleared on the preview D1.
   - On workers.dev, Cloudflare sends `X-Robots-Tag: noindex` instead of the Worker's `noindex, nofollow`. `test:access` accepts that on workers.dev only.
   - One of three `test:access` runs on the preview failed without a captured cause; the next two passed.
+
+## 2026-11-25: Spec 004 specified (reading offline and across devices)
+
+- **Scope:** download books for offline reading, sync the reading place between devices (offline places queue and send later), and a storage page. Spec 003 already covers reading online and the offline library list, so they aren't repeated.
+- **Owner ruling (FR-009):** opening a book that another device read further goes straight there, unless both devices moved since they last synced; then it offers the jump, like the Kobo notice.
+- **Left out:** the public showcase (its own spec), Kobo progress (spec 005), finished status, highlights.
+- New screens get mocks for approval before code (FR-017).
+
+## 2026-11-25: Spec 004 planned (DR-0013 proposed)
+
+- **Downloads:** Cache Storage (`books-v1`), keyed by the file's content-addressed URL and served by the service worker, so the reader needs no change. OPFS (DESIGN.md's plan) is kept as the fallback if spike T001 finds `cache.put` can leave partial entries.
+- **Places:** the existing per-book localStorage place gains `readAt` and `syncedAt`. Latest-wins means one pending place per book, so no Dexie. On the mirror: a `reading_place` table with `GET`/`PUT /api/progress`.
+- **Spec wording:** FR-010 and SC-003 now ask for the latest place per book, not every intermediate one (research R4).
+- **Unchanged:** no new dependencies; expected cost £0.
+- **Next:** `/speckit-tasks`; mocks of the new screens before any UI code.
+- **Tasks:** 30 in `specs/004-reading/tasks.md`. DR-0013 accepted by the owner. MVP is US1 (offline reading), on its own PR.
+
+## 2026-11-25: Spec 004 T001 spike, Cache Storage confirmed
+
+- A download whose body fails halfway leaves nothing in Cache Storage in Chromium (`NetworkError`) or WebKit (`TypeError`), so DR-0013's choice holds for Android and iPhone. Firefox wouldn't launch on this OS.
+- foliate-js fetches a book whole (no `Range`), so a cached full response is all the reader needs.
+- T002 (phone `persist()` check) folded into the preview check: the storage page shows it.
+- Installed Playwright WebKit and Firefox locally; WebKit needed `libavif16` (owner installed it).
+- **T003 mocks approved** (owner, 2026-11-25): `design-mocks/offline-states.html` (Download button's 7 states, ✓ on downloaded covers, offline line, offline reader message, device notice) and `design-mocks/storage.html`. Build note: keep chapter and percent in the device notice on phones.
+- **T003 mocks approved** (owner, 2026-11-25): `design-mocks/offline-states.html` (Download button's 7 states, ✓ on downloaded covers, offline line, offline reader message, device notice) and `design-mocks/storage.html`. Build note: keep chapter and percent in the device notice on phones.
+- **Phase 2 (T004–T006):** shared `progress.ts` schemas with the 5-minute clock clamp; `lib/offline/device.ts` (id + name from the browser, renamable); the saved place gains `readAt`/`syncedAt`/percent/furthest, upgrades spec 002 entries, and never moves back (two-tab rule). Opening a book no longer counts as moving (FR-009). Web places send chapter `fraction` 0; the CFI is the exact place.
+
+## 2026-11-25: Spec 004 US1 and storage page built
+
+- **Downloads (US1):** `lib/offline/downloads.ts` keeps a book in Cache Storage `books-v1`; the service worker answers `/api/files/*` and `/sample/books/*` from it. The book page's Download button has the 7 approved states; covers show ✓; the library shows "Offline. Books marked ✓…"; the reader shows "<title> isn't on this device" offline instead of an error. A downloaded copy is read even online until Update (FR-004, FR-007). A book that left the library still opens from its download.
+- **Storage page (US3, T025):** `/settings/storage`, as the approved mock. Reached from the book page's More menu ("Downloads on this device") and the no-space message, since nothing links to settings yet.
+- **Tests:** 15 unit tests for downloads (partial body, size mismatch, quota, offline, update keeps the old copy until the new one is stored); the FR-016 smoke test passes in the full e2e run (53 passed).
+- **Known limit (spec 003 behaviour):** offline, a full page load of a deep address gets the cached start page; moving around inside the app works. The installed app always starts at Home, so reading offline works as intended.
+- **Found by the checks:** the token-only rule (no raw radius, no transitions) and the catalogue rule (every component has a design page): added `design/download-button` and `design/offline-note`.

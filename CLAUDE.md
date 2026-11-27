@@ -41,7 +41,7 @@ Run from the repo root (pnpm 12 via corepack, Node 24):
 - `pnpm dev`: SvelteKit dev server (`apps/web`)
 - `pnpm dev:calibre`: dev server on your local Calibre library, read-only with AI off (DR-0009). Set `LONGSHELF_CALIBRE_LIBRARY` to choose a library
 - `pnpm test`: Vitest unit tests (all packages)
-- `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on a free port, never reusing a running server)
+- `pnpm test:e2e`: Playwright + axe (builds and previews with wrangler on a free port, never reusing a running server). Includes the offline smoke test: download a book, go offline, read it (spec 004)
 - `pnpm test:e2e:mirror`: e2e on a mirror build, seeded by the `longshelf` CLI with the test library (spec 003). On demand, never part of build, push or deploy
 - `pnpm test:a11y`: full accessibility matrix (about 5.5 minutes), on demand before a release. Never part of build, push or deploy
 - `pnpm design:compare`: on-demand screenshots of each page beside its mock; filter with `--only`, `--widths`, `--themes`. Never part of build, push or deploy

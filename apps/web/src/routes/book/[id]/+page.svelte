@@ -14,7 +14,6 @@
 	let { data }: PageProps = $props();
 	const item = $derived(data.book);
 	const author = $derived(item.book.authors[0]);
-	let downloaded = $state(false);
 	const paras = $derived((item.book.description ?? '').split(/\n\s*\n/).filter(Boolean));
 </script>
 
@@ -30,7 +29,7 @@
 			>{/if}
 	</nav>
 
-	<BookHeader {item} bind:downloaded />
+	<BookHeader {item} file={data.file} />
 
 	<div class="cols">
 		<section aria-labelledby="about-h">

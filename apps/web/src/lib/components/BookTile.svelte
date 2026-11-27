@@ -1,12 +1,15 @@
 <!--
 	A book in a grid: cover (fixed 2:3, so nothing shifts while it loads), title clamped to two
-	lines, author, read status (FR-005), and an optional reason line for suggestions.
+	lines, author, read status (FR-005), and an optional reason line for suggestions. A ✓ on the
+	cover when the book is downloaded on this device (spec 004).
 	A book without a cover gets a plain binding with its title.
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { Book, ReadStatus } from '@longshelf/shared/library';
 	import { statusLabel } from '@longshelf/shared/library';
+	import Check from '@lucide/svelte/icons/check';
+	import { onDevice } from '#lib/offline/on-device.svelte.ts';
 
 	let {
 		book,
@@ -18,6 +21,7 @@
 	const href = $derived(resolve('/book/[id]', { id: book.id }));
 	const label = $derived(status ? statusLabel(status) : null);
 	const author = $derived(book.authors[0]?.name ?? 'Unknown author');
+	const here = $derived(onDevice().has(book.id));
 </script>
 
 <div class="tile flex flex-col gap-0.5" class:tile-sm={size === 'sm'}>
@@ -27,8 +31,13 @@
 		{:else}
 			<span class="binding">{book.title}</span>
 		{/if}
+		{#if here}<span class="here" title="On this device"
+				><Check class="size-4" aria-hidden="true" /></span
+			>{/if}
 	</a>
-	<a {href} class="title">{book.title}</a>
+	<a {href} class="title"
+		>{book.title}{#if here}<span class="sr-only"> (on this device)</span>{/if}</a
+	>
 	<span class="{size === 'sm' ? 'text-xs' : 'text-sm'} text-text-muted">{author}</span>
 	{#if label}
 		<span class="status" class:status-done={status?.kind === 'finished'}>{label}</span>
@@ -39,6 +48,22 @@
 </div>
 
 <style>
+	.cover {
+		position: relative;
+	}
+	.here {
+		position: absolute;
+		top: 0.35rem;
+		right: 0.35rem;
+		display: grid;
+		place-items: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		border-radius: 50%;
+		background: var(--r-bg);
+		color: var(--r-ink);
+		box-shadow: var(--r-shadow-tile);
+	}
 	.cover img,
 	.binding {
 		display: block;

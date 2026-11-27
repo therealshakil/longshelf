@@ -28,7 +28,11 @@ const MAX_CAPTURE_HEIGHT = 2400;
 const CONCURRENCY = 4;
 
 type Theme = (typeof THEMES)[number];
-type Target = { id: string; route: string; mock: string };
+/**
+ * `download`: a book page whose Download button is pressed first, so the page has something stored.
+ * `ready`: text that shows once the page has read what's on this device.
+ */
+type Target = { id: string; route: string; mock: string; download?: string; ready?: string };
 type Job = { target: Target; width: number; theme: Theme };
 
 const TARGETS: Target[] = [
@@ -39,7 +43,14 @@ const TARGETS: Target[] = [
 	{ id: 'book-similar', route: '/book/charlotte-bronte_jane-eyre', mock: 'book.html' },
 	{ id: 'author', route: '/library/authors/jane-austen', mock: 'author.html' },
 	{ id: 'shelf', route: '/library/shelf/collection/poetry-drama', mock: 'shelf.html' },
-	{ id: 'reader', route: '/read/george-eliot_middlemarch', mock: 'reader.html' }
+	{ id: 'reader', route: '/read/george-eliot_middlemarch', mock: 'reader.html' },
+	{
+		id: 'storage',
+		route: '/settings/storage',
+		mock: 'storage.html',
+		download: '/book/bram-stoker_dracula',
+		ready: 'Dracula'
+	}
 ];
 
 const TYPES: Record<string, string> = {
@@ -153,7 +164,13 @@ async function runJob(browser: Browser, job: Job, appUrl: string, mockUrl: strin
 				([key]) => localStorage.setItem(key, JSON.stringify({ theme: 'night' })),
 				[READER_SETTINGS_KEY]
 			);
+		if (target.download) {
+			await app.goto(appUrl + target.download, { waitUntil: 'load' });
+			await app.getByRole('button', { name: /^Download/ }).click();
+			await app.getByText(/^On this device/).waitFor({ timeout: 15000 });
+		}
 		await app.goto(appUrl + target.route, { waitUntil: 'load' });
+		if (target.ready) await app.getByText(target.ready).first().waitFor({ timeout: 15000 });
 		if (target.id === 'reader') {
 			await app.waitForSelector('foliate-view', { state: 'attached', timeout: 15000 });
 			await app.waitForTimeout(1500); // the book renders inside foliate's own frame

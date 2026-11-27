@@ -21,6 +21,10 @@ library is private and copyrighted, and the repository is public. Calibre stays 
 Add `pnpm dev:calibre`, a dev-server mode that reads `metadata.db` read-only at startup and serves
 covers and EPUBs from the library to localhost only.
 
+Update 2026-11-26: at startup the dev server copies `metadata.db` with SQLite's backup API to
+`~/.cache/longshelf/dev/metadata.db` and reads the copy, so dev never holds the live database open
+while Calibre is running. The longshelf CLI still reads the library's own file.
+
 ## Rationale
 
 It adds no dependency or service and uses the existing `LibrarySource` swap point. Production builds

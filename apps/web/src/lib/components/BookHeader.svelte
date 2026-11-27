@@ -1,25 +1,26 @@
 <!--
 	The top of a book page (approved mock design-mocks/book.html): large cover; title, author link
 	and publication line; where you are on each device; then the actions. Continue reading is the
-	one primary action. Download is a toggle; the More menu holds rarer actions.
+	one primary action. Download keeps the book on this device (spec 004, DownloadButton); the More
+	menu holds rarer actions, including Remove download.
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import Download from '@lucide/svelte/icons/download';
-	import Check from '@lucide/svelte/icons/check';
+	import DownloadButton from '#lib/components/DownloadButton.svelte';
 	import Ellipsis from '@lucide/svelte/icons/ellipsis';
 	import { READABLE_FORMATS, type BookWithPositions } from '@longshelf/shared/library';
 	import { deviceName, lastReadLabel, splitPositions } from '#lib/library/format.ts';
 
 	let {
 		item,
-		downloaded = $bindable(false),
+		file = null,
 		headingLevel = 1,
 		onMarkFinished
 	}: {
 		item: BookWithPositions;
-		downloaded?: boolean;
+		/** The file the reader opens, for Download (spec 004). */
+		file?: { url: string; format: string; size?: number } | null;
 		/** 1 on the book page; 2 where the page already has a main heading. */
 		headingLevel?: 1 | 2;
 		onMarkFinished?: () => void;
@@ -31,6 +32,8 @@
 	/** Spec 003 US2 scenario 4: no EPUB or KEPUB means no Read action, and a plain reason. */
 	const readable = $derived(book.formats.some((f) => READABLE_FORMATS.includes(f)));
 	let menuOpen = $state(false);
+	let downloaded = $state(false);
+	let downloader = $state<ReturnType<typeof DownloadButton> | null>(null);
 </script>
 
 <div class="top">
@@ -57,7 +60,7 @@
 				</dd>
 				{#if pos.other}
 					<dt>Elsewhere</dt>
-					<dd>{deviceName(pos.other.source)} is at {pos.other.percent}%</dd>
+					<dd>{deviceName(pos.other)} is at {pos.other.percent}%</dd>
 				{/if}
 				<dt>Last read</dt>
 				<dd>{lastReadLabel(pos.here.readAt)}, on this device</dd>
@@ -76,17 +79,14 @@
 						: 'There’s no book file in Calibre.'}
 				</p>
 			{/if}
-			<button
-				type="button"
-				class="out"
-				aria-pressed={downloaded}
-				onclick={() => (downloaded = !downloaded)}
-			>
-				{#if downloaded}<Check class="size-4" aria-hidden="true" />Downloaded{:else}<Download
-						class="size-4"
-						aria-hidden="true"
-					/>Download{/if}
-			</button>
+			{#if readable}
+				<DownloadButton
+					bind:this={downloader}
+					bind:downloaded
+					book={{ id: book.id, title: book.title }}
+					{file}
+				/>
+			{/if}
 			<div class="more">
 				<button
 					type="button"
@@ -108,13 +108,16 @@
 								}}>Mark as finished</button
 							>
 						</li>
+						<li>
+							<a href={resolve('/settings/storage')}>Downloads on this device</a>
+						</li>
 						{#if downloaded}
 							<li>
 								<button
 									type="button"
-									onclick={() => {
-										downloaded = false;
+									onclick={async () => {
 										menuOpen = false;
+										await downloader?.removeDownload();
 									}}>Remove download</button
 								>
 							</li>
@@ -223,23 +226,6 @@
 	.go:hover {
 		background: var(--r-accent);
 	}
-	.out {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		min-height: var(--r-target);
-		padding: 0 1.1rem;
-		border: 1px solid var(--r-control);
-		border-radius: var(--r-radius-pill);
-		background: transparent;
-		font: inherit;
-		font-weight: var(--r-weight-strong);
-		color: var(--r-ink);
-		cursor: pointer;
-	}
-	.out:hover {
-		border-color: var(--r-ink);
-	}
 	.more {
 		position: relative;
 	}
@@ -270,6 +256,18 @@
 		border: 1px solid var(--r-border);
 		border-radius: var(--r-radius-md);
 		box-shadow: var(--r-shadow-tile);
+	}
+	.menu a {
+		display: flex;
+		align-items: center;
+		min-height: var(--r-target);
+		padding: 0 0.75rem;
+		border-radius: var(--r-radius-sm);
+		color: var(--r-text);
+		text-decoration: none;
+	}
+	.menu a:hover {
+		background: var(--r-surface);
 	}
 	.menu button {
 		width: 100%;
@@ -306,10 +304,6 @@
 		}
 		.go {
 			flex: 1 1 100%;
-			justify-content: center;
-		}
-		.out {
-			flex: 1;
 			justify-content: center;
 		}
 	}

@@ -10,7 +10,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 | 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | MVP built (US1+US2); US4 superseded by 002 |
 | 002 | [Redesigned screens and AI features](../specs/002-redesign-and-ai/spec.md) (DR-0002, DR-0003) | 001 | Built and design signed off 2026-11-23 on sample data. Not deployed. Story so far (T053) and AI search (T061–T063) are parked; plain search shipped instead (DR-0008) |
 | 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Done 2026-11-25. Deployed 2026-11-24; the owner's 670 books are online at library.longshelf.app |
-| 004 | Read (Phase 2) | 003 | not started |
+| 004 | [Reading offline and across devices](../specs/004-reading/spec.md) (Phase 2) | 003 | Built 2026-11-27, in review (PR #2). FR-009 revised 2026-11-27: the most recently read place wins, places further on are offered once. Left: the owner's device check (T028), deploy (T030) |
 | 005 | Device progress (Phase 3) | 004, spike | not started |
 
 ## Spike (manual, on the desktop with the Kobo; record findings here)
@@ -21,6 +21,9 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 - [ ] Add KEPUB as a library format for one book, send it, and check whether the file on the device is
       byte-identical to the library copy (if so, exact web -> Kobo positions are possible).
 - [ ] Note the exact column names and the format of the location value for a KEPUB and a plain EPUB.
+- [ ] Does the last-read column hold the Kobo's own last-read time, or the time of the USB sync? Is the
+      Libra's clock right when it's rarely on wifi? Spec 004 FR-009 opens at the most recently read
+      place; if Kobo times can't be trusted, Kobo places become offer-only (calm council, 2026-11-27).
 
 ## Spike: OPDS (parked 2026-11-24: future nice-to-have, to be specced another time)
 Nothing below has been tested. Pick it up from the first unchecked item.
@@ -85,6 +88,16 @@ licence-free synthetic one: 670 records, 1.2 MB.
     redirected to sign-in like an anonymous request.
   - The library is served at `library.longshelf.app` only, with workers.dev off.
 
+## Spike log: spec 004 T001 (browser storage, 2026-11-25)
+
+- **(a) `cache.put` with a body that errors after 1 MB:**
+  - **Chromium 1254:** `put` rejects with `NetworkError`; no entry, no keys. A full 2 MB body stores 2,000,000 bytes. **Safe: R1 holds.**
+  - **Firefox (Playwright fallback build):** would not launch on this OS in 150 s. Not tested.
+  - **WebKit 2388** (after the owner installed `libavif16`): `put` rejects with `TypeError`; no entry, no keys. Full body stores. **Safe.** `persist()` false on a fresh origin; quota about 1 GB.
+  - Design guard either way: the download is aborted on timeout or offline, and the stored size is checked against the catalogue before a book counts as downloaded (FR-002).
+- **(b) foliate-js and `Range`:** from the source (`vendor/foliate-js/view.js` `fetchFile`), a URL is fetched whole and read as a Blob, so it never sends `Range`. A cached full 200 response is all it needs. The smoke test (T008) proves the offline open.
+- **(c) `persist()` / `estimate()`, Chromium, fresh test origin:** `persist()` false (no interaction history, as MDN describes); quota about 10.7 GB here. The owner's phones (Android and iPhone) are read off the storage page during the preview check: it shows whether downloads are kept (T002 folded into T028).
+
 ## Starting scope per spec
 
 ### Phase 1: mirror → spec 003 (does not depend on the spike)
@@ -98,10 +111,11 @@ licence-free synthetic one: 670 records, 1.2 MB.
 - [x] Upload the owner's real library and record the SC timings (spec 003 T039; phone check SC-003 by the owner)
 
 ### Phase 2: read → spec 004
-- [ ] foliate-js submodule + `Reader.svelte`
-- [ ] Offline downloads (OPFS), storage settings page
-- [ ] Web progress, outbox, catalog snapshot in Dexie
-- [ ] Playwright smoke test: open app, go offline, open a book
+- [x] foliate-js submodule + `Reader.svelte` (spec 002)
+- [x] Offline downloads, storage settings page (in Cache Storage, not OPFS: DR-0013)
+- [x] Web progress and outbox (in localStorage, not Dexie: DR-0013); the catalogue copy is in
+      Cache Storage (spec 003)
+- [x] Playwright smoke test: open app, go offline, open a book (`offline-reading.spec.ts`)
 - [ ] Public showcase library (owner, 2026-11-24): a second, public deployment on its own
       subdomain that anyone can browse and read. It holds public-domain books the owner picks to
       represent them, and it grows out of the spec 003 test library. Needs:

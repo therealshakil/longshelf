@@ -76,29 +76,110 @@ export const measurePx = (s: Pick<ReaderSettings, 'size' | 'margins'>, rootPx = 
 	Math.round(MEASURE[s.margins] * SIZES[s.size] * rootPx);
 export const LEADING: Record<Spacing, number> = { tight: 1.5, normal: 1.7, loose: 1.9 };
 
-/** Saved place per book on this device. */
-const placeKey = (bookId: string) => `longshelf.reader.place.${bookId}`;
+/**
+ * Saved place per book on this device (spec 004 data-model.md). `readAt` is when it was read;
+ * `syncedAt` is the `readAt` the mirror last confirmed, so a place with `readAt > syncedAt` (or
+ * never synced) is still to send. Older entries (spec 002) are upgraded on read.
+ */
+export const PLACE_PREFIX = 'longshelf.reader.place.';
+const placeKey = (bookId: string) => `${PLACE_PREFIX}${bookId}`;
 
 export interface SavedPlace {
 	cfi: string;
+	/** Through the whole book, 0–1 (as foliate reports it). */
 	fraction: number;
 	chapterLabel: string;
+	/** Kept for spec 002 entries; same as `readAt` for new ones. */
 	savedAt: string;
+	/** The chapter's document within the file. */
+	href: string;
+	/** 0–100 through the book. */
+	percent: number;
+	furthestPercent: number;
+	furthestHref: string;
+	/** The file the CFI belongs to (its content hash), when known. */
+	fileSha256?: string;
+	readAt: string;
+	syncedAt: string | null;
 }
 
-export function loadPlace(bookId: string): SavedPlace | null {
+/** A stored entry in its current shape, or null if unreadable. */
+export function parsePlace(raw: string | null): SavedPlace | null {
+	if (!raw) return null;
 	try {
-		const raw = localStorage.getItem(placeKey(bookId));
-		return raw ? (JSON.parse(raw) as SavedPlace) : null;
+		const o = JSON.parse(raw) as Partial<SavedPlace>;
+		if (typeof o.cfi !== 'string' || typeof o.fraction !== 'number') return null;
+		const readAt = o.readAt ?? o.savedAt ?? new Date(0).toISOString();
+		const percent = typeof o.percent === 'number' ? o.percent : Math.round(o.fraction * 1000) / 10;
+		return {
+			cfi: o.cfi,
+			fraction: o.fraction,
+			chapterLabel: o.chapterLabel ?? '',
+			savedAt: o.savedAt ?? readAt,
+			href: o.href ?? '',
+			percent,
+			furthestPercent: Math.max(o.furthestPercent ?? percent, percent),
+			furthestHref: o.furthestHref ?? o.href ?? '',
+			...(o.fileSha256 ? { fileSha256: o.fileSha256 } : {}),
+			readAt,
+			syncedAt: o.syncedAt ?? null
+		};
 	} catch {
 		return null;
 	}
 }
 
-export function savePlace(bookId: string, place: SavedPlace): void {
+export function loadPlace(bookId: string): SavedPlace | null {
 	try {
+		return parsePlace(localStorage.getItem(placeKey(bookId)));
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Save a place unless the stored one was read later (another tab, or a place adopted from
+ * another device): nothing ever moves back. Returns whether it was written.
+ */
+export function savePlace(bookId: string, place: SavedPlace): boolean {
+	try {
+		const current = loadPlace(bookId);
+		if (current && Date.parse(current.readAt) > Date.parse(place.readAt)) return false;
 		localStorage.setItem(placeKey(bookId), JSON.stringify(place));
+		return true;
 	} catch {
 		// Storage unavailable: the place is kept for this visit only.
+		return false;
+	}
+}
+
+/** Every saved place on this device, by book id. */
+export function allPlaces(): Map<string, SavedPlace> {
+	const out = new Map<string, SavedPlace>();
+	try {
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			if (!key?.startsWith(PLACE_PREFIX)) continue;
+			const place = parsePlace(localStorage.getItem(key));
+			if (place) out.set(key.slice(PLACE_PREFIX.length), place);
+		}
+	} catch {
+		// Storage unavailable: nothing saved.
+	}
+	return out;
+}
+
+/** True when the mirror hasn't confirmed this place yet. */
+export const isPending = (p: SavedPlace) =>
+	p.syncedAt === null || Date.parse(p.readAt) > Date.parse(p.syncedAt);
+
+/** Record that the mirror holds this place, unless it has moved on since it was sent. */
+export function markSynced(bookId: string, readAt: string): void {
+	const current = loadPlace(bookId);
+	if (!current || current.readAt !== readAt) return;
+	try {
+		localStorage.setItem(placeKey(bookId), JSON.stringify({ ...current, syncedAt: readAt }));
+	} catch {
+		// Storage unavailable: it will be sent again, which is harmless.
 	}
 }

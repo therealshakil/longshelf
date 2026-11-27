@@ -75,10 +75,13 @@ v1 is layers 0 and 1. Column names are configuration, so the core contains no Ko
 - Service worker: SvelteKit native `src/service-worker.ts`. App shell precached; covers cache-first;
   catalogue network-first with the cached copy as fallback ("Offline", or "Sign in again" when Access
   has expired). Book files offline are spec 004.
-- Dexie: whole catalog fetched as one JSON document, re-fetched only when its ETag changes (700 books is
-  small; no incremental sync). Offline progress writes go to an outbox table, flushed on `online`,
-  `visibilitychange` and app start (no Background Sync; iOS lacks it).
-- Offline books: "Download" stores the file in OPFS and calls `navigator.storage.persist()`.
+- Catalogue: one JSON document, re-fetched only when its ETag changes (700 books is small; no
+  incremental sync), cached by the service worker (spec 003).
+- Reading places (DR-0013): the latest place per book in localStorage; places the mirror hasn't
+  confirmed are sent on change (debounced), `visibilitychange`, `online` and app start (no
+  Background Sync; iOS lacks it). Latest `read_at` wins per book and device.
+- Offline books (DR-0013): "Download" stores the file in a Cache Storage cache keyed by its
+  content-addressed URL, served by the service worker, and calls `navigator.storage.persist()`.
 - Reader: foliate-js (parses EPUB/KEPUB/PDF in the browser from a Blob), pinned submodule, one wrapper
   component. Fallback if it stalls: Readium ts-toolkit. Not epub.js.
 
@@ -108,8 +111,9 @@ books_fts USING fts5(title, authors, series, tags)
   through the chapter) map to `percent` and `fraction`.
 - `status` and position have separate timestamps and are merged independently, so "finished" set on one
   device and a position moved on another both survive.
-- Each source's latest position is kept separately. The UI offers "Kobo: 63%, ch. 12. Jump there?" rather
-  than overwriting silently.
+- Each source's latest position is kept separately. The book opens at the most recently read place;
+  a place further on is offered once ("Kobo is further on", spec 004 FR-009), never forced
+  and never lost.
 
 ## Known limits
 - Web -> Kobo is accurate to the chapter, not the sentence, when the library holds only EPUB: Kobo's exact

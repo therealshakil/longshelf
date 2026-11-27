@@ -64,11 +64,15 @@ type Row = Record<string, string | number | null>;
 /** Calibre stores 0 to 10 (half stars); screens use 0 to 5. No rating or 0 means unrated. */
 const ratingOf = (n: number | undefined) => (n && n > 0 ? Math.min(n, 10) / 2 : undefined);
 
-export function readCalibreSnapshot(root: string): {
+/** `dbPath` lets dev read a copy of `metadata.db`; file paths still resolve under `root`. */
+export function readCalibreSnapshot(
+	root: string,
+	dbPath = join(root, 'metadata.db')
+): {
 	snapshot: LibrarySnapshot;
 	files: CalibreFiles;
 } {
-	const db = new DatabaseSync(join(root, 'metadata.db'), {
+	const db = new DatabaseSync(dbPath, {
 		readOnly: true,
 		timeout: 5000
 	});

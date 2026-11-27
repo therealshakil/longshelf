@@ -30,7 +30,7 @@ export async function mirrorEnv() {
 	const store: Store = { db, bucket: proxy.env.BUCKET };
 	const reset = async () => {
 		await db.batch(
-			['book_file', 'book', 'blob', 'catalog', 'ingest_run'].map((t) =>
+			['book_file', 'book', 'blob', 'catalog', 'ingest_run', 'reading_place'].map((t) =>
 				db.prepare(`DELETE FROM ${t}`)
 			)
 		);

@@ -6,4 +6,12 @@
 
 <EntryPage {meta}>
 	<KoboNotice device="Kobo" chapter="Chapter 41" percent={41} onGo={() => {}} onStay={() => {}} />
+	<!-- Spec 004 FR-009: opened at a newer place from another device, this one was further on. -->
+	<KoboNotice
+		device="This device"
+		chapter="Chapter 12"
+		percent={45}
+		onGo={() => {}}
+		onStay={() => {}}
+	/>
 </EntryPage>

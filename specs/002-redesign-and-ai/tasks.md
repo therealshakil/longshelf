@@ -199,7 +199,7 @@ description: "Tasks for 002 redesigned screens and AI features"
 - [X] T038 [US3] Build the book page `apps/web/src/routes/book/[id]/+page.svelte` and `BookHeader.svelte`:
   - cover, title, author link, subtitle, publication line;
   - the CurrentBook progress table;
-  - actions: Continue reading, Downloaded/Download toggle (state only until 004), Story so far, and a more menu (Mark as finished);
+  - actions: Continue reading, Downloaded/Download toggle (state only until 004; resolved: spec 004 US1 made it real), Story so far, and a more menu (Mark as finished);
   - About this book, Details;
   - Genres and More like this slots that hide until US6 and US5;
   - on phones, the cover stacks and Downloaded, Story so far and the menu share one row.

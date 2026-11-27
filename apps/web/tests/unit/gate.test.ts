@@ -6,7 +6,14 @@ const cli = { kind: 'cli' } as const;
 
 describe('gate', () => {
 	it('refuses everything without an identity (FR-015)', () => {
-		for (const path of ['/', '/library', '/api/catalog', '/api/files/x', '/api/ingest/plan'])
+		for (const path of [
+			'/',
+			'/library',
+			'/api/catalog',
+			'/api/files/x',
+			'/api/progress',
+			'/api/ingest/plan'
+		])
 			expect(allowed(path, null, false)).toBe(false);
 	});
 
@@ -15,6 +22,8 @@ describe('gate', () => {
 		expect(allowed('/api/ingest/plan', owner, false)).toBe(false);
 		expect(allowed('/api/ingest/plan', cli, false)).toBe(true);
 		expect(allowed('/api/catalog', cli, false)).toBe(false);
+		expect(allowed('/api/progress', owner, false)).toBe(true);
+		expect(allowed('/api/progress', cli, false)).toBe(false);
 	});
 
 	it('allows anything in a local run', () => {
