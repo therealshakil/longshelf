@@ -187,7 +187,7 @@ reader opens at the right place per FR-009.
 
   Removing never touches places (FR-015). Add a link to it wherever settings are reached (the header menu or `/settings/ai`). (Nothing links to settings today; Storage is reached from the book page's More menu, "Downloads on this device", and from the no-space message. Owner to confirm.)
 - [X] T026 [US3] On app start, reconcile: if a book's place says it was downloaded but `books-v1` has no entry (storage cleared), there's nothing to fix in data. Make sure every view reads `list()` rather than a cached flag, so a cleared cache shows as "not downloaded" (edge case "device cleared its storage"). Add a test to `downloads.test.ts` by clearing the fake cache.
-- [ ] T027 [P] [US3] Add the storage page, and the book page's download states, to the a11y matrix (`apps/web/tests/e2e/a11y.spec.ts`) and to `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) against `design-mocks/storage.html`.
+- [X] T027 [P] [US3] Add the storage page, and the book page's download states, to the a11y matrix (`apps/web/tests/e2e/a11y.spec.ts`) and to `pnpm design:compare` (`apps/web/scripts/design-compare.ts`) against `design-mocks/storage.html`.
 
 **Checkpoint**: quickstart step 4 passes on the preview.
 
