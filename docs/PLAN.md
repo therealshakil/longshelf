@@ -21,6 +21,9 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 - [ ] Add KEPUB as a library format for one book, send it, and check whether the file on the device is
       byte-identical to the library copy (if so, exact web -> Kobo positions are possible).
 - [ ] Note the exact column names and the format of the location value for a KEPUB and a plain EPUB.
+- [ ] Does the last-read column hold the Kobo's own last-read time, or the time of the USB sync? Is the
+      Libra's clock right when it's rarely on wifi? Spec 004 FR-009 opens at the most recently read
+      place; if Kobo times can't be trusted, Kobo places become offer-only (calm council, 2026-11-27).
 
 ## Spike: OPDS (parked 2026-11-24: future nice-to-have, to be specced another time)
 Nothing below has been tested. Pick it up from the first unchecked item.

@@ -64,12 +64,14 @@ reconnected.
 
 1. **Given** the owner read further on device A and device B has not moved since it last
    synced, **When** they open the book on device B, **Then** it opens at device A's place.
-2. **Given** both devices moved since they last synced, **When** the owner opens the book on
-   device B, **Then** it opens at device B's place and offers device A's place to jump to.
+2. **Given** both devices moved since they last synced and device A read more recently, **When**
+   the owner opens the book on device B, **Then** it opens at device A's place, and if device
+   B's own place was in a later chapter, offers it once ("This device is further on").
 3. **Given** device A was offline while reading, **When** it next has a connection and the app
    is open, **Then** its latest place reaches the mirror without the owner doing anything.
 4. **Given** both devices moved while apart, **When** they sync, **Then** the most recently read
-   place is the one offered, and no device ever silently moves the owner backwards.
+   place is where the book opens, and a place further on, on any device, is offered once, so
+   none is lost.
 5. **Given** the owner closes the app mid-chapter, **When** they reopen it on the same device,
    **Then** they are at the same place, to within the same screen.
 
@@ -139,13 +141,20 @@ remove one, and confirm it is no longer readable offline and the total falls.
 **Reading place**
 - **FR-008**: The reader MUST save the reading place on the device as the owner reads, online or
   offline, so that closing the app at any moment loses at most the current screen.
-- **FR-009**: When the book is opened and another device has a more recent place than this
-  device (owner, 2026-11-25):
-  - if this device has not moved in the book since it last synced, the reader MUST go straight
-    to the more recent place;
-  - if both devices moved, the reader MUST open where this device was and offer the other place
-    ("Phone: 63%, ch. 12. Jump there?"), as the existing Kobo notice does. It MUST NOT move the
-    owner without asking.
+- **FR-009**: The most recently read place is the source of truth (owner, 2026-11-27; replaces
+  the 2026-11-25 rule, which asked whenever both devices had moved):
+  - the reader MUST open at the most recently read place, on this device or another. "Most
+    recently" means when it was read, never when it reached the mirror, so a place that
+    arrives late (a device that was offline, or the Kobo over USB) doesn't win by arriving;
+  - if another place, this device's own included, is further on in a later chapter (or, with no
+    chapter to compare, at least 5% further), the reader MUST offer it in the existing notice
+    ("Kobo is further on · Chapter 12, 63%", with Go there and Stay). It asks nothing and has
+    no timer;
+  - each place MUST be offered at most once, so re-reading a book or leaving a place behind
+    doesn't bring the same offer back.
+  Calm council, 2026-11-27, option 1. To check in the spec 005 spike: that Kobo Utilities gives
+  the Kobo's own last-read time, not the time of the USB sync; if not, Kobo places become
+  offer-only.
 - **FR-010**: The latest place of every book read offline MUST be sent to the mirror
   automatically once there is a connection and the app is open. It MUST NOT be lost if the app
   is closed before sending, nor overtaken by an older place. (Earlier places in the same book

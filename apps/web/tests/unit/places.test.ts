@@ -6,6 +6,8 @@ import {
 	chooseOpen,
 	fileShaOf,
 	mergePositions,
+	offerKey,
+	placeToOffer,
 	startAt,
 	THIS_DEVICE
 } from '#lib/reader/places.ts';
@@ -63,10 +65,16 @@ describe('chooseOpen (FR-009, research R6)', () => {
 		expect(chooseOpen(null, [remote(20)]).kind).toBe('adopt');
 	});
 
-	it('opens here and offers when both devices moved', () => {
+	it('adopts the newer place even when both devices moved (owner, 2026-11-27)', () => {
 		const choice = chooseOpen(local(15, 10), [remote(20)]);
-		expect(choice).toMatchObject({ kind: 'offer', from: { deviceName: 'Android phone' } });
-		expect(chooseOpen(local(15, null), [remote(20)]).kind).toBe('offer');
+		expect(choice).toMatchObject({ kind: 'adopt', from: { deviceName: 'Android phone' } });
+		expect(chooseOpen(local(15, null), [remote(20)]).kind).toBe('adopt');
+	});
+
+	it('goes by when a place was read, not when it arrived', () => {
+		// A Kobo place read yesterday and synced today is older than this morning's place here.
+		const kobo = { ...remote(5), source: 'kobo', deviceName: undefined };
+		expect(chooseOpen(local(10, 10), [kobo])).toEqual({ kind: 'here' });
 	});
 
 	it('picks the most recent of several other devices', () => {
@@ -84,6 +92,43 @@ describe('chooseOpen (FR-009, research R6)', () => {
 		const p = adoptedPlace(remote(20), SHA_A);
 		expect(p).toMatchObject({ readAt: at(20), syncedAt: at(20), cfi: 'epubcfi(/6/26)' });
 		expect(adoptedPlace(remote(20), SHA_B).cfi).toBe('');
+	});
+});
+
+describe('placeToOffer (FR-009)', () => {
+	const opened = { percent: 20, href: 'ch03.xhtml' };
+	const none = new Set<string>();
+
+	it('offers a place further on, in a later chapter', () => {
+		expect(placeToOffer(opened, [remote(5)], none)?.percent).toBe(63);
+	});
+
+	it('does not offer a place behind, or further on in the same chapter', () => {
+		expect(placeToOffer(opened, [remote(5, { percent: 10, href: 'ch02.xhtml' })], none)).toBe(
+			undefined
+		);
+		expect(placeToOffer(opened, [remote(5, { percent: 24, href: 'ch03.xhtml' })], none)).toBe(
+			undefined
+		);
+	});
+
+	it('with no chapter to compare, needs a few percent', () => {
+		const bare = { percent: 20, href: '' };
+		expect(placeToOffer(bare, [remote(5, { percent: 23 })], none)).toBe(undefined);
+		expect(placeToOffer(bare, [remote(5, { percent: 25 })], none)?.percent).toBe(25);
+	});
+
+	it('offers each place once', () => {
+		const p = remote(5);
+		expect(placeToOffer(opened, [p], new Set([offerKey(p)]))).toBe(undefined);
+		// The same device read on: a new place, so it can be offered again.
+		expect(placeToOffer(opened, [remote(6)], new Set([offerKey(p)]))?.readAt).toBe(at(6));
+	});
+
+	it('offers the furthest of several', () => {
+		const near = remote(5, { percent: 40, href: 'ch08.xhtml' });
+		const far = { ...remote(4, { percent: 70, href: 'ch14.xhtml' }), source: 'kobo' };
+		expect(placeToOffer(opened, [near, far], none)?.source).toBe('kobo');
 	});
 });
 

@@ -34,8 +34,11 @@ On the preview, on the phone:
 3. Phone, airplane mode: read on to about 45%. Close the app.
 4. Laptop: read on from 30% to 35%.
 5. Phone back online, open the app. Expected: within 1 minute its 45% reaches the mirror.
-6. Laptop: reopen Dracula. Expected: both moved, so it opens at 35% and offers "Android phone:
-   45%… Jump there?"
+6. Laptop: reopen Dracula. Expected: the laptop read most recently, so it opens at 35%, and
+   offers "Android phone is further on · 45%" (FR-009, 2026-11-27). Tap Stay.
+7. Phone: open Dracula. Expected: it opens at the laptop's 35%, the most recent, and offers
+   "This device is further on · 45%". Tap Stay.
+8. Reopen Dracula on either device. Expected: no offer; each place is offered once.
 
 ## 4. Storage page (US3, SC-006)
 

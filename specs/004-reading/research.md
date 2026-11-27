@@ -136,14 +136,20 @@ phones and laptops are NTP-synced to within seconds, so latest-wins is reliable 
 
 ## R6. Choosing where to open (FR-009)
 
-**Decision:** on opening a book, compare this device's place with the newest place from another
-device:
+**Decision (revised 2026-11-27, owner chose option 1 after a calm council):** on opening a book,
+compare this device's place with the newest place from another device, by `readAt`:
 - no newer place elsewhere: open here;
-- newer elsewhere, and this device hasn't moved since it last synced (`readAt <= syncedAt`): open
-  at the other place, and adopt it as this device's place with the other place's `readAt`, so
-  adopting never creates a "move";
-- newer elsewhere, and this device has moved (`readAt > syncedAt`): open here, and show the
-  existing notice with the other device's name and place.
+- newer elsewhere: open at the other place, and adopt it as this device's place with the other
+  place's `readAt`, so adopting never creates a "move". If this device's own place was still
+  unsent, send it first, so the mirror keeps it.
+
+Then offer, once, the furthest place that is further on in a later chapter (or at least 5%
+further when there's no chapter to compare), from another device or from this device's place
+before adopting. Offers already shown are kept per book in `longshelf.reader.offered.v1`, by
+device and `readAt`, so the same place is never offered twice. Prior art: Kindle opens at the most
+recent page and keeps the furthest page as a manual option; KOReader's Kobo plugin pulls newer
+progress and never older. The 2026-11-25 rule (open here and ask when both devices moved) taxed
+the common case of switching devices.
 
 The open is made from the newest places available. That is the network copy online, or the
 cached copy offline, which may be older; the spec accepts that.

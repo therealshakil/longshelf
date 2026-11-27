@@ -9,7 +9,13 @@
 	import Reader from '#lib/reader/Reader.svelte';
 	import type { FoliateLocation, ReaderApi } from '#lib/reader/foliate.d.ts';
 	import { placeLabel } from '#lib/reader/chapters.ts';
-	import { loadPlace, loadSettings, savePlace, saveSettings } from '#lib/reader/settings.ts';
+	import {
+		isPending,
+		loadPlace,
+		loadSettings,
+		savePlace,
+		saveSettings
+	} from '#lib/reader/settings.ts';
 	import ReaderChrome from '#lib/components/ReaderChrome.svelte';
 	import KoboNotice from '#lib/components/KoboNotice.svelte';
 	import TextPanel from '#lib/components/TextPanel.svelte';
@@ -17,8 +23,20 @@
 	import ErrorState from '#lib/components/ErrorState.svelte';
 	import { deviceName, splitPositions } from '#lib/library/format.ts';
 	import { SYNCS_PLACES } from '#lib/library/index.ts';
-	import { adoptedPlace, chooseOpen, fileShaOf, startAt } from '#lib/reader/places.ts';
-	import { queueSend } from '#lib/reader/outbox.ts';
+	import {
+		adoptedPlace,
+		chooseOpen,
+		fileShaOf,
+		fromSaved,
+		loadOffered,
+		markOffered,
+		offerKey,
+		placeToOffer,
+		startAt,
+		THIS_DEVICE
+	} from '#lib/reader/places.ts';
+	import type { ReadingPosition } from '@longshelf/shared/library';
+	import { flushNow, queueSend } from '#lib/reader/outbox.ts';
 	import { sendSummary } from '#lib/reader/summaries.ts';
 	import { RECAPS_ENABLED } from '#lib/ai/features.ts';
 	import StorySoFar from '#lib/components/StorySoFar.svelte';
@@ -31,27 +49,41 @@
 	const positions = $derived(splitPositions(data.book?.positions ?? []));
 	const fileSha = $derived(fileShaOf(data.fileUrl));
 
-	// Where to open (spec 004 FR-009): here, at a more recent place from another device (adopt),
-	// or here with that place offered. Worked out once per book, from the places at open.
+	// Where to open (spec 004 FR-009, owner 2026-11-27): at the most recently read place, here or
+	// on another device. A place further on, in a later chapter, is offered once. Worked out once
+	// per book, from the places at open.
 	const opening = $derived.by(() => {
 		if (!book) return null;
+		const all = data.book?.positions ?? [];
 		const saved = loadPlace(book.id);
-		const here = positions.here;
-		const mine = saved ?? (here ? { readAt: here.readAt, syncedAt: here.readAt } : null);
-		const choice = chooseOpen(mine, data.book?.positions ?? []);
+		const here = all.find((p) => p.source === THIS_DEVICE);
+		const others = all.filter((p) => p.source !== THIS_DEVICE);
+		const choice = chooseOpen(saved ?? here ?? null, all);
+		let start, opened: Pick<ReadingPosition, 'percent' | 'href'>;
+		let candidates = others;
 		if (choice.kind === 'adopt') {
+			if (saved) {
+				// This device's own place stays on offer, and reaches the mirror before it's replaced.
+				if (isPending(saved) && SYNCS_PLACES) void flushNow();
+				candidates = [...others, { ...fromSaved(book.id, saved), deviceName: 'This device' }];
+			}
 			// Keeps the other device's readAt, so adopting is never a move of its own.
 			savePlace(book.id, adoptedPlace(choice.from, fileSha));
-			return { choice, start: startAt(choice.from, fileSha) };
+			start = startAt(choice.from, fileSha);
+			opened = choice.from;
+		} else {
+			start = saved?.cfi
+				? { cfi: saved.cfi }
+				: saved
+					? { href: saved.href || undefined, fraction: saved.percent / 100 }
+					: here
+						? startAt(here, fileSha)
+						: {};
+			opened = saved ?? here ?? { percent: 0, href: '' };
 		}
-		const start = saved?.cfi
-			? { cfi: saved.cfi }
-			: saved
-				? { href: saved.href || undefined, fraction: saved.percent / 100 }
-				: here
-					? startAt(here, fileSha)
-					: {};
-		return { choice, start };
+		const offer = placeToOffer(opened, candidates, loadOffered(book.id));
+		if (offer) markOffered(book.id, offerKey(offer));
+		return { choice, start, offer };
 	});
 	/** The first location reported after opening is where it opened, not a move. */
 	let opened = false;
@@ -104,15 +136,7 @@
 			? { device: deviceName(positions.other), percent: positions.other.percent }
 			: undefined
 	);
-	// Offered: a more recent place when both devices moved (FR-009), or, as in spec 002, a
-	// place further on.
-	const offered = $derived(
-		opening?.choice.kind === 'offer'
-			? opening.choice.from
-			: positions.other && positions.other.percent > percent
-				? positions.other
-				: undefined
-	);
+	const offered = $derived(opening?.offer);
 	const chapterLabel = $derived(
 		loc?.tocItem ? placeLabel(api?.toc ?? [], loc.tocItem) : (positions.here?.chapterLabel ?? '')
 	);
@@ -250,7 +274,6 @@
 					device={deviceName(offered)}
 					chapter={offered.chapterLabel}
 					percent={offered.percent}
-					further={offered.percent > percent}
 					onGo={() => {
 						void goToOther();
 						noticeDismissed = true;

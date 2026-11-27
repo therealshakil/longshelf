@@ -111,8 +111,9 @@ books_fts USING fts5(title, authors, series, tags)
   through the chapter) map to `percent` and `fraction`.
 - `status` and position have separate timestamps and are merged independently, so "finished" set on one
   device and a position moved on another both survive.
-- Each source's latest position is kept separately. The UI offers "Kobo: 63%, ch. 12. Jump there?" rather
-  than overwriting silently.
+- Each source's latest position is kept separately. The book opens at the most recently read place;
+  a place further on is offered once ("Kobo is further on", spec 004 FR-009), never forced
+  and never lost.
 
 ## Known limits
 - Web -> Kobo is accurate to the chapter, not the sentence, when the library holds only EPUB: Kobo's exact

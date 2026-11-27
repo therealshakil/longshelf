@@ -76,18 +76,15 @@ export function startAt(p: ReadingPosition, fileSha256?: string): Start {
 	return { ...(p.href ? { href: p.href } : {}), fraction: p.percent / 100 };
 }
 
-export type OpenChoice =
-	| { kind: 'here' }
-	| { kind: 'adopt'; from: ReadingPosition }
-	| { kind: 'offer'; from: ReadingPosition };
+export type OpenChoice = { kind: 'here' } | { kind: 'adopt'; from: ReadingPosition };
 
 /**
- * FR-009: open at a more recent place from another device if this device hasn't moved since
- * it last synced; if it has, open here and offer the other place. `here` is null when this
- * device has never read the book.
+ * FR-009 (owner, 2026-11-27): the most recently read place wins, by when it was read, never by
+ * when it arrived. Open here unless another device read this book more recently. `here` is null
+ * when this device has never read the book.
  */
 export function chooseOpen(
-	here: Pick<SavedPlace, 'readAt' | 'syncedAt'> | null,
+	here: Pick<SavedPlace, 'readAt'> | null,
 	positions: ReadingPosition[]
 ): OpenChoice {
 	const newest = positions
@@ -95,9 +92,63 @@ export function chooseOpen(
 		.reduce<ReadingPosition | null>((a, p) => (!a || p.readAt > a.readAt ? p : a), null);
 	if (!newest) return { kind: 'here' };
 	if (here && Date.parse(newest.readAt) <= Date.parse(here.readAt)) return { kind: 'here' };
-	const moved =
-		here && (here.syncedAt === null || Date.parse(here.readAt) > Date.parse(here.syncedAt));
-	return moved ? { kind: 'offer', from: newest } : { kind: 'adopt', from: newest };
+	return { kind: 'adopt', from: newest };
+}
+
+/** Below this, a place without a chapter isn't far enough on to be worth offering. */
+export const OFFER_MIN_PERCENT = 5;
+
+/** One offer, known by where and when it was read, so it is offered once. */
+export const offerKey = (p: Pick<ReadingPosition, 'source' | 'readAt'>) =>
+	`${p.source}@${p.readAt}`;
+
+/**
+ * FR-009: a place worth offering after opening at `opened`. It must be further on, in a later
+ * chapter (or, with no chapter to compare, at least OFFER_MIN_PERCENT further), and not offered
+ * before. The furthest such place wins.
+ */
+export function placeToOffer(
+	opened: Pick<ReadingPosition, 'percent' | 'href'>,
+	candidates: ReadingPosition[],
+	offered: ReadonlySet<string>
+): ReadingPosition | undefined {
+	return candidates
+		.filter(
+			(p) =>
+				!offered.has(offerKey(p)) &&
+				p.percent > opened.percent &&
+				(p.href && opened.href
+					? p.href !== opened.href
+					: p.percent - opened.percent >= OFFER_MIN_PERCENT)
+		)
+		.reduce<ReadingPosition | undefined>(
+			(a, p) => (!a || p.percent > a.percent ? p : a),
+			undefined
+		);
+}
+
+const OFFERED_KEY = 'longshelf.reader.offered.v1';
+
+/** The offers already shown for a book. */
+export function loadOffered(bookId: string): Set<string> {
+	try {
+		const all = JSON.parse(localStorage.getItem(OFFERED_KEY) ?? '{}') as Record<string, string[]>;
+		return new Set(Array.isArray(all[bookId]) ? all[bookId] : []);
+	} catch {
+		return new Set();
+	}
+}
+
+/** Remember that an offer was shown, so it isn't shown again. */
+export function markOffered(bookId: string, key: string): void {
+	try {
+		const all = JSON.parse(localStorage.getItem(OFFERED_KEY) ?? '{}') as Record<string, string[]>;
+		// Only the latest few per book matter: a place offered long ago has been read past.
+		all[bookId] = [...new Set([...(all[bookId] ?? []), key])].slice(-10);
+		localStorage.setItem(OFFERED_KEY, JSON.stringify(all));
+	} catch {
+		// Storage unavailable: the offer may show again, which is harmless.
+	}
 }
 
 /** The place this device keeps when it adopts another device's place: same `readAt`, synced. */
