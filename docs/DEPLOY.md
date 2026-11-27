@@ -46,7 +46,9 @@ pnpm run deploy
 
 This builds the mirror app, applies D1 migrations to the live database, and deploys the Worker.
 Use `pnpm run deploy`, not `pnpm deploy` (a pnpm built-in). Migrations only ever add, so the
-version still serving keeps working; a failed deploy leaves it in place.
+version still serving keeps working; a failed deploy leaves it in place. Spec 004 adds one,
+`0005_reading_place.sql` (reading places synced across devices); it runs with the deploy, with
+no extra step.
 
 Until step 4 is done, every request is refused with "Sign in to Longshelf to continue." That's
 the Worker failing closed, not an error.

@@ -10,7 +10,7 @@ exists, its `tasks.md` is the source of truth and the list here is not updated.
 | 001 | [Visual design](../specs/001-visual-design/spec.md): calm, ND-friendly design system + per-element design pages | calm-ds constitution | MVP built (US1+US2); US4 superseded by 002 |
 | 002 | [Redesigned screens and AI features](../specs/002-redesign-and-ai/spec.md) (DR-0002, DR-0003) | 001 | Built and design signed off 2026-11-23 on sample data. Not deployed. Story so far (T053) and AI search (T061–T063) are parked; plain search shipped instead (DR-0008) |
 | 003 | [Library mirror](../specs/003-library-mirror/spec.md) (Phase 1 below) | 002 | Done 2026-11-25. Deployed 2026-11-24; the owner's 670 books are online at library.longshelf.app |
-| 004 | [Reading offline and across devices](../specs/004-reading/spec.md) (Phase 2) | 003 | Planned 2026-11-25 (DR-0013 accepted); 30 tasks, next `/speckit-implement` |
+| 004 | [Reading offline and across devices](../specs/004-reading/spec.md) (Phase 2) | 003 | Built 2026-11-27, in review (PR #2). FR-009 revised 2026-11-27: the most recently read place wins, places further on are offered once. Left: the owner's device check (T028), deploy (T030) |
 | 005 | Device progress (Phase 3) | 004, spike | not started |
 
 ## Spike (manual, on the desktop with the Kobo; record findings here)
@@ -111,10 +111,11 @@ licence-free synthetic one: 670 records, 1.2 MB.
 - [x] Upload the owner's real library and record the SC timings (spec 003 T039; phone check SC-003 by the owner)
 
 ### Phase 2: read → spec 004
-- [ ] foliate-js submodule + `Reader.svelte`
-- [ ] Offline downloads (OPFS), storage settings page
-- [ ] Web progress, outbox, catalog snapshot in Dexie
-- [ ] Playwright smoke test: open app, go offline, open a book
+- [x] foliate-js submodule + `Reader.svelte` (spec 002)
+- [x] Offline downloads, storage settings page (in Cache Storage, not OPFS: DR-0013)
+- [x] Web progress and outbox (in localStorage, not Dexie: DR-0013); the catalogue copy is in
+      Cache Storage (spec 003)
+- [x] Playwright smoke test: open app, go offline, open a book (`offline-reading.spec.ts`)
 - [ ] Public showcase library (owner, 2026-11-24): a second, public deployment on its own
       subdomain that anyone can browse and read. It holds public-domain books the owner picks to
       represent them, and it grows out of the spec 003 test library. Needs:

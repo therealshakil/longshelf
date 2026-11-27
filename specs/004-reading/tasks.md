@@ -196,7 +196,7 @@ reader opens at the right place per FR-009.
 ## Phase 6: Polish and production
 
 - [ ] T028 Run quickstart steps 1 to 5 on the PR preview. Fix anything found. Record the results in `docs/JOURNAL.md`.
-- [ ] T029 Update the docs:
+- [X] T029 Update the docs:
   - `CLAUDE.md` Commands (no new commands expected; note the smoke test in `pnpm test:e2e`);
   - `docs/DEPLOY.md` (the migration runs with `pnpm run deploy`);
   - `docs/PLAN.md` Phase 2 checkboxes and spec table (004 done);
